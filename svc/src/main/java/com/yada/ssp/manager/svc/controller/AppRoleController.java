@@ -7,18 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
- * Created by bjy on 2018/8/1.
- * App角色Controller
+ * Merchant App角色API
  */
-@Controller
-@RequestMapping("/approle")
+@RestController
+@RequestMapping("/appRole")
 public class AppRoleController {
     private final AppRoleService appRoleService;
 
@@ -27,44 +22,23 @@ public class AppRoleController {
         this.appRoleService = appRoleService;
     }
 
-    @RequestMapping("/list")
-    public String list(Model model, @ModelAttribute AppRoleQuery query, @PageableDefault Pageable pageable) {
-        Page page = appRoleService.findAll(query, pageable);
-        model.addAttribute("query", query);
-        model.addAttribute("page", page);
-        return "ssp_pages/AppRole/list";
+    @GetMapping
+    public Page<AppRole> list(@ModelAttribute AppRoleQuery query, @PageableDefault Pageable pageable) {
+        return appRoleService.findAll(query, pageable);
     }
 
-    @RequestMapping("/create")
-    public String create() {
-        return "ssp_pages/AppRole/create";
-    }
-
-    @RequestMapping("/save")
-    public String save(@ModelAttribute("model") AppRole appRole) {
+    @PutMapping
+    public void save(AppRole appRole) {
         appRoleService.saveAndUpdate(appRole);
-        return "redirect:list";
     }
 
-    @RequestMapping("/show")
-    public String show(Model model, String id) {
-        model.addAttribute("model", appRoleService.findOne(id));
-        return "ssp_pages/AppRole/show";
+    @GetMapping("/{id}")
+    public AppRole show(@PathVariable String id) {
+        return appRoleService.findOne(id);
     }
 
-    @RequestMapping("/edit")
-    public String edit(Model model, String id) {
-        model.addAttribute("model", appRoleService.findOne(id));
-        return "ssp_pages/AppRole/edit1";
-    }
-
-    @ResponseBody
-    @RequestMapping("/AJAX_findRole")
-    public String AJAX_findRole(String id) {
-        String mess = "*";
-        if (appRoleService.exists(id)) {
-            mess = "该角色已存在";
-        }
-        return mess;
+    @GetMapping("/{id}/exists")
+    public Boolean exists(@PathVariable String id) {
+        return appRoleService.exists(id);
     }
 }
