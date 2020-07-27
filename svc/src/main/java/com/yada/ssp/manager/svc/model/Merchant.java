@@ -1,7 +1,7 @@
 package com.yada.ssp.manager.svc.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.yada.security.model.Org;
+import com.yada.ssp.manager.svc.model.Org;
 
 import javax.persistence.*;
 import java.util.Set;

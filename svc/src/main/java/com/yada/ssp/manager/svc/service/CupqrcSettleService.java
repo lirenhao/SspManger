@@ -1,6 +1,5 @@
 package com.yada.ssp.manager.svc.service;
 
-import com.yada.security.util.DictUtil;
 import com.yada.ssp.manager.svc.dao.CupqrcSettleDao;
 import com.yada.ssp.manager.svc.model.CupqrcSettle;
 import com.yada.ssp.manager.svc.query.CupqrcSettleQuery;
@@ -39,17 +38,17 @@ public class CupqrcSettleService {
     }
 
     private CupqrcSettle dict(CupqrcSettle cupqrcSettle) {
-        CupqrcSettle copy = new CupqrcSettle();
-        BeanUtils.copyProperties(cupqrcSettle, copy);
-        copy.setTranDate(cupqrcSettle.getTranDate() + cupqrcSettle.getTranTime());
-        DictUtil.getDictByType("TRAN_TYPE").forEach(item -> {
-            if (item.getDictcode().equals(cupqrcSettle.getTranType()))
-                copy.setTranType(item.getDictcodename());
-        });
-        DictUtil.getDictByType("TRAN_HANDLE").forEach(item -> {
-            if (item.getDictcode().equals(cupqrcSettle.getStatus()))
-                copy.setStatus(item.getDictcodename());
-        });
-        return copy;
+//        CupqrcSettle copy = new CupqrcSettle();
+//        BeanUtils.copyProperties(cupqrcSettle, copy);
+//        copy.setTranDate(cupqrcSettle.getTranDate() + cupqrcSettle.getTranTime());
+//        DictUtil.getDictByType("TRAN_TYPE").forEach(item -> {
+//            if (item.getDictcode().equals(cupqrcSettle.getTranType()))
+//                copy.setTranType(item.getDictcodename());
+//        });
+//        DictUtil.getDictByType("TRAN_HANDLE").forEach(item -> {
+//            if (item.getDictcode().equals(cupqrcSettle.getStatus()))
+//                copy.setStatus(item.getDictcodename());
+//        });
+        return cupqrcSettle;
     }
 }

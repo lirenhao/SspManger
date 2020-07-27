@@ -1,10 +1,8 @@
 package com.yada.ssp.manager.svc.service;
 
-import com.yada.security.util.DictUtil;
 import com.yada.ssp.manager.svc.dao.CupAcomnDao;
 import com.yada.ssp.manager.svc.model.CupAcomn;
 import com.yada.ssp.manager.svc.query.CupAcomnQuery;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,17 +37,17 @@ public class CupAcomnService {
     }
 
     private CupAcomn dict(CupAcomn cupAcomn) {
-        CupAcomn copy = new CupAcomn();
-        BeanUtils.copyProperties(cupAcomn, copy);
-        copy.setTranDate(cupAcomn.getTranDate() + cupAcomn.getTranTime());
-        DictUtil.getDictByType("CUP_TRAN_TYPE").forEach(item -> {
-            if (item.getDictcode().equals(cupAcomn.getMessageType() + cupAcomn.getProcCode()))
-                copy.setMessageType(item.getDictcodename());
-        });
-        DictUtil.getDictByType("TRAN_HANDLE").forEach(item -> {
-            if (item.getDictcode().equals(cupAcomn.getStatus()))
-                copy.setStatus(item.getDictcodename());
-        });
-        return copy;
+//        CupAcomn copy = new CupAcomn();
+//        BeanUtils.copyProperties(cupAcomn, copy);
+//        copy.setTranDate(cupAcomn.getTranDate() + cupAcomn.getTranTime());
+//        DictUtil.getDictByType("CUP_TRAN_TYPE").forEach(item -> {
+//            if (item.getDictcode().equals(cupAcomn.getMessageType() + cupAcomn.getProcCode()))
+//                copy.setMessageType(item.getDictcodename());
+//        });
+//        DictUtil.getDictByType("TRAN_HANDLE").forEach(item -> {
+//            if (item.getDictcode().equals(cupAcomn.getStatus()))
+//                copy.setStatus(item.getDictcodename());
+//        });
+        return cupAcomn;
     }
 }

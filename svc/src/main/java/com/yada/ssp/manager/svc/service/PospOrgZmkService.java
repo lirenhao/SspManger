@@ -5,7 +5,7 @@ import com.yada.ssp.common.util.TripleDESUtil;
 import com.yada.ssp.manager.svc.dao.PospOrgZmkDao;
 import com.yada.ssp.manager.svc.model.PospOrgZmk;
 import com.yada.ssp.manager.svc.query.PospOrgZmkQuery;
-import com.yada.ssp.util.XorUtil;
+import com.yada.ssp.manager.svc.util.XorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

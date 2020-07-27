@@ -28,7 +28,7 @@ public class MerSubsService {
         Merchant merchant = merchantDao.getOne(merId);
         if (merIds != null) {
             Set<Merchant> merchantSet = Arrays.stream(merIds)
-                    .map(merchantDao::findOne).collect(Collectors.toSet());
+                    .map(merchantDao::getOne).collect(Collectors.toSet());
             merchant.setWebSubs(merchantSet);
         } else {
             merchant.setWebSubs(null);

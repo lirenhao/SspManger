@@ -60,7 +60,7 @@ public class PospOrgTmkService {
                 saves.add(tmk);
             }
         }
-        pospOrgTmkDao.save(saves);
+        pospOrgTmkDao.saveAll(saves);
         return exists;
     }
 }
