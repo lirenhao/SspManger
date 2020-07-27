@@ -1,7 +1,6 @@
 package com.yada.ssp.manager.svc.controller;
 
 import com.yada.ssp.manager.svc.model.InternationalCode;
-import com.yada.ssp.manager.svc.model.MerchantExtra;
 import com.yada.ssp.manager.svc.query.InternationalCodeQuery;
 import com.yada.ssp.manager.svc.service.InternationalCodeService;
 import com.yada.ssp.manager.svc.service.MerchantExtraService;
@@ -10,20 +9,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 /**
- * Created by bjy on 2018/9/6.
- * 国家代码Controller
+ * 国家代码API
  */
-
 @Controller
-@RequestMapping("/internationalcode")
+@RequestMapping("/countryCode")
 public class InternationalCodeController {
 
     private final InternationalCodeService internationalCodeService;
@@ -35,61 +27,38 @@ public class InternationalCodeController {
         this.merchantExtraService = merchantExtraService;
     }
 
-    @RequestMapping("/list")
-    public String list(Model model, @ModelAttribute InternationalCodeQuery query, @PageableDefault Pageable pageable) {
-        Page page = internationalCodeService.findAll(query, pageable);
-        model.addAttribute("query", query);
-        model.addAttribute("page", page);
-        return "ssp_pages/InternationalCode/list";
+    @GetMapping
+    public Page<InternationalCode> list(@ModelAttribute InternationalCodeQuery query, @PageableDefault Pageable pageable) {
+        return internationalCodeService.findAll(query, pageable);
     }
 
-    @RequestMapping("/create")
-    public String create() {
-        return "ssp_pages/InternationalCode/create";
-    }
-
-    @RequestMapping("/save")
-    public String save(@ModelAttribute("model") InternationalCode internationalCode) {
+    @PutMapping
+    public void save(@ModelAttribute InternationalCode internationalCode) {
         internationalCodeService.saveAndUpdate(internationalCode);
-        return "redirect:list";
     }
 
-    @RequestMapping("/show")
-    public String show(Model model, String internationalCode) {
-        model.addAttribute("model", internationalCodeService.findOne(internationalCode));
-        return "ssp_pages/InternationalCode/show";
+    @GetMapping("/{id}")
+    public InternationalCode get(@PathVariable String id) {
+        return internationalCodeService.findOne(id);
     }
 
-    @RequestMapping("/edit")
-    public String edit(Model model, String internationalCode) {
-        model.addAttribute("model", internationalCodeService.findOne(internationalCode));
-        return "ssp_pages/InternationalCode/edit1";
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable String id) {
+        internationalCodeService.delete(id);
     }
 
-    @RequestMapping("/delete")
-    public String delete(String internationalCode) {
-        internationalCodeService.delete(internationalCode);
-        return "redirect:list";
+    @GetMapping("/{id}/exists")
+    public boolean exists(@PathVariable String id) {
+        return internationalCodeService.exists(id);
     }
 
-    @ResponseBody
-    @RequestMapping("/AJAX_findInternationalCode")
-    public String AJAX_findInternationalCode(String internationalCode) {
-        String mess = "*";
-        if (internationalCodeService.exists(internationalCode)) {
-            mess = "该商户号已存在";
-        }
-        return mess;
-    }
-
-    @ResponseBody
-    @RequestMapping("/AJAX_isCanDelete")
-    public String AJAX_isCanDelete(String internationalCode) {
-        String mess = "*";
-        List<MerchantExtra> merchantExtraList = merchantExtraService.findListByInternationalCode(internationalCode);
-        if (merchantExtraList != null && merchantExtraList.size() > 0) {
-            mess = "该国家代码已被使用不能删除";
-        }
-        return mess;
+    /**
+     * 国家代码是否被使用
+     * @param id 币种ID
+     * @return 是否被使用
+     */
+    @GetMapping("/{id}/enable")
+    public boolean enable(@PathVariable String id) {
+        return merchantExtraService.findListByInternationalCode(id).size() > 0;
     }
 }

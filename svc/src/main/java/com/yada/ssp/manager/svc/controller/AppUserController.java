@@ -11,29 +11,29 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
 /**
- * Created by bjy on 2018/7/23.
- * APP用户Controller
+ * Merchant APP用户API
  */
-@Controller
-@RequestMapping("/appuser")
+@RestController
+@RequestMapping("/appUser")
 public class AppUserController {
+
     private final AppUserCheckService appUserCheckService;
     private final AppRoleService appRoleService;
     private final MerchantService merchantService;
     private final CcyTypeService ccyTypeService;
     private final TerminalService terminalService;
     private final AppUserService appUserService;
+
     @Autowired
-    public AppUserController(AppUserCheckService appUserCheckService, AppRoleService appRoleService, MerchantService merchantService, CcyTypeService ccyTypeService, TerminalService terminalService, AppUserService appUserService) {
+    public AppUserController(AppUserCheckService appUserCheckService, AppRoleService appRoleService,
+                             MerchantService merchantService, CcyTypeService ccyTypeService,
+                             TerminalService terminalService, AppUserService appUserService) {
         this.appUserCheckService = appUserCheckService;
         this.appRoleService = appRoleService;
         this.merchantService = merchantService;
@@ -46,7 +46,7 @@ public class AppUserController {
     public String list(Model model, @RequestAttribute("auth") Auth auth,
                        @ModelAttribute AppUserCheckQuery query, @PageableDefault Pageable pageable) {
         query.setOrgId(auth.getOrgId());
-        Page page = appUserCheckService.findAll(query, pageable);
+        Page<AppUserCheck> page = appUserCheckService.findAll(query, pageable);
         model.addAttribute("query", query);
         model.addAttribute("page", page);
         return "ssp_pages/AppUser/list";
@@ -106,7 +106,7 @@ public class AppUserController {
             model.addAttribute("userRoleCheckList", userRoleList);
         }
         AppUser appUser = appUserService.findOne(new AppUserPK(merNo, loginName));
-        if (appUser!=null && appUser.getRoles() != null && !appUser.getRoles().equals("")) {
+        if (appUser != null && appUser.getRoles() != null && !appUser.getRoles().equals("")) {
             String[] userRoleList = appUser.getRoles().split(",");
             model.addAttribute("userRoleList", userRoleList);
         }
@@ -125,7 +125,7 @@ public class AppUserController {
             model.addAttribute("userRoleCheckList", userRoleList);
         }
         AppUser appUser = appUserService.findOne(new AppUserPK(merNo, loginName));
-        if (appUser!=null && appUser.getRoles() != null && !appUser.getRoles().equals("")) {
+        if (appUser != null && appUser.getRoles() != null && !appUser.getRoles().equals("")) {
             String[] userRoleList = appUser.getRoles().split(",");
             model.addAttribute("userRoleList", userRoleList);
         }
@@ -138,7 +138,7 @@ public class AppUserController {
 
     @RequestMapping("/saveCheck")
     public String saveCheck(String state, String checkReason, String merNo, String loginName) {
-        appUserCheckService.saveCheck(state,checkReason,merNo,loginName);
+        appUserCheckService.saveCheck(state, checkReason, merNo, loginName);
         return "redirect:listForCheck";
     }
 

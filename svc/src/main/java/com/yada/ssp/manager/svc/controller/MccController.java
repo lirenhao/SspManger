@@ -7,19 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
- * Created by bjy on 2018/7/25.
- * MCC码Controller
+ * MCC Code API
  */
-
-@Controller
-@RequestMapping("/mcc")
+@RestController
+@RequestMapping("/mccCode")
 public class MccController {
 
     private final MccService mccService;
@@ -29,50 +23,28 @@ public class MccController {
         this.mccService = mccService;
     }
 
-    @RequestMapping("/list")
-    public String list(Model model, @ModelAttribute MccQuery query, @PageableDefault Pageable pageable) {
-        Page page = mccService.findAll(query, pageable);
-        model.addAttribute("query", query);
-        model.addAttribute("page", page);
-        return "ssp_pages/Mcc/list";
+    @GetMapping
+    public Page<Mcc> list(@ModelAttribute MccQuery query, @PageableDefault Pageable pageable) {
+        return mccService.findAll(query, pageable);
     }
 
-    @RequestMapping("/create")
-    public String create() {
-        return "ssp_pages/Mcc/create";
-    }
-
-    @RequestMapping("/save")
-    public String save(@ModelAttribute("model") Mcc mcc) {
+    @PutMapping
+    public void save(Mcc mcc) {
         mccService.saveAndUpdate(mcc);
-        return "redirect:list";
     }
 
-    @RequestMapping("/show")
-    public String show(Model model, String mcc) {
-        model.addAttribute("model", mccService.findOne(mcc));
-        return "ssp_pages/Mcc/show";
+    @GetMapping("/{id}")
+    public Mcc get(@PathVariable String id) {
+        return mccService.findOne(id);
     }
 
-    @RequestMapping("/edit")
-    public String edit(Model model, String mcc) {
-        model.addAttribute("model", mccService.findOne(mcc));
-        return "ssp_pages/Mcc/edit1";
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable String id) {
+        mccService.deleteMcc(id);
     }
 
-    @RequestMapping("/delete")
-    public String delete(String mcc) {
-        mccService.deleteMcc(mcc);
-        return "redirect:list";
-    }
-
-    @ResponseBody
-    @RequestMapping("/AJAX_findMcc")
-    public String AJAX_findMcc(String mccId) {
-        String mess = "*";
-        if (mccService.exists(mccId)) {
-            mess = "该商户号已存在";
-        }
-        return mess;
+    @GetMapping("/{id}/exists")
+    public boolean exists(@PathVariable String id) {
+        return mccService.exists(id);
     }
 }

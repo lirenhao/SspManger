@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/appRole")
 public class AppRoleController {
+
     private final AppRoleService appRoleService;
 
     @Autowired
