@@ -1,5 +1,6 @@
 package com.yada.ssp.manager.svc.controller;
 
+import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.*;
 import com.yada.ssp.manager.svc.query.MerchantExtraCheckQuery;
 import com.yada.ssp.manager.svc.query.MerchantQuery;
@@ -11,6 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -21,7 +23,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/merchantextra")
-public class MerchantExtraController extends BaseController{
+public class MerchantExtraController {
     private final MerchantService merchantService;
     private final CcyTypeService typeService;
     private final InternationalCodeService internationalCodeService;
@@ -37,8 +39,9 @@ public class MerchantExtraController extends BaseController{
     }
 
     @RequestMapping("/merchantExtraList")
-    public String merchantExtraList(Model model, @ModelAttribute MerchantQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+    public String merchantExtraList(Model model, @RequestAttribute("auth") Auth auth,
+                                    @ModelAttribute MerchantQuery query, @PageableDefault Pageable pageable) {
+        query.setOrgId(auth.getOrgId());
         Page page = merchantService.findAll(query, pageable);
         model.addAttribute("query", query);
         model.addAttribute("page", page);
@@ -46,8 +49,9 @@ public class MerchantExtraController extends BaseController{
     }
 
     @RequestMapping("/merchantExtraListForCheck")
-    public String merchantExtraListForCheck(Model model, @ModelAttribute MerchantExtraCheckQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+    public String merchantExtraListForCheck(Model model, @RequestAttribute("auth") Auth auth,
+                                            @ModelAttribute MerchantExtraCheckQuery query, @PageableDefault Pageable pageable) {
+        query.setOrgId(auth.getOrgId());
         Page page = merchantExtraCheckService.findAll(query, pageable);
         model.addAttribute("query", query);
         model.addAttribute("page", page);

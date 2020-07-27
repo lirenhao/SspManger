@@ -1,5 +1,6 @@
 package com.yada.ssp.manager.svc.controller;
 
+import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.*;
 import com.yada.ssp.manager.svc.query.StaticQrcListCheckQuery;
 import com.yada.ssp.manager.svc.query.TerminalQuery;
@@ -11,6 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,7 +24,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/staticqrclistcheck")
-public class StaticQrcListCheckController extends BaseController {
+public class StaticQrcListCheckController {
     private final StaticQrcListCheckService staticQrcListCheckService;
     private final CcyTypeService ccyTypeService;
     private final MerchantService merchantService;
@@ -38,10 +40,11 @@ public class StaticQrcListCheckController extends BaseController {
     }
 
     @RequestMapping("/list")
-    public String list(Model model, @ModelAttribute StaticQrcListCheckQuery query, @PageableDefault Pageable pageable) {
+    public String list(Model model, @RequestAttribute("auth") Auth auth,
+                       @ModelAttribute StaticQrcListCheckQuery query, @PageableDefault Pageable pageable) {
         List<CcyType> ccyTypeList = ccyTypeService.findAll();
 
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+        query.setOrgId(auth.getOrgId());
         Page page = staticQrcListCheckService.findAll(query, pageable);
         model.addAttribute("ccyTypeList", ccyTypeList);
         model.addAttribute("query", query);
@@ -50,10 +53,11 @@ public class StaticQrcListCheckController extends BaseController {
     }
 
     @RequestMapping("/listForCheck")
-    public String listForCheck(Model model, @ModelAttribute StaticQrcListCheckQuery query, @PageableDefault Pageable pageable) {
+    public String listForCheck(Model model, @RequestAttribute("auth") Auth auth,
+                               @ModelAttribute StaticQrcListCheckQuery query, @PageableDefault Pageable pageable) {
         List<CcyType> ccyTypeList = ccyTypeService.findAll();
 
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+        query.setOrgId(auth.getOrgId());
         Page page = staticQrcListCheckService.findAll(query, pageable);
         model.addAttribute("ccyTypeList", ccyTypeList);
         model.addAttribute("query", query);
@@ -62,11 +66,11 @@ public class StaticQrcListCheckController extends BaseController {
     }
 
     @RequestMapping("/create")
-    public String create(Model model) {
+    public String create(Model model, @RequestAttribute("auth") Auth auth) {
         List<CcyType> ccyTypeList = ccyTypeService.findAll();
         model.addAttribute("ccyTypeList", ccyTypeList);
 
-        List<Merchant> merchantList = merchantService.findByOrgId(getCurUser().getOrg().getOrgId());
+        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
         model.addAttribute("merchantList", merchantList);
         return "ssp_pages/StaticQrcListCheck/create";
     }

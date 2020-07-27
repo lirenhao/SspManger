@@ -2,7 +2,7 @@ package com.yada.ssp.manager.svc.query;
 
 import com.yada.ssp.manager.svc.model.Merchant;
 import com.yada.ssp.manager.svc.model.SettleDetail;
-import com.yada.util.DateUtil;
+import com.yada.ssp.manager.svc.util.DateUtil;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;

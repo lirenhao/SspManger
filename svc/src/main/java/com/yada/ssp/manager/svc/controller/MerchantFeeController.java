@@ -1,5 +1,6 @@
 package com.yada.ssp.manager.svc.controller;
 
+import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.Merchant;
 import com.yada.ssp.manager.svc.model.MerchantFee;
 import com.yada.ssp.manager.svc.model.MerchantFeeCheck;
@@ -14,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,7 +28,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/merchantfee")
-public class MerchantFeeController extends BaseController {
+public class MerchantFeeController {
     private final MerchantFeeCheckService merchantFeeCheckService;
     private final MerchantService merchantService;
     private final MerchantFeeService merchantFeeService;
@@ -38,8 +40,9 @@ public class MerchantFeeController extends BaseController {
     }
 
     @RequestMapping("/list")
-    public String list(Model model, @ModelAttribute MerchantFeeCheckQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+    public String list(Model model, @RequestAttribute("auth") Auth auth,
+                       @ModelAttribute MerchantFeeCheckQuery query, @PageableDefault Pageable pageable) {
+        query.setOrgId(auth.getOrgId());
         Page page = merchantFeeCheckService.findAll(query, pageable);
         model.addAttribute("query", query);
         model.addAttribute("page", page);
@@ -47,8 +50,9 @@ public class MerchantFeeController extends BaseController {
     }
 
     @RequestMapping("/listForCheck")
-    public String listForCheck(Model model, @ModelAttribute MerchantFeeCheckQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+    public String listForCheck(Model model, @RequestAttribute("auth") Auth auth,
+                               @ModelAttribute MerchantFeeCheckQuery query, @PageableDefault Pageable pageable) {
+        query.setOrgId(auth.getOrgId());
         Page page = merchantFeeCheckService.findAll(query, pageable);
         model.addAttribute("query", query);
         model.addAttribute("page", page);
@@ -56,8 +60,8 @@ public class MerchantFeeController extends BaseController {
     }
 
     @RequestMapping("/create")
-    public String create(Model model) {
-        List<Merchant> merchantList = merchantService.findByOrgId(getCurUser().getOrg().getOrgId());
+    public String create(Model model, @RequestAttribute("auth") Auth auth) {
+        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
         model.addAttribute("merchantList", merchantList);
         return "ssp_pages/MerchantFee/create";
     }

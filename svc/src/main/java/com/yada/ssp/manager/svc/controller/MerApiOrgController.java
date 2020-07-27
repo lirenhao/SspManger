@@ -1,5 +1,6 @@
 package com.yada.ssp.manager.svc.controller;
 
+import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.MerApiOrg;
 import com.yada.ssp.manager.svc.model.Merchant;
 import com.yada.ssp.manager.svc.query.MerApiOrgQuery;
@@ -12,6 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,7 +25,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/merapiorg")
-public class MerApiOrgController extends BaseController {
+public class MerApiOrgController {
     private final MerApiOrgService merApiOrgService;
     private final MerchantService merchantService;
 
@@ -79,8 +81,8 @@ public class MerApiOrgController extends BaseController {
     }
 
     @RequestMapping("/updateMerchant")
-    public String updateMerchant(Model model, String orgId) {
-        List<Merchant> merchantList = merchantService.findByOrgId(getCurUser().getOrg().getOrgId());
+    public String updateMerchant(Model model, @RequestAttribute("auth") Auth auth, String orgId) {
+        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
         model.addAttribute("merchantList",merchantList);
 
         model.addAttribute("model", merApiOrgService.findOne(orgId));

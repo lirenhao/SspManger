@@ -1,16 +1,18 @@
 package com.yada.ssp.manager.svc.controller;
 
-import com.yada.security.model.Org;
-import com.yada.security.service.OrgService;
+import com.yada.ssp.manager.svc.auth.model.Auth;
+import com.yada.ssp.manager.svc.model.Org;
+import com.yada.ssp.manager.svc.service.OrgService;
 import com.yada.ssp.manager.svc.model.HqReport;
 import com.yada.ssp.manager.svc.service.HqReportService;
-import com.yada.util.DateUtil;
+import com.yada.ssp.manager.svc.util.DateUtil;
 import org.jxls.common.Context;
 import org.jxls.util.JxlsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +22,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/hqReport")
-public class HqReportController extends BaseController {
+public class HqReportController {
 
     private final OrgService orgService;
     private final HqReportService hqReportService;
@@ -34,12 +36,13 @@ public class HqReportController extends BaseController {
     }
 
     @RequestMapping("/list")
-    public String list(Model model, Integer year, String orgId) {
+    public String list(Model model, @RequestAttribute("auth") Auth auth,
+                       Integer year, String orgId) {
         if (year == null) {
             year = Integer.parseInt(DateUtil.getCurYear());
         }
-        List<HqReport> page = query(year, orgId);
-        List<Org> orgList = orgService.findSecondOrg(getCurUser().getOrg().getOrgId());
+        List<HqReport> page = query(auth, year, orgId);
+        List<Org> orgList = orgService.findSecondOrg(auth.getOrgId());
         model.addAttribute("page", page);
         model.addAttribute("year", year);
         model.addAttribute("orgId", orgId);
@@ -48,9 +51,9 @@ public class HqReportController extends BaseController {
     }
 
     @RequestMapping("/download")
-    public void download(HttpServletResponse resp, Integer year, String orgId) {
+    public void download(@RequestAttribute("auth") Auth auth, HttpServletResponse resp, Integer year, String orgId) {
         Context context = new Context();
-        List<HqReport> page = query(year, orgId);
+        List<HqReport> page = query(auth, year, orgId);
         context.putVar("page", page);
         context.putVar("year", year);
         try {
@@ -64,12 +67,12 @@ public class HqReportController extends BaseController {
         }
     }
 
-    private List<HqReport> query(Integer year, String orgId) {
+    private List<HqReport> query(Auth auth, Integer year, String orgId) {
         if (year == null) {
             year = Integer.parseInt(DateUtil.getCurYear());
         }
-        if(orgId == null || !orgId.startsWith(getCurUser().getOrg().getOrgId())) {
-            orgId = getCurUser().getOrg().getOrgId();
+        if(orgId == null || !orgId.startsWith(auth.getOrgId())) {
+            orgId = auth.getOrgId();
         }
        return hqReportService.hqReport(year, orgId);
     }

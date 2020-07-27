@@ -1,11 +1,12 @@
 package com.yada.ssp.manager.svc.controller;
 
+import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.CupqrcSettle;
 import com.yada.ssp.manager.svc.model.Merchant;
 import com.yada.ssp.manager.svc.query.CupqrcSettleQuery;
 import com.yada.ssp.manager.svc.service.CupqrcSettleService;
 import com.yada.ssp.manager.svc.service.MerchantService;
-import com.yada.util.DateUtil;
+import com.yada.ssp.manager.svc.util.DateUtil;
 import org.jxls.common.Context;
 import org.jxls.util.JxlsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -25,7 +27,7 @@ import java.util.List;
 
 @org.springframework.stereotype.Controller
 @RequestMapping("/cupqrcSettle")
-public class CupqrcSettleController extends BaseController {
+public class CupqrcSettleController {
 
     private final CupqrcSettleService cupqrcSettleService;
     private final MerchantService merchantService;
@@ -39,8 +41,9 @@ public class CupqrcSettleController extends BaseController {
     }
 
     @RequestMapping("/list")
-    public String list(Model model, @ModelAttribute CupqrcSettleQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+    public String list(Model model, @RequestAttribute("auth") Auth auth,
+                       @ModelAttribute CupqrcSettleQuery query, @PageableDefault Pageable pageable) {
+        query.setOrgId(auth.getOrgId());
         if (query.getSettleDate() == null || "".equals(query.getSettleDate())) {
             query.setSettleDate(DateUtil.getYesterday());
         }
@@ -49,14 +52,15 @@ public class CupqrcSettleController extends BaseController {
         model.addAttribute("query", query);
         model.addAttribute("page", page);
 
-        List<Merchant> merchantList = merchantService.findByOrgId(getCurUser().getOrg().getOrgId());
+        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
         model.addAttribute("merchantList", merchantList);
 
         return "ssp_pages/CupqrcSettle/list";
     }
 
     @RequestMapping("/download")
-    public void download(@ModelAttribute CupqrcSettleQuery query, HttpServletResponse resp) {
+    public void download(@RequestAttribute("auth") Auth auth,
+                         @ModelAttribute CupqrcSettleQuery query, HttpServletResponse resp) {
         query.setStatus("0");
         List<CupqrcSettle> page = cupqrcSettleService.findAll(query);
         Context context = new Context();
@@ -82,8 +86,9 @@ public class CupqrcSettleController extends BaseController {
     }
 
     @RequestMapping("/handleList")
-    public String handleList(Model model, @ModelAttribute CupqrcSettleQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+    public String handleList(Model model, @RequestAttribute("auth") Auth auth,
+                             @ModelAttribute CupqrcSettleQuery query, @PageableDefault Pageable pageable) {
+        query.setOrgId(auth.getOrgId());
         if (query.getSettleDate() == null || "".equals(query.getSettleDate())) {
             query.setSettleDate(DateUtil.getYesterday());
         }
@@ -92,7 +97,7 @@ public class CupqrcSettleController extends BaseController {
         model.addAttribute("query", query);
         model.addAttribute("page", page);
 
-        List<Merchant> merchantList = merchantService.findByOrgId(getCurUser().getOrg().getOrgId());
+        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
         model.addAttribute("merchantList", merchantList);
 
         return "ssp_pages/CupqrcSettle/handleList";

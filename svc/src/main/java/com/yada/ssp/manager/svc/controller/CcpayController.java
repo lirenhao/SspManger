@@ -1,8 +1,9 @@
 package com.yada.ssp.manager.svc.controller;
 
+import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.CcpayCheck;
 import com.yada.ssp.manager.svc.model.Merchant;
-import com.yada.ssp.net.SspResult;
+import com.yada.ssp.manager.svc.net.SspResult;
 import com.yada.ssp.manager.svc.query.CcpayCheckQuery;
 import com.yada.ssp.manager.svc.query.MerchantQuery;
 import com.yada.ssp.manager.svc.service.CcpayCheckService;
@@ -16,6 +17,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -30,7 +32,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/ccpay")
-public class CcpayController extends BaseController {
+public class CcpayController {
 
     private final CcpayCheckService ccpayCheckService;
     private final MerchantService merchantService;
@@ -45,8 +47,9 @@ public class CcpayController extends BaseController {
     }
 
     @RequestMapping("/list")
-    public String list(Model model, @ModelAttribute CcpayCheckQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+    public String list(Model model, @RequestAttribute("auth") Auth auth,
+                       @ModelAttribute CcpayCheckQuery query, @PageableDefault Pageable pageable) {
+        query.setOrgId(auth.getOrgId());
         Page page = ccpayCheckService.findAll(query, pageable);
         model.addAttribute("query", query);
         model.addAttribute("page", page);
@@ -54,8 +57,9 @@ public class CcpayController extends BaseController {
     }
 
     @RequestMapping("/listForCheck")
-    public String listForCheck(Model model, @ModelAttribute CcpayCheckQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+    public String listForCheck(Model model, @RequestAttribute("auth") Auth auth,
+                               @ModelAttribute CcpayCheckQuery query, @PageableDefault Pageable pageable) {
+        query.setOrgId(auth.getOrgId());
         Page page = ccpayCheckService.findAll(query, pageable);
         model.addAttribute("query", query);
         model.addAttribute("page", page);
@@ -63,8 +67,8 @@ public class CcpayController extends BaseController {
     }
 
     @RequestMapping("/create")
-    public String create(Model model) {
-        List<Merchant> merchantList = merchantService.findByOrgId(getCurUser().getOrg().getOrgId());
+    public String create(Model model, @RequestAttribute("auth") Auth auth) {
+        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
         model.addAttribute("merchantList", merchantList);
         return "ssp_pages/Ccpay/create";
     }
@@ -150,10 +154,10 @@ public class CcpayController extends BaseController {
     }
 
     @RequestMapping("/edit")
-    public String edit(Model model, String merchantId) {
+    public String edit(Model model, @RequestAttribute("auth") Auth auth, String merchantId) {
         MerchantQuery merchantQuery = new MerchantQuery();
-        merchantQuery.setOrgId(getCurUser().getOrg().getOrgId());
-        List<Merchant> merchantList = merchantService.findByOrgId(getCurUser().getOrg().getOrgId());
+        merchantQuery.setOrgId(auth.getOrgId());
+        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
         CcpayCheck ccpayCheck = ccpayCheckService.findOne(merchantId);
         if (ccpayCheck.getFee() != null) {
             BigDecimal fee = ccpayCheck.getFee();

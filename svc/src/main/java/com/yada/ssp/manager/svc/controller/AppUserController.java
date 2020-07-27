@@ -1,5 +1,6 @@
 package com.yada.ssp.manager.svc.controller;
 
+import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.*;
 import com.yada.ssp.manager.svc.query.AppUserCheckQuery;
 import com.yada.ssp.manager.svc.query.TerminalQuery;
@@ -11,6 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -23,7 +25,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/appuser")
-public class AppUserController extends BaseController {
+public class AppUserController {
     private final AppUserCheckService appUserCheckService;
     private final AppRoleService appRoleService;
     private final MerchantService merchantService;
@@ -41,8 +43,9 @@ public class AppUserController extends BaseController {
     }
 
     @RequestMapping("/list")
-    public String list(Model model, @ModelAttribute AppUserCheckQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+    public String list(Model model, @RequestAttribute("auth") Auth auth,
+                       @ModelAttribute AppUserCheckQuery query, @PageableDefault Pageable pageable) {
+        query.setOrgId(auth.getOrgId());
         Page page = appUserCheckService.findAll(query, pageable);
         model.addAttribute("query", query);
         model.addAttribute("page", page);
@@ -50,8 +53,9 @@ public class AppUserController extends BaseController {
     }
 
     @RequestMapping("/listForCheck")
-    public String listForCheck(Model model, @ModelAttribute AppUserCheckQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+    public String listForCheck(Model model, @RequestAttribute("auth") Auth auth,
+                               @ModelAttribute AppUserCheckQuery query, @PageableDefault Pageable pageable) {
+        query.setOrgId(auth.getOrgId());
         Page page = appUserCheckService.findAll(query, pageable);
         model.addAttribute("query", query);
         model.addAttribute("page", page);
@@ -59,9 +63,9 @@ public class AppUserController extends BaseController {
     }
 
     @RequestMapping("/create")
-    public String create(Model model) {
+    public String create(Model model, @RequestAttribute("auth") Auth auth) {
         List<CcyType> ccyTypeList = ccyTypeService.findAll();
-        List<Merchant> merchantList = merchantService.findByOrgId(getCurUser().getOrg().getOrgId());
+        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
         List<AppRole> roleList = appRoleService.findAll();
         model.addAttribute("merchantList", merchantList);
         model.addAttribute("roleList", roleList);

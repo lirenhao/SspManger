@@ -1,7 +1,8 @@
 package com.yada.ssp.manager.svc.controller;
 
-import com.yada.security.model.Org;
-import com.yada.security.service.OrgService;
+import com.yada.ssp.manager.svc.auth.model.Auth;
+import com.yada.ssp.manager.svc.model.Org;
+import com.yada.ssp.manager.svc.service.OrgService;
 import com.yada.ssp.manager.svc.model.MerUser;
 import com.yada.ssp.manager.svc.model.Merchant;
 import com.yada.ssp.manager.svc.query.MerUserQuery;
@@ -14,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -23,7 +25,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/merUser")
-public class MerUserController extends BaseController {
+public class MerUserController {
 
     private final MerUserService merUserService;
     private final OrgService orgService;
@@ -37,12 +39,13 @@ public class MerUserController extends BaseController {
     }
 
     @RequestMapping("/list")
-    public String list(Model model, @ModelAttribute MerUserQuery query, @PageableDefault Pageable pageable) {
+    public String list(Model model, @RequestAttribute("auth") Auth auth,
+                       @ModelAttribute MerUserQuery query, @PageableDefault Pageable pageable) {
         if (null == query.getOrgId() || "".equals(query.getOrgId())) {
-            query.setOrgId(getCurUser().getOrg().getOrgId());
+            query.setOrgId(auth.getOrgId());
         }
         Page<MerUser> page = merUserService.findAll(query, pageable);
-        List<Org> orgList = orgService.findByOrgIdStartingWithList(getCurUser().getOrg().getOrgId());
+        List<Org> orgList = orgService.findByOrgIdStartingWithList(auth.getOrgId());
         model.addAttribute("orgList", orgList);
         model.addAttribute("query", query);
         model.addAttribute("page", page);
@@ -50,8 +53,8 @@ public class MerUserController extends BaseController {
     }
 
     @RequestMapping("/create")
-    public String create(Model model) {
-        List<Org> orgList = orgService.findByOrgIdStartingWithList(getCurUser().getOrg().getOrgId());
+    public String create(Model model, @RequestAttribute("auth") Auth auth) {
+        List<Org> orgList = orgService.findByOrgIdStartingWithList(auth.getOrgId());
         model.addAttribute("orgList", orgList);
         return "ssp_pages/MerUser/create";
     }

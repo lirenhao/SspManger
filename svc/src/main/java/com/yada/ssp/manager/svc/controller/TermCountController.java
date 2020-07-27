@@ -1,9 +1,10 @@
 package com.yada.ssp.manager.svc.controller;
 
+import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.TermCountCur;
 import com.yada.ssp.manager.svc.model.TermCountHis;
 import com.yada.ssp.manager.svc.service.TermCountService;
-import com.yada.util.DateUtil;
+import com.yada.ssp.manager.svc.util.DateUtil;
 import org.jxls.common.Context;
 import org.jxls.util.JxlsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +24,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/termCount")
-public class TermCountController extends BaseController {
+public class TermCountController {
 
     private final TermCountService termCountService;
     private final ResourceLoader resourceLoader;
@@ -34,13 +36,14 @@ public class TermCountController extends BaseController {
     }
 
     @RequestMapping("/list")
-    public String list(Model model, String month, @PageableDefault Pageable pageable) {
+    public String list(Model model, @RequestAttribute("auth") Auth auth,
+                       String month, @PageableDefault Pageable pageable) {
         if(null == month || "".equals(month) || DateUtil.getCurMonth().equals(month)) {
-            Page<TermCountCur> page = termCountService.findCurMonth(getCurUser().getOrg().getOrgId(), pageable);
+            Page<TermCountCur> page = termCountService.findCurMonth(auth.getOrgId(), pageable);
             model.addAttribute("page", page);
             model.addAttribute("month", DateUtil.getCurMonth());
         } else {
-            Page<TermCountHis> page = termCountService.findHis(month, getCurUser().getOrg().getOrgId(), pageable);
+            Page<TermCountHis> page = termCountService.findHis(month, auth.getOrgId(), pageable);
             model.addAttribute("page", page);
             model.addAttribute("month", month);
         }
@@ -48,14 +51,14 @@ public class TermCountController extends BaseController {
     }
 
     @RequestMapping("/download")
-    public void download(String month, HttpServletResponse resp) {
+    public void download(@RequestAttribute("auth") Auth auth, String month, HttpServletResponse resp) {
         Context context = new Context();
         if(null == month || "".equals(month) || DateUtil.getCurMonth().equals(month)) {
-            List<TermCountCur> page = termCountService.findCurMonth(getCurUser().getOrg().getOrgId());
+            List<TermCountCur> page = termCountService.findCurMonth(auth.getOrgId());
             context.putVar("page", page);
             context.putVar("month", DateUtil.getCurMonth());
         } else {
-            List<TermCountHis> page = termCountService.findHis(month, getCurUser().getOrg().getOrgId());
+            List<TermCountHis> page = termCountService.findHis(month, auth.getOrgId());
             context.putVar("page", page);
             context.putVar("month", month);
         }

@@ -1,7 +1,8 @@
 package com.yada.ssp.manager.svc.controller;
 
-import com.yada.security.model.Org;
-import com.yada.security.service.OrgService;
+import com.yada.ssp.manager.svc.auth.model.Auth;
+import com.yada.ssp.manager.svc.model.Org;
+import com.yada.ssp.manager.svc.service.OrgService;
 import com.yada.ssp.manager.svc.model.Terminal;
 import com.yada.ssp.manager.svc.model.TerminalPK;
 import com.yada.ssp.manager.svc.query.TerminalQuery;
@@ -13,6 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -23,7 +25,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/terminal")
-public class TerminalController extends BaseController {
+public class TerminalController {
     private final TerminalService terminalService;
     private final OrgService orgService;
 
@@ -34,12 +36,13 @@ public class TerminalController extends BaseController {
     }
 
     @RequestMapping("/list")
-    public String list(Model model, @ModelAttribute TerminalQuery query, @PageableDefault Pageable pageable) {
+    public String list(Model model, @RequestAttribute("auth") Auth auth,
+                       @ModelAttribute TerminalQuery query, @PageableDefault Pageable pageable) {
         if (null == query.getOrgId() || "".equals(query.getOrgId())) {
-            query.setOrgId(getCurUser().getOrg().getOrgId());
+            query.setOrgId(auth.getOrgId());
         }
         Page<Terminal> page = terminalService.findAll(query, pageable);
-        List<Org> orgList = orgService.findByOrgIdStartingWithList(getCurUser().getOrg().getOrgId());
+        List<Org> orgList = orgService.findByOrgIdStartingWithList(auth.getOrgId());
         model.addAttribute("orgList", orgList);
         model.addAttribute("query", query);
         model.addAttribute("page", page);

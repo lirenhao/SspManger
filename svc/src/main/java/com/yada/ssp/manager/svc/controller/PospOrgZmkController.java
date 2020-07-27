@@ -1,7 +1,8 @@
 package com.yada.ssp.manager.svc.controller;
 
-import com.yada.security.model.Org;
-import com.yada.security.service.OrgService;
+import com.yada.ssp.manager.svc.auth.model.Auth;
+import com.yada.ssp.manager.svc.model.Org;
+import com.yada.ssp.manager.svc.service.OrgService;
 import com.yada.ssp.manager.svc.model.PospOrgZmk;
 import com.yada.ssp.manager.svc.query.PospOrgZmkQuery;
 import com.yada.ssp.manager.svc.service.PospOrgZmkService;
@@ -12,6 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -19,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/pospOrgZmk")
-public class PospOrgZmkController extends BaseController {
+public class PospOrgZmkController {
 
     private final PospOrgZmkService pospOrgZmkService;
     private final OrgService orgService;
@@ -31,13 +33,14 @@ public class PospOrgZmkController extends BaseController {
     }
 
     @RequestMapping("/list")
-    public String list(Model model, @ModelAttribute PospOrgZmkQuery query, @PageableDefault Pageable pageable) {
+    public String list(Model model, @RequestAttribute("auth") Auth auth,
+                       @ModelAttribute PospOrgZmkQuery query, @PageableDefault Pageable pageable) {
 
-        List<Org> orgList = orgService.findSecondOrg(getCurUser().getOrg().getOrgId());
+        List<Org> orgList = orgService.findSecondOrg(auth.getOrgId());
         model.addAttribute("orgList", orgList);
 
-        if ((null == query.getOrgId() || "".equals(query.getOrgId())) && getCurUser().getOrg().getOrgId().length() > 2) {
-            query.setOrgId(getCurUser().getOrg().getOrgId());
+        if ((null == query.getOrgId() || "".equals(query.getOrgId())) && auth.getOrgId().length() > 2) {
+            query.setOrgId(auth.getOrgId());
         }
         Page<PospOrgZmk> page = pospOrgZmkService.findAll(query, pageable);
         model.addAttribute("page", page);
@@ -47,9 +50,9 @@ public class PospOrgZmkController extends BaseController {
     }
 
     @RequestMapping("/create")
-    public String create(Model model) {
+    public String create(Model model, @RequestAttribute("auth") Auth auth) {
         List<String> limitOrgList = pospOrgZmkService.findAllOrgId();
-        List<Org> orgList = orgService.findSecondOrg(getCurUser().getOrg().getOrgId())
+        List<Org> orgList = orgService.findSecondOrg(auth.getOrgId())
                 .stream().filter(item -> !limitOrgList.contains(item.getOrgId())).collect(Collectors.toList());
         model.addAttribute("orgList", orgList);
         return "ssp_pages/PospOrgZmk/create";

@@ -1,7 +1,8 @@
 package com.yada.ssp.manager.svc.controller;
 
-import com.yada.security.model.Org;
-import com.yada.security.service.OrgService;
+import com.yada.ssp.manager.svc.auth.model.Auth;
+import com.yada.ssp.manager.svc.model.Org;
+import com.yada.ssp.manager.svc.service.OrgService;
 import com.yada.ssp.manager.svc.model.Merchant;
 import com.yada.ssp.manager.svc.query.MerchantQuery;
 import com.yada.ssp.manager.svc.service.MerSubsService;
@@ -13,6 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,7 +25,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/merSubs")
-public class MerSubsController extends BaseController {
+public class MerSubsController {
 
     private final OrgService orgService;
     private final MerchantService merchantService;
@@ -37,12 +39,13 @@ public class MerSubsController extends BaseController {
     }
 
     @RequestMapping("/list")
-    public String list(Model model, @ModelAttribute MerchantQuery query, @PageableDefault Pageable pageable) {
+    public String list(Model model, @RequestAttribute("auth") Auth auth,
+                       @ModelAttribute MerchantQuery query, @PageableDefault Pageable pageable) {
         if (null == query.getOrgId() || "".equals(query.getOrgId())) {
-            query.setOrgId(getCurUser().getOrg().getOrgId());
+            query.setOrgId(auth.getOrgId());
         }
         Page<Merchant> page = merchantService.findAll(query, pageable);
-        List<Org> orgList = orgService.findByOrgIdStartingWithList(getCurUser().getOrg().getOrgId());
+        List<Org> orgList = orgService.findByOrgIdStartingWithList(auth.getOrgId());
         model.addAttribute("orgList", orgList);
         model.addAttribute("query", query);
         model.addAttribute("page", page);
@@ -50,8 +53,8 @@ public class MerSubsController extends BaseController {
     }
 
     @RequestMapping("/edit")
-    public String edit(Model model, String merchantId) {
-        List<Merchant> merchantList = merchantService.findByOrgId(getCurUser().getOrg().getOrgId());
+    public String edit(Model model, @RequestAttribute("auth") Auth auth, String merchantId) {
+        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
         model.addAttribute("merchantList", merchantList);
 
         model.addAttribute("model", merchantService.findOne(merchantId));

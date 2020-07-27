@@ -1,5 +1,6 @@
 package com.yada.ssp.manager.svc.controller;
 
+import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.MerApiOrg;
 import com.yada.ssp.manager.svc.model.Merchant;
 import com.yada.ssp.manager.svc.model.TermSn;
@@ -17,6 +18,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,7 +26,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/termSn")
-public class TermSnController extends BaseController {
+public class TermSnController {
 
     private final TermSnService termSnService;
     private final MerApiOrgService orgService;
@@ -41,20 +43,21 @@ public class TermSnController extends BaseController {
     }
 
     @RequestMapping("/list")
-    public String list(Model model, @ModelAttribute TermSnQuery query, @PageableDefault Pageable pageable) {
+    public String list(Model model, @RequestAttribute("auth") Auth auth,
+                       @ModelAttribute TermSnQuery query, @PageableDefault Pageable pageable) {
         List<MerApiOrg> orgList = orgService.findAll();
         model.addAttribute("orgList", orgList);
 
-        List<Merchant> merList = merchantService.findByOrgId(getCurUser().getOrg().getOrgId());
+        List<Merchant> merList = merchantService.findByOrgId(auth.getOrgId());
         model.addAttribute("merList", merList);
 
         TerminalQuery termQuery = new TerminalQuery();
-        termQuery.setOrgId(getCurUser().getOrg().getOrgId());
+        termQuery.setOrgId(auth.getOrgId());
         termQuery.setMerchantId(query.getMerchantId());
         List<Terminal> termList = terminalService.findAll(termQuery);
         model.addAttribute("termList", termList);
 
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+        query.setOrgId(auth.getOrgId());
         Page<TermSn> page = termSnService.findAll(query, pageable);
         model.addAttribute("page", page);
         model.addAttribute("query", query);
@@ -70,9 +73,9 @@ public class TermSnController extends BaseController {
 
     @ResponseBody
     @RequestMapping("/AJAX_findTerminal")
-    public List<Terminal> AJAX_findTerminal(String merchantId) {
+    public List<Terminal> AJAX_findTerminal(@RequestAttribute("auth") Auth auth, String merchantId) {
         TerminalQuery query = new TerminalQuery();
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+        query.setOrgId(auth.getOrgId());
         query.setMerchantId(merchantId);
         return terminalService.findAll(query);
     }

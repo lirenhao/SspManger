@@ -1,7 +1,8 @@
 package com.yada.ssp.manager.svc.controller;
 
-import com.yada.security.model.Org;
-import com.yada.security.service.OrgService;
+import com.yada.ssp.manager.svc.auth.model.Auth;
+import com.yada.ssp.manager.svc.model.Org;
+import com.yada.ssp.manager.svc.service.OrgService;
 import com.yada.ssp.manager.svc.model.Merchant;
 import com.yada.ssp.manager.svc.model.PospOrgTmk;
 import com.yada.ssp.manager.svc.model.Terminal;
@@ -10,7 +11,7 @@ import com.yada.ssp.manager.svc.query.TerminalQuery;
 import com.yada.ssp.manager.svc.service.MerchantService;
 import com.yada.ssp.manager.svc.service.PospOrgTmkService;
 import com.yada.ssp.manager.svc.service.TerminalService;
-import com.yada.util.PoiExcleUtil;
+import com.yada.ssp.manager.svc.util.PoiExcelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +30,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/pospOrgTmk")
-public class PospOrgTmkController extends BaseController {
+public class PospOrgTmkController {
 
     private final PospOrgTmkService pospOrgTmkService;
     private final OrgService orgService;
@@ -45,15 +47,16 @@ public class PospOrgTmkController extends BaseController {
     }
 
     @RequestMapping("/list")
-    public String list(Model model, @ModelAttribute PospOrgTmkQuery query, @PageableDefault( sort = { "orgId", "terminalId", "tmkZmk" }) Pageable pageable) {
-        List<Org> orgList = orgService.findSecondOrg(getCurUser().getOrg().getOrgId());
+    public String list(Model model, @RequestAttribute("auth") Auth auth,
+                       @ModelAttribute PospOrgTmkQuery query, @PageableDefault( sort = { "orgId", "terminalId", "tmkZmk" }) Pageable pageable) {
+        List<Org> orgList = orgService.findSecondOrg(auth.getOrgId());
         model.addAttribute("orgList", orgList);
 
-        List<Merchant> merList = merchantService.findByOrgId(getCurUser().getOrg().getOrgId());
+        List<Merchant> merList = merchantService.findByOrgId(auth.getOrgId());
         model.addAttribute("merList", merList);
 
-        if ((null == query.getOrgId() || "".equals(query.getOrgId())) && getCurUser().getOrg().getOrgId().length() > 2) {
-            query.setOrgId(getCurUser().getOrg().getOrgId());
+        if ((null == query.getOrgId() || "".equals(query.getOrgId())) && auth.getOrgId().length() > 2) {
+            query.setOrgId(auth.getOrgId());
         }
         if (query.getOrgId() == null) {
             query.setOrgId("");
@@ -71,8 +74,8 @@ public class PospOrgTmkController extends BaseController {
     }
 
     @RequestMapping("/create")
-    public String create(Model model) {
-        List<Org> orgList = orgService.findSecondOrg(getCurUser().getOrg().getOrgId());
+    public String create(Model model, @RequestAttribute("auth") Auth auth) {
+        List<Org> orgList = orgService.findSecondOrg(auth.getOrgId());
         model.addAttribute("orgList", orgList);
         return "ssp_pages/PospOrgTmk/create";
     }
@@ -91,16 +94,16 @@ public class PospOrgTmkController extends BaseController {
 
     @ResponseBody
     @RequestMapping("/AJAX_findTerminal")
-    public List<Terminal> AJAX_findTerminal(String merchantId) {
+    public List<Terminal> AJAX_findTerminal(@RequestAttribute("auth") Auth auth, String merchantId) {
         TerminalQuery query = new TerminalQuery();
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+        query.setOrgId(auth.getOrgId());
         query.setMerchantId(merchantId);
         return terminalService.findAll(query);
     }
 
     @RequestMapping("/upload")
-    public String upload(Model model) {
-        List<Org> orgList = orgService.findSecondOrg(getCurUser().getOrg().getOrgId());
+    public String upload(Model model, @RequestAttribute("auth") Auth auth) {
+        List<Org> orgList = orgService.findSecondOrg(auth.getOrgId());
         model.addAttribute("orgList", orgList);
         return "ssp_pages/PospOrgTmk/upload";
     }
@@ -109,7 +112,7 @@ public class PospOrgTmkController extends BaseController {
     public String result(Model model, String orgId, MultipartFile file) {
         try {
             List<PospOrgTmk> batch = new ArrayList<>();
-            List<String[]> data = PoiExcleUtil.readExcelOneSheet(file, 5);
+            List<String[]> data = PoiExcelUtil.readExcelOneSheet(file, 5);
             if (data != null && data.size() > 0) {
                 data.remove(0);
                 data.forEach(tmk -> {

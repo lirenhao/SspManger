@@ -1,8 +1,8 @@
 package com.yada.ssp.manager.svc.service;
 
-import com.yada.ssp.net.SspClient;
-import com.yada.ssp.net.SspResult;
-import com.yada.ssp.util.TlvPacker;
+import com.yada.ssp.manager.svc.net.SspClient;
+import com.yada.ssp.manager.svc.net.SspResult;
+import com.yada.ssp.manager.svc.util.TlvPacker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

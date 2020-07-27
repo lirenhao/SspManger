@@ -1,24 +1,26 @@
 package com.yada.ssp.manager.svc.controller;
 
+import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.ManualSettleCheck;
 import com.yada.ssp.manager.svc.model.Merchant;
 import com.yada.ssp.manager.svc.query.ManualSettleQuery;
 import com.yada.ssp.manager.svc.service.ManualSettleService;
 import com.yada.ssp.manager.svc.service.MerchantService;
-import com.yada.util.DateUtil;
+import com.yada.ssp.manager.svc.util.DateUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/manualSettle")
-public class ManualSettleController extends BaseController {
+public class ManualSettleController {
 
     private final ManualSettleService manualSettleService;
     private final MerchantService merchantService;
@@ -29,8 +31,9 @@ public class ManualSettleController extends BaseController {
     }
 
     @RequestMapping("/list")
-    public String list(Model model, @ModelAttribute ManualSettleQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+    public String list(Model model, @RequestAttribute("auth") Auth auth,
+                       @ModelAttribute ManualSettleQuery query, @PageableDefault Pageable pageable) {
+        query.setOrgId(auth.getOrgId());
         if (query.getSettleDate() == null || "".equals(query.getSettleDate())) {
             query.setSettleDate(DateUtil.getYesterday());
         }
@@ -38,28 +41,29 @@ public class ManualSettleController extends BaseController {
         model.addAttribute("query", query);
         model.addAttribute("page", page);
 
-        List<Merchant> merchantList = merchantService.findByOrgId(getCurUser().getOrg().getOrgId());
+        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
         model.addAttribute("merchantList", merchantList);
 
         return "ssp_pages/ManualSettle/list";
     }
 
     @RequestMapping("/listForCheck")
-    public String listForCheck(Model model, @ModelAttribute ManualSettleQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+    public String listForCheck(Model model, @RequestAttribute("auth") Auth auth,
+                               @ModelAttribute ManualSettleQuery query, @PageableDefault Pageable pageable) {
+        query.setOrgId(auth.getOrgId());
         Page page = manualSettleService.findCheckAll(query, pageable);
         model.addAttribute("query", query);
         model.addAttribute("page", page);
 
-        List<Merchant> merchantList = merchantService.findByOrgId(getCurUser().getOrg().getOrgId());
+        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
         model.addAttribute("merchantList", merchantList);
 
         return "ssp_pages/ManualSettle/listForCheck";
     }
 
     @RequestMapping("/create")
-    public String create(Model model) {
-        List<Merchant> merchantList = merchantService.findByOrgId(getCurUser().getOrg().getOrgId());
+    public String create(Model model, @RequestAttribute("auth") Auth auth) {
+        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
         model.addAttribute("merchantList", merchantList);
         return "ssp_pages/ManualSettle/create";
     }

@@ -1,11 +1,12 @@
 package com.yada.ssp.manager.svc.controller;
 
+import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.MerSettle;
 import com.yada.ssp.manager.svc.model.Merchant;
 import com.yada.ssp.manager.svc.query.MerSettleQuery;
 import com.yada.ssp.manager.svc.service.MerSettleService;
 import com.yada.ssp.manager.svc.service.MerchantService;
-import com.yada.util.DateUtil;
+import com.yada.ssp.manager.svc.util.DateUtil;
 import org.jxls.common.Context;
 import org.jxls.util.JxlsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +27,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/merSettle")
-public class MerSettleController extends BaseController {
+public class MerSettleController {
 
     private final MerSettleService merSettleService;
     private final MerchantService merchantService;
@@ -39,8 +41,9 @@ public class MerSettleController extends BaseController {
     }
 
     @RequestMapping("/list")
-    public String list(Model model, @ModelAttribute MerSettleQuery query, @PageableDefault Pageable pageable) {
-        query(model, query, pageable);
+    public String list(Model model, @RequestAttribute("auth") Auth auth,
+                       @ModelAttribute MerSettleQuery query, @PageableDefault Pageable pageable) {
+        query(model, auth, query, pageable);
         return "ssp_pages/MerSettle/list";
     }
 
@@ -50,9 +53,10 @@ public class MerSettleController extends BaseController {
     }
 
     @RequestMapping("/success")
-    public String success(Model model, @ModelAttribute MerSettleQuery query, @PageableDefault Pageable pageable) {
+    public String success(Model model, @RequestAttribute("auth") Auth auth,
+                          @ModelAttribute MerSettleQuery query, @PageableDefault Pageable pageable) {
         query.setStatus("1");
-        query(model, query, pageable);
+        query(model, auth, query, pageable);
         return "ssp_pages/MerSettle/success";
     }
 
@@ -63,9 +67,10 @@ public class MerSettleController extends BaseController {
     }
 
     @RequestMapping("/failure")
-    public String failure(Model model, @ModelAttribute MerSettleQuery query, @PageableDefault Pageable pageable) {
+    public String failure(Model model, @RequestAttribute("auth") Auth auth,
+                          @ModelAttribute MerSettleQuery query, @PageableDefault Pageable pageable) {
         query.setStatus("2");
-        query(model, query, pageable);
+        query(model, auth, query, pageable);
         return "ssp_pages/MerSettle/failure";
     }
 
@@ -75,13 +80,13 @@ public class MerSettleController extends BaseController {
         download(query, resp, "merSettleFailure.xls", "MER_SETTLE_FAILURE");
     }
 
-    private void query(Model model, MerSettleQuery query, Pageable pageable) {
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+    private void query(Model model, Auth auth, MerSettleQuery query, Pageable pageable) {
+        query.setOrgId(auth.getOrgId());
         Page<MerSettle> page = merSettleService.findAll(query, pageable);
         model.addAttribute("query", query);
         model.addAttribute("page", page);
 
-        List<Merchant> merchantList = merchantService.findByOrgId(getCurUser().getOrg().getOrgId());
+        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
         model.addAttribute("merchantList", merchantList);
     }
 

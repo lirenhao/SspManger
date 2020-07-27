@@ -1,5 +1,6 @@
 package com.yada.ssp.manager.svc.controller;
 
+import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.Risk;
 import com.yada.ssp.manager.svc.model.RiskList;
 import com.yada.ssp.manager.svc.model.RiskTran;
@@ -13,13 +14,14 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/riskList")
-public class RiskListController extends BaseController {
+public class RiskListController {
 
     private final RiskService riskService;
     private final RiskListService riskListService;
@@ -31,11 +33,12 @@ public class RiskListController extends BaseController {
     }
 
     @RequestMapping("/list")
-    public String list(Model model, @ModelAttribute RiskListQuery query, @PageableDefault Pageable pageable) {
+    public String list(Model model, @RequestAttribute("auth") Auth auth,
+                       @ModelAttribute RiskListQuery query, @PageableDefault Pageable pageable) {
         List<Risk> riskList =  riskService.findAll();
         model.addAttribute("riskList", riskList);
 
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+        query.setOrgId(auth.getOrgId());
         Page<RiskList> page = riskListService.findAll(query, pageable);
         model.addAttribute("query", query);
         model.addAttribute("page", page);

@@ -1,5 +1,6 @@
 package com.yada.ssp.manager.svc.controller;
 
+import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.Trans;
 import com.yada.ssp.manager.svc.query.TransQuery;
 import com.yada.ssp.manager.svc.service.TransService;
@@ -10,10 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 
@@ -24,7 +22,7 @@ import java.util.Collections;
 
 @Controller
 @RequestMapping("/trans")
-public class TransController extends BaseController {
+public class TransController {
     private final TransService transService;
 
     @Autowired
@@ -39,8 +37,9 @@ public class TransController extends BaseController {
     }
 
     @PostMapping("/list")
-    public String list(Model model, @ModelAttribute TransQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(getCurUser().getOrg().getOrgId());
+    public String list(Model model, @RequestAttribute("auth") Auth auth,
+                       @ModelAttribute TransQuery query, @PageableDefault Pageable pageable) {
+        query.setOrgId(auth.getOrgId());
         Page<Trans> page = transService.findAll(query, pageable);
         model.addAttribute("query", query);
         model.addAttribute("page", page);
