@@ -14,9 +14,6 @@ import java.util.List;
 @Service
 public class MerPolicyService {
 
-    @Value("${gw-client.user.url}")
-    private String userUrl;
-
     private final MerPolicyDao merPolicyDao;
 
     @Autowired
@@ -44,9 +41,5 @@ public class MerPolicyService {
 
     public boolean exists(String id) {
         return merPolicyDao.existsById(id);
-    }
-
-    public String issue(String id) {
-        return id;
     }
 }
