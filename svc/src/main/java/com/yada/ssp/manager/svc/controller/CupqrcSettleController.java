@@ -2,11 +2,8 @@ package com.yada.ssp.manager.svc.controller;
 
 import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.CupqrcSettle;
-import com.yada.ssp.manager.svc.model.Merchant;
 import com.yada.ssp.manager.svc.query.CupqrcSettleQuery;
 import com.yada.ssp.manager.svc.service.CupqrcSettleService;
-import com.yada.ssp.manager.svc.service.MerchantService;
-import com.yada.ssp.manager.svc.util.DateUtil;
 import org.jxls.common.Context;
 import org.jxls.util.JxlsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,52 +12,41 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-@org.springframework.stereotype.Controller
+@RestController
 @RequestMapping("/cupqrcSettle")
 public class CupqrcSettleController {
 
     private final CupqrcSettleService cupqrcSettleService;
-    private final MerchantService merchantService;
     private final ResourceLoader resourceLoader;
 
     @Autowired
-    public CupqrcSettleController(CupqrcSettleService cupqrcSettleService, MerchantService merchantService, ResourceLoader resourceLoader) {
+    public CupqrcSettleController(CupqrcSettleService cupqrcSettleService, ResourceLoader resourceLoader) {
         this.cupqrcSettleService = cupqrcSettleService;
-        this.merchantService = merchantService;
         this.resourceLoader = resourceLoader;
     }
 
-    @RequestMapping("/list")
-    public String list(Model model, @RequestAttribute("auth") Auth auth,
-                       @ModelAttribute CupqrcSettleQuery query, @PageableDefault Pageable pageable) {
+    /**
+     * TODO 查询时默认日期是昨天
+     */
+    @GetMapping
+    public Page<CupqrcSettle> list(@RequestAttribute("auth") Auth auth,
+                                   @ModelAttribute CupqrcSettleQuery query, @PageableDefault Pageable pageable) {
         query.setOrgId(auth.getOrgId());
-        if (query.getSettleDate() == null || "".equals(query.getSettleDate())) {
-            query.setSettleDate(DateUtil.getYesterday());
-        }
         query.setStatus("0");
-        Page<CupqrcSettle> page = cupqrcSettleService.findAll(query, pageable);
-        model.addAttribute("query", query);
-        model.addAttribute("page", page);
-
-        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
-        model.addAttribute("merchantList", merchantList);
-
-        return "ssp_pages/CupqrcSettle/list";
+        return cupqrcSettleService.findAll(query, pageable);
     }
 
-    @RequestMapping("/download")
+    @GetMapping("/download")
     public void download(@RequestAttribute("auth") Auth auth,
                          @ModelAttribute CupqrcSettleQuery query, HttpServletResponse resp) {
+        query.setOrgId(auth.getOrgId());
         query.setStatus("0");
         List<CupqrcSettle> page = cupqrcSettleService.findAll(query);
         Context context = new Context();
@@ -78,28 +64,19 @@ public class CupqrcSettleController {
         }
     }
 
+    /**
+     * TODO 查询时默认日期是昨天
+     */
     @RequestMapping("/handle")
-    public String handle(String lsId, RedirectAttributes redirectAttrs) {
-        cupqrcSettleService.handle(lsId);
-        redirectAttrs.addFlashAttribute("message", "Transaction is Handled!");
-        return "redirect:list";
+    public Page<CupqrcSettle> handleList(Model model, @RequestAttribute("auth") Auth auth,
+                                         @ModelAttribute CupqrcSettleQuery query, @PageableDefault Pageable pageable) {
+        query.setOrgId(auth.getOrgId());
+        query.setStatus("2");
+        return cupqrcSettleService.findAll(query, pageable);
     }
 
-    @RequestMapping("/handleList")
-    public String handleList(Model model, @RequestAttribute("auth") Auth auth,
-                             @ModelAttribute CupqrcSettleQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(auth.getOrgId());
-        if (query.getSettleDate() == null || "".equals(query.getSettleDate())) {
-            query.setSettleDate(DateUtil.getYesterday());
-        }
-        query.setStatus("2");
-        Page<CupqrcSettle> page = cupqrcSettleService.findAll(query, pageable);
-        model.addAttribute("query", query);
-        model.addAttribute("page", page);
-
-        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
-        model.addAttribute("merchantList", merchantList);
-
-        return "ssp_pages/CupqrcSettle/handleList";
+    @GetMapping("/{lsId}/handle")
+    public void handle(@PathVariable String lsId) {
+        cupqrcSettleService.handle(lsId);
     }
 }

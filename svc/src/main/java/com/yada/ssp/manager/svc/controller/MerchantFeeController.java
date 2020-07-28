@@ -1,110 +1,87 @@
 package com.yada.ssp.manager.svc.controller;
 
 import com.yada.ssp.manager.svc.auth.model.Auth;
-import com.yada.ssp.manager.svc.model.Merchant;
 import com.yada.ssp.manager.svc.model.MerchantFee;
 import com.yada.ssp.manager.svc.model.MerchantFeeCheck;
 import com.yada.ssp.manager.svc.query.MerchantFeeCheckQuery;
 import com.yada.ssp.manager.svc.service.MerchantFeeCheckService;
 import com.yada.ssp.manager.svc.service.MerchantFeeService;
-import com.yada.ssp.manager.svc.service.MerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Created by bjy on 2018/11/27.
  * 商户费率表
+ * TODO 费率展示10000位
  */
-@Controller
-@RequestMapping("/merchantfee")
+@RestController
+@RequestMapping("/merchantFee")
 public class MerchantFeeController {
+
     private final MerchantFeeCheckService merchantFeeCheckService;
-    private final MerchantService merchantService;
     private final MerchantFeeService merchantFeeService;
+
     @Autowired
-    public MerchantFeeController(MerchantFeeCheckService merchantFeeCheckService, MerchantService merchantService, MerchantFeeService merchantFeeService) {
+    public MerchantFeeController(MerchantFeeCheckService merchantFeeCheckService, MerchantFeeService merchantFeeService) {
         this.merchantFeeCheckService = merchantFeeCheckService;
-        this.merchantService = merchantService;
         this.merchantFeeService = merchantFeeService;
     }
 
-    @RequestMapping("/list")
-    public String list(Model model, @RequestAttribute("auth") Auth auth,
-                       @ModelAttribute MerchantFeeCheckQuery query, @PageableDefault Pageable pageable) {
+    @GetMapping
+    public Page<MerchantFeeCheck> list(@RequestAttribute("auth") Auth auth,
+                                       @ModelAttribute MerchantFeeCheckQuery query, @PageableDefault Pageable pageable) {
         query.setOrgId(auth.getOrgId());
-        Page page = merchantFeeCheckService.findAll(query, pageable);
-        model.addAttribute("query", query);
-        model.addAttribute("page", page);
-        return "ssp_pages/MerchantFee/list";
+        return merchantFeeCheckService.findAll(query, pageable);
     }
 
-    @RequestMapping("/listForCheck")
-    public String listForCheck(Model model, @RequestAttribute("auth") Auth auth,
-                               @ModelAttribute MerchantFeeCheckQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(auth.getOrgId());
-        Page page = merchantFeeCheckService.findAll(query, pageable);
-        model.addAttribute("query", query);
-        model.addAttribute("page", page);
-        return "ssp_pages/MerchantFee/listForCheck";
-    }
-
-    @RequestMapping("/create")
-    public String create(Model model, @RequestAttribute("auth") Auth auth) {
-        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
-        model.addAttribute("merchantList", merchantList);
-        return "ssp_pages/MerchantFee/create";
-    }
-
-    @RequestMapping("/save")
-    public String save(@ModelAttribute("model") MerchantFeeCheck merchantFeeCheck) {
+    @PostMapping
+    public void save(@ModelAttribute MerchantFeeCheck merchantFeeCheck) {
         merchantFeeCheckService.save(merchantFeeCheck);
-        return "redirect:list";
     }
 
-    @RequestMapping("/update")
-    public String update(@ModelAttribute("model") MerchantFeeCheck merchantFeeCheck) {
+    @PutMapping
+    public String update(@ModelAttribute MerchantFeeCheck merchantFeeCheck) {
         merchantFeeCheckService.update(merchantFeeCheck);
         return "redirect:list";
     }
 
-    @RequestMapping("/saveCheck")
-    public String saveCheck(String lsId, String state, String checkReason) {
-        merchantFeeCheckService.saveCheck(lsId,state,checkReason);
-        return "redirect:listForCheck";
+    @GetMapping("/feeType")
+    public String getFeeType(String merchantId) {
+        String feeType = "*";
+        List<MerchantFee> merchantFeeList = merchantFeeService.findListByMerchantId(merchantId);
+        if (merchantFeeList != null && merchantFeeList.size() > 0) {
+            feeType = merchantFeeList.get(0).getFeeType();
+        }
+        return feeType;
     }
 
-    @RequestMapping("/show")
-    public String show(Model model, String lsId) {
-        model.addAttribute("model", merchantFeeCheckService.findOne(lsId));
-        return "ssp_pages/MerchantFee/show";
+    @GetMapping("/{id}")
+    public MerchantFeeCheck get(@PathVariable String id) {
+        return merchantFeeCheckService.findOne(id);
     }
 
-    @RequestMapping("/showForCheck")
-    public String showForCheck(Model model, String lsId) {
-        model.addAttribute("model", merchantFeeCheckService.findOne(lsId));
-        model.addAttribute("merchantFee",merchantFeeService.findOne(lsId));
-        return "ssp_pages/MerchantFee/showForCheck";
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable String id) {
+        merchantFeeCheckService.delete(id);
     }
 
-    @RequestMapping("/check")
-    public String check(Model model, String lsId) {
-        model.addAttribute("model", merchantFeeCheckService.findOne(lsId));
-        model.addAttribute("merchantFee",merchantFeeService.findOne(lsId));
-        return "ssp_pages/MerchantFee/check";
+    @GetMapping("/{id}/check")
+    public MerchantFee getCheck(@PathVariable String id) {
+        return merchantFeeService.findOne(id);
     }
 
-    @RequestMapping("/edit")
+    @PutMapping("/{id}/check")
+    public void check(@PathVariable String id, String state, String checkReason) {
+        merchantFeeCheckService.saveCheck(id, state, checkReason);
+    }
+
+    // TODO 修改时费率状态控制
     public String edit(Model model, String lsId) {
         MerchantFeeCheck merchantFeeCheck = merchantFeeCheckService.findOne(lsId);
         BigDecimal fee = merchantFeeCheck.getFee();
@@ -117,22 +94,5 @@ public class MerchantFeeController {
             return "ssp_pages/MerchantFee/editOnlyCloseDate";
         }
         return "ssp_pages/MerchantFee/edit1";
-    }
-
-    @RequestMapping("/delete")
-    public String delete(String lsId) {
-        merchantFeeCheckService.delete(lsId);
-        return "redirect:list";
-    }
-
-    @ResponseBody
-    @RequestMapping("/AJAX_getFeeType")
-    public String AJAX_getFeeType(String merchantId) {
-        String feeType = "*";
-        List<MerchantFee> merchantFeeList = merchantFeeService.findListByMerchantId(merchantId);
-        if (merchantFeeList != null && merchantFeeList.size() > 0) {
-            feeType = merchantFeeList.get(0).getFeeType();
-        }
-        return feeType;
     }
 }

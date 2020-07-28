@@ -26,11 +26,10 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Created by bjy on 2018/11/19.
- * Ccpay Controller
+ * Ccpay参数配置API
  */
 
-@Controller
+@RestController
 @RequestMapping("/ccpay")
 public class CcpayController {
 

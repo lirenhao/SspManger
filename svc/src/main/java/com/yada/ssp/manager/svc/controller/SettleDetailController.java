@@ -2,12 +2,10 @@ package com.yada.ssp.manager.svc.controller;
 
 import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.MerSettle;
-import com.yada.ssp.manager.svc.model.Merchant;
 import com.yada.ssp.manager.svc.model.SettleDetail;
 import com.yada.ssp.manager.svc.query.MerSettleQuery;
 import com.yada.ssp.manager.svc.query.SettleDetailQuery;
 import com.yada.ssp.manager.svc.service.MerSettleService;
-import com.yada.ssp.manager.svc.service.MerchantService;
 import com.yada.ssp.manager.svc.service.SettleDetailService;
 import com.yada.ssp.manager.svc.util.DateUtil;
 import org.jxls.common.Context;
@@ -17,11 +15,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,38 +23,30 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/settleDetail")
 public class SettleDetailController {
 
     private final SettleDetailService settleDetailService;
     private final MerSettleService merSettleService;
-    private final MerchantService merchantService;
     private final ResourceLoader resourceLoader;
 
     @Autowired
     public SettleDetailController(SettleDetailService settleDetailService, MerSettleService merSettleService,
-                                  MerchantService merchantService, ResourceLoader resourceLoader) {
+                                  ResourceLoader resourceLoader) {
         this.settleDetailService = settleDetailService;
         this.merSettleService = merSettleService;
-        this.merchantService = merchantService;
         this.resourceLoader = resourceLoader;
     }
 
-    @RequestMapping("/list")
-    public String list(Model model, @RequestAttribute("auth") Auth auth,
-                       @ModelAttribute SettleDetailQuery query, @PageableDefault Pageable pageable) {
-        model.addAttribute("query", query);
-        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
-        model.addAttribute("merchantList", merchantList);
-
+    @GetMapping
+    public Page<SettleDetail> list(@RequestAttribute("auth") Auth auth,
+                                   @ModelAttribute SettleDetailQuery query, @PageableDefault Pageable pageable) {
         query.setOrgId(auth.getOrgId());
-        Page<SettleDetail> page = settleDetailService.findAll(query, pageable);
-        model.addAttribute("page", page);
-        return "ssp_pages/SettleDetail/list";
+        return settleDetailService.findAll(query, pageable);
     }
 
-    @RequestMapping("/listLoad")
+    @GetMapping("/download")
     public void list(@RequestAttribute("auth") Auth auth,
                      @ModelAttribute SettleDetailQuery query, HttpServletResponse resp) {
         query.setOrgId(auth.getOrgId());
@@ -75,7 +61,7 @@ public class SettleDetailController {
         merSettleQuery.setSettleEndDate(query.getSettleEndDate());
         merSettleQuery.setOrgId(auth.getOrgId());
         List<MerSettle> list = merSettleService.findAll(merSettleQuery);
-        if(list.size() > 0) {
+        if (list.size() > 0) {
             context.putVar("total", list.get(0));
         } else {
             context.putVar("total", new MerSettle());

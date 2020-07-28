@@ -24,8 +24,6 @@ public class AuthFilter implements Filter {
     private boolean mockOpen;
     @Value("${auth.mock.orgId:}")
     private String mockOrgId;
-    @Value("${auth.mock.merId:}")
-    private String mockMerId;
     @Value("${auth.mock.userId:}")
     private String mockUserId;
 

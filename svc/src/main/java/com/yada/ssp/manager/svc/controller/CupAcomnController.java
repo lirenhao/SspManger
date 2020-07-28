@@ -2,11 +2,8 @@ package com.yada.ssp.manager.svc.controller;
 
 import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.CupAcomn;
-import com.yada.ssp.manager.svc.model.Merchant;
 import com.yada.ssp.manager.svc.query.CupAcomnQuery;
 import com.yada.ssp.manager.svc.service.CupAcomnService;
-import com.yada.ssp.manager.svc.service.MerchantService;
-import com.yada.ssp.manager.svc.util.DateUtil;
 import org.jxls.common.Context;
 import org.jxls.util.JxlsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,52 +11,38 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/cupAcomn")
 public class CupAcomnController {
 
     private final CupAcomnService cupAcomnService;
-    private final MerchantService merchantService;
     private final ResourceLoader resourceLoader;
 
     @Autowired
-    public CupAcomnController(CupAcomnService cupAcomnService, MerchantService merchantService, ResourceLoader resourceLoader) {
+    public CupAcomnController(CupAcomnService cupAcomnService, ResourceLoader resourceLoader) {
         this.cupAcomnService = cupAcomnService;
-        this.merchantService = merchantService;
         this.resourceLoader = resourceLoader;
     }
 
-    @RequestMapping("/list")
-    public String list(Model model, @RequestAttribute("auth") Auth auth,
+    /**
+     * TODO 查询时默认日期是昨天
+     */
+    @GetMapping
+    public Page<CupAcomn> list(@RequestAttribute("auth") Auth auth,
                        @ModelAttribute CupAcomnQuery query, @PageableDefault Pageable pageable) {
         query.setOrgId(auth.getOrgId());
-        if (query.getSettleDate() == null || "".equals(query.getSettleDate())) {
-            query.setSettleDate(DateUtil.getYesterday());
-        }
         query.setStatus("0");
-        Page<CupAcomn> page = cupAcomnService.findAll(query, pageable);
-        model.addAttribute("query", query);
-        model.addAttribute("page", page);
-
-        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
-        model.addAttribute("merchantList", merchantList);
-
-        return "ssp_pages/CupAcomn/list";
+        return cupAcomnService.findAll(query, pageable);
     }
 
-    @RequestMapping("/download")
+    @GetMapping("/download")
     public void download(@ModelAttribute CupAcomnQuery query, HttpServletResponse resp) {
         query.setStatus("0");
         List<CupAcomn> page = cupAcomnService.findAll(query);
@@ -78,29 +61,20 @@ public class CupAcomnController {
         }
     }
 
-    @RequestMapping("/handle")
-    public String handle(String lsId, RedirectAttributes redirectAttrs) {
-        cupAcomnService.handle(lsId);
-        redirectAttrs.addFlashAttribute("message", "Transaction is Handled!");
-        return "redirect:list";
-    }
-
-    @RequestMapping("/handleList")
-    public String handleList(Model model, @RequestAttribute("auth") Auth auth,
+    /**
+     * 手工处理列表
+     * TODO 查询时默认日期是昨天
+     */
+    @GetMapping("/handle")
+    public Page<CupAcomn> handleList(@RequestAttribute("auth") Auth auth,
                              @ModelAttribute CupAcomnQuery query, @PageableDefault Pageable pageable) {
         query.setOrgId(auth.getOrgId());
-        if (query.getSettleDate() == null || "".equals(query.getSettleDate())) {
-            query.setSettleDate(DateUtil.getYesterday());
-        }
         query.setStatus("2");
+        return cupAcomnService.findAll(query, pageable);
+    }
 
-        Page<CupAcomn> page = cupAcomnService.findAll(query, pageable);
-        model.addAttribute("query", query);
-        model.addAttribute("page", page);
-
-        List<Merchant> merchantList = merchantService.findByOrgId(auth.getOrgId());
-        model.addAttribute("merchantList", merchantList);
-
-        return "ssp_pages/CupAcomn/handleList";
+    @PutMapping("/{lsId}/handle")
+    public void handle(@PathVariable String lsId) {
+        cupAcomnService.handle(lsId);
     }
 }

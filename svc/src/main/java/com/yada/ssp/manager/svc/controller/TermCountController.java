@@ -12,17 +12,17 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/termCount")
 public class TermCountController {
 
@@ -35,25 +35,19 @@ public class TermCountController {
         this.resourceLoader = resourceLoader;
     }
 
-    @RequestMapping("/list")
-    public String list(Model model, @RequestAttribute("auth") Auth auth,
-                       String month, @PageableDefault Pageable pageable) {
-        if(null == month || "".equals(month) || DateUtil.getCurMonth().equals(month)) {
-            Page<TermCountCur> page = termCountService.findCurMonth(auth.getOrgId(), pageable);
-            model.addAttribute("page", page);
-            model.addAttribute("month", DateUtil.getCurMonth());
+    @GetMapping
+    public Page list(@RequestAttribute("auth") Auth auth, String month, @PageableDefault Pageable pageable) {
+        if (null == month || "".equals(month) || DateUtil.getCurMonth().equals(month)) {
+            return termCountService.findCurMonth(auth.getOrgId(), pageable);
         } else {
-            Page<TermCountHis> page = termCountService.findHis(month, auth.getOrgId(), pageable);
-            model.addAttribute("page", page);
-            model.addAttribute("month", month);
+            return termCountService.findHis(month, auth.getOrgId(), pageable);
         }
-        return "ssp_pages/TermCount/list";
     }
 
-    @RequestMapping("/download")
+    @GetMapping("/download")
     public void download(@RequestAttribute("auth") Auth auth, String month, HttpServletResponse resp) {
         Context context = new Context();
-        if(null == month || "".equals(month) || DateUtil.getCurMonth().equals(month)) {
+        if (null == month || "".equals(month) || DateUtil.getCurMonth().equals(month)) {
             List<TermCountCur> page = termCountService.findCurMonth(auth.getOrgId());
             context.putVar("page", page);
             context.putVar("month", DateUtil.getCurMonth());

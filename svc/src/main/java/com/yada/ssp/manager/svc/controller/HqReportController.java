@@ -1,8 +1,6 @@
 package com.yada.ssp.manager.svc.controller;
 
 import com.yada.ssp.manager.svc.auth.model.Auth;
-import com.yada.ssp.manager.svc.model.Org;
-import com.yada.ssp.manager.svc.service.OrgService;
 import com.yada.ssp.manager.svc.model.HqReport;
 import com.yada.ssp.manager.svc.service.HqReportService;
 import com.yada.ssp.manager.svc.util.DateUtil;
@@ -10,47 +8,35 @@ import org.jxls.common.Context;
 import org.jxls.util.JxlsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/hqReport")
 public class HqReportController {
 
-    private final OrgService orgService;
     private final HqReportService hqReportService;
     private final ResourceLoader resourceLoader;
 
     @Autowired
-    public HqReportController(OrgService orgService, HqReportService hqReportService, ResourceLoader resourceLoader) {
-        this.orgService = orgService;
+    public HqReportController(HqReportService hqReportService, ResourceLoader resourceLoader) {
         this.hqReportService = hqReportService;
         this.resourceLoader = resourceLoader;
     }
 
-    @RequestMapping("/list")
-    public String list(Model model, @RequestAttribute("auth") Auth auth,
-                       Integer year, String orgId) {
-        if (year == null) {
-            year = Integer.parseInt(DateUtil.getCurYear());
-        }
-        List<HqReport> page = query(auth, year, orgId);
-        List<Org> orgList = orgService.findSecondOrg(auth.getOrgId());
-        model.addAttribute("page", page);
-        model.addAttribute("year", year);
-        model.addAttribute("orgId", orgId);
-        model.addAttribute("orgList", orgList);
-        return "ssp_pages/HqReport/list";
+    @GetMapping
+    public List<HqReport> list(@RequestAttribute("auth") Auth auth, Integer year, String orgId) {
+        return query(auth, year, orgId);
     }
 
-    @RequestMapping("/download")
+    @GetMapping("/download")
     public void download(@RequestAttribute("auth") Auth auth, HttpServletResponse resp, Integer year, String orgId) {
         Context context = new Context();
         List<HqReport> page = query(auth, year, orgId);

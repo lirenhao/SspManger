@@ -58,7 +58,7 @@ public class ManualSettleService {
         }
     }
 
-    public Page findCheckAll(ManualSettleQuery query, Pageable pageable) {
+    public Page<ManualSettleCheck> findCheckAll(ManualSettleQuery query, Pageable pageable) {
         return manualSettleCheckDao.findAll(query, pageable);
     }
 

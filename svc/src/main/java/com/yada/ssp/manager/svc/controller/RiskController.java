@@ -3,14 +3,11 @@ package com.yada.ssp.manager.svc.controller;
 import com.yada.ssp.manager.svc.model.Risk;
 import com.yada.ssp.manager.svc.service.RiskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/risk")
 public class RiskController {
 
@@ -21,23 +18,13 @@ public class RiskController {
         this.riskService = riskService;
     }
 
-    @RequestMapping("/list")
-    public String list(Model model) {
-        List<Risk> page = riskService.findAll();
-        model.addAttribute("page", page);
-        return "ssp_pages/Risk/list";
+    @GetMapping
+    public List<Risk> list() {
+        return riskService.findAll();
     }
 
-    @RequestMapping("/edit")
-    public String edit(Model model, String id) {
-        Risk risk = riskService.findOne(id);
-        model.addAttribute("model", risk);
-        return "ssp_pages/Risk/edit";
-    }
-
-    @RequestMapping("/update")
-    public String update(@ModelAttribute("model") Risk risk) {
+    @PutMapping
+    public void update(@ModelAttribute Risk risk) {
         riskService.update(risk);
-        return "redirect:list";
     }
 }

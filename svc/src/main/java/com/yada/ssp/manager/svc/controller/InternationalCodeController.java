@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * 国家代码API
  */
-@Controller
+@RestController
 @RequestMapping("/countryCode")
 public class InternationalCodeController {
 

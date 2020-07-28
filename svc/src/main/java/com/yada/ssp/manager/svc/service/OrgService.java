@@ -86,4 +86,8 @@ public class OrgService {
     public List<Org> findAll() {
         return orgDao.findAll();
     }
+
+    public boolean exists (String id){
+        return orgDao.existsById(id);
+    }
 }
