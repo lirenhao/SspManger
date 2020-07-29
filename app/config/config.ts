@@ -32,17 +32,6 @@ export default defineConfig({
   // umi routes: https://umijs.org/docs/routing
   routes: [
     {
-      path: '/user',
-      layout: false,
-      routes: [
-        {
-          name: 'login',
-          path: '/user/login',
-          component: './user/login',
-        },
-      ],
-    },
-    {
       path: '/welcome',
       name: 'welcome',
       icon: 'smile',
@@ -70,31 +59,27 @@ export default defineConfig({
       component: './ListTableList',
     },
     {
-      path: '/systemPara',
-      name: 'system-parameter',
+      path: '/systemParam',
+      name: 'systemParam',
       icon: 'setting',
       routes: [
         {
-          path: '/systemPara/AppRole',
-          name: 'role',
-          icon: 'smile',
-          component: './systemParam/AppRole',
+          path: '/systemParam/appRole',
+          name: 'appRole',
+          component: './systemParam/appRole',
         },
         {
-          path: './systemParam/MccCode',
+          path: '/systemParam/mccCode',
           name: 'mccCode',
-          icon: 'smile',
-          component: './systemParam/MccCode',
+          component: './systemParam/mccCode',
         },
         {
-          path: './systemParam/ccyManager',
-          name: 'currency',
-          icon: 'smile',
+          path: '/systemParam/ccyManager',
+          name: 'ccyManager',
           component: './systemParam/ccyManager',
         },
       ],
     },
-
     {
       path: '/',
       redirect: '/welcome',

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import AppRole from '@/pages/systemParam/AppRole/data';
+import AppRole from './data.d';
 
 const tableListDataSource: AppRole.TableListItem[] = [];
 tableListDataSource.push({

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import MccCode from '@/pages/systemParam/MccCode/data';
+import MccCode from './data.d';
 
 const mccTableListDataSource: MccCode.TableListItem[] = [];
 mccTableListDataSource.push({
