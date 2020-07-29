@@ -7,10 +7,21 @@
  */
 export default {
   dev: {
-    '/api/': {
-      target: 'https://preview.pro.ant.design',
+    '/svc/user': {
+      target: 'http://localhost:8085/',
       changeOrigin: true,
-      pathRewrite: { '^': '' },
+      pathRewrite: {
+        '^/svc': '',
+      },
+      logLevel: 'debug',
+    },
+    '/svc': {
+      target: 'http://localhost:8084/',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/svc': '',
+      },
+      logLevel: 'debug',
     },
   },
   test: {

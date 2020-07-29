@@ -72,8 +72,7 @@ export default defineConfig({
     {
       path: '/SystemParameter',
       name: 'system-parameter',
-      icon: 'crown',
-      component: './SystemParameter/MccCode',
+      icon: 'setting',
       routes: [
         {
           path: '/SystemParameter/AppRole',

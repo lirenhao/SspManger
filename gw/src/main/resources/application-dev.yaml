@@ -1,40 +1,31 @@
-#logging.level:
-#    org.springframework: TRACE
+logging.level:
+  org.springframework: INFO
+
 server:
   error:
     includeStacktrace: ALWAYS
 
-yada.contextPath: /gw
-
 spring.cloud.gateway.routes:
-  - uri: http://localhost:3010
+  - uri: http://localhost:8000
     predicates:
-      - App=${yada.contextPath:}/app/app-1
+      - App=/manager
     filters:
       - Auth
-  - uri: http://localhost:3011
+      - RewritePath=/manager(?<segment>/?.*),$\{segment}
+  - uri: http://localhost:8084
     predicates:
-      - Svc=${yada.contextPath:}/svc,service-1
+      - Svc=/svc,manager
     filters:
       - ApiAuth
-  - uri: http://localhost:8080
+      - RewritePath=/svc(?<segment>/?.*),$\{segment}
+  - uri: http://localhost:8085
     predicates:
-      - Path=${yada.contextPath:}/**
+      - Svc=${yada.contextPath}/svc,user
     filters:
-      - RewritePath=${yada.contextPath:}(?<segment>/?.*),$\{segment}
+      - ApiAuth
+      - RewritePath=/svc(?<segment>/?.*),$\{segment}
 
 management.endpoints:
   web.exposure.include: metrics,gateway
   health.show-details: always
-
-#yada.security:
-#  defaultPwd: changepwd
-#  recaptcha: recaptcha.None
-#  pwdStrength: 1
-#  token:
-#    secret: yadajwt
-#    expire: 3600
-
 #yada.db.mongo.uri: 'mongodb://localhost/yada_auth?replicaSet=rs'
-
-
