@@ -70,6 +70,27 @@ export default defineConfig({
       component: './ListTableList',
     },
     {
+      path: '/SystemParameter',
+      name: 'system-parameter',
+      icon: 'crown',
+      component: './SystemParameter/MccCode',
+      routes: [
+        {
+          path: '/SystemParameter/AppRole',
+          name: 'role',
+          icon: 'smile',
+          component: './SystemParameter/AppRole',
+        },
+        {
+          path: './SystemParameter/MccCode',
+          name: 'mccCode',
+          icon: 'smile',
+          component: './SystemParameter/MccCode',
+        },
+      ],
+    },
+
+    {
       path: '/',
       redirect: '/welcome',
     },

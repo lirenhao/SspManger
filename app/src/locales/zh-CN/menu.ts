@@ -1,4 +1,8 @@
 export default {
+  'menu.system-parameter': '系统参数',
+  'menu.system-parameter.role': '角色管理',
+  'menu.system-parameter.mccCode': 'Mcc管理',
+
   'menu.welcome': '欢迎',
   'menu.more-blocks': '更多区块',
   'menu.home': '首页',
@@ -22,6 +26,7 @@ export default {
   'menu.form.step-form.result': '分步表单（完成）',
   'menu.form.advanced-form': '高级表单',
   'menu.list': '列表页',
+
   'menu.list.table-list': '查询表格',
   'menu.list.basic-list': '标准列表',
   'menu.list.card-list': '卡片列表',
