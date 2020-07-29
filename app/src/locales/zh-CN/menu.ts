@@ -2,6 +2,7 @@ export default {
   'menu.system-parameter': '系统参数',
   'menu.system-parameter.role': '角色管理',
   'menu.system-parameter.mccCode': 'Mcc管理',
+  'menu.system-parameter.currency': 'Currency Management',
 
   'menu.welcome': '欢迎',
   'menu.more-blocks': '更多区块',

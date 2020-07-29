@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Modal, Input, Button } from 'antd';
 import { formatMessage } from 'umi';
-import { TableListItem } from '../data.d';
+import { TableListItem } from '../data';
 
 interface CreateFormProps {
   modalVisible: boolean;
@@ -22,8 +22,10 @@ export interface UpdateFormState {
 const CreateForm: React.FC<CreateFormProps> = (props) => {
   const { modalVisible, onCancel, onSubmit } = props;
   const [formVals] = useState<TableListItem>({
-    mcc: props.values.mcc ? props.values.mcc : '',
-    remark: props.values.remark,
+    ccyName: props.values.ccyName ? props.values.ccyName : '',
+    ccyType: props.values.ccyType ? props.values.ccyType : '',
+    ccyEname: props.values.ccyEname,
+    ccySymbol: props.values.ccySymbol,
   });
 
   const [form] = Form.useForm();
@@ -40,10 +42,16 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   const renderContent = () => {
     return (
       <>
-        <Form.Item name="mcc" label={formatMessage({ id: 'mcc.mcc' })}>
+        <Form.Item name="ccyType" label={formatMessage({ id: 'currency.ccyType' })}>
           <Input.TextArea rows={1} />
         </Form.Item>
-        <Form.Item name="remark" label={formatMessage({ id: 'mcc.remark' })}>
+        <Form.Item name="ccyName" label={formatMessage({ id: 'currency.ccyName' })}>
+          <Input.TextArea rows={4} />
+        </Form.Item>
+        <Form.Item name="ccyEname" label={formatMessage({ id: 'currency.eName' })}>
+          <Input.TextArea rows={1} />
+        </Form.Item>
+        <Form.Item name="ccySymbol" label={formatMessage({ id: 'currency.symbol' })}>
           <Input.TextArea rows={4} />
         </Form.Item>
         <Button name="finish" type="primary" onClick={() => handleSubmit()}>
@@ -78,8 +86,10 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
         {...formLayout}
         form={form}
         initialValues={{
-          mcc: formVals.mcc,
-          remark: formVals.remark,
+          ccyName: formVals.ccyName,
+          ccyType: formVals.ccyType,
+          ccyEname: formVals.ccyEname,
+          ccySymbol: formVals.ccySymbol,
         }}
       >
         {renderContent()}

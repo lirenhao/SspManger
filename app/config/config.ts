@@ -70,21 +70,27 @@ export default defineConfig({
       component: './ListTableList',
     },
     {
-      path: '/SystemParameter',
+      path: '/systemPara',
       name: 'system-parameter',
       icon: 'setting',
       routes: [
         {
-          path: '/SystemParameter/AppRole',
+          path: '/systemPara/AppRole',
           name: 'role',
           icon: 'smile',
-          component: './SystemParameter/AppRole',
+          component: './systemParam/AppRole',
         },
         {
-          path: './SystemParameter/MccCode',
+          path: './systemParam/MccCode',
           name: 'mccCode',
           icon: 'smile',
-          component: './SystemParameter/MccCode',
+          component: './systemParam/MccCode',
+        },
+        {
+          path: './systemParam/ccyManager',
+          name: 'currency',
+          icon: 'smile',
+          component: './systemParam/ccyManager',
         },
       ],
     },

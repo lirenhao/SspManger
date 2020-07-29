@@ -4,4 +4,5 @@ export default {
   'global.success': '成功',
   'global.submit': '提交',
   'global.clean': '取消',
+  'global.operate': 'functions',
 };

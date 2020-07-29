@@ -3,26 +3,28 @@ import { Button, message, Divider } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { FormattedMessage, formatMessage } from 'umi';
+import { useIntl, FormattedMessage, IntlShape } from 'umi';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { TableListItem } from './data';
-import { queryMcc, saveMcc, removeMcc } from './service';
+import { queryCcy, saveCcy, removeCcy } from './service';
 
 /**
  * 添加
  * @param fields
  */
-const handleSaveAndUpdate = async (fields: TableListItem) => {
-  const hide = message.loading(formatMessage({ id: 'global.running' }));
+
+const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
+  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
+
   try {
-    await saveMcc({ ...fields });
+    await saveCcy({ ...fields });
     hide();
-    message.success(formatMessage({ id: 'global.success' }));
+    message.success(intl.formatMessage({ id: 'global.success' }));
     return true;
   } catch (error) {
     hide();
-    message.error(formatMessage({ id: 'global.error' }));
+    message.error(intl.formatMessage({ id: 'global.error' }));
     return false;
   }
 };
@@ -31,16 +33,16 @@ const handleSaveAndUpdate = async (fields: TableListItem) => {
  * 添加
  * @param fields
  */
-const handleDel = async (fields: TableListItem) => {
-  const hide = message.loading('global.running');
+const handleDel = async (fields: TableListItem, intl: IntlShape) => {
+  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
   try {
-    await removeMcc({ ...fields });
+    await removeCcy({ ...fields });
     hide();
-    message.success('global.success');
+    message.success(intl.formatMessage({ id: 'global.success' }));
     return true;
   } catch (error) {
     hide();
-    message.error('global.error');
+    message.success(intl.formatMessage({ id: 'global.error' }));
     return false;
   }
 };
@@ -48,7 +50,7 @@ const handleDel = async (fields: TableListItem) => {
 // const handleGet = async (fields: TableListItem) => {
 //   const hide = message.loading('global.running');
 //   try {
-//     await getMcc({ ...fields });
+//     await getCcy({ ...fields });
 //     hide();
 //     message.success('global.success');
 //     return true;
@@ -63,12 +65,12 @@ const TableList: React.FC<{}> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
   const [stepFormValues, setStepFormValues] = useState({});
-
+  const intl = useIntl();
   const actionRef = useRef<ActionType>();
 
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '操作',
+      title: intl.formatMessage({ id: 'global.operate' }),
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => (
@@ -79,47 +81,62 @@ const TableList: React.FC<{}> = () => {
               setStepFormValues(record);
             }}
           >
-            <FormattedMessage id="mcc.updateCompoent" />
+            <FormattedMessage id="currency.updateCompoent" />
           </a>
           <Divider type="vertical" />
           <a
             onClick={() => {
-              handleDel(record);
+              handleDel(record, intl);
               actionRef.current?.reload();
             }}
           >
-            <FormattedMessage id="mcc.delete" />
+            <FormattedMessage id="currency.delete" />
           </a>
         </>
       ),
     },
     {
-      title: formatMessage({ id: 'mcc.mcc' }),
-      dataIndex: 'mcc',
+      title: intl.formatMessage({ id: 'currency.ccyType' }),
+      dataIndex: 'ccyType',
       rules: [
         {
           required: true,
-          message: formatMessage({ id: 'mcc.mccNecessary' }),
+          message: intl.formatMessage({ id: 'currency.ccyTypeNecessary' }),
         },
       ],
     },
     {
-      title: formatMessage({ id: 'mcc.remark' }),
-      dataIndex: 'roleDescripiton',
-      valueType: 'textarea',
+      title: intl.formatMessage({ id: 'currency.ccyName' }),
+      dataIndex: 'ccyName',
+      rules: [
+        {
+          required: true,
+          message: intl.formatMessage({ id: 'currency.ccyNameNecessary' }),
+        },
+      ],
+    },
+    {
+      title: intl.formatMessage({ id: 'currency.eName' }),
+      dataIndex: 'ccyEname',
+    },
+
+    {
+      title: intl.formatMessage({ id: 'currency.symbol' }),
+      dataIndex: 'ccySymbol',
+      hideInSearch: true,
     },
   ];
 
   return (
     <PageContainer>
       <ProTable<TableListItem>
-        request={(params, sorter, filter) => queryMcc({ ...params, sorter, filter })}
+        request={(params, sorter, filter) => queryCcy({ ...params, sorter, filter })}
         headerTitle=""
         actionRef={actionRef}
-        rowKey="mcc"
+        rowKey="ccyType"
         toolBarRender={() => [
           <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> <FormattedMessage id="mcc.create" />
+            <PlusOutlined /> <FormattedMessage id="currency.create" />
           </Button>,
         ]}
         columns={columns}
@@ -127,7 +144,7 @@ const TableList: React.FC<{}> = () => {
       <CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
         <ProTable<TableListItem, TableListItem>
           onSubmit={async (value) => {
-            const success = await handleSaveAndUpdate(value);
+            const success = await handleSaveAndUpdate(value, intl);
             if (success) {
               handleModalVisible(false);
               if (actionRef.current) {
@@ -135,7 +152,7 @@ const TableList: React.FC<{}> = () => {
               }
             }
           }}
-          rowKey="mcc"
+          rowKey="ccyType"
           type="form"
           columns={columns}
         />
@@ -146,7 +163,7 @@ const TableList: React.FC<{}> = () => {
           onCancel={() => handleUpdateModalVisible(false)}
           modalVisible={updateModalVisible}
           onSubmit={async (value) => {
-            const success = await handleSaveAndUpdate(value);
+            const success = await handleSaveAndUpdate(value, intl);
             if (success) {
               handleModalVisible(false);
               if (actionRef.current) {

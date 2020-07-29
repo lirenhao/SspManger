@@ -3,7 +3,7 @@ import { Button, message } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { FormattedMessage, formatMessage } from 'umi';
+import { useIntl, FormattedMessage, IntlShape } from 'umi';
 import CreateForm from './components/CreateForm';
 import { TableListItem } from './data';
 import { queryRole, saveRole } from './service';
@@ -12,47 +12,48 @@ import { queryRole, saveRole } from './service';
  * 添加节点
  * @param fields
  */
-const handleAdd = async (fields: TableListItem) => {
-  const hide = message.loading('正在添加');
+const handleAdd = async (fields: TableListItem, intl: IntlShape) => {
+  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
   try {
     await saveRole({ ...fields });
     hide();
-    message.success('添加成功');
+    message.success(intl.formatMessage({ id: 'global.success' }));
     return true;
   } catch (error) {
     hide();
-    message.error('添加失败请重试！');
+    message.error(intl.formatMessage({ id: 'global.error' }));
     return false;
   }
 };
 
 const TableList: React.FC<{}> = () => {
+  const intl = useIntl();
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: formatMessage({ id: 'appRole.roleName' }),
+      title: intl.formatMessage({ id: 'appRole.roleName' }),
       dataIndex: 'roleName',
       rules: [
         {
           required: true,
-          message: formatMessage({ id: 'appRole.roleNameNecessary' }),
+          message: intl.formatMessage({ id: 'appRole.roleNameNecessary' }),
         },
       ],
     },
     {
-      title: formatMessage({ id: 'appRole.role' }),
+      title: intl.formatMessage({ id: 'appRole.role' }),
       dataIndex: 'key',
       hideInForm: true,
       hideInSearch: true,
     },
     {
-      title: formatMessage({ id: 'appRole.role' }),
+      title: intl.formatMessage({ id: 'appRole.role' }),
       dataIndex: 'role',
       hideInSearch: true,
     },
     {
-      title: formatMessage({ id: 'appRole.desc' }),
+      title: intl.formatMessage({ id: 'appRole.desc' }),
       dataIndex: 'roleDescripiton',
       valueType: 'textarea',
       hideInSearch: true,
@@ -73,10 +74,14 @@ const TableList: React.FC<{}> = () => {
         request={(params, sorter, filter) => queryRole({ ...params, sorter, filter })}
         columns={columns}
       />
-      <CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
+      <CreateForm
+        intl={intl}
+        onCancel={() => handleModalVisible(false)}
+        modalVisible={createModalVisible}
+      >
         <ProTable<TableListItem, TableListItem>
           onSubmit={async (value) => {
-            const success = await handleAdd(value);
+            const success = await handleAdd(value, intl);
             if (success) {
               handleModalVisible(false);
               if (actionRef.current) {
