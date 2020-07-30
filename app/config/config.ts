@@ -59,6 +59,12 @@ export default defineConfig({
       component: './ListTableList',
     },
     {
+      name: 'modifyPwd',
+      path: '/account/modifyPwd',
+      component: './user/modifyPwd',
+      hideInMenu: true,
+    },
+    {
       path: '/systemParam',
       name: 'systemParam',
       icon: 'setting',

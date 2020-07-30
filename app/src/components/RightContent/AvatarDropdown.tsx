@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { LogoutOutlined, LockOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
 import { history, useModel } from 'umi';
 import { getPageQuery } from '@/utils/utils';
@@ -87,7 +87,10 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
         </Menu.Item>
       )}
       {menu && <Menu.Divider />}
-
+      <Menu.Item key="modifyPwd">
+        <LockOutlined />
+        修改密码
+      </Menu.Item>
       <Menu.Item key="logout">
         <LogoutOutlined />
         退出登录

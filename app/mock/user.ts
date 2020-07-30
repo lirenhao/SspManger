@@ -3,14 +3,10 @@ import { Request, Response } from 'express';
 export default {
   'GET /api/currentUser': (_: Request, res: Response) => {
     res.send({
-      name: 'Serati Ma',
+      name: 'Admin',
       avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
       userid: '00000001',
       email: 'antdesign@alipay.com',
-      title: '交互专家',
-      notifyCount: 12,
-      unreadCount: 11,
-      country: 'China',
     });
   },
   'GET /api/logout': (_: Request, res: Response) => {

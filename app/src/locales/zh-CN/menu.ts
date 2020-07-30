@@ -1,4 +1,5 @@
 export default {
+  'menu.modifyPwd': '修改密码',
   'menu.system-parameter': '系统参数',
   'menu.system-parameter.role': '角色管理',
   'menu.system-parameter.mccCode': 'Mcc管理',
