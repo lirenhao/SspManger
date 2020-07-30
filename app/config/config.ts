@@ -32,10 +32,15 @@ export default defineConfig({
   // umi routes: https://umijs.org/docs/routing
   routes: [
     {
+      path: '/',
+      redirect: '/welcome',
+    },
+    {
       path: '/welcome',
       name: 'welcome',
-      icon: 'smile',
+      icon: 'home',
       component: './Welcome',
+      hideInMenu: true,
     },
     {
       name: 'modifyPwd',
@@ -70,10 +75,6 @@ export default defineConfig({
           component: './systemParam/country',
         },
       ],
-    },
-    {
-      path: '/',
-      redirect: '/welcome',
     },
     {
       component: './404',
