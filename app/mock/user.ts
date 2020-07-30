@@ -3,10 +3,10 @@ import { Request, Response } from 'express';
 export default {
   'GET /api/currentUser': (_: Request, res: Response) => {
     res.send({
-      name: 'Admin',
-      avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-      userid: '00000001',
-      email: 'antdesign@alipay.com',
+      id: 'admin',
+      orgId: '00',
+      roles: ['admin'],
+      email: 'test@manager.com',
     });
   },
   'GET /api/logout': (_: Request, res: Response) => {

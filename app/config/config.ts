@@ -41,6 +41,7 @@ export default defineConfig({
       name: 'modifyPwd',
       path: '/account/modifyPwd',
       component: './user/modifyPwd',
+      locale: 'menu.modifyPwd',
       hideInMenu: true,
     },
     {
