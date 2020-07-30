@@ -40,23 +40,59 @@ const TableList: React.FC<{}> = () => {
           message: intl.formatMessage({ id: 'appRole.roleNameNecessary' }),
         },
       ],
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 7 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 12 },
+        md: { span: 10 },
+      },
     },
     {
       title: intl.formatMessage({ id: 'appRole.role' }),
       dataIndex: 'key',
       hideInForm: true,
       hideInSearch: true,
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 7 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 12 },
+        md: { span: 10 },
+      },
     },
     {
       title: intl.formatMessage({ id: 'appRole.role' }),
       dataIndex: 'role',
       hideInSearch: true,
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 7 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 12 },
+        md: { span: 10 },
+      },
     },
     {
       title: intl.formatMessage({ id: 'appRole.desc' }),
       dataIndex: 'roleDescripiton',
       valueType: 'textarea',
       hideInSearch: true,
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 7 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 12 },
+        md: { span: 10 },
+      },
     },
   ];
 
