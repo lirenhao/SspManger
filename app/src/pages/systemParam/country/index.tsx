@@ -7,7 +7,7 @@ import { useIntl, FormattedMessage, IntlShape } from 'umi';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { TableListItem } from './data';
-import { queryCcy, saveCcy, removeCcy } from './service';
+import { queryAll, save, remove } from './service';
 
 /**
  * 添加
@@ -18,7 +18,7 @@ const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
   const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
 
   try {
-    await saveCcy({ ...fields });
+    await save({ ...fields });
     hide();
     message.success(intl.formatMessage({ id: 'global.success' }));
     return true;
@@ -36,7 +36,7 @@ const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
 const handleDel = async (fields: TableListItem, intl: IntlShape) => {
   const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
   try {
-    await removeCcy({ ...fields });
+    await remove({ ...fields });
     hide();
     message.success(intl.formatMessage({ id: 'global.success' }));
     return true;
@@ -96,44 +96,44 @@ const TableList: React.FC<{}> = () => {
       ),
     },
     {
-      title: intl.formatMessage({ id: 'currency.ccyType' }),
-      dataIndex: 'ccyType',
+      title: intl.formatMessage({ id: 'country.internationalCode' }),
+      dataIndex: 'internationalCode',
       rules: [
         {
           required: true,
-          message: intl.formatMessage({ id: 'currency.ccyTypeNecessary' }),
+          message: intl.formatMessage({ id: 'country.internationalCodeNecessary' }),
         },
       ],
     },
     {
-      title: intl.formatMessage({ id: 'currency.ccyName' }),
-      dataIndex: 'ccyName',
+      title: intl.formatMessage({ id: 'country.cName' }),
+      dataIndex: 'codeName',
       rules: [
         {
           required: true,
-          message: intl.formatMessage({ id: 'currency.ccyNameNecessary' }),
+          message: intl.formatMessage({ id: 'country.cNameNecessary' }),
         },
       ],
     },
     {
       title: intl.formatMessage({ id: 'currency.eName' }),
-      dataIndex: 'ccyEname',
-    },
-
-    {
-      title: intl.formatMessage({ id: 'currency.symbol' }),
-      dataIndex: 'ccySymbol',
-      hideInSearch: true,
+      dataIndex: 'codeEname',
+      rules: [
+        {
+          required: true,
+          message: intl.formatMessage({ id: 'country.eNameNecessary' }),
+        },
+      ],
     },
   ];
 
   return (
     <PageContainer>
       <ProTable<TableListItem>
-        request={(params, sorter, filter) => queryCcy({ ...params, sorter, filter })}
+        request={(params, sorter, filter) => queryAll({ ...params, sorter, filter })}
         headerTitle=""
         actionRef={actionRef}
-        rowKey="ccyType"
+        rowKey="internationalCode"
         toolBarRender={() => [
           <Button type="primary" onClick={() => handleModalVisible(true)}>
             <PlusOutlined /> <FormattedMessage id="global.create" />
@@ -152,7 +152,7 @@ const TableList: React.FC<{}> = () => {
               }
             }
           }}
-          rowKey="ccyType"
+          rowKey="internationalCode"
           type="form"
           columns={columns}
         />

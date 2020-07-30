@@ -3,6 +3,7 @@ export default {
   'global.error': '遇到错误',
   'global.success': '成功',
   'global.submit': '提交',
-  'global.clean': '取消',
+  'global.cancel': '取消',
   'global.operate': 'functions',
+  'global.create': 'create',
 };

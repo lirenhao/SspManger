@@ -78,6 +78,11 @@ export default defineConfig({
           name: 'ccyManager',
           component: './systemParam/ccyManager',
         },
+        {
+          path: '/systemParam/country',
+          name: 'country',
+          component: './systemParam/country',
+        },
       ],
     },
     {

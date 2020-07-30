@@ -104,7 +104,7 @@ const TableList: React.FC<{}> = () => {
         rowKey="key"
         toolBarRender={() => [
           <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> <FormattedMessage id="appRole.create" />
+            <PlusOutlined /> <FormattedMessage id="global.create" />
           </Button>,
         ]}
         request={(params, sorter, filter) => queryRole({ ...params, sorter, filter })}

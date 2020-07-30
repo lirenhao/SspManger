@@ -23,10 +23,9 @@ export interface UpdateFormState {
 const CreateForm: React.FC<CreateFormProps> = (props) => {
   const { modalVisible, onCancel, onSubmit, intl } = props;
   const [formVals] = useState<TableListItem>({
-    ccyName: props.values.ccyName ? props.values.ccyName : '',
-    ccyType: props.values.ccyType ? props.values.ccyType : '',
-    ccyEname: props.values.ccyEname,
-    ccySymbol: props.values.ccySymbol,
+    internationalCode: props.values.internationalCode ? props.values.internationalCode : '',
+    codeName: props.values.codeName ? props.values.codeName : '',
+    codeEname: props.values.codeEname ? props.values.codeEname : '',
   });
 
   const [form] = Form.useForm();
@@ -43,17 +42,17 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   const renderContent = () => {
     return (
       <>
-        <Form.Item name="ccyType" label={intl.formatMessage({ id: 'currency.ccyType' })}>
+        <Form.Item
+          name="internationalCode"
+          label={intl.formatMessage({ id: 'country.internationalCode' })}
+        >
           <Input.TextArea rows={1} />
         </Form.Item>
-        <Form.Item name="ccyName" label={intl.formatMessage({ id: 'currency.ccyName' })}>
-          <Input.TextArea rows={4} />
-        </Form.Item>
-        <Form.Item name="ccyEname" label={intl.formatMessage({ id: 'currency.eName' })}>
+        <Form.Item name="codeName" label={intl.formatMessage({ id: 'country.cName' })}>
           <Input.TextArea rows={1} />
         </Form.Item>
-        <Form.Item name="ccySymbol" label={intl.formatMessage({ id: 'currency.symbol' })}>
-          <Input.TextArea rows={4} />
+        <Form.Item name="codeEname" label={intl.formatMessage({ id: 'country.eName' })}>
+          <Input.TextArea rows={1} />
         </Form.Item>
         <Button name="finish" type="primary" onClick={() => handleSubmit()}>
           {intl.formatMessage({ id: 'global.submit' })}
@@ -87,10 +86,9 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
         {...formLayout}
         form={form}
         initialValues={{
-          ccyName: formVals.ccyName,
-          ccyType: formVals.ccyType,
-          ccyEname: formVals.ccyEname,
-          ccySymbol: formVals.ccySymbol,
+          internationalCode: formVals.internationalCode,
+          codeName: formVals.codeName,
+          codeEname: formVals.codeEname,
         }}
       >
         {renderContent()}

@@ -120,7 +120,7 @@ const TableList: React.FC<{}> = () => {
         rowKey="mcc"
         toolBarRender={() => [
           <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> <FormattedMessage id="mcc.create" />
+            <PlusOutlined /> <FormattedMessage id="global.create" />
           </Button>,
         ]}
         columns={columns}
