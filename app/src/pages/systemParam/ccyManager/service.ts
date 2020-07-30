@@ -42,7 +42,7 @@ export async function removeCcy(params: TableListItem) {
 }
 
 export async function existCcy(params: TableListItem) {
-  return request('/CcyCode/'.concat(params.ccyType.toString()).concat('/exists'), {
+  return request('/ccyType/'.concat(params.ccyType.toString()).concat('/exists'), {
     method: 'GET',
     data: {
       ...params,

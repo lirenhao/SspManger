@@ -33,7 +33,7 @@ const TableList: React.FC<{}> = () => {
   const columns: ProColumns<TableListItem>[] = [
     {
       title: intl.formatMessage({ id: 'appRole.roleName' }),
-      dataIndex: 'roleName',
+      dataIndex: 'name',
       rules: [
         {
           required: true,
@@ -52,7 +52,7 @@ const TableList: React.FC<{}> = () => {
     },
     {
       title: intl.formatMessage({ id: 'appRole.role' }),
-      dataIndex: 'key',
+      dataIndex: 'id',
       hideInForm: true,
       hideInSearch: true,
       labelCol: {
@@ -66,22 +66,8 @@ const TableList: React.FC<{}> = () => {
       },
     },
     {
-      title: intl.formatMessage({ id: 'appRole.role' }),
-      dataIndex: 'role',
-      hideInSearch: true,
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 10 },
-      },
-    },
-    {
       title: intl.formatMessage({ id: 'appRole.desc' }),
-      dataIndex: 'roleDescripiton',
+      dataIndex: 'remark',
       valueType: 'textarea',
       hideInSearch: true,
       labelCol: {
@@ -101,7 +87,7 @@ const TableList: React.FC<{}> = () => {
       <ProTable<TableListItem>
         headerTitle=""
         actionRef={actionRef}
-        rowKey="key"
+        rowKey="id"
         toolBarRender={() => [
           <Button type="primary" onClick={() => handleModalVisible(true)}>
             <PlusOutlined /> <FormattedMessage id="global.create" />
@@ -114,22 +100,16 @@ const TableList: React.FC<{}> = () => {
         intl={intl}
         onCancel={() => handleModalVisible(false)}
         modalVisible={createModalVisible}
-      >
-        <ProTable<TableListItem, TableListItem>
-          onSubmit={async (value) => {
-            const success = await handleAdd(value, intl);
-            if (success) {
-              handleModalVisible(false);
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
+        onSubmit={async (value) => {
+          const success = await handleAdd(value, intl);
+          if (success) {
+            handleModalVisible(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
             }
-          }}
-          rowKey="key"
-          type="form"
-          columns={columns}
-        />
-      </CreateForm>
+          }
+        }}
+      />
     </PageContainer>
   );
 };

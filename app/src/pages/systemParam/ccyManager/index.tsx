@@ -81,7 +81,7 @@ const TableList: React.FC<{}> = () => {
               setStepFormValues(record);
             }}
           >
-            <FormattedMessage id="currency.updateCompoent" />
+            <FormattedMessage id="global.edit" />
           </a>
           <Divider type="vertical" />
           <a
@@ -90,7 +90,7 @@ const TableList: React.FC<{}> = () => {
               actionRef.current?.reload();
             }}
           >
-            <FormattedMessage id="currency.delete" />
+            <FormattedMessage id="global.delete" />
           </a>
         </>
       ),
@@ -124,6 +124,15 @@ const TableList: React.FC<{}> = () => {
       title: intl.formatMessage({ id: 'currency.symbol' }),
       dataIndex: 'ccySymbol',
       hideInSearch: true,
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 7 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 12 },
+        md: { span: 10 },
+      },
     },
   ];
 
@@ -141,22 +150,20 @@ const TableList: React.FC<{}> = () => {
         ]}
         columns={columns}
       />
-      <CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
-        <ProTable<TableListItem, TableListItem>
-          onSubmit={async (value) => {
-            const success = await handleSaveAndUpdate(value, intl);
-            if (success) {
-              handleModalVisible(false);
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
+      <CreateForm
+        onCancel={() => handleModalVisible(false)}
+        modalVisible={createModalVisible}
+        onSubmit={async (value) => {
+          const success = await handleSaveAndUpdate(value, intl);
+          if (success) {
+            handleModalVisible(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
             }
-          }}
-          rowKey="ccyType"
-          type="form"
-          columns={columns}
-        />
-      </CreateForm>
+          }
+        }}
+        intl={intl}
+      />
       {stepFormValues && Object.keys(stepFormValues).length ? (
         <UpdateForm
           intl={intl}
@@ -166,7 +173,7 @@ const TableList: React.FC<{}> = () => {
           onSubmit={async (value) => {
             const success = await handleSaveAndUpdate(value, intl);
             if (success) {
-              handleModalVisible(false);
+              handleUpdateModalVisible(false);
               if (actionRef.current) {
                 actionRef.current.reload();
               }

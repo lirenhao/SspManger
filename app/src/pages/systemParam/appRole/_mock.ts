@@ -3,15 +3,13 @@ import AppRole from './data.d';
 
 const tableListDataSource: AppRole.TableListItem[] = [];
 tableListDataSource.push({
-  key: 1,
-  role: 'admin',
-  roleName: 'admin',
-  roleDescripiton: 'this is admin   ',
+  id: 'id',
+  name: 'admin',
+  remark: 'this is admin   ',
 });
 tableListDataSource.push({
-  key: 2,
-  role: 'user',
-  roleName: 'user',
+  id: 'id1',
+  name: 'user',
 });
 
 const result = {
@@ -28,27 +26,30 @@ function getAllRole(req: Request, res: Response) {
 
 function getShow(req: Request, res: Response) {
   return res.json({
-    key: 1,
-    role: 'admin',
-    roleName: 'admin',
-    roleDescripiton: 'this is admin',
+    id: 'id',
+    name: 'admin',
+    remark: 'this is admin',
   });
 }
 
 function save(req: Request, res: Response) {
   tableListDataSource.push({
-    key: tableListDataSource.length + 1,
-    role: 'test',
-    roleName: 'test',
-    roleDescripiton: 'test',
+    id: 'test',
+    name: 'test',
+    remark: 'test',
   });
   return res.json({
     success: true,
   });
 }
 
+function exist(req: Request, res: Response) {
+  return res.send(false);
+}
+
 export default {
-  'GET /approle/list': getAllRole,
-  'GET /approle/show': getShow,
-  'POST /approle/save': save,
+  'GET /appRole': getAllRole,
+  'GET /appRole/id': getShow,
+  'PUT /appRole': save,
+  'GET /appRole/id/exists': exist,
 };

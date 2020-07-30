@@ -41,31 +41,30 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   const renderContent = () => {
     return (
       <>
-        <Form.Item name="mcc" label={intl.formatMessage({ id: 'mcc.mcc' })}>
+        <Form.Item
+          name="mcc"
+          label={intl.formatMessage({ id: 'mcc.mcc' })}
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({ id: 'mcc.mccNecessary' }),
+            },
+          ]}
+        >
           <Input.TextArea rows={1} />
         </Form.Item>
         <Form.Item name="remark" label={intl.formatMessage({ id: 'mcc.remark' })}>
           <Input.TextArea rows={4} />
         </Form.Item>
         <Button name="finish" type="primary" onClick={() => handleSubmit()}>
-          完成
+          {intl.formatMessage({ id: 'global.submit' })}
         </Button>
         <Button name="clean" onClick={() => onCancel()}>
-          取消
+          {intl.formatMessage({ id: 'global.cancel' })}
         </Button>
       </>
     );
   };
-
-  // const renderFooter = ()=>{
-  //   return(
-  //     <>
-  //         <Button type="primary" onClick={() => handleNext()}>
-  //           {formatMessage({id : 'global.submit'})}
-  //         </Button>
-  //     </>
-  //   )
-  // }
 
   return (
     <Modal

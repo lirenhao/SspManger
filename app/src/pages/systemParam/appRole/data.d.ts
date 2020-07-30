@@ -1,8 +1,7 @@
 export interface TableListItem {
-  key: number;
-  role: string;
-  roleName: string;
-  roleDescripiton?: string;
+  id: string;
+  name: string;
+  remark?: string;
 }
 
 export interface TableListPagination {
@@ -17,10 +16,9 @@ export interface TableListData {
 }
 
 export interface TableListParams {
-  key?: number;
-  role?: string;
-  roleName?: string;
-  roleDescripiton?: string;
+  id?: string;
+  name?: string;
+  remark?: string;
   pageSize?: number;
   currentPage?: number;
   filter?: { [key: string]: any[] };

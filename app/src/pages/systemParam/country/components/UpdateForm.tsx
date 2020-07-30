@@ -11,11 +11,6 @@ interface CreateFormProps {
   intl: IntlShape;
 }
 
-// export interface FormValueType extends Partial<TableListItem> {
-//   mcc?: string;
-//   remark?: string;
-// }
-
 export interface UpdateFormState {
   formVals: TableListItem;
 }
@@ -45,13 +40,37 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
         <Form.Item
           name="internationalCode"
           label={intl.formatMessage({ id: 'country.internationalCode' })}
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({ id: 'country.internationalCodeNecessary' }),
+            },
+          ]}
         >
           <Input.TextArea rows={1} />
         </Form.Item>
-        <Form.Item name="codeName" label={intl.formatMessage({ id: 'country.cName' })}>
+        <Form.Item
+          name="codeName"
+          label={intl.formatMessage({ id: 'country.cName' })}
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({ id: 'country.cNameNecessary' }),
+            },
+          ]}
+        >
           <Input.TextArea rows={1} />
         </Form.Item>
-        <Form.Item name="codeEname" label={intl.formatMessage({ id: 'country.eName' })}>
+        <Form.Item
+          name="codeEname"
+          label={intl.formatMessage({ id: 'country.eName' })}
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({ id: 'country.cNameNecessary' }),
+            },
+          ]}
+        >
           <Input.TextArea rows={1} />
         </Form.Item>
         <Button name="finish" type="primary" onClick={() => handleSubmit()}>
@@ -64,20 +83,10 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
     );
   };
 
-  // const renderFooter = ()=>{
-  //   return(
-  //     <>
-  //         <Button type="primary" onClick={() => handleNext()}>
-  //           {formatMessage({id : 'global.submit'})}
-  //         </Button>
-  //     </>
-  //   )
-  // }
-
   return (
     <Modal
       destroyOnClose
-      title={intl.formatMessage({ id: 'mcc.updateCompoent' })}
+      title={intl.formatMessage({ id: 'country.updateCompoent' })}
       visible={modalVisible}
       onCancel={() => onCancel()}
       footer={null}

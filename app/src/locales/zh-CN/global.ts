@@ -6,4 +6,7 @@ export default {
   'global.cancel': '取消',
   'global.operate': 'functions',
   'global.create': 'create',
+  'global.createExists': '该记录已存在，无法再次创建',
+  'global.edit': '修改',
+  'global.delete': '删除',
 };

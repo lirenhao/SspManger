@@ -1,5 +1,18 @@
 export default {
   'menu.modifyPwd': 'MODIFY POSSWORD',
+  'menu.systemParam': 'Systemparam',
+  'menu.systemParam.role': 'App Role Management',
+  'menu.systemParam.mccCode': 'Mcc Code Management',
+  'menu.systemParam.currency': 'Currency Management',
+  'menu.systemParam.country': 'Country Code Management',
+  'menu.systemParam.cardbin': 'Cup Card Bin Management',
+  'menu.systemParam.merapi': 'Merchant API Management',
+  'menu.systemParam.banks': 'Bank List',
+  'menu.systemParam.orgzmk': 'Posp Org ZMK',
+  'menu.systemParam.orgtmk': 'Posp Org TMK',
+  'menu.systemParam.tmkUpload': 'Posp TMK Upload',
+  'menu.systemParam.mPolicy': 'Merchant Policy',
+
   'menu.welcome': 'Welcome',
   'menu.more-blocks': 'More Blocks',
   'menu.home': 'Home',

@@ -47,9 +47,16 @@ function removeCcy(req: Request, res: Response) {
   }
 }
 
+function existsCcy(req: Request, res: Response) {
+  // const falseResult = {result:false}
+  // res.json(falseResult)
+  res.send(false);
+}
+
 export default {
   'GET /ccyType': getAllCcy,
   'PUT /ccyType': saveCcy,
   'PUT /ccyType/ccy': getOneCcy,
   'DELETE /ccyType/ccy': removeCcy,
+  'GET /ccyType/ccy/exists': existsCcy,
 };

@@ -69,7 +69,7 @@ const TableList: React.FC<{}> = () => {
 
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '操作',
+      title: intl.formatMessage({ id: 'global.operate' }),
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => (
@@ -80,7 +80,7 @@ const TableList: React.FC<{}> = () => {
               setStepFormValues(record);
             }}
           >
-            <FormattedMessage id="mcc.updateCompoent" />
+            <FormattedMessage id="global.edit" />
           </a>
           <Divider type="vertical" />
           <a
@@ -89,7 +89,7 @@ const TableList: React.FC<{}> = () => {
               actionRef.current?.reload();
             }}
           >
-            <FormattedMessage id="mcc.delete" />
+            <FormattedMessage id="global.delete" />
           </a>
         </>
       ),
@@ -126,25 +126,19 @@ const TableList: React.FC<{}> = () => {
         columns={columns}
       />
       <CreateForm
+        intl={intl}
         onCancel={() => handleModalVisible(false)}
         modalVisible={createModalVisible}
-        intl={intl}
-      >
-        <ProTable<TableListItem, TableListItem>
-          onSubmit={async (value) => {
-            const success = await handleSaveAndUpdate(value, intl);
-            if (success) {
-              handleModalVisible(false);
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
+        onSubmit={async (value) => {
+          const success = await handleSaveAndUpdate(value, intl);
+          if (success) {
+            handleModalVisible(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
             }
-          }}
-          rowKey="mcc"
-          type="form"
-          columns={columns}
-        />
-      </CreateForm>
+          }
+        }}
+      />
       {stepFormValues && Object.keys(stepFormValues).length ? (
         <UpdateForm
           intl={intl}
@@ -154,7 +148,7 @@ const TableList: React.FC<{}> = () => {
           onSubmit={async (value) => {
             const success = await handleSaveAndUpdate(value, intl);
             if (success) {
-              handleModalVisible(false);
+              handleUpdateModalVisible(false);
               if (actionRef.current) {
                 actionRef.current.reload();
               }

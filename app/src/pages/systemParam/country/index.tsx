@@ -81,7 +81,7 @@ const TableList: React.FC<{}> = () => {
               setStepFormValues(record);
             }}
           >
-            <FormattedMessage id="currency.updateCompoent" />
+            <FormattedMessage id="global.edit" />
           </a>
           <Divider type="vertical" />
           <a
@@ -90,7 +90,7 @@ const TableList: React.FC<{}> = () => {
               actionRef.current?.reload();
             }}
           >
-            <FormattedMessage id="currency.delete" />
+            <FormattedMessage id="global.delete" />
           </a>
         </>
       ),
@@ -98,13 +98,8 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'country.internationalCode' }),
       dataIndex: 'internationalCode',
-      rules: [
-        {
-          required: true,
-          message: intl.formatMessage({ id: 'country.internationalCodeNecessary' }),
-        },
-      ],
     },
+
     {
       title: intl.formatMessage({ id: 'country.cName' }),
       dataIndex: 'codeName',
@@ -116,7 +111,7 @@ const TableList: React.FC<{}> = () => {
       ],
     },
     {
-      title: intl.formatMessage({ id: 'currency.eName' }),
+      title: intl.formatMessage({ id: 'country.eName' }),
       dataIndex: 'codeEname',
       rules: [
         {
@@ -126,6 +121,10 @@ const TableList: React.FC<{}> = () => {
       ],
     },
   ];
+
+  // columns = columns.map((colValue)=>{
+  //   return {...colValue,...columnAddation};
+  // })
 
   return (
     <PageContainer>
@@ -141,22 +140,21 @@ const TableList: React.FC<{}> = () => {
         ]}
         columns={columns}
       />
-      <CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
-        <ProTable<TableListItem, TableListItem>
-          onSubmit={async (value) => {
-            const success = await handleSaveAndUpdate(value, intl);
-            if (success) {
-              handleModalVisible(false);
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
+      <CreateForm
+        intl={intl}
+        onCancel={() => handleModalVisible(false)}
+        modalVisible={createModalVisible}
+        onSubmit={async (value) => {
+          console.error(value);
+          const success = await handleSaveAndUpdate(value, intl);
+          if (success) {
+            handleModalVisible(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
             }
-          }}
-          rowKey="internationalCode"
-          type="form"
-          columns={columns}
-        />
-      </CreateForm>
+          }
+        }}
+      />
       {stepFormValues && Object.keys(stepFormValues).length ? (
         <UpdateForm
           intl={intl}
@@ -166,7 +164,7 @@ const TableList: React.FC<{}> = () => {
           onSubmit={async (value) => {
             const success = await handleSaveAndUpdate(value, intl);
             if (success) {
-              handleModalVisible(false);
+              handleUpdateModalVisible(false);
               if (actionRef.current) {
                 actionRef.current.reload();
               }

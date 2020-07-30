@@ -6,4 +6,6 @@ export default {
   'global.cancel': '取消',
   'global.operate': 'functions',
   'global.create': 'create',
+  'global.edit': 'edit',
+  'global.delete': 'delete',
 };

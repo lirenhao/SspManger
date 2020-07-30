@@ -43,10 +43,28 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   const renderContent = () => {
     return (
       <>
-        <Form.Item name="ccyType" label={intl.formatMessage({ id: 'currency.ccyType' })}>
+        <Form.Item
+          name="ccyType"
+          label={intl.formatMessage({ id: 'currency.ccyType' })}
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({ id: 'currency.ccyTypeNecessary' }),
+            },
+          ]}
+        >
           <Input.TextArea rows={1} />
         </Form.Item>
-        <Form.Item name="ccyName" label={intl.formatMessage({ id: 'currency.ccyName' })}>
+        <Form.Item
+          name="ccyName"
+          label={intl.formatMessage({ id: 'currency.ccyName' })}
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({ id: 'currency.ccyNameNecessary' }),
+            },
+          ]}
+        >
           <Input.TextArea rows={4} />
         </Form.Item>
         <Form.Item name="ccyEname" label={intl.formatMessage({ id: 'currency.eName' })}>
@@ -65,20 +83,10 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
     );
   };
 
-  // const renderFooter = ()=>{
-  //   return(
-  //     <>
-  //         <Button type="primary" onClick={() => handleNext()}>
-  //           {formatMessage({id : 'global.submit'})}
-  //         </Button>
-  //     </>
-  //   )
-  // }
-
   return (
     <Modal
       destroyOnClose
-      title={intl.formatMessage({ id: 'mcc.updateCompoent' })}
+      title={intl.formatMessage({ id: 'ccy.updateCompoent' })}
       visible={modalVisible}
       onCancel={() => onCancel()}
       footer={null}
