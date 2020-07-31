@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import { ResponseError } from 'umi-request';
 import { queryCurrent } from './services/user';
 import defaultSettings from '../config/defaultSettings';
+import logoSvg from '@/assets/logo.svg';
 
 export async function getInitialState(): Promise<{
   currentUser?: API.CurrentUser;
@@ -37,6 +38,7 @@ export const layout = ({
     disableContentMargin: false,
     footerRender: () => <Footer />,
     menuHeaderRender: undefined,
+    logo: logoSvg,
     ...initialState?.settings,
   };
 };
