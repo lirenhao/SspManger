@@ -53,26 +53,31 @@ export default defineConfig({
       path: '/systemParam',
       name: 'systemParam',
       icon: 'setting',
+      locale: 'menu.systemParam',
       routes: [
         {
           path: '/systemParam/appRole',
           name: 'appRole',
           component: './systemParam/appRole',
+          locale: 'menu.appRole',
         },
         {
           path: '/systemParam/mccCode',
           name: 'mccCode',
           component: './systemParam/mccCode',
+          locale: 'menu.mccCode',
         },
         {
-          path: '/systemParam/ccyManager',
-          name: 'ccyManager',
+          path: '/systemParam/currency',
+          name: 'currency',
           component: './systemParam/ccyManager',
+          locale: 'menu.currency',
         },
         {
           path: '/systemParam/country',
           name: 'country',
           component: './systemParam/country',
+          locale: 'menu.country',
         },
       ],
     },
