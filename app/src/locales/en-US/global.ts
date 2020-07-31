@@ -1,11 +1,11 @@
 export default {
   'global.running': '正在执行',
   'global.error': '遇到错误',
-  'global.success': '成功',
-  'global.submit': '提交',
-  'global.cancel': '取消',
-  'global.operate': 'functions',
-  'global.create': 'create',
-  'global.edit': 'edit',
-  'global.delete': 'delete',
+  'global.success': 'Success',
+  'global.submit': 'Submit',
+  'global.cancel': 'Cancel',
+  'global.operate': 'Functions',
+  'global.create': 'Create',
+  'global.edit': 'Edit',
+  'global.delete': 'Delete',
 };

@@ -56,6 +56,12 @@ export default defineConfig({
       locale: 'menu.systemParam',
       routes: [
         {
+          path: '/systemParam/apiOrg',
+          name: 'apiOrg',
+          component: './api/org',
+          locale: 'menu.api.org',
+        },
+        {
           path: '/systemParam/appRole',
           name: 'appRole',
           component: './systemParam/appRole',
