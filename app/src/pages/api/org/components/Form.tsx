@@ -4,7 +4,7 @@ import { useIntl } from 'umi';
 import { TableListItem } from '../data';
 import { fetchExistOrgId } from '../service';
 
-interface CreateFormProps {
+interface FormProps {
   title: string;
   info: Partial<TableListItem>;
   modalVisible: boolean;
@@ -25,7 +25,7 @@ const formLayout = {
   },
 };
 
-const CreateForm: React.FC<CreateFormProps> = (props) => {
+const FormView: React.FC<FormProps> = (props) => {
   const { title, info, modalVisible, onCancel, onSubmit } = props;
 
   const intl = useIntl();
@@ -45,24 +45,30 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
         {...formLayout}
         form={form}
         initialValues={info}
-        onFinish={values => onSubmit(values as TableListItem)}
+        onFinish={values => onSubmit({ ...info, ...values } as TableListItem)}
       >
-        <Form.Item
-          name="orgId"
-          label={intl.formatMessage({ id: 'api.org.id' })}
-          rules={[
-            {
-              required: true,
-              message: intl.formatMessage({ id: 'api.org.id.required' }),
-            },
-            {
-              validator: (_, value) => (value === '' || value === info.orgId) ? Promise.resolve() :
-                fetchExistOrgId(value).then((result: boolean) => result ? Promise.reject(intl.formatMessage({ id: 'api.org.id.validator' })) : Promise.resolve()),
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+        {info.orgId ? (
+          <Form.Item label={intl.formatMessage({ id: 'api.org.orgId' })}>
+            <Input value={info.orgId} readOnly />
+          </Form.Item>
+        ) : (
+            <Form.Item
+              name="orgId"
+              label={intl.formatMessage({ id: 'api.org.orgId' })}
+              rules={[
+                {
+                  required: true,
+                  message: intl.formatMessage({ id: 'api.org.orgId.required' }),
+                },
+                {
+                  validator: (_, value) => (value === '' || value === info.orgId) ? Promise.resolve() :
+                    fetchExistOrgId(value).then((result: boolean) => result ? Promise.reject(intl.formatMessage({ id: 'api.org.id.validator' })) : Promise.resolve()),
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+          )}
         <Form.Item
           name="orgName"
           label={intl.formatMessage({ id: 'api.org.orgName' })}
@@ -86,10 +92,10 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
           ]}
         >
           <Select>
-            <Select.Option value="0">{intl.formatMessage({ id: 'api.org.type.0' })}</Select.Option>
-            <Select.Option value="1">{intl.formatMessage({ id: 'api.org.type.1' })}</Select.Option>
-            <Select.Option value="2">{intl.formatMessage({ id: 'api.org.type.2' })}</Select.Option>
-            <Select.Option value="3">{intl.formatMessage({ id: 'api.org.type.3' })}</Select.Option>
+            <Select.Option value="0">{intl.formatMessage({ id: 'api.org.orgType.0' })}</Select.Option>
+            <Select.Option value="1">{intl.formatMessage({ id: 'api.org.orgType.1' })}</Select.Option>
+            <Select.Option value="2">{intl.formatMessage({ id: 'api.org.orgType.2' })}</Select.Option>
+            <Select.Option value="9">{intl.formatMessage({ id: 'api.org.orgType.9' })}</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item
@@ -113,8 +119,8 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
               message: intl.formatMessage({ id: 'api.org.notifyUrl.required' }),
             },
             {
-              type: 'email',
-              message: intl.formatMessage({ id: 'api.org.notifyUrl.required' }),
+              type: 'url',
+              message: intl.formatMessage({ id: 'api.org.notifyUrl.url' }),
             },
           ]}
         >
@@ -133,8 +139,8 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
           <Input.TextArea rows={4} />
         </Form.Item>
       </Form>
-    </Modal>
+    </Modal >
   );
 };
 
-export default CreateForm;
+export default FormView;

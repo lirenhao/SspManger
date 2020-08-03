@@ -10,4 +10,5 @@ export default {
   'global.edit': '修改',
   'global.delete': '删除',
   'global.finish': '确定',
+  'global.view': '查看',
 };

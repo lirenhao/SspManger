@@ -1,30 +1,79 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Divider, Button } from 'antd';
+import { Divider, Modal, Button } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl } from 'umi';
 import { TableListItem } from './data';
-import { fetchQuery } from './service';
+import { fetchQuery, fetchGet, fetchSave, fetchUpdate, fetchDel } from './service';
 import Form from './components/Form';
+import Show from './components/Show';
 
+const { confirm } = Modal;
 
 const TableList: React.FC<{}> = () => {
 
   const intl = useIntl();
   const actionRef = useRef<ActionType>();
 
+  const [isView, setIsView] = useState<boolean>(false);
   const [isCreate, setIsCreate] = useState<boolean>(false);
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
-  const [record, setRecord] = useState<Partial<TableListItem>>({});
+  const [info, setInfo] = useState<Partial<TableListItem>>({});
 
-  const handleUpdate = (record: TableListItem) => {
-    setIsUpdate(true);
-    setRecord(record);
+  const handleView = async (id: string) => {
+    try {
+      const info = await fetchGet(id);
+      setInfo(info);
+      setIsView(true);
+    } catch (err) {
+
+    }
   }
 
-  const handleDelete = () => {
+  const handleCreate = async (record: TableListItem) => {
+    try {
+      await fetchSave(record);
+      setIsCreate(false);
+      await actionRef.current?.reload();
+    } catch (err) {
 
+    }
+  }
+
+  const beforeUpdate = async (id: string) => {
+    try {
+      const info = await fetchGet(id);
+      setInfo(info);
+      setIsUpdate(true);
+    } catch (err) {
+
+    }
+  }
+
+  const handleUpdate = async (record: TableListItem) => {
+    try {
+      await fetchUpdate(record);
+      setIsUpdate(false);
+      await actionRef.current?.reload();
+    } catch (err) {
+
+    }
+  }
+
+  const handleDelete = (orgId: string) => {
+    confirm({
+      title: intl.formatMessage({ id: 'api.org.delete' }, { orgId }),
+      okType: 'danger',
+      onOk: async () => {
+        try {
+          await fetchDel(orgId)
+          await actionRef.current?.reload();
+        } catch (err) {
+
+        }
+      }
+    });
   }
 
   const columns: ProColumns<TableListItem>[] = [
@@ -32,33 +81,37 @@ const TableList: React.FC<{}> = () => {
       title: intl.formatMessage({ id: 'global.operate' }),
       render: (_, record) => (
         <>
-          <a onClick={() => handleUpdate(record)} >
+          <a onClick={() => beforeUpdate(record.orgId)}>
             {intl.formatMessage({ id: 'global.edit' })}
           </a>
           <Divider type="vertical" />
-          <a onClick={handleDelete}>
+          <a onClick={() => handleDelete(record.orgId)}>
             {intl.formatMessage({ id: 'global.delete' })}
+          </a>
+          <Divider type="vertical" />
+          <a onClick={() => handleView(record.orgId)}>
+            {intl.formatMessage({ id: 'global.view' })}
           </a>
         </>
       ),
     },
     {
-      title: intl.formatMessage({ id: 'api.org.id' }),
+      title: intl.formatMessage({ id: 'api.org.orgId' }),
       dataIndex: 'orgId',
     },
     {
-      title: intl.formatMessage({ id: 'api.org.name' }),
+      title: intl.formatMessage({ id: 'api.org.orgName' }),
       dataIndex: 'orgName',
       hideInSearch: true,
     },
     {
-      title: intl.formatMessage({ id: 'api.org.type' }),
+      title: intl.formatMessage({ id: 'api.org.orgType' }),
       dataIndex: 'orgType',
       valueEnum: {
-        '0': { text: intl.formatMessage({ id: 'api.org.type.0' }) },
-        '1': { text: intl.formatMessage({ id: 'api.org.type.1' }) },
-        '2': { text: intl.formatMessage({ id: 'api.org.type.2' }) },
-        '3': { text: intl.formatMessage({ id: 'api.org.type.3' }) },
+        '0': { text: intl.formatMessage({ id: 'api.org.orgType.0' }) },
+        '1': { text: intl.formatMessage({ id: 'api.org.orgType.1' }) },
+        '2': { text: intl.formatMessage({ id: 'api.org.orgType.2' }) },
+        '9': { text: intl.formatMessage({ id: 'api.org.orgType.9' }) },
       },
       hideInSearch: true,
     },
@@ -99,19 +152,25 @@ const TableList: React.FC<{}> = () => {
         }}
         columns={columns}
       />
+      <Show
+        title={intl.formatMessage({ id: 'api.org.view.title' })}
+        info={info}
+        modalVisible={isView}
+        onCancel={() => setIsView(false)}
+      />
       <Form
-        title={intl.formatMessage({ id: 'role.createCompoent' })}
+        title={intl.formatMessage({ id: 'api.org.create.title' })}
         info={{}}
         modalVisible={isCreate}
         onCancel={() => setIsCreate(false)}
-        onSubmit={() => { }}
+        onSubmit={handleCreate}
       />
       <Form
-        title={intl.formatMessage({ id: 'role.createCompoent' })}
-        info={record}
+        title={intl.formatMessage({ id: 'api.org.update.title' })}
+        info={info}
         modalVisible={isUpdate}
         onCancel={() => setIsUpdate(false)}
-        onSubmit={() => { }}
+        onSubmit={handleUpdate}
       />
     </PageContainer>
   );

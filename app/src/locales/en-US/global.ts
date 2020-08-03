@@ -9,4 +9,5 @@ export default {
   'global.edit': 'Edit',
   'global.delete': 'Delete',
   'global.finish': 'finish',
+  'global.view': 'View',
 };

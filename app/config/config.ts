@@ -59,7 +59,7 @@ export default defineConfig({
           path: '/systemParam/apiOrg',
           name: 'apiOrg',
           component: './api/org',
-          locale: 'menu.api.org',
+          locale: 'menu.apiOrg',
         },
         {
           path: '/systemParam/appRole',

@@ -11,9 +11,22 @@ export async function fetchGet(orgId: string) {
   return request(`/svc/merApiOrg/${orgId}`);
 }
 
+export async function fetchDel(orgId: string) {
+  return request(`/svc/merApiOrg/${orgId}`, {
+    method: 'DELETE',
+  });
+}
+
 export async function fetchSave(params: TableListItem) {
   return request('/svc/merApiOrg', {
     method: 'POST',
+    data: params,
+  });
+}
+
+export async function fetchUpdate(params: TableListItem) {
+  return request('/svc/merApiOrg', {
+    method: 'PUT',
     data: params,
   });
 }

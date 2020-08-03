@@ -8,7 +8,7 @@ const data: TableListItem[] = [
     orgName: 'Test',
     orgType: '0',
     publicKey: 'publicKey',
-    notifyUrl: 'notifyUrl',
+    notifyUrl: 'http://test.com',
     privateKey: 'privateKey',
   }
 ];
@@ -27,27 +27,39 @@ function getAll(req: Request, res: Response) {
     totalElements: dataSource.length,
     totalPages: dataSource.length % params.size,
   }
-
   return res.json(page);
 }
 
 function get(req: Request, res: Response) {
-  const orgId = req.query.id;
+  const orgId = req.params.id;
   return res.send(data.filter(item => item.orgId === orgId)[0]);
 }
 
 function save(req: Request, res: Response) {
+  data.push(req.body);
+  return res.end();
+}
+
+function update(_: Request, res: Response) {
+  return res.end();
+}
+
+function del(req: Request, res: Response) {
+  const orgId = req.params.id;
+  delete data[data.map(item => item.orgId).indexOf(orgId)];
   return res.end();
 }
 
 function exist(req: Request, res: Response) {
-  const orgId = req.query.id;
+  const orgId = req.params.id;
   return res.send(data.filter(item => item.orgId === orgId).length > 0);
 }
 
 export default {
   'GET /svc/merApiOrg': getAll,
-  'GET /svc/merApiOrg/{id}': get,
+  'GET /svc/merApiOrg/:id': get,
   'POST /svc/merApiOrg': save,
-  'GET /svc/merApiOrg/{id}/exists': exist,
+  'PUT /svc/merApiOrg': update,
+  'DELETE /svc/merApiOrg/:id': del,
+  'GET /svc/merApiOrg/:id/exists': exist,
 };
