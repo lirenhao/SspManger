@@ -9,4 +9,5 @@ export default {
   'global.createExists': '该记录已存在，无法再次创建',
   'global.edit': '修改',
   'global.delete': '删除',
+  'global.finish': '确定',
 };

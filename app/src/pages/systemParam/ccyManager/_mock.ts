@@ -21,8 +21,16 @@ const ccyResult = {
   current: 0,
 };
 
+const pageResult = {
+  content: ccyResult.data,
+  totalElements: ccyResult.total,
+  success: true,
+  size: ccyResult.pageSize,
+  number: ccyResult.current,
+};
+
 function getAllCcy(req: Request, res: Response) {
-  return res.json(ccyResult);
+  return res.json(pageResult);
 }
 function saveCcy(req: Request, res: Response) {
   ccyResult.data[0] = {
@@ -58,5 +66,6 @@ export default {
   'PUT /ccyType': saveCcy,
   'PUT /ccyType/ccy': getOneCcy,
   'DELETE /ccyType/ccy': removeCcy,
-  'GET /ccyType/ccy/exists': existsCcy,
+  'GET /ccyType/{id}/exists': existsCcy,
+  'GET /ccyType/aaa/exists': existsCcy,
 };

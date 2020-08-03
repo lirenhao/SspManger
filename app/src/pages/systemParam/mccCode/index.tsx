@@ -114,7 +114,27 @@ const TableList: React.FC<{}> = () => {
   return (
     <PageContainer>
       <ProTable<TableListItem>
-        request={(params, sorter, filter) => queryMcc({ ...params, sorter, filter })}
+        request={async (params = {}, sort = {}) => {
+          try {
+            const result = await queryMcc({
+              ...params,
+              size: params.pageSize,
+              page: (params.current as number) - 1,
+              sort: Object.keys(sort).map((key) => `${key},desc${sort[key].replace('end', '')}`),
+            });
+            return {
+              data: result.content,
+              page: result.totalPages,
+              total: result.totalElements,
+              success: true,
+            };
+          } catch (err) {
+            return {
+              data: [],
+              success: false,
+            };
+          }
+        }}
         headerTitle=""
         actionRef={actionRef}
         rowKey="mcc"

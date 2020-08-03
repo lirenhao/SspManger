@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Form, Modal, Input, Button, message } from 'antd';
+import { Form, Modal, Input } from 'antd';
 import { IntlShape } from 'umi';
 import { TableListItem } from '../data';
 import { existCcy } from '../service';
+import formLayout from '../../../../formLayout';
 
 interface CreateFormProps {
   modalVisible: boolean;
@@ -30,20 +31,10 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   });
 
   const [form] = Form.useForm();
-  const formLayout = {
-    labelCol: { span: 7 },
-    wrapperCol: { span: 13 },
-  };
 
   const handleSubmit = async () => {
     const fieldsValue = await form.validateFields();
-    const isExists = await existCcy({ ...formVals, ...fieldsValue });
-
-    if (isExists) {
-      message.error(intl.formatMessage({ id: 'global.createExists' }));
-    } else {
-      onSubmit({ ...formVals, ...fieldsValue });
-    }
+    onSubmit({ ...formVals, ...fieldsValue });
   };
 
   const renderContent = () => {
@@ -57,9 +48,20 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
               required: true,
               message: intl.formatMessage({ id: 'currency.ccyTypeNecessary' }),
             },
+
+            {
+              validator: (_, value) =>
+                value === ''
+                  ? Promise.resolve()
+                  : existCcy(value).then((result: boolean) =>
+                      result
+                        ? Promise.reject(intl.formatMessage({ id: 'global.createExists' }))
+                        : Promise.resolve(),
+                    ),
+            },
           ]}
         >
-          <Input.TextArea rows={1} />
+          <Input />
         </Form.Item>
         <Form.Item
           name="ccyName"
@@ -71,20 +73,14 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
             },
           ]}
         >
-          <Input.TextArea rows={4} />
+          <Input />
         </Form.Item>
         <Form.Item name="ccyEname" label={intl.formatMessage({ id: 'currency.eName' })}>
-          <Input.TextArea rows={1} />
+          <Input />
         </Form.Item>
         <Form.Item name="ccySymbol" label={intl.formatMessage({ id: 'currency.symbol' })}>
-          <Input.TextArea rows={4} />
+          <Input />
         </Form.Item>
-        <Button name="finish" type="primary" onClick={() => handleSubmit()}>
-          {intl.formatMessage({ id: 'global.submit' })}
-        </Button>
-        <Button name="clean" onClick={() => onCancel()}>
-          {intl.formatMessage({ id: 'global.cancel' })}
-        </Button>
       </>
     );
   };
@@ -95,7 +91,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
       title={intl.formatMessage({ id: 'ccy.createCompoent' })}
       visible={modalVisible}
       onCancel={() => onCancel()}
-      footer={null}
+      onOk={() => form.submit()}
     >
       <Form
         {...formLayout}
@@ -106,6 +102,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
           ccyEname: formVals.ccyEname,
           ccySymbol: formVals.ccySymbol,
         }}
+        onFinish={() => handleSubmit()}
       >
         {renderContent()}
       </Form>

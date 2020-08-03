@@ -17,8 +17,16 @@ const mccResult = {
   current: 0,
 };
 
+const pageResult = {
+  content: mccResult.data,
+  totalElements: mccResult.total,
+  success: true,
+  size: mccResult.pageSize,
+  number: mccResult.current,
+};
+
 function getAllMccCode(req: Request, res: Response) {
-  return res.json(mccResult);
+  return res.json(pageResult);
 }
 function saveMcc(req: Request, res: Response) {
   mccResult.data[0] = {

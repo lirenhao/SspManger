@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Form, Modal, Input, Button } from 'antd';
+import { Form, Modal, Input } from 'antd';
 import { IntlShape } from 'umi';
 import { TableListItem } from '../data';
+import formLayout from '../../../../formLayout';
 
 interface CreateFormProps {
   modalVisible: boolean;
@@ -24,10 +25,6 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   });
 
   const [form] = Form.useForm();
-  const formLayout = {
-    labelCol: { span: 7 },
-    wrapperCol: { span: 13 },
-  };
 
   const handleSubmit = async () => {
     const fieldsValue = await form.validateFields();
@@ -47,7 +44,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
             },
           ]}
         >
-          <Input.TextArea rows={1} />
+          <Input disabled />
         </Form.Item>
         <Form.Item
           name="codeName"
@@ -59,7 +56,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
             },
           ]}
         >
-          <Input.TextArea rows={1} />
+          <Input />
         </Form.Item>
         <Form.Item
           name="codeEname"
@@ -71,14 +68,8 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
             },
           ]}
         >
-          <Input.TextArea rows={1} />
+          <Input />
         </Form.Item>
-        <Button name="finish" type="primary" onClick={() => handleSubmit()}>
-          {intl.formatMessage({ id: 'global.submit' })}
-        </Button>
-        <Button name="clean" onClick={() => onCancel()}>
-          {intl.formatMessage({ id: 'global.cancel' })}
-        </Button>
       </>
     );
   };
@@ -89,7 +80,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
       title={intl.formatMessage({ id: 'country.updateCompoent' })}
       visible={modalVisible}
       onCancel={() => onCancel()}
-      footer={null}
+      onOk={() => handleSubmit()}
     >
       <Form
         {...formLayout}

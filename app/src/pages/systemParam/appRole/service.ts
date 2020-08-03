@@ -4,20 +4,13 @@ import { TableListParams, TableListItem } from './data';
 export async function queryRole(params?: TableListParams) {
   return request('/appRole', {
     method: 'GET',
-    data: {
-      ...params,
-      method: 'get',
-    },
+    params,
   });
 }
 
 export async function getRole(params: TableListItem) {
   return request('/appRole/'.concat(params.id), {
     method: 'GET',
-    data: {
-      ...params,
-      method: 'get',
-    },
   });
 }
 
@@ -31,8 +24,6 @@ export async function saveRole(params: TableListItem) {
   });
 }
 
-export async function exist(params: TableListItem) {
-  return request('/approle/'.concat(params.id).concat('/exists'), {
-    method: 'GET',
-  });
+export async function exist(id: string) {
+  return request(`/approle/${id}/exists`);
 }

@@ -20,8 +20,16 @@ const result = {
   current: 0,
 };
 
+const pageResult = {
+  content: result.data,
+  totalElements: result.total,
+  success: true,
+  size: result.pageSize,
+  number: result.current,
+};
+
 function getAllRole(req: Request, res: Response) {
-  return res.json(result);
+  return res.json(pageResult);
 }
 
 function getShow(req: Request, res: Response) {

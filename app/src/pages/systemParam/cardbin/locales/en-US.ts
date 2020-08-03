@@ -1,0 +1,22 @@
+export default {
+  'cardbin.menuName': 'Cup Card Bin Management',
+  'cardbin.viewCompoent': 'VIEW CardBin',
+
+  'cardbin.issueriin': 'issuer iin',
+  'cardbin.issuername': 'issuer name',
+  'cardbin.cardlevel': 'bank card level',
+  'cardbin.issuingregion': 'issuing area',
+  'cardbin.pctbusinesstype': 'pct business type',
+  'cardbin.billingcurrency1': 'billingcurrency1',
+  'cardbin.billingcurrency2': 'billingcurrency2',
+  'cardbin.billingcurrency3': 'billingcurrency3',
+  'cardbin.reserved': 'reserved',
+  'cardbin.binlength': 'card bin length',
+  'cardbin.bin': 'card bin',
+  'cardbin.panlength': 'password length',
+  'cardbin.cardtype': 'bank card categories',
+  'cardbin.singledualmessage': 'singledualmessage/双重信息',
+  'cardbin.transationtypesupported': 'transation type supported',
+  'cardbin.transationchannelsupported': 'transation channel supported',
+  'cardbin.networkopened': 'network opened',
+};

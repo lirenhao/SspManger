@@ -1,6 +1,6 @@
 export default {
-  'global.running': '正在执行',
-  'global.error': '遇到错误',
+  'global.running': 'running',
+  'global.error': 'some error occurred,please try again',
   'global.success': 'Success',
   'global.submit': 'Submit',
   'global.cancel': 'Cancel',
@@ -8,4 +8,5 @@ export default {
   'global.create': 'Create',
   'global.edit': 'Edit',
   'global.delete': 'Delete',
+  'global.finish': 'finish',
 };

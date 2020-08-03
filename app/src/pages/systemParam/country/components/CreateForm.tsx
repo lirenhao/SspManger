@@ -1,34 +1,9 @@
-// import React from 'react';
-// import { Modal } from 'antd';
-// import { formatMessage } from 'umi';
-
-// interface CreateFormProps {
-//   modalVisible: boolean;
-//   onCancel: () => void;
-// }
-
-// const CreateForm: React.FC<CreateFormProps> = (props) => {
-//   const { modalVisible, onCancel } = props;
-//   return (
-//     <Modal
-//       destroyOnClose
-//       title={formatMessage({ id: 'country.createCompoent' })}
-//       visible={modalVisible}
-//       onCancel={() => onCancel()}
-//       footer={null}
-//     >
-//       {props.children}
-//     </Modal>
-//   );
-// };
-
-// export default CreateForm;
-
 import React, { useState } from 'react';
-import { Form, Modal, Input, Button, message } from 'antd';
+import { Form, Modal, Input } from 'antd';
 import { IntlShape } from 'umi';
 import { TableListItem } from '../data';
 import { exist } from '../service';
+import formLayout from '../../../../formLayout';
 
 interface CreateFormProps {
   modalVisible: boolean;
@@ -50,20 +25,10 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   });
 
   const [form] = Form.useForm();
-  const formLayout = {
-    labelCol: { span: 7 },
-    wrapperCol: { span: 13 },
-  };
 
   const handleSubmit = async () => {
     const fieldsValue = await form.validateFields();
-    const isExists = await exist({ ...formVals, ...fieldsValue });
-
-    if (isExists) {
-      message.error(intl.formatMessage({ id: 'global.createExists' }));
-    } else {
-      onSubmit({ ...formVals, ...fieldsValue });
-    }
+    onSubmit({ ...formVals, ...fieldsValue });
   };
 
   const renderContent = () => {
@@ -77,9 +42,19 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
               required: true,
               message: intl.formatMessage({ id: 'country.internationalCodeNecessary' }),
             },
+            {
+              validator: (_, value) =>
+                value === ''
+                  ? Promise.resolve()
+                  : exist(value).then((result: boolean) =>
+                      result
+                        ? Promise.reject(intl.formatMessage({ id: 'global.createExists' }))
+                        : Promise.resolve(),
+                    ),
+            },
           ]}
         >
-          <Input.TextArea rows={1} />
+          <Input />
         </Form.Item>
         <Form.Item
           name="codeName"
@@ -91,7 +66,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
             },
           ]}
         >
-          <Input.TextArea rows={1} />
+          <Input />
         </Form.Item>
         <Form.Item
           name="codeEname"
@@ -103,14 +78,8 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
             },
           ]}
         >
-          <Input.TextArea rows={1} />
+          <Input />
         </Form.Item>
-        <Button name="finish" type="primary" onClick={() => handleSubmit()}>
-          {intl.formatMessage({ id: 'global.submit' })}
-        </Button>
-        <Button name="clean" onClick={() => onCancel()}>
-          {intl.formatMessage({ id: 'global.cancel' })}
-        </Button>
       </>
     );
   };
@@ -121,7 +90,9 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
       title={intl.formatMessage({ id: 'country.createCompoent' })}
       visible={modalVisible}
       onCancel={() => onCancel()}
-      footer={null}
+      onOk={() => handleSubmit()}
+      okText={intl.formatMessage({ id: 'global.submit' })}
+      cancelText={intl.formatMessage({ id: 'global.cancel' })}
     >
       <Form
         {...formLayout}

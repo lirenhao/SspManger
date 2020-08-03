@@ -21,8 +21,16 @@ const countryResult = {
   current: 0,
 };
 
+const pageResult = {
+  content: countryResult.data,
+  totalElements: countryResult.total,
+  success: true,
+  size: countryResult.pageSize,
+  number: countryResult.current,
+};
+
 function getAllcountry(req: Request, res: Response) {
-  return res.json(countryResult);
+  return res.json(pageResult);
 }
 function savecountry(req: Request, res: Response) {
   countryResult.data[0] = {
@@ -46,9 +54,15 @@ function removecountry(req: Request, res: Response) {
   }
 }
 
+function exists(req: Request, res: Response) {
+  res.send(false);
+}
+
 export default {
   'GET /countryCode': getAllcountry,
   'PUT /countryCode': savecountry,
   'PUT /countryCode/country': getOnecountry,
   'DELETE /countryCode/country': removecountry,
+  'GET /countryCode/id/exists': exists,
+  'GET /countryCode/{id}/exists': exists,
 };

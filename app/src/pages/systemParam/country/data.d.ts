@@ -11,15 +11,16 @@ export interface TableListPagination {
 }
 
 export interface TableListData {
-  list: TableListItem[];
-  pagination: Partial<TableListPagination>;
+  content: TableListItem[];
+  totalPages: number;
+  totalElements: number;
 }
 
 export interface TableListParams {
   internationalCode?: string;
   codeName?: string;
   codeEname?: string;
-  currentPage?: number;
-  filter?: { [key: string]: any[] };
-  sorter?: { [key: string]: any };
+  size?: number;
+  page?: number;
+  sort?: string[];
 }
