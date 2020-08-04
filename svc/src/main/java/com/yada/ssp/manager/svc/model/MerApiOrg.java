@@ -6,21 +6,11 @@ import javax.persistence.*;
 import java.util.Set;
 
 /**
- * Created by bjy on 2018/12/19.
  * API机构表
  */
 @Entity
 @Table(name = "T_B_MERAPI_ORG")
 public class MerApiOrg {
-
-    public static final String TABLE_ALIAS = "参数维护";
-    public static final String ALIAS_ORG_ID = "Merchant Org ID";
-    public static final String ALIAS_ORG_NAME = "Merchant Org Name";
-    public static final String ALIAS_ORG_TYPE = "Merchant Org Type";
-    public static final String ALIAS_PUBLIC_KEY = "机构公钥";
-    public static final String ALIAS_NOTIFY_URL = "通知地址";
-    public static final String ALIAS_PRIVATE_KEY = "银行私钥";
-    public static final String ALIAS_MERCHANT = "所属商户";
 
     //机构ID
     @Id

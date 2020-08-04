@@ -1,14 +1,16 @@
 package com.yada.ssp.manager.svc.controller;
 
 import com.yada.ssp.manager.svc.model.MerApiOrg;
+import com.yada.ssp.manager.svc.model.Merchant;
 import com.yada.ssp.manager.svc.query.MerApiOrgQuery;
 import com.yada.ssp.manager.svc.service.MerApiOrgService;
-import com.yada.ssp.manager.svc.service.MerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 /**
  * 商户API机构参数维护API
@@ -18,12 +20,10 @@ import org.springframework.web.bind.annotation.*;
 public class MerApiOrgController {
 
     private final MerApiOrgService merApiOrgService;
-    private final MerchantService merchantService;
 
     @Autowired
-    public MerApiOrgController(MerApiOrgService merApiOrgService, MerchantService merchantService) {
+    public MerApiOrgController(MerApiOrgService merApiOrgService) {
         this.merApiOrgService = merApiOrgService;
-        this.merchantService = merchantService;
     }
 
     @GetMapping
@@ -46,12 +46,6 @@ public class MerApiOrgController {
         return merApiOrgService.findOne(orgId);
     }
 
-    @PutMapping("/{orgId}/merchant")
-    public String saveUpdateMerchant(@PathVariable String orgId, String[] merchantId) {
-        merApiOrgService.saveUpdateMerchant(merchantId, orgId);
-        return "redirect:mapping";
-    }
-
     @DeleteMapping("/{orgId}")
     public void delete(@PathVariable String orgId) {
         merApiOrgService.delete(orgId);
@@ -60,5 +54,15 @@ public class MerApiOrgController {
     @GetMapping("/{orgId}/exists")
     public boolean exists(@PathVariable String orgId) {
         return merApiOrgService.exists(orgId);
+    }
+
+    @GetMapping("/{orgId}/mapping")
+    public Set<Merchant> getMerchant(@PathVariable String orgId) {
+        return merApiOrgService.findOne(orgId).getMerchant();
+    }
+
+    @PutMapping("/{orgId}/mapping")
+    public void saveUpdateMerchant(@PathVariable String orgId, String[] merchantId) {
+        merApiOrgService.saveUpdateMerchant(merchantId, orgId);
     }
 }

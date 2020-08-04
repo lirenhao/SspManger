@@ -30,7 +30,6 @@ public class PospOrgTmk {
     @Column
     private String terminalId;
 
-    @JsonIgnore
     @OneToOne(targetEntity = Org.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "orgId", referencedColumnName = "ORG_ID", insertable=false, updatable=false)
     private Org org;

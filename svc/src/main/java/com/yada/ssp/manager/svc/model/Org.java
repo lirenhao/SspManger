@@ -1,5 +1,7 @@
 package com.yada.ssp.manager.svc.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.LinkedHashSet;
@@ -8,24 +10,6 @@ import java.util.Set;
 @Entity
 @Table(name = "T_B_ORG")
 public class Org implements Serializable {
-
-    public static final String TABLE_ALIAS = "机构";
-    public static final String ALIAS_ORG_ID = "机构号";
-    public static final String ALIAS_PORG_ID = "上级机构号";
-    public static final String ALIAS_ORG_LEV = "机构级别";
-    public static final String ALIAS_CUP_ID = "银联联行号";
-    public static final String ALIAS_ZONE_CODE = "区域代码";
-    public static final String ALIAS_BANK_NO = "EACQ省行机构号";
-    public static final String ALIAS_NAME = "机构名称";
-    public static final String ALIAS_CONTACT = "联系人";
-    public static final String ALIAS_TEL = "联系电话";
-    public static final String ALIAS_FAX = "传真号码";
-    public static final String ALIAS_ADDR = "机构地址";
-    public static final String ALIAS_STATUS = "状态";
-    public static final String ALIAS_ONLINE_FLAG = "新旧线系统标志";
-    public static final String ALIAS_ACQ_ORG_ID = "网点机构号";
-    public static final String ALIAS_ACQ_BANK_NO = "省行机构号";
-    public static final String ALIAS_EACQ_ORG_ID = "EACQ网点机构号";
 
     /**
      * 机构ID
@@ -42,6 +26,7 @@ public class Org implements Serializable {
     /**
      * 下级机构
      */
+    @JsonIgnore
     @OneToMany(mappedBy = "org")
     @OrderBy("orgId ASC")
     private Set<Org> children;

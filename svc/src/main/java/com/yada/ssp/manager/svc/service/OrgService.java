@@ -2,12 +2,15 @@ package com.yada.ssp.manager.svc.service;
 
 import com.yada.ssp.manager.svc.dao.OrgDao;
 import com.yada.ssp.manager.svc.model.Org;
+import com.yada.ssp.manager.svc.view.TreeNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -35,10 +38,32 @@ public class OrgService {
     }
 
     /**
-     * 根据userGrpId查询
+     * 根据orgId查询
      */
     public Org findOne(String orgId) {
         return orgDao.getOne(orgId);
+    }
+
+    /**
+     * 生成机构树
+     */
+    public TreeNode[] genOrgTree(String orgId) {
+        Org org = orgDao.getOne(orgId);
+        TreeNode root = new TreeNode();
+        root.setValue(org.getOrgId());
+        root.setTitle(org.getName());
+        root.setChildren(genChildren(org.getChildren()));
+        return new TreeNode[]{root};
+    }
+
+    private TreeNode[] genChildren(Set<Org> children) {
+        return children.stream().map(org -> {
+            TreeNode node = new TreeNode();
+            node.setValue(org.getOrgId());
+            node.setTitle(org.getName());
+            node.setChildren(genChildren(org.getChildren()));
+            return node;
+        }).collect(Collectors.toList()).toArray(new TreeNode[]{});
     }
 
     /**
@@ -87,7 +112,7 @@ public class OrgService {
         return orgDao.findAll();
     }
 
-    public boolean exists (String id){
+    public boolean exists(String id) {
         return orgDao.existsById(id);
     }
 }

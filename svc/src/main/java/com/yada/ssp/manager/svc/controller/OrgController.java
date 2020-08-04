@@ -3,6 +3,7 @@ package com.yada.ssp.manager.svc.controller;
 import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.Org;
 import com.yada.ssp.manager.svc.service.OrgService;
+import com.yada.ssp.manager.svc.view.TreeNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,11 @@ public class OrgController {
         Org pOrg = orgService.findOne(pid);
         org.setOrg(pOrg);
         orgService.save(org);
+    }
+
+    @GetMapping("/tree")
+    public TreeNode[] tree(@RequestAttribute("auth") Auth auth) {
+        return orgService.genOrgTree(auth.getOrgId());
     }
 
     @GetMapping("/{id}")
