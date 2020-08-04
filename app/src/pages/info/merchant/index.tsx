@@ -6,6 +6,7 @@ import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl, useModel } from 'umi';
 import { TableListItem } from './data';
 import { fetchQuery, fetchGet, fetchOrgTree } from './service';
+import Show from './components/Show';
 
 const TableList: React.FC<{}> = () => {
 
@@ -22,7 +23,7 @@ const TableList: React.FC<{}> = () => {
     fetchOrgTree().then(setOrgTree);
   }, []);
 
-  const beforeUpdate = async (id: string) => {
+  const handleView = async (id: string) => {
     try {
       const info = await fetchGet(id);
       setInfo(info);
@@ -36,7 +37,7 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'global.operate' }),
       render: (_, record) => (
-        <a onClick={() => beforeUpdate(record.merchantId)}>
+        <a onClick={() => handleView(record.merchantId)}>
           {intl.formatMessage({ id: 'merchant.view', defaultMessage: 'VIEW' })}
         </a>
       ),
@@ -116,6 +117,12 @@ const TableList: React.FC<{}> = () => {
           }
         }}
         columns={columns}
+      />
+      <Show
+        title={intl.formatMessage({ id: 'merchant.view.title' })}
+        info={info}
+        modalVisible={isView}
+        onCancel={() => setIsView(false)}
       />
     </PageContainer>
   );

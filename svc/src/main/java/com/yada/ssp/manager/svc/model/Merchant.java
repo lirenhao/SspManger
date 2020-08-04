@@ -38,7 +38,6 @@ public class Merchant {
     private Set<Merchant> children;
 
     //收单机构代码
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ACQ_ORG_ID", referencedColumnName = "ACQ_ORG_ID")
     private Org org;

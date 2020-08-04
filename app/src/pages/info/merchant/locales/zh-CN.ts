@@ -1,6 +1,7 @@
 export default {
   'merchant.title': '商户信息',
   'merchant.view': '查看',
+  'merchant.view.title': '商户信息查看',
   'merchant.orgId': '机构号',
   'merchant.merchantId': '商户号',
   'merchant.merNameChnAbbr': '商户中文经商名称',

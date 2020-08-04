@@ -47,10 +47,10 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
                 value === ''
                   ? Promise.resolve()
                   : exist(value).then((result: boolean) =>
-                      result
-                        ? Promise.reject(intl.formatMessage({ id: 'global.createExists' }))
-                        : Promise.resolve(),
-                    ),
+                    result
+                      ? Promise.reject(intl.formatMessage({ id: 'global.createExists' }))
+                      : Promise.resolve(),
+                  ),
             },
           ]}
         >
