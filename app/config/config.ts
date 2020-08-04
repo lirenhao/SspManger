@@ -59,7 +59,7 @@ export default defineConfig({
           path: '/systemParam/merchant',
           name: 'merchant',
           component: './info/merchant',
-          locale: 'menu.merchant',
+          locale: 'merchant.title',
         },
         {
           path: '/systemParam/apiOrg',

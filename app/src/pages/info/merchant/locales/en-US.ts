@@ -7,4 +7,10 @@ export default {
   'merchant.merNameEngAbbr': 'MERCHANT ENGLISH DOING BUSINESS NAME',
   'merchant.merchantType': 'MERCHANT TYPE',
   'merchant.merStatus': 'MERCHANT STATUS',
+  'merchant.merchantType.J': 'SUB GROUP',
+  'merchant.merchantType.D': 'OUTLETS',
+  'merchant.merchantType.O': 'ORGANISATION',
+  'merchant.merStatus.0': 'PENDING',
+  'merchant.merStatus.1': 'NORMAL',
+  'merchant.merStatus.3': 'TERMINATED',
 };

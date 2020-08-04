@@ -7,4 +7,10 @@ export default {
   'merchant.merNameEngAbbr': '商户英文经商名称',
   'merchant.merchantType': '商户类型',
   'merchant.merStatus': '商户状态',
+  'merchant.merchantType.J': 'SUB GROUP',
+  'merchant.merchantType.D': 'OUTLETS',
+  'merchant.merchantType.O': 'ORGANISATION',
+  'merchant.merStatus.0': 'PENDING',
+  'merchant.merStatus.1': 'NORMAL',
+  'merchant.merStatus.3': 'TERMINATED',
 };
