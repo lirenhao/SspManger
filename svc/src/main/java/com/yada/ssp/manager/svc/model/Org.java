@@ -20,6 +20,7 @@ public class Org implements Serializable {
     /**
      * 上级机构编码
      */
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "P_ORG_ID", referencedColumnName = "ORG_ID")
     private Org org;

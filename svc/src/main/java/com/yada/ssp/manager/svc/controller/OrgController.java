@@ -7,6 +7,9 @@ import com.yada.ssp.manager.svc.view.TreeNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * TODO 机构接口根据项目在扩充
@@ -23,9 +26,8 @@ public class OrgController {
     }
 
     @GetMapping
-    public Org list(@RequestAttribute("auth") Auth auth) {
-        // 获取当前用户所在机构
-        return orgService.findOne(auth.getOrgId());
+    public List<Org> list() {
+        return orgService.findAll();
     }
 
     @PostMapping
@@ -35,9 +37,30 @@ public class OrgController {
         orgService.save(org);
     }
 
+    /**
+     * 获取机构树
+     */
     @GetMapping("/tree")
     public TreeNode[] tree(@RequestAttribute("auth") Auth auth) {
         return orgService.genOrgTree(auth.getOrgId());
+    }
+
+    /**
+     * 获取所有子集机构的key:value
+     */
+    @GetMapping("/map")
+    public Map<String, String> map(@RequestAttribute("auth") Auth auth) {
+        return orgService.findByOrgIdStartingWithList(auth.getOrgId())
+                .stream().collect(Collectors.toMap(Org::getOrgId, Org::getName));
+    }
+
+    /**
+     * 获取所有二级机构的key:value
+     */
+    @GetMapping("/second")
+    public Map<String, String> secondOrg(@RequestAttribute("auth") Auth auth) {
+        return orgService.findSecondOrg(auth.getOrgId())
+                .stream().collect(Collectors.toMap(Org::getOrgId, Org::getName));
     }
 
     @GetMapping("/{id}")

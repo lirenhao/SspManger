@@ -1,80 +1,16 @@
 package com.yada.ssp.manager.svc.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.yada.ssp.manager.svc.model.Org;
 
 import javax.persistence.*;
 import java.util.Set;
 
 /**
- * Created by bjy on 2018/7/23.
- * 商户表
+ * 商户信息
  */
-
 @Entity
 @Table(name = "T_B_MERCHANT_BASE_GAS")
 public class Merchant {
-
-    public static final String TABLE_ALIAS = "MERCHANT NAME";
-    public static final String ALIAS_MERCHANT_ID = "MERCHANT ID";
-    public static final String ALIAS_MERCHANT_TYPE = "MERCHANT TYPE";
-    public static final String ALIAS_MER_LEV = "GROUPING?";
-    public static final String ALIAS_P_MERID = "GROUP MID";
-    public static final String ALIAS_CHILDREN = "下级商户";
-    public static final String ALIAS_ACQ_ORG_ID = "ACQUIRER CODE";
-    public static final String ALIAS_SIGN_ORG_ID = "AUTHORISATION CODE";
-    public static final String ALIAS_VOUCHER_ORG_ID = "RECEIPT CODE";
-    public static final String ALIAS_ZONE_ID = "AREA CODE";
-    public static final String ALIAS_MER_STATUS = "MERCHANT STATUS";
-    public static final String ALIAS_MER_RISK = "MERCHANT RISK LEVEL";
-    public static final String ALIAS_MER_GROUP = "MERCHANT GROUPING";
-    public static final String ALIAS_MCC = "MERCHANT MCC";
-    public static final String ALIAS_MER_NAME_CHN = "MERCHANT CHINESE REGISTERED COMPANY NAME";
-    public static final String ALIAS_MER_NAME_CHN_ABBR = "MERCHANT CHINESE DOING BUSINESS NAME";
-    public static final String ALIAS_MER_NAME_ENG = "MERCHANT ENGLISH REGISTERED COMPANY NAME";
-    public static final String ALIAS_MER_NAME_ENG_ABBR = "MERCHANT ENGLISH DOING BUSINESS NAME";
-    public static final String ALIAS_BUSINESS_ADDRESS_CHN = "CHINESE BUSINESS ADDRESS";
-    public static final String ALIAS_BUSINESS_ADDRESS_ENG = "ENGLISH BUSINESS ADDRESS";
-    public static final String ALIAS_CITY_ENG = "ENGLISH CITY NAME";
-    public static final String ALIAS_COMPANY_TYPE = "TYPE OF COMPANY";
-    public static final String ALIAS_TRAN_CTL = "MERCHANT FUNCTIONS";
-    public static final String ALIAS_ACCOUNT_TYPE = "SETTLEMENT ACCOUNT NATURE";
-    public static final String ALIAS_SETTLE_MODE = "SETTLEMENT METHOD";
-    public static final String ALIAS_ACCOUNT_NO = "SETTLEMENT ACCOUNT NUMBER";
-    public static final String ALIAS_ACCOUNT_NAME = "SETTLEMENT MERCHANT NAME";
-    public static final String ALIAS_ACCOUNT_BANK_NO = "SETTLEMENT BANK CODE";
-    public static final String ALIAS_ACCOUNT_BANK_NAME = "SETTLEMENT BANK NAME";
-    public static final String ALIAS_BUSINESS_LICENSE = "ACRA/UEN NUMBER";
-    public static final String ALIAS_ENTERPRISE_CODE = "LICENSE NUMBER";
-    public static final String ALIAS_LEGAL_PERSON_ID_TYPE = "LEGAL ID TYPE";
-    public static final String ALIAS_LEGAL_PERSON_ID = "IDENTITY CARD / PASSPORT NUMBER";
-    public static final String ALIAS_LEGAL_PERSON_NAME = "LEGAL NAME";
-    public static final String ALIAS_REG_ADDRESS = "REGISTERED ADDRESS";
-    public static final String ALIAS_REG_CAPITAL = "REGISTERED CAPITAL";
-    public static final String ALIAS_EMPLOYEE_NUM = "NUMBER OF EMPLOYEES";
-    public static final String ALIAS_CONTACT_PERSON_NAME = "CONTACT PERSON";
-    public static final String ALIAS_TELEPHONE = "PHONE NO.";
-    public static final String ALIAS_TAX = "FAX NO.";
-    public static final String ALIAS_EMAIL = "EMAIL ADDRESS";
-    public static final String ALIAS_POST_CODE = "POSTAL CODE";
-    public static final String ALIAS_COMM_ADDRESS = "CORRESPONDENCE ADDRESS";
-    public static final String ALIAS_APPLY_DATE = "DATE OF APPLICATION";
-    public static final String ALIAS_START_DATE = "ACTIVATION DATE";
-    public static final String ALIAS_BANK_CUSTOMER_NAME = "RELATIONSHIP MANAGER";
-    public static final String ALIAS_BANK_CUSTOMER_NUM = "RELATIONSHIP MANAGER ID";
-    public static final String ALIAS_PROTOCOL_NUM = "AGREEMENT NUMBER";
-    public static final String ALIAS_REMARK = "REMARKS";
-    public static final String ALIAS_FROZEN_FLAG = "FREEZE FLAG";
-    public static final String ALIAS_REJECT_RESON = "REJECT REASON";
-    public static final String ALIAS_LOGOUT_DATE = "LOFFOFF TIME";
-    public static final String ALIAS_LOGOUT_RESON = "REASON FOR CANCELLATION";
-    public static final String ALIAS_RECODE_STAT = "RECORD STATUS";
-    public static final String ALIAS_LASTOPER_FLAG = "LAST UPDATE RECORD";
-    public static final String ALIAS_MODIFY_OPER = "MODIFIED USER IDENTITY";
-    public static final String ALIAS_MODIFY_DATE = "MODIFIED DATE";
-    public static final String ALIAS_CREATE_DATE = "CREATION DATE";
-    public static final String ALIAS_CARD_CTL = "CARD ASSOCIATION";
-    public static final String ALIAS_PMERCHANT = "父级商户";
 
     //商户号
     @Id
