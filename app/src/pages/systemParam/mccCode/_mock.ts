@@ -49,9 +49,15 @@ function removeMcc(req: Request, res: Response) {
   }
 }
 
+function exist(req: Request, res: Response) {
+  // console.log(req.param.id)
+  res.send(false);
+}
+
 export default {
   'GET /mccCode': getAllMccCode,
   'PUT /mccCode': saveMcc,
-  'PUT /mccCode/mcc2': getOneMcc,
-  'DELETE /mccCode/mcc2': removeMcc,
+  'PUT /mccCode/:id': getOneMcc,
+  'DELETE /mccCode/:id': removeMcc,
+  'GET /mccCode/:id/exists': exist,
 };

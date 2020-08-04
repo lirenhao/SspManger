@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Form, Modal, Input } from 'antd';
-import { IntlShape } from 'umi';
+import { useIntl } from 'umi';
 import { TableListItem } from '../data';
-import { existMcc } from '../service';
+import { exist } from '../service';
 import formLayout from '../../../../formLayout';
 
 interface CreateFormProps {
-  intl: IntlShape;
   modalVisible: boolean;
   onCancel: () => void;
   onSubmit: (values: TableListItem) => void;
@@ -17,10 +16,12 @@ export interface UpdateFormState {
 }
 
 const CreateForm: React.FC<CreateFormProps> = (props) => {
-  const { modalVisible, onCancel, onSubmit, intl } = props;
+  const intl = useIntl();
+  const { modalVisible, onCancel, onSubmit } = props;
   const [formVals] = useState<TableListItem>({
-    mcc: '',
-    remark: '',
+    accountBankNo: '',
+    bankName: '',
+    bic: '',
   });
 
   const [form] = Form.useForm();
@@ -34,18 +35,18 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
     return (
       <>
         <Form.Item
-          name="mcc"
-          label={intl.formatMessage({ id: 'mcc.mcc' })}
+          name="accountBankNo"
+          label={intl.formatMessage({ id: 'banks.accountBankNo' })}
           rules={[
             {
               required: true,
-              message: intl.formatMessage({ id: 'mcc.mccNecessary' }),
+              message: intl.formatMessage({ id: 'banks.accountBankNoNecessary' }),
             },
             {
               validator: (_, value) =>
                 value === ''
                   ? Promise.resolve()
-                  : existMcc(value).then((result: boolean) =>
+                  : exist(value).then((result: boolean) =>
                       result
                         ? Promise.reject(intl.formatMessage({ id: 'global.createExists' }))
                         : Promise.resolve(),
@@ -55,8 +56,20 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
         >
           <Input />
         </Form.Item>
-        <Form.Item name="remark" label={intl.formatMessage({ id: 'mcc.remark' })}>
-          <Input.TextArea rows={4} />
+        <Form.Item
+          name="bankName"
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({ id: 'banks.banknameNecessary' }),
+            },
+          ]}
+          label={intl.formatMessage({ id: 'banks.bankname' })}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item name="bic" label={intl.formatMessage({ id: 'banks.bic' })}>
+          <Input />
         </Form.Item>
       </>
     );
@@ -65,7 +78,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   return (
     <Modal
       destroyOnClose
-      title={intl.formatMessage({ id: 'mcc.createCompoent' })}
+      title={intl.formatMessage({ id: 'banks.createCompoent' })}
       visible={modalVisible}
       onCancel={() => onCancel()}
       onOk={() => handleSubmit()}
@@ -74,8 +87,9 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
         {...formLayout}
         form={form}
         initialValues={{
-          mcc: formVals.mcc,
-          remark: formVals.remark,
+          accountBankNo: formVals.accountBankNo,
+          bankName: formVals.bankName,
+          bic: formVals.bic,
         }}
       >
         {renderContent()}

@@ -85,6 +85,19 @@ export default defineConfig({
           component: './systemParam/country',
           locale: 'menu.country',
         },
+        {
+          path: '/systemParam/banks',
+          name: 'bank list',
+          component: './systemParam/banks',
+          locale: 'menu.banks',
+        },
+        {
+          path: '/systemParam/orgZmk',
+          name: 'orgzmk',
+          component: './systemParam/orgZmk',
+
+          locale: 'menu.orgZmk',
+        },
       ],
     },
     {
