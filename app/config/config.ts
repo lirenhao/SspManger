@@ -56,10 +56,22 @@ export default defineConfig({
       locale: 'menu.systemParam',
       routes: [
         {
+          path: '/systemParam/merchant',
+          name: 'merchant',
+          component: './info/merchant',
+          locale: 'menu.merchant',
+        },
+        {
           path: '/systemParam/apiOrg',
           name: 'apiOrg',
           component: './api/org',
           locale: 'menu.apiOrg',
+        },
+        {
+          path: '/systemParam/apiOrgMapping',
+          name: 'apiOrgMapping',
+          component: './api/org/mapping',
+          locale: 'menu.apiOrg.mapping',
         },
         {
           path: '/systemParam/appRole',
