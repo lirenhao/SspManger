@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/pospOrgTmk")
@@ -37,16 +36,25 @@ public class PospOrgTmkController {
             query.setOrgId("");
         }
         // TODO 密钥数量提示
-        // "total", pospOrgTmkService.total(query.getOrgId());
-        // "enable", pospOrgTmkService.enable(query.getOrgId());
-        // "unable", pospOrgTmkService.unable(query.getOrgId());
-        // "termNum", pospOrgTmkService.termNum(query.getOrgId());
         return pospOrgTmkService.findAll(query, pageable);
     }
 
     @PostMapping
     public void save(@ModelAttribute PospOrgTmk pospOrgTmk) {
         pospOrgTmkService.saveAndUpdate(pospOrgTmk);
+    }
+
+    /**
+     * 密钥数量提示
+     */
+    @GetMapping("/scalar")
+    public Map<String, Integer> scalar(@RequestAttribute("auth") Auth auth) {
+        Map<String, Integer> result = new HashMap<>();
+        result.put("total", pospOrgTmkService.total(auth.getOrgId()));
+        result.put("enable", pospOrgTmkService.enable(auth.getOrgId()));
+        result.put("unable", pospOrgTmkService.unable(auth.getOrgId()));
+        result.put("termNum", pospOrgTmkService.termNum(auth.getOrgId()));
+        return result;
     }
 
     @DeleteMapping("/{orgId}/{tmkZmk}")
