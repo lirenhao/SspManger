@@ -35,7 +35,6 @@ public class PospOrgTmkController {
         if (query.getOrgId() == null) {
             query.setOrgId("");
         }
-        // TODO 密钥数量提示
         return pospOrgTmkService.findAll(query, pageable);
     }
 

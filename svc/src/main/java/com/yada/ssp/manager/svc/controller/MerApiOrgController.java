@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,7 +28,7 @@ public class MerApiOrgController {
     }
 
     @GetMapping
-    public Page<MerApiOrg> list(@ModelAttribute MerApiOrgQuery query, @PageableDefault Pageable pageable) {
+    public Page<MerApiOrg> page(@ModelAttribute MerApiOrgQuery query, @PageableDefault Pageable pageable) {
         return merApiOrgService.findAll(query, pageable);
     }
 
@@ -39,6 +40,11 @@ public class MerApiOrgController {
     @PutMapping
     public void update(@ModelAttribute MerApiOrg merApiOrg) {
         merApiOrgService.update(merApiOrg);
+    }
+
+    @GetMapping("/list")
+    public List<MerApiOrg> list() {
+        return merApiOrgService.findAll();
     }
 
     @GetMapping("/{orgId}")

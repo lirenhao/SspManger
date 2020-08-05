@@ -30,6 +30,10 @@ function getAll(req: Request, res: Response) {
   return res.json(page);
 }
 
+function getList(_: Request, res: Response) {
+  return res.send(data);
+}
+
 function get(req: Request, res: Response) {
   const orgId = req.params.id;
   return res.send(data.filter(item => item.orgId === orgId)[0]);
@@ -57,6 +61,7 @@ function exist(req: Request, res: Response) {
 
 export default {
   'GET /svc/merApiOrg': getAll,
+  'GET /svc/merApiOrg/list': getList,
   'GET /svc/merApiOrg/:id': get,
   'POST /svc/merApiOrg': save,
   'PUT /svc/merApiOrg': update,

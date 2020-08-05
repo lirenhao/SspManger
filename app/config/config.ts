@@ -62,6 +62,12 @@ export default defineConfig({
           locale: 'merchant.title',
         },
         {
+          path: '/systemParam/termSn',
+          name: 'termSn',
+          component: './info/termSn',
+          locale: 'termSn.title',
+        },
+        {
           path: '/systemParam/apiOrg',
           name: 'apiOrg',
           component: './api/org',
