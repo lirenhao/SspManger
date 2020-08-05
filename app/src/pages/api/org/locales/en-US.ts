@@ -1,4 +1,7 @@
 export default {
+  'apiOrg.title': 'Merchant Api Setting',
+  'apiOrg.mapping.title': 'Merchant API Mapping',
+  'apiOrg.operate.mapping': 'MERCHANT MAPPING',
   'api.org.orgId': 'Merchant Org ID',
   'api.org.orgName': 'Merchant Org Name',
   'api.org.orgType': 'Merchant Org Type',

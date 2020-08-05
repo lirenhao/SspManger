@@ -28,7 +28,7 @@ const Mapping: React.FC<{}> = () => {
       title: intl.formatMessage({ id: 'global.operate' }),
       render: (_, record) => (
         <a onClick={() => beforeUpdate(record.orgId)}>
-          {intl.formatMessage({ id: 'api.org.mapping', defaultMessage: 'MERCHANT MAPPING' })}
+          {intl.formatMessage({ id: 'apiOrg.operate.mapping' })}
         </a>
       ),
     },

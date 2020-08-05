@@ -14,5 +14,4 @@ export default {
   'menu.orgtmk': 'Posp Org TMK',
   'menu.tmkUpload': 'Posp TMK Upload',
   'menu.mPolicy': 'Merchant Policy',
-  'menu.apiOrg': '商户API机构',
 };

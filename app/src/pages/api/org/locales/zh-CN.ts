@@ -1,4 +1,7 @@
 export default {
+  'apiOrg.title': '商户API管理',
+  'apiOrg.mapping.title': '商户API设置',
+  'apiOrg.operate.mapping': '商户设置',
   'api.org.orgId': '商户机构ID',
   'api.org.orgName': '商户机构名称',
   'api.org.orgType': '商户机构类型',
