@@ -1,11 +1,13 @@
 import React, { useState, useRef } from 'react';
-import { Select } from 'antd';
+import { Select, Modal } from 'antd';
+import { FormInstance } from 'antd/lib/form';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl } from 'umi';
 import { TableListItem, ApiOrgData, MerchantData, TerminalData } from './data';
 import { fetchQuery, fetchDel, fetchApiOrg, fetchMer, fetchTerm } from './service';
-import { FormInstance } from 'antd/lib/form';
+
+const { confirm } = Modal;
 
 const TableList: React.FC<{}> = () => {
 
@@ -22,11 +24,18 @@ const TableList: React.FC<{}> = () => {
   }, []);
 
   const handleDelete = async (vendorId: string, snNo: string) => {
-    try {
-      await fetchDel(vendorId, snNo);
-    } catch (err) {
+    confirm({
+      title: intl.formatMessage({ id: 'termSn.delete' }, { vendorId, snNo }),
+      okType: 'danger',
+      onOk: async () => {
+        try {
+          await fetchDel(vendorId, snNo);
+          actionRef.current?.reload();
+        } catch (err) {
 
-    }
+        }
+      }
+    });
   }
 
   const handleMerChange = (value: string, form: FormInstance, onChange?: (value: any) => void) => {
@@ -106,7 +115,7 @@ const TableList: React.FC<{}> = () => {
       <ProTable<TableListItem>
         headerTitle=""
         actionRef={actionRef}
-        rowKey="termSnId"
+        rowKey="snNo"
         options={{ density: false, fullScreen: true, reload: true, setting: false }}
         request={async (params = {}, sort = {}) => {
           try {
