@@ -1,8 +1,8 @@
 export interface TableListItem {
   orgId: string;
-  pwd1?: string;
-  pwd2?: string;
-  checkValue?: string;
+  tmkZmk?: string;
+  tmkWeb?: string;
+  terminalId?: string;
   lmkzmk?: string;
   org: {
     name: string;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Modal, Input } from 'antd';
 import { useIntl } from 'umi';
 import { TableListItem } from '../data';
@@ -23,11 +23,16 @@ export interface UpdateFormState {
 const CreateForm: React.FC<CreateFormProps> = (props) => {
   const intl = useIntl();
   const { modalVisible, onCancel, onSubmit } = props;
-  const [formVals] = useState<TableListItem>({
+  const formVals = {
     orgId: props.values.orgId ? props.values.orgId : '',
-  });
+    org: {
+      name: props.values.org ? props.values.org.name : '',
+    },
+  };
 
   const [form] = Form.useForm();
+
+  form.setFieldsValue(formVals);
 
   const handleSubmit = async () => {
     const fieldsValue = await form.validateFields();
@@ -39,6 +44,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
       <>
         <Form.Item
           name="orgId"
+          hidden
           label={intl.formatMessage({ id: 'orgzmk.orgId' })}
           rules={[
             {
@@ -48,6 +54,9 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
           ]}
         >
           <Input />
+        </Form.Item>
+        <Form.Item name={['org', 'name']} label={intl.formatMessage({ id: 'orgzmk.orgId' })}>
+          <Input disabled />
         </Form.Item>
         <Form.Item
           name="pwd1"
@@ -115,6 +124,9 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
         form={form}
         initialValues={{
           orgId: formVals.orgId,
+          org: {
+            name: formVals.org.name,
+          },
         }}
       >
         {renderContent()}

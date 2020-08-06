@@ -19,13 +19,13 @@ export async function saveMcc(params: TableListItem) {
 }
 
 export async function getMcc(params: TableListItem) {
-  return request('/mccCode/'.concat(params.mcc.toString()), {
+  return request(`/mccCode/${params.mcc}`, {
     method: 'PUT',
   });
 }
 
 export async function removeMcc(params: TableListItem) {
-  return request('/mccCode/'.concat(params.mcc.toString()), {
+  return request(`/mccCode/${params.mcc}`, {
     method: 'DELETE',
   });
 }

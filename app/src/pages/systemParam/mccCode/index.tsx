@@ -76,8 +76,9 @@ const TableList: React.FC<{}> = () => {
         <>
           <a
             onClick={() => {
-              handleUpdateModalVisible(true);
+              console.error('test', record);
               setStepFormValues(record);
+              handleUpdateModalVisible(true);
             }}
           >
             <FormattedMessage id="global.edit" />
@@ -106,7 +107,7 @@ const TableList: React.FC<{}> = () => {
     },
     {
       title: intl.formatMessage({ id: 'mcc.remark' }),
-      dataIndex: 'roleDescripiton',
+      dataIndex: 'remark',
       valueType: 'textarea',
     },
   ];
@@ -161,7 +162,6 @@ const TableList: React.FC<{}> = () => {
       />
       {stepFormValues && Object.keys(stepFormValues).length ? (
         <UpdateForm
-          intl={intl}
           values={stepFormValues}
           onCancel={() => handleUpdateModalVisible(false)}
           modalVisible={updateModalVisible}

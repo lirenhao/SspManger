@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Modal, Input } from 'antd';
 import { useIntl } from 'umi';
 import { TableListItem } from '../data';
@@ -23,14 +23,14 @@ export interface UpdateFormState {
 const CreateForm: React.FC<CreateFormProps> = (props) => {
   const intl = useIntl();
   const { modalVisible, onCancel, onSubmit } = props;
-  const [formVals] = useState<TableListItem>({
+  const formVals = {
     accountBankNo: props.values.accountBankNo ? props.values.accountBankNo : '',
     bankName: props.values.bankName ? props.values.bankName : '',
     bic: props.values.bic ? props.values.bic : '',
-  });
+  };
 
   const [form] = Form.useForm();
-
+  form.setFieldsValue(formVals);
   const handleSubmit = async () => {
     const fieldsValue = await form.validateFields();
     onSubmit({ ...formVals, ...fieldsValue });

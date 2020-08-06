@@ -1,5 +1,5 @@
 export interface TableListItem {
-  mcc: string;
+  mcc?: string;
   remark?: string;
   key?: string;
 }

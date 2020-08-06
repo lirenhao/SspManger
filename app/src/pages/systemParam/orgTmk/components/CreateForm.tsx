@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Modal, Input, Select } from 'antd';
 import { useIntl } from 'umi';
-// import { useRequest } from '@umijs/hooks';
 import { TableListItem } from '../data';
 import formLayout from '../../../../formLayout';
 
@@ -21,8 +20,8 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   const { modalVisible, onCancel, onSubmit, orgData } = props;
   const [formVals] = useState<TableListItem>({
     orgId: '',
-    pwd1: '',
-    pwd2: '',
+    tmkZmk: '',
+    tmkWeb: '',
     org: {
       name: '',
     },
@@ -34,8 +33,6 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
     const fieldsValue = await form.validateFields();
     onSubmit({ ...formVals, ...fieldsValue });
   };
-
-  // const { data, error, loading } = useRequest(getOrg);
 
   const renderOrgOption = () => {
     const { Option } = Select;
@@ -56,18 +53,18 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
       <>
         <Form.Item
           name="orgId"
-          label={intl.formatMessage({ id: 'orgzmk.orgId' })}
+          label={intl.formatMessage({ id: 'orgtmk.orgId' })}
           rules={[
             {
               required: true,
-              message: intl.formatMessage({ id: 'orgzmk.orgIdNecessary' }),
+              message: intl.formatMessage({ id: 'orgtmk.orgIdNecessary' }),
             },
           ]}
         >
           <Select
             showSearch
             style={{ width: 200 }}
-            placeholder={intl.formatMessage({ id: 'orgzmk.orgIdNecessary' })}
+            placeholder={intl.formatMessage({ id: 'orgtmk.orgIdNecessary' })}
             optionFilterProp="children"
             filterOption={(input, option) => {
               if (option == null) {
@@ -85,22 +82,22 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
           rules={[
             {
               required: true,
-              message: intl.formatMessage({ id: 'orgzmk.pwd1Necessary' }),
+              message: intl.formatMessage({ id: 'orgtmk.pwd1Necessary' }),
             },
             {
               validator: (_, value) => {
                 const hex = /^[A-F0-9a-f]*$/;
                 if (!hex.test(value)) {
-                  return Promise.reject(intl.formatMessage({ id: 'orgzmk.pwd1Format' }));
+                  return Promise.reject(intl.formatMessage({ id: 'orgtmk.pwd1Format' }));
                 }
                 if (value.length < 48) {
-                  return Promise.reject(intl.formatMessage({ id: 'orgzmk.pwd1Length' }));
+                  return Promise.reject(intl.formatMessage({ id: 'orgtmk.pwd1Length' }));
                 }
                 return Promise.resolve();
               },
             },
           ]}
-          label={intl.formatMessage({ id: 'orgzmk.pwd1' })}
+          label={intl.formatMessage({ id: 'orgtmk.pwd1' })}
         >
           <Input.TextArea rows={2} maxLength={48} />
         </Form.Item>
@@ -110,22 +107,22 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
           rules={[
             {
               required: true,
-              message: intl.formatMessage({ id: 'orgzmk.pwd2Necessary' }),
+              message: intl.formatMessage({ id: 'orgtmk.pwd2Necessary' }),
             },
             {
               validator: (_, value) => {
                 const hex = /^[A-F0-9a-f]*$/;
                 if (!hex.test(value)) {
-                  return Promise.reject(intl.formatMessage({ id: 'orgzmk.pwd2Format' }));
+                  return Promise.reject(intl.formatMessage({ id: 'orgtmk.pwd2Format' }));
                 }
                 if (value.length < 48) {
-                  return Promise.reject(intl.formatMessage({ id: 'orgzmk.pwd2Length' }));
+                  return Promise.reject(intl.formatMessage({ id: 'orgtmk.pwd2Length' }));
                 }
                 return Promise.resolve();
               },
             },
           ]}
-          label={intl.formatMessage({ id: 'orgzmk.pwd1' })}
+          label={intl.formatMessage({ id: 'orgtmk.pwd1' })}
         >
           <Input.TextArea rows={2} maxLength={48} />
         </Form.Item>
@@ -136,7 +133,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   return (
     <Modal
       destroyOnClose
-      title={intl.formatMessage({ id: 'orgzmk.createCompoent' })}
+      title={intl.formatMessage({ id: 'orgtmk.createCompoent' })}
       visible={modalVisible}
       onCancel={() => onCancel()}
       onOk={() => handleSubmit()}

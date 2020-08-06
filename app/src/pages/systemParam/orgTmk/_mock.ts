@@ -4,9 +4,9 @@ import orgzmk from './data.d';
 const orgzmkTableListDataSource: orgzmk.TableListItem[] = [];
 orgzmkTableListDataSource.push({
   orgId: 'o0',
-  pwd1: 'aaaaaa',
-  pwd2: 'aaaaaaa',
-  checkValue: 'SSSS',
+  tmkZmk: 'aaaaaa1',
+  tmkWeb: 'aaaaaaa11',
+  terminalId: 'SSSS',
   lmkzmk: 'lmkzmk',
   org: {
     name: 'AAAAAAAAAAA',
@@ -14,9 +14,9 @@ orgzmkTableListDataSource.push({
 });
 orgzmkTableListDataSource.push({
   orgId: 'o1',
-  pwd1: 'aaaaaaa',
-  pwd2: 'aaaaaaaa',
-  checkValue: 'SSSS',
+  tmkZmk: 'aaaaaaa2',
+  tmkWeb: 'aaaaaaaa22',
+  terminalId: 'SSSS',
   lmkzmk: 'lmkzmk',
   org: {
     name: 'BBBBBBBBBBB',
@@ -44,8 +44,8 @@ function getAllorgzmkCode(req: Request, res: Response) {
 function saveorgzmk(req: Request, res: Response) {
   orgzmkResult.data[0] = {
     orgId: req.body.accountBankNo,
-    pwd1: req.body.bankName,
-    pwd2: req.body.bic,
+    tmkZmk: req.body.bankName,
+    tmkWeb: req.body.bic,
     org: { name: 'CCCCCCCCCCCCC' },
   };
   res.send(200);
@@ -70,9 +70,9 @@ function exist(req: Request, res: Response) {
 }
 
 export default {
-  'GET /pospOrgZmk': getAllorgzmkCode,
-  'PUT /pospOrgZmk': saveorgzmk,
-  'PUT /pospOrgZmk/:id': getOneorgzmk,
-  'DELETE /pospOrgZmk/:id': removeorgzmk,
-  'GET /pospOrgZmk/:id/exists': exist,
+  'GET /pospOrgTmk': getAllorgzmkCode,
+  'PUT /pospOrgTmk': saveorgzmk,
+  'PUT /pospOrgTmk/:id': getOneorgzmk,
+  'DELETE /pospOrgTmk/:id': removeorgzmk,
+  'GET /pospOrgTmk/:id/exists': exist,
 };

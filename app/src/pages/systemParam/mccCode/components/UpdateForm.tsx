@@ -1,38 +1,37 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Modal, Input } from 'antd';
-import { IntlShape } from 'umi';
+import { useIntl } from 'umi';
 import { TableListItem } from '../data';
 import formLayout from '../../../../formLayout';
 
 interface CreateFormProps {
-  intl: IntlShape;
   modalVisible: boolean;
   onCancel: () => void;
   onSubmit: (values: TableListItem) => void;
   values: Partial<TableListItem>;
 }
 
-// export interface FormValueType extends Partial<TableListItem> {
-//   mcc?: string;
-//   remark?: string;
-// }
-
 export interface UpdateFormState {
   formVals: TableListItem;
 }
 
 const CreateForm: React.FC<CreateFormProps> = (props) => {
-  const { modalVisible, onCancel, onSubmit, intl } = props;
-  const [formVals] = useState<TableListItem>({
-    mcc: props.values.mcc ? props.values.mcc : '',
-    remark: props.values.remark,
-  });
+  const intl = useIntl();
+  const { modalVisible, onCancel, onSubmit, values } = props;
+
+  // const [formVals] = useState<TableListItem>({
+  //   mcc: values.mcc ? values.mcc : '',
+  //   remark: values.remark,
+  // });
 
   const [form] = Form.useForm();
 
+  const emptyVal = { mcc: '', remark: '' };
+  form.setFieldsValue({ ...emptyVal, ...values });
+
   const handleSubmit = async () => {
     const fieldsValue = await form.validateFields();
-    onSubmit({ ...formVals, ...fieldsValue });
+    onSubmit({ ...values, ...fieldsValue });
   };
 
   const renderContent = () => {
@@ -68,10 +67,11 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
       <Form
         {...formLayout}
         form={form}
-        initialValues={{
-          mcc: formVals.mcc,
-          remark: formVals.remark,
-        }}
+        // initialValues={{
+        //   mcc: formVals.mcc,
+        //   remark: formVals.remark,
+        // }}
+        initialValues={values}
       >
         {renderContent()}
       </Form>

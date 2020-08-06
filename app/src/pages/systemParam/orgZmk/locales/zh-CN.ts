@@ -18,4 +18,5 @@ export default {
   'orgzmk.updateCompoent': '修改ZMK',
   'orgzmk.delete': '删除',
   'orgzmk.create': '增加',
+  'menu.orgZmk': '机构zmk',
 };

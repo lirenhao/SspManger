@@ -1,11 +1,10 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Divider } from 'antd';
+import { Button, message } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl, FormattedMessage, IntlShape } from 'umi';
 import CreateForm from './components/CreateForm';
-import UpdateForm from './components/UpdateForm';
 import { TableListItem } from './data';
 import { query, save, remove, getOrg } from './service';
 
@@ -15,7 +14,6 @@ import { query, save, remove, getOrg } from './service';
  */
 const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
   const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
-
   try {
     await save({ ...fields });
     hide();
@@ -48,11 +46,11 @@ const handleDel = async (fields: TableListItem, intl: IntlShape) => {
 
 const TableList: React.FC<{}> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
-  const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
-  const [stepFormValues, setStepFormValues] = useState({});
   const intl = useIntl();
   const actionRef = useRef<ActionType>();
+
   const [data, setOrg] = useState({});
+
   React.useEffect(() => {
     getOrg().then(setOrg);
   }, []);
@@ -62,6 +60,7 @@ const TableList: React.FC<{}> = () => {
   Object.keys(data).forEach((key) => {
     OptionArr[key] = { text: data[key], status: key };
   });
+  console.error(OptionArr);
 
   const columns: ProColumns<TableListItem>[] = [
     {
@@ -70,15 +69,6 @@ const TableList: React.FC<{}> = () => {
       valueType: 'option',
       render: (_, record) => (
         <>
-          <a
-            onClick={() => {
-              setStepFormValues(record);
-              handleUpdateModalVisible(true);
-            }}
-          >
-            <FormattedMessage id="global.edit" />
-          </a>
-          <Divider type="vertical" />
           <a
             onClick={() => {
               handleDel(record, intl);
@@ -91,25 +81,29 @@ const TableList: React.FC<{}> = () => {
       ),
     },
     {
-      title: intl.formatMessage({ id: 'orgzmk.orgId' }),
+      title: intl.formatMessage({ id: 'orgtmk.orgId' }),
       dataIndex: 'orgId',
       initialValue: undefined,
       valueEnum: OptionArr,
       hideInTable: true,
     },
     {
-      title: intl.formatMessage({ id: 'orgzmk.orgId' }),
+      title: intl.formatMessage({ id: 'orgtmk.orgId' }),
       dataIndex: ['org', 'name'],
       hideInSearch: true,
     },
     {
-      title: intl.formatMessage({ id: 'orgzmk.lmkzmk' }),
-      dataIndex: 'lmkzmk',
+      title: intl.formatMessage({ id: 'orgtmk.pwd1' }),
+      dataIndex: 'tmkZmk',
+    },
+    {
+      title: intl.formatMessage({ id: 'orgtmk.pwd2' }),
+      dataIndex: 'tmkWeb',
       hideInSearch: true,
     },
     {
-      title: intl.formatMessage({ id: 'orgzmk.checkValue' }),
-      dataIndex: 'checkValue',
+      title: intl.formatMessage({ id: 'orgtmk.terminalId' }),
+      dataIndex: 'terminalId',
       hideInSearch: true,
     },
   ];
@@ -162,22 +156,6 @@ const TableList: React.FC<{}> = () => {
           }
         }}
       />
-      {stepFormValues && Object.keys(stepFormValues).length ? (
-        <UpdateForm
-          values={stepFormValues}
-          onCancel={() => handleUpdateModalVisible(false)}
-          modalVisible={updateModalVisible}
-          onSubmit={async (value) => {
-            const success = await handleSaveAndUpdate(value, intl);
-            if (success) {
-              handleUpdateModalVisible(false);
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
-            }
-          }}
-        />
-      ) : null}
     </PageContainer>
   );
 };

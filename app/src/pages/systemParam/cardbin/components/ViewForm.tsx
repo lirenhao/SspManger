@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Modal, Input, Button } from 'antd';
 import { IntlShape } from 'umi';
 import { TableListItem } from '../data';
 import formLayout from '../../../../formLayout';
 
+//  todo 看着有些难受
 interface CreateFormProps {
   modalVisible: boolean;
   onCancel: () => void;
@@ -17,7 +18,7 @@ export interface UpdateFormState {
 
 const CreateForm: React.FC<CreateFormProps> = (props) => {
   const { modalVisible, onCancel, intl } = props;
-  const [formVals] = useState<TableListItem>({
+  const formVals = {
     id: props.values.id ? props.values.id : '',
     issuerIin: props.values.issuerIin ? props.values.issuerIin : '',
     issuerName: props.values.issuerName ? props.values.issuerName : '',
@@ -41,10 +42,10 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
       ? props.values.transationChannelSupported
       : 0,
     networkOpened: props.values.networkOpened ? props.values.networkOpened : 0,
-  });
+  };
 
   const [form] = Form.useForm();
-
+  form.setFieldsValue(formVals);
   const renderContent = () => {
     return (
       <>

@@ -110,11 +110,23 @@ export default defineConfig({
           locale: 'menu.banks',
         },
         {
+          path: '/systemParam/cardbin',
+          name: 'bank list',
+          component: './systemParam/cardbin',
+          locale: 'menu.cardbin',
+        },
+        {
           path: '/systemParam/orgZmk',
           name: 'orgzmk',
           component: './systemParam/orgZmk',
 
           locale: 'menu.orgZmk',
+        },
+        {
+          path: '/systemParam/orgTmk',
+          name: 'orgtmk',
+          component: './systemParam/orgTmk',
+          locale: 'menu.orgtmk',
         },
       ],
     },
