@@ -2,15 +2,11 @@ import React, { useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import { useIntl } from 'umi';
 import { UploadOutlined } from '@ant-design/icons';
-import assert from 'assert';
-import { Form, Select, Upload, Button, message } from 'antd';
-import { TableListItem } from './data';
+import { Form, Select, Upload, Button } from 'antd';
 
-// import { RcCustomRequestOptions } from 'antd/es/upload/interface';
-// import { TableListItem } from './data.d';
-import { save, getOrg } from './service';
-import formLayout from '../../../formLayout';
 import { UploadFile } from 'antd/lib/upload/interface';
+import { getOrg } from './service';
+import formLayout from '../../../formLayout';
 
 /**
  * 添加
@@ -21,15 +17,7 @@ const TableList: React.FC<{}> = () => {
   const intl = useIntl();
   const [orgData, setOrg] = useState({});
   const [form] = Form.useForm();
-
-  const initialState: { file: any; uploading: boolean } = {
-    file: undefined,
-    uploading: false,
-  };
-
-  // const initialFileListState : {fileList:any[]} = {
-  //   fileList: [],
-  // }
+  const [uploadDisable, setUploadDisable] = useState(true);
 
   const uploadFileList: UploadFile[] = [];
 
@@ -37,70 +25,16 @@ const TableList: React.FC<{}> = () => {
     fileList: uploadFileList,
   };
 
-  // const initialFileListState = {
-  //   fileList: [
-  //     {
-  //       uid: '-1',
-  //       name: intl.formatMessage({ id: 'uploadTmk.waitForAdd' }),
-  //       status: 'done',
-  //       url: '',
-  //       type:'',
-  //     },
-  //   ],
-  // };
   const [fileListState, setFileListState] = useState(initialFileListState);
-
-  const [uploadState, setUploadState] = useState(initialState);
-
-  const handleSave = () => {
-    if (uploadState.file == null) {
-      message.error(intl.formatMessage({ id: 'global.error' }));
-      return;
-    }
-
-    form.validateFields().then(() => {
-      const reader = new FileReader();
-
-      reader.readAsArrayBuffer(uploadState.file);
-      reader.onload = () => {
-        // const reader = localFile.target;
-        assert.equal(true, reader != null && reader.result instanceof ArrayBuffer);
-        if (reader.result instanceof ArrayBuffer) {
-          const localFile: Blob = new Blob([reader.result]);
-          const result: TableListItem = {
-            file: localFile,
-            orgId: form.getFieldValue('orgId'),
-          };
-
-          const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
-          save(result).then(
-            () => {
-              hide();
-              message.success(intl.formatMessage({ id: 'global.success' }));
-            },
-            () => {
-              hide();
-              message.error(intl.formatMessage({ id: 'global.error' }));
-              return false;
-            },
-          );
-        }
-      };
-    });
-  };
 
   const uploadProps = {
     name: 'file',
-    // customRequest:handleSaveAndUpdate,
     headers: {
       authorization: 'authorization-text',
     },
-    beforeUpload: (file: any) => {
-      uploadState.file = file;
-      setUploadState(uploadState);
-
-      return false;
-    },
+    action: '/pospOrgTmk/upload',
+    disabled: uploadDisable,
+    data: { orgId: form.getFieldValue('orgId') },
     onChange(info: any) {
       let fileList = [...info.fileList];
       fileList = fileList.slice(-1);
@@ -126,6 +60,14 @@ const TableList: React.FC<{}> = () => {
     return OptionArr;
   };
 
+  function handleChange(value: any) {
+    if (value == null) {
+      setUploadDisable(true);
+    } else {
+      setUploadDisable(false);
+    }
+  }
+
   const renderContent = () => {
     return (
       <>
@@ -141,6 +83,7 @@ const TableList: React.FC<{}> = () => {
         >
           <Select
             showSearch
+            onChange={handleChange}
             style={{ width: 200 }}
             placeholder={intl.formatMessage({ id: 'orgtmk.orgIdNecessary' })}
             optionFilterProp="children"
@@ -154,20 +97,13 @@ const TableList: React.FC<{}> = () => {
             {renderOrgOption()}
           </Select>
         </Form.Item>
-        <Upload {...uploadProps} fileList={fileListState.fileList}>
-          <Button>
-            <UploadOutlined /> Select
-          </Button>
-        </Upload>
-        <Button
-          type="primary"
-          onClick={handleSave}
-          // disabled={uploadState.file == null}
-          loading={uploadState.uploading}
-          style={{ marginTop: 16 }}
-        >
-          {uploadState.uploading ? 'Uploading' : 'Start Upload'}
-        </Button>
+        <Form.Item label={intl.formatMessage({ id: 'uploadTmk.waitForAdd' })}>
+          <Upload {...uploadProps} fileList={fileListState.fileList}>
+            <Button>
+              <UploadOutlined /> {intl.formatMessage({ id: 'uploadTmk.waitForAdd' })}
+            </Button>
+          </Upload>
+        </Form.Item>
       </>
     );
   };
