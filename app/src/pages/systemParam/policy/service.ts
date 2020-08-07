@@ -10,8 +10,10 @@ export async function fetchGet(id: string) {
 }
 
 export async function fetchIssue(id: string) {
-  // TODO 调用发布接口
-  return Promise.resolve(id);
+  return request('/svc/web/policy', {
+    method: 'PUT',
+    data: { id },
+  });
 }
 
 export async function fetchPut(params: TableListItem) {

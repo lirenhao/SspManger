@@ -4,6 +4,7 @@ import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl } from 'umi';
+import moment from 'moment';
 import { TableListItem } from './data';
 import { fetchQuery, fetchGet, fetchPut, fetchIssue } from './service';
 import Form from './components/Form';
@@ -61,9 +62,9 @@ const TableList: React.FC<{}> = () => {
     }
   }
 
-  const handleDelete = (id: string) => {
+  const handleIssue = (id: string) => {
     confirm({
-      title: intl.formatMessage({ id: 'policy.delete' }, { id }),
+      title: intl.formatMessage({ id: 'policy.issue' }, { id }),
       okType: 'danger',
       onOk: async () => {
         try {
@@ -89,7 +90,7 @@ const TableList: React.FC<{}> = () => {
             {intl.formatMessage({ id: 'global.view' })}
           </a>
           <Divider type="vertical" />
-          <a onClick={() => handleDelete(record.id)}>
+          <a onClick={() => handleIssue(record.id)}>
             {intl.formatMessage({ id: 'policy.operate.issue' })}
           </a>
         </>
@@ -106,11 +107,12 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'policy.createTime' }),
       dataIndex: 'createTime',
-      renderText: (text: string) => text,
+      renderText: (text: string) => text ? moment(text, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') : '',
     },
     {
       title: intl.formatMessage({ id: 'policy.updateTime' }),
       dataIndex: 'updateTime',
+      renderText: (text: string) => text ? moment(text, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss') : '',
     },
   ];
 

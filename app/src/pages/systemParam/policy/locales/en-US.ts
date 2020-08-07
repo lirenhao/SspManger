@@ -9,7 +9,7 @@ export default {
   'policy.view.title': 'Merchant Policy View',
   'policy.create.title': 'Merchant Policy Create',
   'policy.update.title': 'Merchant Policy Update',
-  'policy.delete': 'CONFIRM DELETE【{id}】?',
+  'policy.issue': 'CONFIRM ISSUE【{id}】?',
   'policy.status.0': 'enable',
   'policy.id.required': 'Policy ID is required',
   'policy.id.validator': 'Policy ID is exists',

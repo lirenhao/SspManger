@@ -9,7 +9,7 @@ export default {
   'policy.view.title': '商户协议查看',
   'policy.create.title': '商户协议创建',
   'policy.update.title': '商户协议编辑',
-  'policy.delete': '确定删除【{id}】?',
+  'policy.issue': '确定发布【{id}】?',
   'policy.status.0': '使用',
   'policy.id.required': '协议ID是必输的',
   'policy.id.validator': '协议ID已存在',
