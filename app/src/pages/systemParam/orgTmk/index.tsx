@@ -60,7 +60,6 @@ const TableList: React.FC<{}> = () => {
   Object.keys(data).forEach((key) => {
     OptionArr[key] = { text: data[key], status: key };
   });
-  console.error(OptionArr);
 
   const columns: ProColumns<TableListItem>[] = [
     {

@@ -128,6 +128,12 @@ export default defineConfig({
           component: './systemParam/orgTmk',
           locale: 'menu.orgtmk',
         },
+        {
+          path: '/systemParam/uploadTmk',
+          name: 'uploadTmk',
+          component: './systemParam/uploadTmk',
+          locale: 'menu.uploadTmk',
+        },
       ],
     },
     {
