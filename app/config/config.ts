@@ -134,6 +134,12 @@ export default defineConfig({
           component: './systemParam/uploadTmk',
           locale: 'menu.uploadTmk',
         },
+        {
+          path: '/systemParam/policy',
+          name: 'policy',
+          component: './systemParam/policy',
+          locale: 'policy.title',
+        },
       ],
     },
     {
