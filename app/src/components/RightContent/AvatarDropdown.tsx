@@ -1,10 +1,8 @@
-import React, { useCallback } from 'react';
-import { LogoutOutlined, LockOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import React from 'react';
+import { LogoutOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
 import { history, useModel } from 'umi';
-import { getPageQuery } from '@/utils/utils';
 import { logout } from '@/services/user';
-import { stringify } from 'querystring';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
@@ -12,43 +10,22 @@ export interface GlobalHeaderRightProps {
   menu?: boolean;
 }
 
-/**
- * 退出登录，并且将当前的 url 保存
- */
-const loginOut = async () => {
-  await logout();
-  const { redirect } = getPageQuery();
-  // Note: There may be security issues, please note
-  if (window.location.pathname !== '/user/login' && !redirect) {
-    history.replace({
-      pathname: '/user/login',
-      search: stringify({
-        redirect: window.location.href,
-      }),
-    });
-  }
-};
-
-const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
+const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
   const { initialState, setInitialState } = useModel('@@initialState');
 
-  const onMenuClick = useCallback(
-    (event: {
-      key: React.Key;
-      keyPath: React.Key[];
-      item: React.ReactInstance;
-      domEvent: React.MouseEvent<HTMLElement>;
-    }) => {
-      const { key } = event;
-      if (key === 'logout') {
-        setInitialState({ ...initialState, currentUser: undefined });
-        loginOut();
-        return;
-      }
-      history.push(`/account/${key}`);
-    },
-    [],
-  );
+  const handlePush = function (url: string) {
+    history.push(url);
+  }
+
+  const handleLogout = async function () {
+    try {
+      await logout();
+      setInitialState({ ...initialState, currentUser: undefined });
+      window.location.href = `/login?redirect=${encodeURI(window.location.href)}`;
+    } catch (err) {
+
+    }
+  }
 
   const loading = (
     <span className={`${styles.action} ${styles.account}`}>
@@ -73,25 +50,12 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   }
 
   const menuHeaderDropdown = (
-    <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
-      {menu && (
-        <Menu.Item key="center">
-          <UserOutlined />
-          个人中心
-        </Menu.Item>
-      )}
-      {menu && (
-        <Menu.Item key="settings">
-          <SettingOutlined />
-          个人设置
-        </Menu.Item>
-      )}
-      {menu && <Menu.Divider />}
-      <Menu.Item key="modifyPwd">
+    <Menu className={styles.menu} selectedKeys={[]}>
+      <Menu.Item onClick={() => handlePush('/modifyPwd')}>
         <LockOutlined />
         修改密码
       </Menu.Item>
-      <Menu.Item key="logout">
+      <Menu.Item onClick={handleLogout}>
         <LogoutOutlined />
         退出登录
       </Menu.Item>

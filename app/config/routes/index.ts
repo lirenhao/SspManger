@@ -14,8 +14,8 @@ export default [
     hideInMenu: true,
   },
   {
+    path: '/modifyPwd',
     name: 'modifyPwd',
-    path: '/account/modifyPwd',
     component: './user/modifyPwd',
     locale: 'menu.modifyPwd',
     hideInMenu: true,
