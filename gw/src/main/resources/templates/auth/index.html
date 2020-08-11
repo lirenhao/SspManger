@@ -17,18 +17,19 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, .3);
+            background: url("[[@{'/img/auth-bg.jpg'}]]") no-repeat fixed;
+            background-size: cover;
+            width: 100%;
+            height: 100%;
         }
 
         .container {
-            font-size: 12px;
-            position: relative;
-            padding: 2rem;
-            width: 26.5rem;
-            max-width: 80%;
-            box-sizing: border-box;
-            background-color: #fff;
-            border-radius: 6px;
+            background: rgba(255, 255, 255, .5);
+            border-radius: 0 0 3px 3px;
+            background-clip: padding-box;
+            border: 1px solid #e1e1e1;
+            border-bottom-width: 5px;
+            padding: 40px 25px;
         }
 
         h2 {
@@ -65,13 +66,19 @@
             border-color:red;
         }
         .form-btn {
-            background: #007fff;
-            color: #fff;
-            cursor: pointer;
+            font-size: 1.125em;
+            font-weight: 600;
+            padding-bottom: 10px;
+            padding-top: 10px;
+            text-transform: uppercase;
+            margin-top: 8px;
+            background-color: #e84e40;
+            border-color: #dd191d;
+            color:#fff;
         }
 
         .form-btn:hover {
-            background: #0371e0;
+            color: #fff;
         }
 
         .input-box:focus-within input {
@@ -120,10 +127,10 @@
     <script th:if="${@environment.getProperty('yada.security.recaptcha.type') == 'GoogleCN'}"
             src="https://recaptcha.net/recaptcha/api.js" async defer></script>
 </head>
-<body>
-<form id="loginForm" method="post" class="wrap" th:object="${loginForm}">
+<body class="wrap">
+<form id="loginForm" method="post" th:object="${loginForm}">
     <div class="container">
-        <h2>登录</h2>
+        <h2>BOC MERCHANT PLATFORM</h2>
         <p class="alert-error-box" th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></p>
         <div class="input-box username">
             <input type="text" id="username" th:field="*{username}" class="form-input" placeholder="请输入用户名">
@@ -136,7 +143,7 @@
         <div th:if="${@environment.getProperty('yada.security.recaptcha.type') == 'GoogleCN' || @environment.getProperty('yada.security.recaptcha.type') == 'Google'}"
              class="input-box g-recaptcha" th:data-sitekey="${@environment.getProperty('yada.security.recaptcha.sitekey', '6Leu2NsUAAAAAFttLaiyEKDu9yLgrYJhN77Ou1ge')}"></div>
         <div class="login-btn">
-            <input type="submit" class="form-input form-btn" th:value="#{login.submit}">
+            <input type="submit" class="form-input form-btn" value="LOGIN">
         </div>
     </div>
 </form>

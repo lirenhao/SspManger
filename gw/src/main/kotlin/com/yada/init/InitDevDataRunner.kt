@@ -21,31 +21,15 @@ private val orgJson = """
 [
   {
     "id": "00",
-    "name": "总机构"
+    "name": "总行"
   },
   {
     "id": "001",
-    "name": "机构一"
+    "name": "新加坡分行"
   },
   {
     "id": "001001",
-    "name": "机构一1"
-  },
-  {
-    "id": "002",
-    "name": "机构二"
-  },
-  {
-    "id": "003",
-    "name": "机构三"
-  },
-  {
-    "id": "004",
-    "name": "机构四"
-  },
-  {
-    "id": "005",
-    "name": "机构五"
+    "name": "新加坡皮草"
   }
 ]
 """.trimIndent()
@@ -53,12 +37,12 @@ private val orgJson = """
 private val userJson = """
 [
   {
-    "id": "user1",
+    "id": "admin",
     "orgId": "00",
     "roles": [
-      "role1"
+      "admin"
     ],
-    "email": "email"
+    "email": "email@boc.com"
   }
 ]
 """.trimIndent()
@@ -72,59 +56,32 @@ private val adminJson = """
 private val roleJson = """
 [
   {
-    "id": "role1",
-    "svcs": [
-      {
-        "id": "service-1",
-        "resources": [
-          {
-            "uri": "/res1",
-            "ops": [
-              "READ",
-              "CREATE",
-              "UPDATE",
-              "DELETE"
-            ]
-          },
-          {
-            "uri": "/terminal",
-            "ops": [
-                "READ"
-            ]
-          }
-        ]
-      },
-      {
-        "id": "service-2",
-        "resources": [
-          {
-            "uri": "/trans",
-            "ops": [
-              "READ"
-            ]
-          }
-        ]
-      }
-    ]
+    "id": "admin",
+    "svcs": []
   },
   {
-    "id": "role2",
-    "svcs": [
-      {
-        "id": "service-1",
-        "resources": [
-          {
-            "uri": "/merchant",
-            "ops": [
-              "READ",
-              "CREATE",
-              "UPDATE",
-              "DELETE"
-            ]
-          }
-        ]
-      }
-    ]
+    "id": "Account Admin",
+    "svcs": []
+  },
+  {
+    "id": "Merchant Operator",
+    "svcs": []
+  },
+  {
+    "id": "Finance Operator",
+    "svcs": []
+  },
+  {
+    "id": "Risk Operator",
+    "svcs": []
+  },
+  {
+    "id": "Merchant Checker",
+    "svcs": []
+  },
+  {
+    "id": "Finance Checker",
+    "svcs": []
   }
 ]
 """.trimIndent()
@@ -132,102 +89,12 @@ private val roleJson = """
 private val svcJson = """
 [
   {
-    "id": "service-1",
-    "resources": [
-      {
-        "uri": "/res1",
-        "ops": [
-          "READ",
-          "CREATE",
-          "UPDATE",
-          "DELETE"
-        ]
-      },
-      {
-        "uri": "/terminal",
-        "ops": [
-          "READ",
-          "CREATE",
-          "UPDATE",
-          "DELETE"
-        ]
-      },
-      {
-        "uri": "/trans",
-        "ops": [
-          "READ"
-        ]
-      }
-    ]
+    "id": "mer",
+    "resources": []
   },
   {
-    "id": "service-2",
-    "resources": [
-      {
-        "uri": "/merchant",
-        "ops": [
-          "READ"
-        ]
-      },
-      {
-        "uri": "/terminal",
-        "ops": [
-          "READ"
-        ]
-      },
-      {
-        "uri": "/trans",
-        "ops": [
-          "READ"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "service-3",
-    "resources": [
-      {
-        "uri": "/merchant",
-        "ops": [
-          "CREATE"
-        ]
-      },
-      {
-        "uri": "/terminal",
-        "ops": [
-          "CREATE"
-        ]
-      },
-      {
-        "uri": "/trans",
-        "ops": [
-          "READ"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "service-4",
-    "resources": [
-      {
-        "uri": "/merchant",
-        "ops": [
-          "UPDATE"
-        ]
-      },
-      {
-        "uri": "/terminal",
-        "ops": [
-          "UPDATE"
-        ]
-      },
-      {
-        "uri": "/trans",
-        "ops": [
-          "READ"
-        ]
-      }
-    ]
+    "id": "web",
+    "resources": []
   }
 ]
 """.trimIndent()

@@ -5,6 +5,8 @@ server:
   error:
     includeStacktrace: ALWAYS
 
+spring.thymeleaf.cache: false
+
 spring.cloud.gateway.routes:
   - uri: http://localhost:8000
     predicates:
@@ -14,18 +16,29 @@ spring.cloud.gateway.routes:
       - RewritePath=/manager(?<segment>/?.*),$\{segment}
   - uri: http://localhost:8084
     predicates:
-      - Svc=/svc,manager
+      - Svc=/svc,info
     filters:
       - ApiAuth
       - RewritePath=/svc(?<segment>/?.*),$\{segment}
   - uri: http://localhost:8085
     predicates:
-      - Svc=${yada.contextPath}/svc,user
+      - Svc=/svc,web
     filters:
       - ApiAuth
       - RewritePath=/svc(?<segment>/?.*),$\{segment}
+#  - uri: http://localhost:8000
+#    predicates:
+#      - Path=/**
 
 management.endpoints:
   web.exposure.include: metrics,gateway
   health.show-details: always
+
+jwt.secret: yadajwt
+
+yada:
+  recaptcha:
+    type: None
+  security:
+    defaultPwd: 111111
 #yada.db.mongo.uri: 'mongodb://localhost/yada_auth?replicaSet=rs'
