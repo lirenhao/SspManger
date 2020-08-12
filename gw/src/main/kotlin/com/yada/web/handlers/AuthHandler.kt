@@ -18,7 +18,6 @@ import org.springframework.web.server.ResponseStatusException
 import reactor.core.publisher.Mono
 import java.net.URI
 
-
 @Component
 class AuthHandler @Autowired constructor(
         private val userService: IUserService,
@@ -73,6 +72,11 @@ class AuthHandler @Autowired constructor(
                         }
                         .switchIfEmpty(Mono.defer { ServerResponse.ok().render("auth/index", model) })
             }
+
+    @Suppress("UNUSED_PARAMETER")
+    fun getUser(req: ServerRequest): Mono<ServerResponse> = AuthHolder.getUserInfo()
+            .flatMap { userService.get(it.userId) }
+            .flatMap { ServerResponse.ok().bodyValue(it) }
 
     @Suppress("UNUSED_PARAMETER")
     fun logout(req: ServerRequest): Mono<ServerResponse> =

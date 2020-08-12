@@ -10,10 +10,13 @@ spring.thymeleaf.cache: false
 spring.cloud.gateway.routes:
   - uri: http://localhost:8000
     predicates:
-      - App=/manager
+      - Path=/dev-server/**
+  - uri: http://localhost:8000
+    predicates:
+      - App=/ssp
     filters:
       - Auth
-      - RewritePath=/manager(?<segment>/?.*),$\{segment}
+      - RewritePath=/ssp(?<segment>/?.*),$\{segment}
   - uri: http://localhost:8084
     predicates:
       - Svc=/svc,info

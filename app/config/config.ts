@@ -8,12 +8,13 @@ const { REACT_APP_ENV } = process.env;
 
 export default defineConfig({
   hash: true,
+  publicPath: '/ssp/',
   antd: {},
   dva: {
     hmr: true,
   },
   layout: {
-    name: 'Ant Design Pro',
+    name: 'Boc Merchant Platform',
     locale: true,
     siderWidth: 208,
   },

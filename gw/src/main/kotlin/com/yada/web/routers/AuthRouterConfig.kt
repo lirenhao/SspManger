@@ -39,6 +39,7 @@ open class AuthRouterConfig @Autowired constructor(
         }
 
         contextPath.nest {
+            GET("/user", authHandler::getUser)
             GET("/logout", authHandler::logout)
             POST("/change_pwd", authHandler::changePwd)
             GET("/refresh_token", authHandler::refreshToken)

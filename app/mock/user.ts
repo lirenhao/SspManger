@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 export default {
-  'GET /api/currentUser': (_: Request, res: Response) => {
+  'GET /user': (_: Request, res: Response) => {
     res.send({
       id: 'admin',
       orgId: '00',
@@ -9,7 +9,7 @@ export default {
       email: 'test@manager.com',
     });
   },
-  'GET /api/logout': (_: Request, res: Response) => {
+  'GET /logout': (_: Request, res: Response) => {
     res.end();
   },
   'GET /api/500': (_: Request, res: Response) => {
