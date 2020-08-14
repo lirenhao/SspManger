@@ -1,7 +1,7 @@
 import React from 'react';
 import { BasicLayoutProps, Settings as LayoutSettings } from '@ant-design/pro-layout';
 import { notification } from 'antd';
-import { history, RequestConfig } from 'umi';
+import { history, RequestConfig, Link } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import { ResponseError } from 'umi-request';
@@ -38,13 +38,10 @@ export const layout = ({
     disableContentMargin: false,
     footerRender: () => <Footer />,
     menuHeaderRender: undefined,
-    breadcrumbRender: (routers = []) => [
-      {
-        path: '/',
-        breadcrumbName: 'Home',
-      },
-      ...routers,
-    ].map(router => ({ ...router, path: '#' + router.path })),
+    itemRender: route => {
+      console.log(route)
+      return (<Link to={route.path}>{route.breadcrumbName}</Link>)
+    },
     logo: logoSvg,
     ...initialState?.settings,
   };
