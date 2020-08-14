@@ -84,7 +84,7 @@ const FormView: React.FC<FormProps> = (props) => {
               <Select mode="multiple" style={{ width: '100%' }} value={value} onChange={(value: string[]) => setValue(value)}>
                 {merchants
                   .filter(mer => !orgMers.map(mer => mer.merchantId).includes(mer.merchantId))
-                  .map(mer => (<Select.Option value={mer.merchantId}>{mer.merchantId}</Select.Option>))
+                  .map(mer => (<Select.Option value={mer.merchantId}>{`${mer.merchantId}[${mer.merNameEngAbbr}]`}</Select.Option>))
                 }
               </Select>
             </Col>

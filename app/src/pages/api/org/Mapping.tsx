@@ -4,7 +4,7 @@ import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl } from 'umi';
 import { TableListItem } from './data';
 import { fetchQuery, fetchGet, fetchMapping } from './service';
-import MappingMers from './components/MappingMers';
+import Mers from './components/Mers';
 
 const Mapping: React.FC<{}> = () => {
 
@@ -94,7 +94,7 @@ const Mapping: React.FC<{}> = () => {
         }}
         columns={columns}
       />
-      <MappingMers
+      <Mers
         title={intl.formatMessage({ id: 'api.org.mapping.title' })}
         info={info}
         modalVisible={isUpdate}
