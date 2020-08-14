@@ -35,9 +35,17 @@ export async function fetchExistOrgId(orgId: string) {
   return request(`/svc/merApiOrg/${orgId}/exists`);
 }
 
-export async function fetchMapping(params: TableListItem) {
-  return request('/svc/merApiOrg', {
+export async function fetchGetOrgMer(orgId: string) {
+  return request(`/svc/merApiOrg/${orgId}/mapping`);
+}
+
+export async function fetchGetAllMer() {
+  return request('/svc/merchant/orgId');
+}
+
+export async function fetchMapping(orgId: string, merNos: string[]) {
+  return request(`/svc/merApiOrg/${orgId}/mapping`, {
     method: 'PUT',
-    data: params,
+    data: merNos,
   });
 }

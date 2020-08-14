@@ -68,7 +68,7 @@ public class MerApiOrgController {
     }
 
     @PutMapping("/{orgId}/mapping")
-    public void saveUpdateMerchant(@PathVariable String orgId, String[] merchantId) {
+    public void saveUpdateMerchant(@PathVariable String orgId, @RequestBody String[] merchantId) {
         merApiOrgService.saveUpdateMerchant(merchantId, orgId);
     }
 }

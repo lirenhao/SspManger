@@ -24,11 +24,10 @@ const Mapping: React.FC<{}> = () => {
     }
   }
 
-  const handleUpdate = async (record: TableListItem) => {
+  const handleUpdate = async (orgId: string, merNos: string[]) => {
     try {
-      await fetchMapping(record);
+      await fetchMapping(orgId, merNos);
       setIsUpdate(false);
-      actionRef.current?.reload();
     } catch (err) {
 
     }

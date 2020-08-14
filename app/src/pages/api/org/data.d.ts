@@ -19,3 +19,9 @@ export interface TableListParams {
   page?: number;
   sort?: string[];
 }
+
+export interface MerchantData {
+  merchantId: string;
+  merNameChnAbbr: string;
+  merNameEngAbbr: string;
+}

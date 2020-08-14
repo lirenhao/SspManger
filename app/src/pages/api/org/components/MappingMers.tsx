@@ -1,15 +1,15 @@
 import React from 'react';
-import { Form, Modal, Input, Select } from 'antd';
+import { Form, Modal, Row, Col, Input, Select, Table, Button } from 'antd';
 import { useIntl } from 'umi';
-import { TableListItem } from '../data';
-import { fetchExistOrgId } from '../service';
+import { TableListItem, MerchantData } from '../data';
+import { fetchGetOrgMer, fetchGetAllMer } from '../service';
 
 interface FormProps {
   title: string;
   info: Partial<TableListItem>;
   modalVisible: boolean;
   onCancel: () => void;
-  onSubmit: (values: TableListItem) => void;
+  onSubmit: (id: string, merNos: string[]) => void;
 }
 
 const formLayout = {
@@ -29,7 +29,26 @@ const FormView: React.FC<FormProps> = (props) => {
   const { title, info, modalVisible, onCancel, onSubmit } = props;
 
   const intl = useIntl();
-  const [form] = Form.useForm();
+
+  const [value, setValue] = React.useState<string[]>([]);
+  const [orgMers, setOrgMers] = React.useState<MerchantData[]>([]);
+  const [merchants, setMerchants] = React.useState<MerchantData[]>([]);
+
+  React.useEffect(() => {
+    if (info.orgId)
+      fetchGetOrgMer(info.orgId).then(data => {
+        setOrgMers(data);
+      });
+    fetchGetAllMer().then(setMerchants);
+  }, [info]);
+
+  const handleSubmit = () => {
+    onSubmit(info.orgId || '', orgMers.map(mer => mer.merchantId));
+  }
+
+  const handleDelete = (merchantId: string) => {
+    setOrgMers(orgMers.filter(mer => mer.merchantId !== merchantId))
+  }
 
   return (
     <Modal
@@ -38,108 +57,82 @@ const FormView: React.FC<FormProps> = (props) => {
       title={title}
       visible={modalVisible}
       onCancel={() => onCancel()}
-      onOk={() => form.submit()}
+      onOk={handleSubmit}
       okText={intl.formatMessage({ id: 'global.submit' })}
       width={1040}
     >
-      <Form
-        {...formLayout}
-        form={form}
-        initialValues={info}
-        onFinish={values => onSubmit({ ...info, ...values } as TableListItem)}
-      >
-        {info.orgId ? (
-          <Form.Item label={intl.formatMessage({ id: 'api.org.orgId' })}>
-            <Input value={info.orgId} readOnly />
-          </Form.Item>
-        ) : (
-            <Form.Item
-              name="orgId"
-              label={intl.formatMessage({ id: 'api.org.orgId' })}
-              rules={[
-                {
-                  required: true,
-                  message: intl.formatMessage({ id: 'api.org.orgId.required' }),
-                },
-                {
-                  validator: (_, value) => (value === '' || value === info.orgId) ? Promise.resolve() :
-                    fetchExistOrgId(value).then((result: boolean) => result ? Promise.reject(intl.formatMessage({ id: 'api.org.id.validator' })) : Promise.resolve()),
-                },
-              ]}
-            >
-              <Input />
+      <Form {...formLayout}>
+        <Row gutter={24}>
+          <Col span={12}>
+            <Form.Item label={intl.formatMessage({ id: 'api.org.orgId' })}>
+              <Input value={info.orgId} readOnly />
             </Form.Item>
-          )}
+          </Col>
+          <Col span={12}>
+            <Form.Item label={intl.formatMessage({ id: 'api.org.orgName' })}>
+              <Input value={info.orgName} readOnly />
+            </Form.Item>
+          </Col>
+        </Row>
         <Form.Item
-          name="orgName"
-          label={intl.formatMessage({ id: 'api.org.orgName' })}
-          rules={[
-            {
-              required: true,
-              message: intl.formatMessage({ id: 'api.org.orgName.required' }),
-            },
-          ]}
+          labelCol={{ md: { span: 4 } }}
+          wrapperCol={{ md: { span: 20 } }}
+          label={intl.formatMessage({ id: 'api.org.merchantId' })}
         >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="orgType"
-          label={intl.formatMessage({ id: 'api.org.orgType' })}
-          rules={[
-            {
-              required: true,
-              message: intl.formatMessage({ id: 'api.org.orgType.required' }),
-            },
-          ]}
-        >
-          <Select>
-            <Select.Option value="0">{intl.formatMessage({ id: 'api.org.orgType.0' })}</Select.Option>
-            <Select.Option value="1">{intl.formatMessage({ id: 'api.org.orgType.1' })}</Select.Option>
-            <Select.Option value="2">{intl.formatMessage({ id: 'api.org.orgType.2' })}</Select.Option>
-            <Select.Option value="9">{intl.formatMessage({ id: 'api.org.orgType.9' })}</Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-          name="publicKey"
-          label={intl.formatMessage({ id: 'api.org.publicKey' })}
-          rules={[
-            {
-              required: true,
-              message: intl.formatMessage({ id: 'api.org.publicKey.required' }),
-            },
-          ]}
-        >
-          <Input.TextArea rows={4} />
-        </Form.Item>
-        <Form.Item
-          name="notifyUrl"
-          label={intl.formatMessage({ id: 'api.org.notifyUrl' })}
-          rules={[
-            {
-              required: true,
-              message: intl.formatMessage({ id: 'api.org.notifyUrl.required' }),
-            },
-            {
-              type: 'url',
-              message: intl.formatMessage({ id: 'api.org.notifyUrl.url' }),
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="privateKey"
-          label={intl.formatMessage({ id: 'api.org.privateKey' })}
-          rules={[
-            {
-              required: true,
-              message: intl.formatMessage({ id: 'api.org.privateKey.required' }),
-            },
-          ]}
-        >
-          <Input.TextArea rows={4} />
+          <Row gutter={24}>
+            <Col span={20}>
+              <Select mode="multiple" style={{ width: '100%' }} value={value} onChange={(value: string[]) => setValue(value)}>
+                {merchants
+                  .filter(mer => !orgMers.map(mer => mer.merchantId).includes(mer.merchantId))
+                  .map(mer => (<Select.Option value={mer.merchantId}>{mer.merchantId}</Select.Option>))
+                }
+              </Select>
+            </Col>
+            <Col span={4}>
+              <Button type="primary"
+                disabled={value.length === 0}
+                onClick={() => {
+                  setOrgMers([...merchants.filter(mer => value.includes(mer.merchantId)), ...orgMers])
+                  setValue([]);
+                }}
+              >
+                添加
+              </Button>
+            </Col>
+          </Row>
         </Form.Item>
       </Form>
+      <Table<MerchantData>
+        rowKey="merchantId"
+        pagination={false}
+        dataSource={orgMers}
+        columns={[
+          {
+            title: intl.formatMessage({ id: 'api.org.merchantId' }),
+            dataIndex: 'merchantId',
+            key: 'merchantId',
+          },
+          {
+            title: intl.formatMessage({ id: 'api.org.merNameChnAbbr' }),
+            dataIndex: 'merNameChnAbbr',
+            key: 'merNameChnAbbr',
+          },
+          {
+            title: intl.formatMessage({ id: 'api.org.merNameEngAbbr' }),
+            dataIndex: 'merNameEngAbbr',
+            key: 'merNameEngAbbr',
+          },
+          {
+            title: intl.formatMessage({ id: 'api.org.mapping.action' }),
+            key: 'action',
+            render: (_, record) => (
+              <Button type="link" onClick={() => handleDelete(record.merchantId)}>
+                {intl.formatMessage({ id: 'api.org.mapping.delete' })}
+              </Button>
+            ),
+          },
+        ]}
+      />
     </Modal >
   );
 };
