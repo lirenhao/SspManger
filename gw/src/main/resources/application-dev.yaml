@@ -29,9 +29,9 @@ spring.cloud.gateway.routes:
     filters:
       - ApiAuth
       - RewritePath=/svc(?<segment>/?.*),$\{segment}
-#  - uri: http://localhost:8000
-#    predicates:
-#      - Path=/**
+  - uri: http://localhost:8000
+    predicates:
+      - Path=/svc/**
 
 management.endpoints:
   web.exposure.include: metrics,gateway

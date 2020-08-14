@@ -34,3 +34,10 @@ export async function fetchUpdate(params: TableListItem) {
 export async function fetchExistOrgId(orgId: string) {
   return request(`/svc/merApiOrg/${orgId}/exists`);
 }
+
+export async function fetchMapping(params: TableListItem) {
+  return request('/svc/merApiOrg', {
+    method: 'PUT',
+    data: params,
+  });
+}

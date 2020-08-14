@@ -11,6 +11,7 @@ export default {
   'api.org.create.title': '商户机构新增',
   'api.org.update.title': '商户机构修改',
   'api.org.view.title': '商户机构查看',
+  'api.org.mapping.title': '商户机构设置',
   'api.org.delete': '确定删除【{orgId}】?',
   'api.org.orgType.0': 'POS机构',
   'api.org.orgType.1': '商户机构',

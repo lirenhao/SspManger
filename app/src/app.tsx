@@ -38,6 +38,13 @@ export const layout = ({
     disableContentMargin: false,
     footerRender: () => <Footer />,
     menuHeaderRender: undefined,
+    breadcrumbRender: (routers = []) => [
+      {
+        path: '/',
+        breadcrumbName: 'Home',
+      },
+      ...routers,
+    ].map(router => ({ ...router, path: '#' + router.path })),
     logo: logoSvg,
     ...initialState?.settings,
   };

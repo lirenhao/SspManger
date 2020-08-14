@@ -11,6 +11,7 @@ export default {
   'api.org.create.title': 'Merchant Org Create',
   'api.org.update.title': 'Merchant Org Update',
   'api.org.view.title': 'Merchant Org View',
+  'api.org.mapping.title': 'Merchant Org Mapping',
   'api.org.delete': 'CONFIRM DELETE【{orgId}】?',
   'api.org.orgType.0': 'POS Org',
   'api.org.orgType.1': 'Merchant Org',

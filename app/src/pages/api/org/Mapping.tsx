@@ -3,7 +3,8 @@ import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl } from 'umi';
 import { TableListItem } from './data';
-import { fetchQuery, fetchGet } from './service';
+import { fetchQuery, fetchGet, fetchMapping } from './service';
+import MappingMers from './components/MappingMers';
 
 const Mapping: React.FC<{}> = () => {
 
@@ -18,6 +19,16 @@ const Mapping: React.FC<{}> = () => {
       const info = await fetchGet(id);
       setInfo(info);
       setIsUpdate(true);
+    } catch (err) {
+
+    }
+  }
+
+  const handleUpdate = async (record: TableListItem) => {
+    try {
+      await fetchMapping(record);
+      setIsUpdate(false);
+      actionRef.current?.reload();
     } catch (err) {
 
     }
@@ -83,6 +94,13 @@ const Mapping: React.FC<{}> = () => {
           }
         }}
         columns={columns}
+      />
+      <MappingMers
+        title={intl.formatMessage({ id: 'api.org.mapping.title' })}
+        info={info}
+        modalVisible={isUpdate}
+        onCancel={() => setIsUpdate(false)}
+        onSubmit={handleUpdate}
       />
     </PageContainer>
   );
