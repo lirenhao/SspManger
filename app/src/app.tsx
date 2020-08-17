@@ -38,10 +38,7 @@ export const layout = ({
     disableContentMargin: false,
     footerRender: () => <Footer />,
     menuHeaderRender: undefined,
-    itemRender: route => {
-      console.log(route)
-      return (<Link to={route.path}>{route.breadcrumbName}</Link>)
-    },
+    itemRender: route => (<Link to={route.path}>{route.breadcrumbName}</Link>),
     logo: logoSvg,
     ...initialState?.settings,
   };
