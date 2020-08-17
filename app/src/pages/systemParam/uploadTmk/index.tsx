@@ -4,9 +4,9 @@ import { useIntl } from 'umi';
 import { UploadOutlined } from '@ant-design/icons';
 import { Form, Select, Upload, Button } from 'antd';
 
-import { UploadFile } from 'antd/lib/upload/interface';
 import { getOrg } from './service';
 import formLayout from '../../../formLayout';
+import { UploadFile } from 'antd/lib/upload/interface';
 
 /**
  * 添加

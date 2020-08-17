@@ -11,4 +11,6 @@ export default {
   'global.delete': '删除',
   'global.finish': '确定',
   'global.view': '查看',
+  'global.check': '审核',
+  'global.download': '下载',
 };
