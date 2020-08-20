@@ -6,7 +6,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl, FormattedMessage } from 'umi';
 
-import { TableListItem, statusEnum, TableListParams } from './data.d';
+import { TableListItem, TableListParams } from './data.d';
 import { query, download, handle } from './service';
 
 const TableList: React.FC<{}> = () => {
@@ -32,79 +32,61 @@ const TableList: React.FC<{}> = () => {
         </>
       ),
     },
+
     {
-      title: intl.formatMessage({ id: 'cup.lsId' }),
-      dataIndex: 'lsId',
-      hideInSearch: true,
-      hideInForm: true,
+      title: intl.formatMessage({ id: 'settleList.settleDate' }),
+      dataIndex: 'settleDate',
+      valueType: 'dateRange',
     },
     {
-      title: intl.formatMessage({ id: 'cup.settleDate' }),
-      dataIndex: 'settleDate',
+      title: intl.formatMessage({ id: 'settleList.acqOrgName' }),
+      dataIndex: 'acqOrgName',
+      hideInSearch: true,
+    },
+    {
+      title: intl.formatMessage({ id: 'settleList.bocOrg' }),
+      dataIndex: 'bocOrg',
+      hideInSearch: true,
     },
 
     {
-      title: intl.formatMessage({ id: 'cup.merchantId' }),
+      title: intl.formatMessage({ id: 'settleList.merchantId' }),
       dataIndex: 'merchantId',
     },
     {
-      title: intl.formatMessage({ id: 'cup.terminalId' }),
-      dataIndex: 'terminalId',
-      hideInSearch: true,
+      title: intl.formatMessage({ id: 'settleList.merchantName' }),
+      dataIndex: ['merchant', 'merNameChn'],
     },
     {
-      title: intl.formatMessage({ id: 'cup.messageType' }),
-      dataIndex: 'messageType',
+      title: intl.formatMessage({ id: 'settleList.accountNo' }),
+      dataIndex: 'accountNo',
       hideInSearch: true,
     },
 
     {
-      title: intl.formatMessage({ id: 'cup.pan' }),
-      dataIndex: 'pan',
+      title: intl.formatMessage({ id: 'settleList.accountName' }),
+      dataIndex: 'accountName',
       hideInSearch: true,
     },
     {
-      title: intl.formatMessage({ id: 'cup.tranAmt' }),
+      title: intl.formatMessage({ id: 'settleList.accountBankName' }),
+      dataIndex: 'accountBankName',
+      hideInSearch: true,
+    },
+    {
+      title: intl.formatMessage({ id: 'settleList.tranCount' }),
+      dataIndex: 'tranCount',
+      hideInSearch: true,
+    },
+    {
+      title: intl.formatMessage({ id: 'settleList.tranAmt' }),
       dataIndex: 'tranAmt',
       hideInSearch: true,
     },
     {
-      title: intl.formatMessage({ id: 'cup.tranDate' }),
-      dataIndex: 'tranDate',
+      title: intl.formatMessage({ id: 'settleList.settleAmt' }),
+      dataIndex: 'settleAmt',
       hideInSearch: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'cup.tranTime' }),
-      dataIndex: 'tranTime',
-      hideInSearch: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'cup.rrn' }),
-      dataIndex: 'rrn',
-      hideInSearch: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'cup.authCode' }),
-      dataIndex: 'authCode',
-      hideInSearch: true,
-    },
-
-    {
-      title: intl.formatMessage({ id: 'cup.feeReceivable' }),
-      dataIndex: 'feeReceivable',
-      hideInSearch: true,
-    },
-
-    {
-      title: intl.formatMessage({ id: 'cup.feePayable' }),
-      dataIndex: 'feePayable',
-      hideInSearch: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'cup.status' }),
-      dataIndex: 'status',
-      initialValue: undefined,
-      valueEnum: statusEnum,
     },
   ];
 
@@ -137,7 +119,7 @@ const TableList: React.FC<{}> = () => {
         }}
         headerTitle=""
         actionRef={actionRef}
-        rowKey="lsId"
+        rowKey="merchantId"
         columns={columns}
         toolBarRender={() => [
           <Button

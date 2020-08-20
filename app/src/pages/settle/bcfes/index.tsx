@@ -33,75 +33,64 @@ const TableList: React.FC<{}> = () => {
       ),
     },
     {
-      title: intl.formatMessage({ id: 'cup.lsId' }),
+      title: intl.formatMessage({ id: 'bcfes.lsId' }),
       dataIndex: 'lsId',
       hideInSearch: true,
       hideInForm: true,
     },
     {
-      title: intl.formatMessage({ id: 'cup.settleDate' }),
+      title: intl.formatMessage({ id: 'bcfes.settleDate' }),
       dataIndex: 'settleDate',
     },
 
     {
-      title: intl.formatMessage({ id: 'cup.merchantId' }),
+      title: intl.formatMessage({ id: 'bcfes.merchantId' }),
       dataIndex: 'merchantId',
     },
     {
-      title: intl.formatMessage({ id: 'cup.terminalId' }),
+      title: intl.formatMessage({ id: 'bcfes.terminalId' }),
       dataIndex: 'terminalId',
       hideInSearch: true,
     },
     {
-      title: intl.formatMessage({ id: 'cup.messageType' }),
-      dataIndex: 'messageType',
+      title: intl.formatMessage({ id: 'bcfes.tranType' }),
+      dataIndex: 'tranType',
       hideInSearch: true,
     },
 
     {
-      title: intl.formatMessage({ id: 'cup.pan' }),
+      title: intl.formatMessage({ id: 'bcfes.pan' }),
       dataIndex: 'pan',
       hideInSearch: true,
     },
     {
-      title: intl.formatMessage({ id: 'cup.tranAmt' }),
+      title: intl.formatMessage({ id: 'bcfes.tranAmt' }),
       dataIndex: 'tranAmt',
       hideInSearch: true,
     },
     {
-      title: intl.formatMessage({ id: 'cup.tranDate' }),
-      dataIndex: 'tranDate',
-      hideInSearch: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'cup.tranTime' }),
+      title: intl.formatMessage({ id: 'bcfes.tranTime' }),
       dataIndex: 'tranTime',
       hideInSearch: true,
     },
     {
-      title: intl.formatMessage({ id: 'cup.rrn' }),
+      title: intl.formatMessage({ id: 'bcfes.rrn' }),
       dataIndex: 'rrn',
       hideInSearch: true,
     },
     {
-      title: intl.formatMessage({ id: 'cup.authCode' }),
+      title: intl.formatMessage({ id: 'bcfes.authCode' }),
       dataIndex: 'authCode',
       hideInSearch: true,
     },
 
     {
-      title: intl.formatMessage({ id: 'cup.feeReceivable' }),
-      dataIndex: 'feeReceivable',
-      hideInSearch: true,
-    },
-
-    {
-      title: intl.formatMessage({ id: 'cup.feePayable' }),
-      dataIndex: 'feePayable',
+      title: intl.formatMessage({ id: 'bcfes.fee' }),
+      dataIndex: 'fee',
       hideInSearch: true,
     },
     {
-      title: intl.formatMessage({ id: 'cup.status' }),
+      title: intl.formatMessage({ id: 'bcfes.status' }),
       dataIndex: 'status',
       initialValue: undefined,
       valueEnum: statusEnum,

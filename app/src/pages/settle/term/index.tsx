@@ -6,8 +6,8 @@ import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl, FormattedMessage } from 'umi';
 
-import { TableListItem, statusEnum, TableListParams } from './data.d';
-import { query, download, handle } from './service';
+import { TableListItem, TableListParams } from './data.d';
+import { query, download } from './service';
 
 const TableList: React.FC<{}> = () => {
   const intl = useIntl();
@@ -16,95 +16,63 @@ const TableList: React.FC<{}> = () => {
 
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: intl.formatMessage({ id: 'global.operate' }),
-      dataIndex: 'option',
-      valueType: 'option',
-
-      render: (_, record) => (
-        <>
-          <a
-            onClick={() => {
-              handle({ lsId: record.lsId ? record.lsId : '' });
-            }}
-          >
-            <FormattedMessage id="global.operate" />
-          </a>
-        </>
-      ),
-    },
-    {
-      title: intl.formatMessage({ id: 'cup.lsId' }),
-      dataIndex: 'lsId',
-      hideInSearch: true,
-      hideInForm: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'cup.settleDate' }),
-      dataIndex: 'settleDate',
+      title: intl.formatMessage({ id: 'termCount.merNameEng' }),
+      dataIndex: 'merNameEng',
     },
 
     {
-      title: intl.formatMessage({ id: 'cup.merchantId' }),
+      title: intl.formatMessage({ id: 'termCount.merchantId' }),
       dataIndex: 'merchantId',
     },
     {
-      title: intl.formatMessage({ id: 'cup.terminalId' }),
+      title: intl.formatMessage({ id: 'termCount.terminalId' }),
       dataIndex: 'terminalId',
-      hideInSearch: true,
     },
     {
-      title: intl.formatMessage({ id: 'cup.messageType' }),
-      dataIndex: 'messageType',
-      hideInSearch: true,
-    },
-
-    {
-      title: intl.formatMessage({ id: 'cup.pan' }),
-      dataIndex: 'pan',
-      hideInSearch: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'cup.tranAmt' }),
-      dataIndex: 'tranAmt',
-      hideInSearch: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'cup.tranDate' }),
-      dataIndex: 'tranDate',
-      hideInSearch: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'cup.tranTime' }),
-      dataIndex: 'tranTime',
-      hideInSearch: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'cup.rrn' }),
-      dataIndex: 'rrn',
-      hideInSearch: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'cup.authCode' }),
-      dataIndex: 'authCode',
+      title: intl.formatMessage({ id: 'termCount.vendorName' }),
+      dataIndex: 'vendorName',
       hideInSearch: true,
     },
 
     {
-      title: intl.formatMessage({ id: 'cup.feeReceivable' }),
-      dataIndex: 'feeReceivable',
-      hideInSearch: true,
-    },
-
-    {
-      title: intl.formatMessage({ id: 'cup.feePayable' }),
-      dataIndex: 'feePayable',
+      title: intl.formatMessage({ id: 'termCount.terminalBrand' }),
+      dataIndex: 'terminalBrand',
       hideInSearch: true,
     },
     {
-      title: intl.formatMessage({ id: 'cup.status' }),
-      dataIndex: 'status',
-      initialValue: undefined,
-      valueEnum: statusEnum,
+      title: intl.formatMessage({ id: 'termCount.terminalModel' }),
+      dataIndex: 'terminalModel',
+      hideInSearch: true,
+    },
+    {
+      title: intl.formatMessage({ id: 'termCount.snNo' }),
+      dataIndex: 'snNo',
+      hideInSearch: true,
+    },
+    {
+      title: intl.formatMessage({ id: 'termCount.installAddress' }),
+      dataIndex: 'installAddress',
+      hideInSearch: true,
+    },
+    {
+      title: intl.formatMessage({ id: 'termCount.termStatus' }),
+      dataIndex: 'termStatus',
+      hideInSearch: true,
+    },
+    {
+      title: intl.formatMessage({ id: 'termCount.termCreateDate' }),
+      dataIndex: 'termCreateDate',
+      hideInSearch: true,
+    },
+    {
+      title: intl.formatMessage({ id: 'termCount.bankCustomerNum' }),
+      dataIndex: 'bankCustomerNum',
+      hideInSearch: true,
+    },
+    {
+      title: intl.formatMessage({ id: 'termCount.termModifyDate' }),
+      dataIndex: 'termModifyDate',
+      hideInSearch: true,
     },
   ];
 
@@ -137,7 +105,7 @@ const TableList: React.FC<{}> = () => {
         }}
         headerTitle=""
         actionRef={actionRef}
-        rowKey="lsId"
+        rowKey="merchantId"
         columns={columns}
         toolBarRender={() => [
           <Button

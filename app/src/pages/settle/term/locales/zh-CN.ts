@@ -1,0 +1,16 @@
+export default {
+  'termCount.orgId': 'MERCHANT ABBREVIATION NAME',
+  'termCount.yearmon': 'MID',
+  'termCount.merNameEng': 'MERCHANT ABBREVIATION NAME',
+  'termCount.merchantId': 'MID',
+  'termCount.terminalId': 'TID',
+  'termCount.vendorName': 'VENDOR',
+  'termCount.terminalBrand': 'POS BRAND',
+  'termCount.terminalModel': 'POS MODEL',
+  'termCount.snNo': 'POS SERIAL',
+  'termCount.installAddress': 'INSTALLATION ADDRESS',
+  'termCount.termStatus': 'TERMINAL STATUS',
+  'termCount.termCreateDate': 'TID CREATE DATE',
+  'termCount.bankCustomerNum': 'RM',
+  'termCount.termModifyDate': 'TID STATUS CHANGE DATE',
+};
