@@ -15,12 +15,12 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional
-public class MerSubsService {
+public class WebSubsService {
 
     private final MerchantDao merchantDao;
 
     @Autowired
-    public MerSubsService(MerchantDao merchantDao) {
+    public WebSubsService(MerchantDao merchantDao) {
         this.merchantDao = merchantDao;
     }
 

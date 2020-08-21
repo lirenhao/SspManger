@@ -2,7 +2,7 @@ import { IRoute } from 'umi';
 
 const routes: IRoute[] = [
   {
-    path: '/systemParam/merchant',
+    path: '/mer/merchant',
     name: 'merchant',
     component: './info/merchant',
     locale: 'merchant.title',
@@ -26,6 +26,12 @@ const routes: IRoute[] = [
     name: 'merMdr',
     component: './mer/merMdr',
     locale: 'mer.merMdr',
+  },
+  {
+    path: '/mer/webSubs',
+    name: 'webSubs',
+    component: './web/subs',
+    locale: 'webSubs.title',
   },
 ];
 

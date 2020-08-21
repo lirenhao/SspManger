@@ -101,7 +101,7 @@ task("copyApp") {
             exclude("index.html")
         }
         copy {
-            from '../admin/dist/index.html'
+            from '../app/dist/index.html'
             into 'src/main/resources/templates'
         }
     }
