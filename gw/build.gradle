@@ -30,7 +30,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'com.nulab-inc:zxcvbn:1.3.0'
@@ -39,23 +38,12 @@ dependencies {
     implementation 'commons-codec:commons-codec:1.14'
     implementation 'jakarta.xml.bind:jakarta.xml.bind-api'
     implementation 'org.glassfish.jaxb:jaxb-runtime'
-    // implementation 'io.projectreactor:reactor-tools'
     implementation 'com.hazelcast:hazelcast:3.12.6'
     implementation 'com.hazelcast:hazelcast-client:3.12.6'
-//    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
-//    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'io.projectreactor:reactor-test'
-
-//    compileOnly 'org.projectlombok:lombok:1.18.10'
-//    annotationProcessor 'org.projectlombok:lombok:1.18.10'
 }
-
-//application {
-//    // Define the main class for the application.
-//    mainClassName = 'com.yada.MyAppKt'
-//}
 
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
@@ -71,9 +59,30 @@ test {
     }
 }
 
-tasks.register("copyAdmin") {
-    group("build")
-    description("拷贝admin webapp")
+task("buildApp") {
+    group("app")
+    description("build app")
+    exec {
+        workingDir("../admin")
+        commandLine "npm", "install"
+    }
+    exec {
+        workingDir("../admin")
+        commandLine "npm", "run", "build"
+    }
+    exec {
+        workingDir("../app")
+        commandLine "npm", "install"
+    }
+    exec {
+        workingDir("../app")
+        commandLine "npm", "run", "build"
+    }
+}
+
+task("copyApp") {
+    group("app")
+    description("copy app build output")
     doLast {
         copy {
             from '../admin/dist'
@@ -87,24 +96,97 @@ tasks.register("copyAdmin") {
             into 'src/main/resources/templates/admin'
         }
     }
-}
-
-tasks.register("deleteAdmin") {
-    group("build")
-    description("清理admin webapp")
     doLast {
-        delete "src/main/resources/static/admin"
+        copy {
+            from '../app/dist'
+            into 'src/main/resources/static/app'
+            exclude("index.html")
+        }
+    }
+    doLast {
+        copy {
+            from '../admin/dist/index.html'
+            into 'src/main/resources/templates'
+        }
     }
 }
 
-task("buildAdmin", type: Exec) {
-    workingDir("../admin")
-    commandLine "npm", "run", "build"
+task("deleteApp") {
+    group("app")
+    description("delete copy app")
+    doLast {
+        delete "src/main/resources/static/admin"
+    }
+    doLast {
+        delete "src/main/resources/static/app"
+    }
+}
+
+task("buildDev") {
+    group("build")
+    description("build dev env")
+    buildApp.mustRunAfter("deleteApp")
+    copyApp.mustRunAfter("buildApp")
+}.dependsOn("clean", "deleteApp", "buildApp", "copyApp")
+
+task("buildSvc") {
+    group("svc")
+    description("build svc")
+    doLast {
+        exec {
+            workingDir "../svc"
+            commandLine "mvn", "clean", "package"
+        }
+    }
+}
+
+task("buildGw") {
+    group("svc")
+    description("build gw svc")
+    buildApp.mustRunAfter("deleteApp")
+    copyApp.mustRunAfter("buildApp")
+    bootJar.mustRunAfter("copyApp")
+    bootJar.mustRunAfter("clean")
+}.dependsOn("clean", "deleteApp", "buildApp", "copyApp", "bootJar")
+
+
+task("deleteJar") {
+    group("svc")
+    description("delete build output")
+    doLast {
+        delete "../dist"
+    }
+}
+
+task("copyJar") {
+    group("svc")
+    description("copy build jar output to dist")
+    doLast {
+        copy {
+            from '../gw/build/libs/gw-1.0-SNAPSHOT.jar'
+            into '../dist/gw'
+        }
+        copy {
+            from '../gw/src/main/resources'
+            into '../dist/gw'
+            include('application*')
+        }
+        copy {
+            from '../svc/target/svc-0.0.1-SNAPSHOT.jar'
+            into '../dist/svc'
+        }
+        copy {
+            from '../mspSvc/src/main/resources'
+            into '../dist/msp'
+            include('application*')
+        }
+    }
 }
 
 task("buildAll") {
-    buildAdmin.mustRunAfter("deleteAdmin")
-    copyAdmin.mustRunAfter("buildAdmin")
-    bootJar.mustRunAfter("clean")
-    bootJar.mustRunAfter("copyAdmin")
-}.dependsOn("clean", "deleteAdmin", "bootJar", "buildAdmin", "copyAdmin")
+    group("build")
+    description("build all output to dist")
+    copyJar.mustRunAfter("deleteJar")
+    copyJar.mustRunAfter("buildGw")
+    copyJar.mustRunAfter("buildSvc")
+}.dependsOn("deleteJar", "buildGw", "buildSvc", "copyJar")
