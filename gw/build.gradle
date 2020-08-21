@@ -165,16 +165,16 @@ task("copyJar") {
         copy {
             from '../gw/src/main/resources'
             into '../dist/gw'
-            include('application*')
+            include('*.*')
         }
         copy {
             from '../svc/target/svc-0.0.1-SNAPSHOT.jar'
-            into '../dist/svc'
+            into '../dist/ssp'
         }
         copy {
-            from '../mspSvc/src/main/resources'
-            into '../dist/msp'
-            include('application*')
+            from '../svc/src/main/resources'
+            into '../dist/ssp'
+            include('application*', '*.xml')
         }
     }
 }
