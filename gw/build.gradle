@@ -62,21 +62,23 @@ test {
 task("buildApp") {
     group("app")
     description("build app")
-    exec {
-        workingDir("../admin")
-        commandLine "npm", "install"
-    }
-    exec {
-        workingDir("../admin")
-        commandLine "npm", "run", "build"
-    }
-    exec {
-        workingDir("../app")
-        commandLine "npm", "install"
-    }
-    exec {
-        workingDir("../app")
-        commandLine "npm", "run", "build"
+    doLast {
+        exec {
+            workingDir("../admin")
+            commandLine "npm", "install"
+        }
+        exec {
+            workingDir("../admin")
+            commandLine "npm", "run", "build"
+        }
+        exec {
+            workingDir("../app")
+            commandLine "npm", "install"
+        }
+        exec {
+            workingDir("../app")
+            commandLine "npm", "run", "build"
+        }
     }
 }
 
@@ -89,21 +91,15 @@ task("copyApp") {
             into 'src/main/resources/static/admin'
             exclude("index.html")
         }
-    }
-    doLast {
         copy {
             from '../admin/dist/index.html'
             into 'src/main/resources/templates/admin'
         }
-    }
-    doLast {
         copy {
             from '../app/dist'
-            into 'src/main/resources/static/app'
+            into 'src/main/resources/static/ssp'
             exclude("index.html")
         }
-    }
-    doLast {
         copy {
             from '../admin/dist/index.html'
             into 'src/main/resources/templates'
@@ -116,9 +112,9 @@ task("deleteApp") {
     description("delete copy app")
     doLast {
         delete "src/main/resources/static/admin"
-    }
-    doLast {
-        delete "src/main/resources/static/app"
+        delete "src/main/resources/templates/admin/index.html"
+        delete "src/main/resources/static/ssp"
+        delete "src/main/resources/templates/index.html"
     }
 }
 
