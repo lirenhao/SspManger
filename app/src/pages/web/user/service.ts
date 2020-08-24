@@ -7,6 +7,10 @@ export async function fetchQuery(params?: TableListParams) {
   });
 }
 
+export async function fetchAll() {
+  return request('/svc/web/user/list');
+}
+
 export async function fetchGet(id: string) {
   return request(`/svc/web/user/${id}`);
 }
@@ -45,4 +49,8 @@ export async function fetchOrgMap() {
 
 export async function fetchAllMer() {
   return request('/svc/merchant/orgId');
+}
+
+export async function fetchMerByOrgId(orgId: string) {
+  return request(`/svc/merchant/orgId/${orgId}`);
 }

@@ -18,6 +18,7 @@ class UserRouterConfig @Autowired constructor(
             GET("", userHandler::getPage)
             POST("", userHandler::create)
             PUT("/policy", userHandler::updatePolicy)
+            GET("/list", userHandler::getList)
             GET("/{id}", userHandler::getOne)
             GET("/{id}/exist", userHandler::exist)
             PUT("/{id}/reset", userHandler::reset)

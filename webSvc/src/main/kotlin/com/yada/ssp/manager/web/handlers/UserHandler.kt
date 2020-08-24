@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.ServerResponse.ok
+import org.springframework.web.reactive.function.server.body
 import org.springframework.web.reactive.function.server.bodyToMono
 import org.springframework.web.server.ResponseStatusException
 import reactor.core.publisher.Mono
@@ -26,6 +27,8 @@ class UserHandler @Autowired constructor(private val userService: UserService) {
                             req.queryParam("size").orElse("10").toInt()
                     )
             ).flatMap { ok().bodyValue(it) }
+
+    fun getList(req: ServerRequest): Mono<ServerResponse> = ok().body(userService.getAll())
 
     fun getOne(req: ServerRequest): Mono<ServerResponse> =
             userService.get(req.pathVariable("id"))

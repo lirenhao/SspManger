@@ -2,8 +2,8 @@ import React from 'react';
 import { Form, Modal, TreeSelect, Select, Input } from 'antd';
 import { DataNode } from 'antd/lib/tree';
 import { useIntl } from 'umi';
-import { TableListItem } from '../data';
-import { fetchOrgTree, fetchOrgMap, fetchExistId } from '../service';
+import { TableListItem, MerchantData } from '../data';
+import { fetchOrgTree, fetchOrgMap, fetchMerByOrgId, fetchAll } from '../service';
 
 interface FormProps {
   title: string;
@@ -34,11 +34,23 @@ const FormView: React.FC<FormProps> = (props) => {
 
   const [orgTree, setOrgTree] = React.useState<DataNode[]>([]);
   const [orgMap, setOrgMap] = React.useState<Object>({});
+  const [merchants, setmerchants] = React.useState<MerchantData[]>([]);
+  const [merNos, setMerNos] = React.useState<string[]>([]);
 
   React.useEffect(() => {
     fetchOrgTree().then(setOrgTree);
     fetchOrgMap().then(setOrgMap);
-  }, []);
+    fetchAll().then(data => setMerNos(data?.map((item: any) => item.id.split('@')[0])))
+  }, [info]);
+
+  const handleOrgChange = async (orgId: string) => {
+    await fetchMerByOrgId(orgId).then(setmerchants);
+    await fetchAll().then(data => setMerNos(data?.map((item: any) => item.id.split('@')[0])))
+    form.setFieldsValue({
+      ...form.getFieldsValue(),
+      id: undefined,
+    });
+  }
 
   return (
     <Modal
@@ -54,7 +66,10 @@ const FormView: React.FC<FormProps> = (props) => {
         {...formLayout}
         form={form}
         initialValues={info}
-        onFinish={values => onSubmit({ ...info, ...values } as TableListItem)}
+        onFinish={values => {
+          onSubmit({ ...info, ...values } as TableListItem);
+          form.resetFields();
+        }}
       >
         {info.id ? (
           <Form.Item label={intl.formatMessage({ id: 'webUser.orgId' })}>
@@ -71,7 +86,7 @@ const FormView: React.FC<FormProps> = (props) => {
                 },
               ]}
             >
-              <TreeSelect treeDefaultExpandAll treeData={orgTree} />
+              <TreeSelect treeDefaultExpandAll treeData={orgTree} onChange={(value: string) => handleOrgChange(value)} />
             </Form.Item>
           )}
         {info.id ? (
@@ -87,14 +102,14 @@ const FormView: React.FC<FormProps> = (props) => {
                   required: true,
                   message: intl.formatMessage({ id: 'webUser.id.required' }),
                 },
-                {
-                  validator: (_, value) => (value === '' || value === info.id) ? Promise.resolve() :
-                    fetchExistId(value).then((result: boolean) => result ? Promise.reject(intl.formatMessage({ id: 'webUser.id.validator' })) : Promise.resolve()),
-                },
               ]}
             >
-              <Select>
-
+              <Select allowClear showSearch>
+                {
+                  merchants
+                    .filter(item => !merNos.includes(item.merchantId))
+                    .map(item => (<Select.Option value={item.merchantId}>{`${item.merchantId}-${item.merNameEng}`}</Select.Option>))
+                }
               </Select>
             </Form.Item>
           )}

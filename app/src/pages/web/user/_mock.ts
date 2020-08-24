@@ -56,6 +56,7 @@ function exist(req: Request, res: Response) {
 
 export default {
   'GET /svc/web/user': getAll,
+  'GET /svc/web/user/list': data,
   'GET /svc/web/user/:id': get,
   'POST /svc/web/user': save,
   'PUT /svc/web/user': update,

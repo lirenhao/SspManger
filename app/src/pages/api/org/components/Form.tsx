@@ -62,7 +62,7 @@ const FormView: React.FC<FormProps> = (props) => {
                 },
                 {
                   validator: (_, value) => (value === '' || value === info.orgId) ? Promise.resolve() :
-                    fetchExistOrgId(value).then((result: boolean) => result ? Promise.reject(intl.formatMessage({ id: 'api.org.id.validator' })) : Promise.resolve()),
+                    fetchExistOrgId(value).then((result: boolean) => result ? Promise.reject(intl.formatMessage({ id: 'api.org.orgId.validator' })) : Promise.resolve()),
                 },
               ]}
             >

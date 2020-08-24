@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class MerchantController {
 
     @GetMapping
     public Page<Merchant> list(@RequestAttribute("auth") Auth auth,
-                       @ModelAttribute MerchantQuery query, @PageableDefault Pageable pageable) {
+                               @ModelAttribute MerchantQuery query, @PageableDefault Pageable pageable) {
         if (null == query.getOrgId() || "".equals(query.getOrgId())) {
             query.setOrgId(auth.getOrgId());
         }
@@ -38,6 +39,14 @@ public class MerchantController {
     @GetMapping("/orgId")
     public List<Merchant> getByOrgId(@RequestAttribute("auth") Auth auth) {
         return merchantService.findByOrgId(auth.getOrgId());
+    }
+
+    @GetMapping("/orgId/{orgId}")
+    public List<Merchant> getByOrgId(@RequestAttribute("auth") Auth auth, @PathVariable String orgId) {
+        if (orgId.startsWith(auth.getOrgId()))
+            return merchantService.findByOrgId(orgId);
+        else
+            return Collections.emptyList();
     }
 
     @GetMapping("/{id}")
