@@ -15,9 +15,15 @@ export async function fetchGet(id: string) {
   return request(`/svc/web/user/${id}`);
 }
 
-export async function fetchDel(orgId: string) {
-  return request(`/svc/web/user/${orgId}`, {
+export async function fetchDel(id: string) {
+  return request(`/svc/web/user/${id}`, {
     method: 'DELETE',
+  });
+}
+
+export async function fetchResetPwd(id: string) {
+  return request(`/svc/web/user/${id}/reset`, {
+    method: 'PUT',
   });
 }
 
@@ -29,7 +35,7 @@ export async function fetchSave(params: TableListItem) {
 }
 
 export async function fetchUpdate(params: TableListItem) {
-  return request('/svc/web/user', {
+  return request(`/svc/web/user/${params.id}`, {
     method: 'PUT',
     data: params,
   });

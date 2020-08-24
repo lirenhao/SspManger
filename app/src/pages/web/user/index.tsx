@@ -1,6 +1,6 @@
 import React from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import { Divider, Modal, Button, TreeSelect } from 'antd';
+import { Divider, Modal, Button, TreeSelect, notification } from 'antd';
 import { DataNode } from 'antd/lib/tree';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -8,7 +8,7 @@ import { useIntl, useModel } from 'umi';
 import { TableListItem, MerchantData } from './data';
 import {
   fetchOrgTree, fetchOrgMap, fetchAllMer,
-  fetchQuery, fetchGet, fetchSave, fetchUpdate, fetchDel
+  fetchQuery, fetchGet, fetchSave, fetchUpdate, fetchDel, fetchResetPwd
 } from './service';
 import Form from './components/Form';
 
@@ -61,7 +61,7 @@ const TableList: React.FC<{}> = () => {
     try {
       await fetchUpdate(record);
       setIsUpdate(false);
-      await actionRef.current?.reload();
+      actionRef.current?.reload();
     } catch (err) {
 
     }
@@ -74,9 +74,28 @@ const TableList: React.FC<{}> = () => {
       onOk: async () => {
         try {
           await fetchDel(id)
-          await actionRef.current?.reload();
+          actionRef.current?.reload();
         } catch (err) {
 
+        }
+      }
+    });
+  }
+
+  const handleResetPwd = (id: string) => {
+    confirm({
+      title: intl.formatMessage({ id: 'webUser.reset' }, { id }),
+      okType: 'danger',
+      onOk: async () => {
+        try {
+          await fetchResetPwd(id)
+          notification.success({
+            message: intl.formatMessage({ id: 'webUser.reset.success' }, { id }),
+          })
+        } catch (err) {
+          notification.error({
+            message: intl.formatMessage({ id: 'webUser.reset.error' }, { id }),
+          });
         }
       }
     });
@@ -93,6 +112,10 @@ const TableList: React.FC<{}> = () => {
           <Divider type="vertical" />
           <a onClick={() => handleDelete(record.id)}>
             {intl.formatMessage({ id: 'global.delete' })}
+          </a>
+          <Divider type="vertical" />
+          <a onClick={() => handleResetPwd(record.id)}>
+            {intl.formatMessage({ id: 'webUser.reset.action' })}
           </a>
         </>
       ),

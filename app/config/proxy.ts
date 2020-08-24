@@ -7,11 +7,11 @@
  */
 export default {
   dev: {
-    '/svc/user': {
+    '/svc/web': {
       target: 'http://localhost:8085/',
       changeOrigin: true,
       pathRewrite: {
-        '^/svc': '',
+        '^/svc/web': '',
       },
       logLevel: 'debug',
     },
