@@ -20,7 +20,7 @@ class UserHandler @Autowired constructor(private val userService: UserService) {
     fun getPage(req: ServerRequest): Mono<ServerResponse> =
             userService.getPage(
                     req.queryParam("orgId").orElse(""),
-                    req.queryParam("userId").orElse(""),
+                    req.queryParam("id").orElse(""),
                     PageRequest.of(
                             req.queryParam("page").orElse("0").toInt(),
                             req.queryParam("size").orElse("10").toInt()
@@ -50,7 +50,7 @@ class UserHandler @Autowired constructor(private val userService: UserService) {
                                             data.orgId ?: user.orgId,
                                             data.roles ?: user.roles,
                                             data.status ?: user.status,
-                                            data.emailAddress ?: user.email
+                                            data.email ?: user.email
                                     )
                                 }
                                 .flatMap { userService.update(it) }

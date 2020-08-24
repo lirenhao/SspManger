@@ -33,6 +33,12 @@ const routes: IRoute[] = [
     component: './web/subs',
     locale: 'webSubs.title',
   },
+  {
+    path: '/mer/webUser',
+    name: 'webUser',
+    component: './web/user',
+    locale: 'webUser.title',
+  },
 ];
 
 export default routes;

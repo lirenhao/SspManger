@@ -76,7 +76,7 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'merchantId',
       renderFormItem: (item, { onChange, ...rest }, form) => (
         <Select allowClear showSearch {...item.formItemProps} {...rest}
-          onChange={value => handleMerChange(value, form, onChange)}
+          onChange={(value: string) => handleMerChange(value, form, onChange)}
         >
           {merchants.map(item => (
             <Select.Option key={item.merchantId} value={item.merchantId}>
@@ -123,7 +123,7 @@ const TableList: React.FC<{}> = () => {
               ...params,
               size: params.pageSize,
               page: params.current as number - 1,
-              sort: Object.keys(sort).map(key => `${key},desc${sort[key].replace('end', '')}`),
+              sort: Object.keys(sort).map(key => `${key},desc${sort[key]?.replace('end', '')}`),
             });
             return {
               data: result.content,
