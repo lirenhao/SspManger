@@ -14,4 +14,5 @@ export default {
   'check.approval': '审核通过',
   'check.reject': '审核拒绝',
   'check.cancel': '取消',
+  'check.merQrc': 'MERCHANT QR CODE',
 };

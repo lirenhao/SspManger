@@ -8,4 +8,5 @@ export default {
   'merAddon.cName': '中文名称',
   'merAddon.eName': '英文名称',
   'merAddon.merchantType': '商户类型',
+  'check.merAddonName': 'Merchant Add-On Check',
 };

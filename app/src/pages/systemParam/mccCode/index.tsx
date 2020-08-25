@@ -76,7 +76,6 @@ const TableList: React.FC<{}> = () => {
         <>
           <a
             onClick={() => {
-              console.error('test', record);
               setStepFormValues(record);
               handleUpdateModalVisible(true);
             }}

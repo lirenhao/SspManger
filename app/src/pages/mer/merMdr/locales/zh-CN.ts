@@ -9,6 +9,7 @@ export default {
   'merMdr.feeCreate': 'MDR RATES(eg: 1=0.01% 10=0.1% 100=1% 1000=10%)',
   'merMdr.tranAmt': 'TRANS AMOUNT TIER',
   'merMdr.tranCnt': 'TRANS COUNT TIER',
+  'merMdr.updateCompoent': '修改',
 
   'merMdr.merchantIdNecessary': '商户必须选择',
   'merMdr.feeTypeNecessary': '费率类型必须选择',
@@ -26,4 +27,5 @@ export default {
   'merMdr.merchantType': '商户类型',
   'merMdr.create': '创建',
   'merMdr.view': '查看',
+  'mer.merMdr': 'Merchant Mdr Management',
 };

@@ -5,7 +5,7 @@ export default {
   'orgzmk.pwd1Necessary': '密码1是必须的',
   'orgzmk.pwd1Format': '密码1格式错误',
   'orgzmk.pwd1Length': '密码1长度需要达到48位',
-
+  'orgzmk.orgIdNoNecessary': '机构是必选的',
   'orgzmk.pwd2': '密码2',
   'orgzmk.pwd2Necessary': '密码2是必须的',
   'orgzmk.pwd2Format': '密码2格式错误',

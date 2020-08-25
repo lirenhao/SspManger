@@ -61,12 +61,6 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   React.useEffect(() => {
     fetchOrgTree().then(setOrgTree);
   }, []);
-  // React.useEffect(() => {
-  //   console.error('orgSelect',orgSelect)
-  //   if(orgSelect!=null&&orgSelect!==''){
-  //     getTerminal(orgSelect).then(setTerminals);
-  //   }
-  // }, []);
 
   const renderUseCaseOption = () => {
     const { Option } = Select;
@@ -98,7 +92,6 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
     const { Option } = Select;
     const OptionArr: JSX.Element[] = [];
 
-    console.error('terminals', form.getFieldValue('merchantId'));
     terminals.forEach((element) => {
       OptionArr.push(
         <Option key={element.terminalId} value={element.terminalId}>
@@ -114,10 +107,6 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
     onSubmit({ ...{ merchant: {}, ccyCode: {} }, ...fieldsValue });
   };
 
-  // const treeOnChange = (merchantId:string)=>{
-  //   console.error(form.getFieldValue('merchantId'))
-  // }
-
   const handleMerChange = (
     value: string,
     thisForm: FormInstance,
@@ -130,7 +119,6 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
         terminalId: undefined,
       });
 
-      console.error(thisForm.getFieldsValue());
       getTerminal(value).then(setTerminals);
     }
   };

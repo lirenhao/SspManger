@@ -13,7 +13,7 @@ export default {
   'ccpay.ccpayMerPassNecessary': '密码是必须的',
   'ccpay.feeCreate': 'MDR RATES(eg: 1=0.1% 10=1% 100=10%)',
   'ccpay.feeCreateNecessary': '费率是必须的',
-
+  'ccy.createCompoent': '创建',
   'ccpay.checkState': '检查状态',
   'ccpay.checkReason': '检查原因',
   'ccpay.operation': '操作状态',
@@ -22,4 +22,7 @@ export default {
   'ccpay.merchantType': '商户类型',
   'ccpay.create': '创建',
   'ccpay.view': '查看',
+  'ccpay.mng': 'Ccpay Management',
+  'ccpay.staticQrc': 'QR CODE',
+  'ccpay.updateCompoent': '修改',
 };

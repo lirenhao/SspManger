@@ -1,7 +1,8 @@
 export interface TableListItem {
-  mcc: string;
-  remark?: string;
-  key?: string;
+  merchantId: string;
+  maxTrxCount: string;
+  maxTrxAmount: string;
+  status: string;
 }
 
 export interface TableListPagination {
@@ -17,11 +18,16 @@ export interface TableListData {
 }
 
 export interface TableListParams {
-  mcc?: number;
-  remark?: string;
-  key?: string;
-  pageSize?: number;
+  merchantId?: string;
+  status?: string;
+  bic?: string;
   size?: number;
   page?: number;
   sort?: string[];
 }
+
+const StatusEnum = {
+  '0': 'close',
+  '1': 'open',
+};
+export { StatusEnum };

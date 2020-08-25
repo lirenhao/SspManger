@@ -13,4 +13,11 @@ export default {
   'menu.orgtmk': 'Posp Org TMK',
   'menu.tmkUpload': 'Posp TMK Upload',
   'menu.mPolicy': 'Merchant Policy',
+  'menu.uploadTmk': 'Posp TMK Upload',
+  'menu.terminal': 'Terminal',
+  'menu.risk': 'risk',
+  'menu.settle': 'settle',
+  'menu.check': 'MANAGEMENT CHECK LIST',
+  'menu.trans': 'TRANSACTION INQUIRY MANAGEMENT',
+  'menu.ccpay': 'Ccpay Management',
 };

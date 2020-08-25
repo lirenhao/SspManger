@@ -11,4 +11,12 @@ export default {
   'merQrc.merchantType': '商户类型',
   'merQrc.create': '创建',
   'merQrc.view': '查看',
+  'merQrc.ccyName': '现金类型',
+  'merQrc.qrValue': 'MERCHANT QR CODE',
+  'merQrc.cardAsso': 'CARD ASSOCIATION',
+  'merQrc.terminalId': 'TERMINAL ID',
+  'merQrc.updateCompoent': '修改QR',
+  'merQrc.ccyCode': 'CURRENCY',
+  'merQrc.fee': 'Fee Type',
+  'mer.merQrc': 'Merchant Static-QRC',
 };

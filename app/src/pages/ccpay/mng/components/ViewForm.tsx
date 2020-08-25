@@ -42,27 +42,27 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
   const renderContent = () => {
     return (
       <>
-        <Form.Item name="merchantId" label={intl.formatMessage({ id: 'merQrc.merchantId' })}>
+        <Form.Item name="merchantId" label={intl.formatMessage({ id: 'ccpay.merchantId' })}>
           <Input disabled />
         </Form.Item>
 
-        <Form.Item name="ccpayMerName" label={intl.formatMessage({ id: 'merQrc.ccpayMerName' })}>
+        <Form.Item name="ccpayMerName" label={intl.formatMessage({ id: 'ccpay.ccpayMerName' })}>
           <Input disabled />
         </Form.Item>
 
-        <Form.Item name="staticQrc" label={intl.formatMessage({ id: 'merQrc.staticQrc' })}>
+        <Form.Item name="staticQrc" label={intl.formatMessage({ id: 'ccpay.staticQrc' })}>
           <Input disabled />
         </Form.Item>
 
-        <Form.Item name="fee" label={intl.formatMessage({ id: 'merQrc.fee' })}>
+        <Form.Item name="fee" label={intl.formatMessage({ id: 'ccpay.fee' })}>
           <Input disabled />
         </Form.Item>
 
-        <Form.Item name="checkState" label={intl.formatMessage({ id: 'merQrc.checkState' })}>
+        <Form.Item name="checkState" label={intl.formatMessage({ id: 'ccpay.checkState' })}>
           <Input disabled />
         </Form.Item>
 
-        <Form.Item name="operation" label={intl.formatMessage({ id: 'merQrc.operation' })}>
+        <Form.Item name="operation" label={intl.formatMessage({ id: 'ccpay.operation' })}>
           <Input disabled />
         </Form.Item>
       </>
@@ -72,7 +72,7 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
   return (
     <Modal
       destroyOnClose
-      title={intl.formatMessage({ id: 'merQrc.updateCompoent' })}
+      title={intl.formatMessage({ id: 'ccpay.updateCompoent' })}
       visible={modalVisible}
       onCancel={() => onCancel()}
       onOk={() => onCancel()}

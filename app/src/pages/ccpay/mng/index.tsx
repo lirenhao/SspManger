@@ -140,7 +140,7 @@ const TableList: React.FC<{}> = () => {
         }}
         headerTitle=""
         actionRef={actionRef}
-        rowKey="lsId"
+        rowKey="merchantId"
         toolBarRender={() => [
           <Button type="primary" onClick={() => handleModalVisible(true)}>
             <PlusOutlined /> <FormattedMessage id="global.create" />

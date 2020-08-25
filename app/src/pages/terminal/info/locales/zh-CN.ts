@@ -8,7 +8,9 @@ export default {
   'terminal.tmkZmk': 'TERMINAL TMK KEYS',
   'terminal.terminalBrand': 'TERMINAL BRAND',
   'terminal.terminalModel': 'TERMINAL SERIAL NUMBER',
-  'terminal.orgId': 'ORG',
+  'terminal.orgId': 'ACQUIRER CODE',
+  'terminal.terminalType': 'TERMINAL TYPE',
+  'terminal.status': 'TERMINAL STATUS',
   'terminal.lineCondition': 'CONNECTION STATUS',
   'terminal.installAddress': 'INSTALLATION ADDRESS',
   'terminal.installDate': 'INSTALLATION DATE',
@@ -16,7 +18,7 @@ export default {
   'terminal.telephone': 'PHONE NO.',
   'terminal.counterName': 'OUTLET NAME',
   'terminal.counterPhone': 'OUTLET CONTACT NUMBER',
-
+  'terminal.terminalId': 'TERMINAL ID',
   'terminal.terminalDesc': 'TERMINAL DESCRIPTION',
   'terminal.areaCode': 'AREA CODE',
   'terminal.timeZone': 'TIME',
@@ -27,4 +29,5 @@ export default {
 
   'terminal.modifyDate': 'MODIFIED TIME',
   'terminal.createDate': 'CREATION TIME',
+  'terminal.info': 'Terminal Information',
 };

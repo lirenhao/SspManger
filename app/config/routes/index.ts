@@ -6,6 +6,7 @@ import ccpay from './ccpay';
 import trans from './trans';
 import check from './check';
 import settle from './settle';
+import risk from './risk';
 
 export default [
   {
@@ -75,6 +76,13 @@ export default [
     icon: 'setting',
     locale: 'menu.settle',
     routes: settle,
+  },
+  {
+    path: '/risk',
+    name: 'risk',
+    icon: 'setting',
+    locale: 'menu.risk',
+    routes: risk,
   },
   {
     component: './404',

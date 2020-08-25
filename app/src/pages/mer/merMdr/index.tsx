@@ -82,7 +82,7 @@ const TableList: React.FC<{}> = () => {
       title: intl.formatMessage({ id: 'merMdr.merchantId' }),
       dataIndex: 'lsId',
       hideInSearch: true,
-      hideInForm: true,
+      hideInTable: true,
     },
 
     {

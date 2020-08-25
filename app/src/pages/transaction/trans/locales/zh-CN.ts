@@ -13,13 +13,6 @@ export default {
   'trans.respCode': 'RESPONSE CODE',
   'trans.merTraceNo': 'MER TRACE NO',
   'trans.channelTraceNo': 'CHANNEL TRACE NO',
-
-  'merMdr.checkState': '检查状态',
-  'merMdr.checkReason': '检查原因',
-  'merMdr.operation': '操作状态',
-  'merMdr.cName': '中文名称',
-  'merMdr.eName': '英文名称',
-  'merMdr.merchantType': '商户类型',
-  'merMdr.create': '创建',
-  'merMdr.view': '查看',
+  'transaction.trans': 'Search Transaction',
+  'trans.viewCompoent': '查看',
 };
