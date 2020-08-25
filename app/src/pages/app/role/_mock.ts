@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import AppRole from './data';
+import { TableListItem } from './data.d';
 
-const tableListDataSource: AppRole.TableListItem[] = [];
+const tableListDataSource: TableListItem[] = [];
 tableListDataSource.push({
   id: 'id',
   name: 'admin',
