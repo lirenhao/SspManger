@@ -25,18 +25,22 @@
 
         .container {
             background: rgba(255, 255, 255, .5);
-            border-radius: 0 0 3px 3px;
-            background-clip: padding-box;
-            border: 1px solid #e1e1e1;
+            border-radius: 6px;
             border-bottom-width: 5px;
+            max-width: 350px;
+        }
+
+        .header img {
+            border-radius: 6px 6px 0 0;
+            background: transparent;
+            width: 100%;
+        }
+
+        .form-box {
             padding: 40px 25px;
         }
 
-        h2 {
-            margin: 0 0 2rem;
-            text-align: center;
-        }
-        .alert-error-box{
+        .alert-error-box {
             margin-bottom: 10px;
             padding: 4px 10px;
             background-color: #fff4f0;
@@ -57,14 +61,17 @@
             box-sizing: border-box;
             transition: .5s;
         }
-        .form-input+span{
+
+        .form-input + span {
             display: inline-block;
             padding-top: 10px;
             color: red;
         }
-        .form-input.alert-error{
-            border-color:red;
+
+        .form-input.alert-error {
+            border-color: red;
         }
+
         .form-btn {
             font-size: 1.125em;
             font-weight: 600;
@@ -74,7 +81,7 @@
             margin-top: 8px;
             background-color: #e84e40;
             border-color: #dd191d;
-            color:#fff;
+            color: #fff;
         }
 
         .form-btn:hover {
@@ -88,7 +95,7 @@
     <script th:src="@{${@environment.getProperty('yada.contextPath', '')}+'/js/jquery-3.1.1.js'}"></script>
     <script th:src="@{${@environment.getProperty('yada.contextPath', '')}+'/js/jquery.validate-1.19.1.js'}"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#loginForm").validate({
                 rules: {
                     username: {
@@ -120,7 +127,6 @@
         });
 
 
-
     </script>
     <script th:if="${@environment.getProperty('yada.security.recaptcha.type') == 'Google'}"
             src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -128,24 +134,28 @@
             src="https://recaptcha.net/recaptcha/api.js" async defer></script>
 </head>
 <body class="wrap">
-<form id="loginForm" method="post" th:object="${loginForm}">
-    <div class="container">
-        <h2>BOC MERCHANT PLATFORM</h2>
+
+<div class="container">
+    <header class="header">
+        <img th:src="@{${@environment.getProperty('yada.contextPath', '')}+'/img/login-header.png'}" width="100%">
+    </header>
+    <form class="form-box" id="loginForm" method="post" th:object="${loginForm}">
         <p class="alert-error-box" th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></p>
         <div class="input-box username">
-            <input type="text" id="username" th:field="*{username}" class="form-input" placeholder="请输入用户名">
+            <input type="text" id="username" th:field="*{username}" class="form-input" placeholder="USERNAME">
             <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
         </div>
         <div class="input-box pwd">
-            <input type="password" id="password" th:field="*{password}" class="form-input" placeholder="请输入密码">
+            <input type="password" id="password" th:field="*{password}" class="form-input" placeholder="PASSWORD">
             <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
         </div>
         <div th:if="${@environment.getProperty('yada.security.recaptcha.type') == 'GoogleCN' || @environment.getProperty('yada.security.recaptcha.type') == 'Google'}"
-             class="input-box g-recaptcha" th:data-sitekey="${@environment.getProperty('yada.security.recaptcha.sitekey', '6Leu2NsUAAAAAFttLaiyEKDu9yLgrYJhN77Ou1ge')}"></div>
+             class="input-box g-recaptcha"
+             th:data-sitekey="${@environment.getProperty('yada.security.recaptcha.sitekey', '6Leu2NsUAAAAAFttLaiyEKDu9yLgrYJhN77Ou1ge')}"></div>
         <div class="login-btn">
             <input type="submit" class="form-input form-btn" value="LOGIN">
         </div>
-    </div>
-</form>
+    </form>
+</div>
 </body>
 </html>
