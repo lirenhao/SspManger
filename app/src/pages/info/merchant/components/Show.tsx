@@ -94,12 +94,12 @@ const ShowView: React.FC<ShowProps> = (props) => {
       footer={null}
       width={1040}
     >
-      <Form initialValues={info} {...formLayout}>
+      <Form {...formLayout}>
         <Row gutter={24}>
           {fields.map((field, index) => (
             <Col span={12} key={index}>
-              <Form.Item label={field.label} name={field.name}>
-                <Input readOnly />
+              <Form.Item label={field.label}>
+                {info[field.name]}
               </Form.Item>
             </Col>
           ))}

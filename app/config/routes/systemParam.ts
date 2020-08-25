@@ -85,7 +85,7 @@ const routes: IRoute[] = [
   {
     path: '/systemParam/policy',
     name: 'policy',
-    component: './systemParam/policy',
+    component: './web/policy',
     locale: 'policy.title',
   },
 ];

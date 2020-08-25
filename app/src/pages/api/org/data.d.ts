@@ -22,6 +22,8 @@ export interface TableListParams {
 
 export interface MerchantData {
   merchantId: string;
+  merNameChn: string;
+  merNameEng: string;
   merNameChnAbbr: string;
   merNameEngAbbr: string;
 }

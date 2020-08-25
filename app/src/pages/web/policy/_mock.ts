@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { TableListItem } from './data.d';
+import { TableListItem } from './data';
 
 const dataSource: TableListItem[] = [
   {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Modal, Row, Col, Input, Select, Table, Button } from 'antd';
+import { Form, Modal, Row, Col, Select, Table, Button } from 'antd';
 import { useIntl } from 'umi';
 import { TableListItem, MerchantData } from '../data';
 import { fetchGetOrgMer, fetchGetAllMer } from '../service';
@@ -65,12 +65,12 @@ const FormView: React.FC<FormProps> = (props) => {
         <Row gutter={24}>
           <Col span={12}>
             <Form.Item label={intl.formatMessage({ id: 'api.org.orgId' })}>
-              <Input value={info.orgId} readOnly />
+              {info.orgId}
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item label={intl.formatMessage({ id: 'api.org.orgName' })}>
-              <Input value={info.orgName} readOnly />
+              {info.orgName}
             </Form.Item>
           </Col>
         </Row>
@@ -84,7 +84,7 @@ const FormView: React.FC<FormProps> = (props) => {
               <Select mode="multiple" style={{ width: '100%' }} value={value} onChange={(value: string[]) => setValue(value)}>
                 {merchants
                   .filter(mer => !orgMers.map(mer => mer.merchantId).includes(mer.merchantId))
-                  .map(mer => (<Select.Option value={mer.merchantId}>{`${mer.merchantId}[${mer.merNameEngAbbr}]`}</Select.Option>))
+                  .map(mer => (<Select.Option value={mer.merchantId}>{`${mer.merchantId}[${mer.merNameEng}]`}</Select.Option>))
                 }
               </Select>
             </Col>
