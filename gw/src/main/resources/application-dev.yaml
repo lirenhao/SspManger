@@ -5,8 +5,6 @@ server:
   error:
     includeStacktrace: ALWAYS
 
-spring.thymeleaf.cache: false
-
 spring.cloud.gateway.routes:
   - uri: http://localhost:8000
     predicates:
@@ -19,7 +17,7 @@ spring.cloud.gateway.routes:
       - RewritePath=/ssp(?<segment>/?.*),$\{segment}
   - uri: http://localhost:8084
     predicates:
-      - Svc=/svc,info
+      - Svc=/svc,ssp
     filters:
       - ApiAuth
       - RewritePath=/svc(?<segment>/?.*),$\{segment}
@@ -29,9 +27,6 @@ spring.cloud.gateway.routes:
     filters:
       - ApiAuth
       - RewritePath=/svc(?<segment>/?.*),$\{segment}
-  - uri: http://localhost:8000
-    predicates:
-      - Path=/svc/**
 
 management.endpoints:
   web.exposure.include: metrics,gateway
@@ -45,3 +40,8 @@ yada:
   security:
     defaultPwd: 111111
 #yada.db.mongo.uri: 'mongodb://localhost/yada_auth?replicaSet=rs'
+
+spring:
+  thymeleaf:
+    prefix: file:src/main/resources/templates/
+    cache: false

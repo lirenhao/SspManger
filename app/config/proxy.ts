@@ -15,11 +15,11 @@ export default {
       },
       logLevel: 'debug',
     },
-    '/svc': {
+    '/svc/ssp': {
       target: 'http://localhost:8084/',
       changeOrigin: true,
       pathRewrite: {
-        '^/svc': '',
+        '^/svc/ssp': '',
       },
       logLevel: 'debug',
     },
