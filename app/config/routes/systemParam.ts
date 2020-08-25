@@ -30,8 +30,8 @@ const routes: IRoute[] = [
   {
     path: '/systemParam/appRole',
     name: 'appRole',
-    component: './systemParam/appRole',
-    locale: 'menu.appRole',
+    component: './app/role',
+    locale: 'appRole.title',
   },
   {
     path: '/systemParam/mccCode',

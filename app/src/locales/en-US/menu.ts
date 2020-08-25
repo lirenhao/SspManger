@@ -3,7 +3,6 @@ export default {
   'menu.welcome': 'Welcome',
   'menu.modifyPwd': 'MODIFY POSSWORD',
   'menu.systemParam': 'Systemparam',
-  'menu.appRole': 'App Role Management',
   'menu.mccCode': 'Mcc Code Management',
   'menu.currency': 'Currency Management',
   'menu.country': 'Country Code Management',

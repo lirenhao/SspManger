@@ -1,39 +1,47 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Modal, Input } from 'antd';
-import { IntlShape } from 'umi';
+import { useIntl } from 'umi';
 import { TableListItem } from '../data';
 import { exist } from '../service';
-import formLayout from '../../../../formLayout';
 
 interface CreateFormProps {
-  intl: IntlShape;
   modalVisible: boolean;
   onCancel: () => void;
   onSubmit: (values: TableListItem) => void;
 }
 
-export interface UpdateFormState {
-  formVals: TableListItem;
-}
+const formLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 24 },
+    md: { span: 8 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 24 },
+    md: { span: 16 },
+  },
+};
 
 const CreateForm: React.FC<CreateFormProps> = (props) => {
-  const { modalVisible, onCancel, onSubmit, intl } = props;
-  const [formVals] = useState<TableListItem>({
-    id: '',
-    name: '',
-    remark: '',
-  });
 
+  const { modalVisible, onCancel, onSubmit } = props;
+
+  const intl = useIntl();
   const [form] = Form.useForm();
 
-  const handleSubmit = async () => {
-    const fieldsValue = await form.validateFields();
-    onSubmit({ ...formVals, ...fieldsValue });
-  };
-
-  const renderContent = () => {
-    return (
-      <>
+  return (
+    <Modal
+      destroyOnClose
+      title={intl.formatMessage({ id: 'appRole.createCompoent' })}
+      visible={modalVisible}
+      onCancel={() => onCancel()}
+      onOk={() => form.submit()}
+    >
+      <Form {...formLayout}
+        form={form}
+        onFinish={values => onSubmit(values as TableListItem)}
+      >
         <Form.Item
           name="id"
           label={intl.formatMessage({ id: 'appRole.role' })}
@@ -68,23 +76,9 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
         >
           <Input.TextArea rows={1} />
         </Form.Item>
-        <Form.Item name="remark" label={intl.formatMessage({ id: 'appRole.desc' })}>
+        <Form.Item name="remark" label={intl.formatMessage({ id: 'appRole.remark' })}>
           <Input.TextArea rows={4} />
         </Form.Item>
-      </>
-    );
-  };
-
-  return (
-    <Modal
-      destroyOnClose
-      title={intl.formatMessage({ id: 'role.createCompoent' })}
-      visible={modalVisible}
-      onCancel={() => onCancel()}
-      onOk={() => handleSubmit()}
-    >
-      <Form {...formLayout} form={form}>
-        {renderContent()}
       </Form>
     </Modal>
   );

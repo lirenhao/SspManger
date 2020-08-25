@@ -3,7 +3,6 @@ export default {
   'menu.welcome': '欢迎',
   'menu.modifyPwd': '修改密码',
   'menu.systemParam': '系统参数',
-  'menu.appRole': 'APP角色管理',
   'menu.mccCode': 'MCC码管理',
   'menu.currency': '货币代码管理',
   'menu.country': '国家代码管理',

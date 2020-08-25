@@ -19,7 +19,6 @@ export interface TableListData {
 export interface TableListParams {
   id?: string;
   name?: string;
-  remark?: string;
   size?: number;
   page?: number;
   sort?: string[];
