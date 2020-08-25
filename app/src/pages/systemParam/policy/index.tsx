@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Divider, Modal, Button } from 'antd';
+import { Divider, Modal, Button, notification } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -36,7 +36,7 @@ const TableList: React.FC<{}> = () => {
     try {
       await fetchPut(record);
       setIsCreate(false);
-      actionRef.current?.reloadAndRest();
+      actionRef.current?.reload();
     } catch (err) {
 
     }
@@ -56,7 +56,7 @@ const TableList: React.FC<{}> = () => {
     try {
       await fetchPut(record);
       setIsUpdate(false);
-      actionRef.current?.reloadAndRest();
+      actionRef.current?.reload();
     } catch (err) {
 
     }
@@ -69,9 +69,13 @@ const TableList: React.FC<{}> = () => {
       onOk: async () => {
         try {
           await fetchIssue(id)
-          actionRef.current?.reloadAndRest();
+          notification.success({
+            message: intl.formatMessage({ id: 'policy.issue.success' }, { id })
+          })
         } catch (err) {
-
+          notification.error({
+            message: intl.formatMessage({ id: 'policy.issue.failure' }, { id })
+          })
         }
       }
     });

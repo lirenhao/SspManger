@@ -10,10 +10,17 @@ export async function fetchGet(id: string) {
 }
 
 export async function fetchIssue(id: string) {
-  return request('/svc/web/policy', {
-    method: 'PUT',
-    data: { id },
-  });
+  if (id === 'login') {
+    return request('/svc/web/user/policy', {
+      method: 'PUT',
+    });
+  } else {
+    // TODO 不同的协议有不同的处理
+    return request('/svc/web/policy', {
+      method: 'PUT',
+      data: { id },
+    });
+  }
 }
 
 export async function fetchPut(params: TableListItem) {

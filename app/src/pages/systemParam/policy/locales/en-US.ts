@@ -10,6 +10,8 @@ export default {
   'policy.create.title': 'Merchant Policy Create',
   'policy.update.title': 'Merchant Policy Update',
   'policy.issue': 'CONFIRM ISSUE【{id}】?',
+  'policy.issue.success': 'POLICY【{id}】ISSUE SUCCESS!',
+  'policy.issue.failure': 'POLICY【{id}】ISSUE FAILURE!',
   'policy.status.0': 'enable',
   'policy.id.required': 'Policy ID is required',
   'policy.id.validator': 'Policy ID is exists',

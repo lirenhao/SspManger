@@ -10,6 +10,8 @@ export default {
   'policy.create.title': '商户协议创建',
   'policy.update.title': '商户协议编辑',
   'policy.issue': '确定发布【{id}】?',
+  'policy.issue.success': '协议【{id}】发布成功!',
+  'policy.issue.failure': '协议【{id}】发布失败!',
   'policy.status.0': '使用',
   'policy.id.required': '协议ID是必输的',
   'policy.id.validator': '协议ID已存在',
