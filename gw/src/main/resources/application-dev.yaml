@@ -14,19 +14,18 @@ spring.cloud.gateway.routes:
       - App=/ssp
     filters:
       - Auth
-      - RewritePath=/ssp(?<segment>/?.*),$\{segment}
   - uri: http://localhost:8084
     predicates:
       - Svc=/svc,ssp
     filters:
-      - ApiAuth
-      - RewritePath=/svc(?<segment>/?.*),$\{segment}
+      - ApiAuth=noCheckPower
+      - RewritePath=/svc/ssp(?<segment>/?.*),$\{segment}
   - uri: http://localhost:8085
     predicates:
       - Svc=/svc,web
     filters:
-      - ApiAuth
-      - RewritePath=/svc(?<segment>/?.*),$\{segment}
+      - ApiAuth=noCheckPower
+      - RewritePath=/svc/web(?<segment>/?.*),$\{segment}
 
 management.endpoints:
   web.exposure.include: metrics,gateway

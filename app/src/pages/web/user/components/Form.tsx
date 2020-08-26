@@ -38,6 +38,7 @@ const FormView: React.FC<FormProps> = (props) => {
   const [merNos, setMerNos] = React.useState<string[]>([]);
 
   React.useEffect(() => {
+    form.resetFields();
     fetchOrgTree().then(setOrgTree);
     fetchOrgMap().then(setOrgMap);
     fetchAll().then(data => setMerNos(data?.map((item: any) => item.id.split('@')[0])))
@@ -66,10 +67,7 @@ const FormView: React.FC<FormProps> = (props) => {
         {...formLayout}
         form={form}
         initialValues={info}
-        onFinish={values => {
-          onSubmit({ ...info, ...values } as TableListItem);
-          form.resetFields();
-        }}
+        onFinish={values => onSubmit({ ...info, ...values } as TableListItem)}
       >
         {info.id ? (
           <Form.Item label={intl.formatMessage({ id: 'webUser.orgId' })}>

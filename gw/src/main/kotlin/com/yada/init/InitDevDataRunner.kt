@@ -89,7 +89,7 @@ private val roleJson = """
 private val svcJson = """
 [
   {
-    "id": "mer",
+    "id": "ssp",
     "resources": []
   },
   {

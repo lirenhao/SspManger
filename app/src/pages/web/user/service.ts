@@ -46,17 +46,17 @@ export async function fetchExistId(id: string) {
 }
 
 export async function fetchOrgTree() {
-  return request('/svc/org/tree');
+  return request('/svc/ssp/org/tree');
 }
 
 export async function fetchOrgMap() {
-  return request('/svc/org/map');
+  return request('/svc/ssp/org/map');
 }
 
 export async function fetchAllMer() {
-  return request('/svc/merchant/orgId');
+  return request('/svc/ssp/merchant/orgId');
 }
 
 export async function fetchMerByOrgId(orgId: string) {
-  return request(`/svc/merchant/orgId/${orgId}`);
+  return request(`/svc/ssp/merchant/orgId/${orgId}`);
 }
