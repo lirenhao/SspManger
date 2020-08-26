@@ -19,7 +19,7 @@ function getAll(req: Request, res: Response) {
   };
 
   const dataSource = data
-    .filter(data => params.orgId ? data.orgId.includes(params.orgId) : true);
+    .filter(item => params.orgId ? item.orgId.includes(params.orgId) : true);
 
   const page: TableListData = {
     content: dataSource,

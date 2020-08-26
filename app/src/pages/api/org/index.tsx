@@ -23,11 +23,11 @@ const TableList: React.FC<{}> = () => {
 
   const handleView = async (id: string) => {
     try {
-      const info = await fetchGet(id);
-      setInfo(info);
+      const result = await fetchGet(id);
+      setInfo(result);
       setIsView(true);
     } catch (err) {
-
+      console.log(err.message);
     }
   }
 
@@ -37,17 +37,17 @@ const TableList: React.FC<{}> = () => {
       setIsCreate(false);
       await actionRef.current?.reload();
     } catch (err) {
-
+      console.log(err.message);
     }
   }
 
   const beforeUpdate = async (id: string) => {
     try {
-      const info = await fetchGet(id);
-      setInfo(info);
+      const result = await fetchGet(id);
+      setInfo(result);
       setIsUpdate(true);
     } catch (err) {
-
+      console.log(err.message);
     }
   }
 
@@ -57,7 +57,7 @@ const TableList: React.FC<{}> = () => {
       setIsUpdate(false);
       await actionRef.current?.reload();
     } catch (err) {
-
+      console.log(err.message);
     }
   }
 
@@ -70,7 +70,7 @@ const TableList: React.FC<{}> = () => {
           await fetchDel(orgId)
           await actionRef.current?.reload();
         } catch (err) {
-
+          console.log(err.message);
         }
       }
     });
