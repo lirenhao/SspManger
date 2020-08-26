@@ -30,7 +30,7 @@ function getAll(req: Request, res: Response) {
 }
 
 function get(req: Request, res: Response) {
-  const id = req.params.id;
+  const { id } = req.params;
   return res.send(data.filter(item => item.id === id)[0]);
 }
 
@@ -44,13 +44,13 @@ function update(_: Request, res: Response) {
 }
 
 function del(req: Request, res: Response) {
-  const id = req.params.id;
+  const { id } = req.params;
   delete data[data.map(item => item.id).indexOf(id)];
   return res.end();
 }
 
 function exist(req: Request, res: Response) {
-  const id = req.params.id;
+  const { id } = req.params;
   return res.send(data.filter(item => item.id === id).length > 0);
 }
 

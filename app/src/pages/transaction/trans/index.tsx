@@ -109,7 +109,7 @@ const TableList: React.FC<{}> = () => {
               ...params,
               size: params.pageSize,
               page: (params.current as number) - 1,
-              sort: Object.keys(sort).map((key) => `${key},desc${sort[key].replace('end', '')}`),
+              sort: Object.keys(sort).map((key) => `${key},desc${sort[key]?.replace('end', '')}`),
             });
             return {
               data: result.content,
@@ -133,7 +133,7 @@ const TableList: React.FC<{}> = () => {
         values={stepFormValues}
         onCancel={() => handleModalViewVisible(false)}
         modalVisible={createModalViewVisible}
-        onSubmit={async () => {}}
+        onSubmit={async () => { }}
       />
     </PageContainer>
   );

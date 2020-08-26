@@ -122,7 +122,7 @@ const dataSource: TableListItem[] = [
 ];
 
 function getPolicy(req: Request, res: Response) {
-  const id = req.params.id;
+  const { id } = req.params;
   return res.json(dataSource.filter(item => item.id === id)[0]);
 }
 
@@ -132,7 +132,7 @@ function putPolicy(req: Request, res: Response) {
 }
 
 function getExists(req: Request, res: Response) {
-  const id = req.params.id;
+  const { id } = req.params;
   return res.send(dataSource.map(item => item.id).includes(id));
 }
 
