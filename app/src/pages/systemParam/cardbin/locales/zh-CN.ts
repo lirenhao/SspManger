@@ -1,5 +1,5 @@
 export default {
-  'cardbin.menuName': 'cardbin信息',
+  'cardbin.title': 'cardbin信息',
   'cardbin.createCompoent': 'ADD',
   'cardbin.updateCompoent': 'EDIT',
   'cardbin.delete': 'DELETE',

@@ -2,14 +2,14 @@ import { request } from 'umi';
 import { TableListParams, TableListItem } from './data';
 
 export async function query(params?: TableListParams) {
-  return request('/merchantExtra', {
+  return request('/svc/ssp/merchantExtra', {
     method: 'GET',
     params,
   });
 }
 
 export async function save(params: TableListItem) {
-  return request(`/merchantExtra/${params.merchantId}/check`, {
+  return request(`/svc/ssp/merchantExtra/${params.merchantId}/check`, {
     method: 'PUT',
     data: {
       ...params,
@@ -18,29 +18,29 @@ export async function save(params: TableListItem) {
 }
 
 export async function get(params: TableListItem) {
-  return request(`/merchantExtra/${params.merchantId}`, {
+  return request(`/svc/ssp/merchantExtra/${params.merchantId}`, {
     method: 'PUT',
   });
 }
 
 export async function remove(params: TableListItem) {
-  return request(`/merchantExtra/${params.merchantId}`, {
+  return request(`/svc/ssp/merchantExtra/${params.merchantId}`, {
     method: 'DELETE',
   });
 }
 
 export async function exist(id: String) {
-  return request(`/merchantExtra/${id}/exists`);
+  return request(`/svc/ssp/merchantExtra/${id}/exists`);
 }
 
 export async function getCcyType() {
-  return request('/ccyType/list', {
+  return request('/svc/ssp/ccyType/list', {
     method: 'GET',
   });
 }
 
 export async function getCountryCode() {
-  return request('/countryCode/list', {
+  return request('/svc/ssp/countryCode/list', {
     method: 'GET',
   });
 }

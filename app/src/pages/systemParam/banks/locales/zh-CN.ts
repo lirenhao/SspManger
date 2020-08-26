@@ -9,7 +9,7 @@ export default {
   'banks.updateCompoent': '修改银行',
   'banks.delete': '删除',
   'banks.create': '增加',
-  'menu.banks': '银行列表',
+  'banks.title': '银行列表',
   'banks.banknameNecessary': '银行名称是必须的',
   'banks.bankname': '银行名称',
   'banks.bicNecessary': 'BIC是必须的',

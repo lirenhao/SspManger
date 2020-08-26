@@ -13,6 +13,8 @@ export default {
   'settleList.fee': 'FEES',
   'settleList.settleAmt': 'NET SETT AMT',
 
+  'settleList.title': 'MERCHANT SETT LIST',
+
   // settleList.'merMdr.cName' : '中文名称',
   // settleList.'merMdr.eName' : '英文名称',
   // settleList.'merMdr.merchantType' : '商户类型',

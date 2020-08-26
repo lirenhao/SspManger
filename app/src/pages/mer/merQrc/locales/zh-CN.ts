@@ -18,5 +18,5 @@ export default {
   'merQrc.updateCompoent': '修改QR',
   'merQrc.ccyCode': 'CURRENCY',
   'merQrc.fee': 'Fee Type',
-  'mer.merQrc': 'Merchant Static-QRC',
+  'merQrc.title': 'Merchant Static-QRC',
 };

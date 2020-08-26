@@ -12,4 +12,5 @@ export default {
   'settleList.tranAmt': 'TXN AMT',
   'settleList.fee': 'FEES',
   'settleList.settleAmt': 'NET SETT AMT',
+  'settleDetail.title': 'Merchant Settle Detail List',
 };

@@ -5,7 +5,7 @@ const routes: IRoute[] = [
     path: '/transaction/trans',
     name: 'transaction info',
     component: './transaction/trans',
-    locale: 'transaction.trans',
+    locale: 'trans.title',
   },
 ];
 

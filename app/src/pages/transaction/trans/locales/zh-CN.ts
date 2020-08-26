@@ -13,6 +13,6 @@ export default {
   'trans.respCode': 'RESPONSE CODE',
   'trans.merTraceNo': 'MER TRACE NO',
   'trans.channelTraceNo': 'CHANNEL TRACE NO',
-  'transaction.trans': 'Search Transaction',
+  'trans.title': 'Search Transaction',
   'trans.viewCompoent': '查看',
 };

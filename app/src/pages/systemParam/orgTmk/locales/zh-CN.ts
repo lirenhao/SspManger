@@ -17,5 +17,5 @@ export default {
   'orgtmk.updateCompoent': '修改TMK',
   'orgtmk.delete': '删除',
   'orgtmk.create': '增加',
-  'menu.orgTmk': 'organization tmk',
+  'orgtmk.title': 'Posp Org TMK',
 };

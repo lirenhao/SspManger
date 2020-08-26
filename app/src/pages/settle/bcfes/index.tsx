@@ -36,7 +36,7 @@ const TableList: React.FC<{}> = () => {
       title: intl.formatMessage({ id: 'bcfes.lsId' }),
       dataIndex: 'lsId',
       hideInSearch: true,
-      hideInForm: true,
+      hideInTable: true,
     },
     {
       title: intl.formatMessage({ id: 'bcfes.settleDate' }),

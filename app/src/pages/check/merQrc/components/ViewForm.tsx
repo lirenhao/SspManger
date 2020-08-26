@@ -93,7 +93,7 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
       title={intl.formatMessage({ id: 'merQrc.updateCompoent' })}
       visible={modalVisible}
       onCancel={() => onCancel()}
-      onOk={() => {}}
+      onOk={() => onCancel()}
     >
       <Form
         {...formLayout}

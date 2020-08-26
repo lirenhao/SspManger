@@ -9,4 +9,5 @@ export default {
   'country.updateCompoent': 'EDIT',
   'country.delete': 'DELETE',
   'country.create': 'ADD',
+  'country.title': 'Country Code Management',
 };

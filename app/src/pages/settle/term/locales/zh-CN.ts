@@ -13,4 +13,5 @@ export default {
   'termCount.termCreateDate': 'TID CREATE DATE',
   'termCount.bankCustomerNum': 'RM',
   'termCount.termModifyDate': 'TID STATUS CHANGE DATE',
+  'termCount.title': 'Terminal Report',
 };

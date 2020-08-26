@@ -22,7 +22,7 @@ export default {
   'ccpay.merchantType': '商户类型',
   'ccpay.create': '创建',
   'ccpay.view': '查看',
-  'ccpay.mng': 'Ccpay Management',
+  'ccpay.title': 'Ccpay Management',
   'ccpay.staticQrc': 'QR CODE',
   'ccpay.updateCompoent': '修改',
 };

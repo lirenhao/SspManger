@@ -1,4 +1,4 @@
-import { IRoute } from "umi";
+import { IRoute } from 'umi';
 
 const routes: IRoute[] = [
   {
@@ -37,50 +37,50 @@ const routes: IRoute[] = [
     path: '/systemParam/mccCode',
     name: 'mccCode',
     component: './systemParam/mccCode',
-    locale: 'menu.mccCode',
+    locale: 'mcc.title',
   },
   {
     path: '/systemParam/currency',
     name: 'currency',
     component: './systemParam/ccyManager',
-    locale: 'menu.currency',
+    locale: 'currency.title',
   },
   {
     path: '/systemParam/country',
     name: 'country',
     component: './systemParam/country',
-    locale: 'menu.country',
+    locale: 'country.title',
   },
   {
     path: '/systemParam/banks',
     name: 'bank list',
     component: './systemParam/banks',
-    locale: 'menu.banks',
+    locale: 'banks.title',
   },
   {
     path: '/systemParam/cardbin',
     name: 'bank list',
     component: './systemParam/cardbin',
-    locale: 'menu.cardbin',
+    locale: 'cardbin.title',
   },
   {
     path: '/systemParam/orgZmk',
     name: 'orgzmk',
     component: './systemParam/orgZmk',
 
-    locale: 'menu.orgZmk',
+    locale: 'orgzmk.title',
   },
   {
     path: '/systemParam/orgTmk',
     name: 'orgtmk',
     component: './systemParam/orgTmk',
-    locale: 'menu.orgtmk',
+    locale: 'orgtmk.title',
   },
   {
     path: '/systemParam/uploadTmk',
     name: 'uploadTmk',
     component: './systemParam/uploadTmk',
-    locale: 'menu.uploadTmk',
+    locale: 'uploadTmk.title',
   },
   {
     path: '/systemParam/policy',

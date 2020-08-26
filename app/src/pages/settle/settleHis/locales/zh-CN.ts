@@ -12,6 +12,9 @@ export default {
   'settleDetail.tranName': 'TXN NAME',
   'settleDetail.rrn': 'TXN RRN',
 
+  'settleHisSuccess.title': 'SETT SUCCESS HISTORY',
+  'settleHisFail.title': 'SETT FAILURE HISTORY',
+
   // settleDetail.'merMdr.cName' : '中文名称',
   // settleDetail.'merMdr.eName' : '英文名称',
   // settleDetail.'merMdr.merchantType' : '商户类型',

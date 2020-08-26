@@ -2,20 +2,20 @@ import { request } from 'umi';
 import { TableListParams, TableListItem } from './data';
 
 export async function queryRole(params?: TableListParams) {
-  return request('/appRole', {
+  return request('/svc/ssp/appRole', {
     method: 'GET',
     params,
   });
 }
 
 export async function getRole(params: TableListItem) {
-  return request('/appRole/'.concat(params.id), {
+  return request('/svc/ssp/appRole/'.concat(params.id), {
     method: 'GET',
   });
 }
 
 export async function saveRole(params: TableListItem) {
-  return request('/approle/save', {
+  return request('/svc/ssp/approle/save', {
     method: 'PUT',
     data: {
       ...params,
@@ -25,5 +25,5 @@ export async function saveRole(params: TableListItem) {
 }
 
 export async function exist(id: string) {
-  return request(`/approle/${id}/exists`);
+  return request(`/svc/ssp/approle/${id}/exists`);
 }

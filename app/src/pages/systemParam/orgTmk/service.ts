@@ -2,14 +2,14 @@ import { request } from 'umi';
 import { TableListParams, TableListItem } from './data';
 
 export async function query(params?: TableListParams) {
-  return request('/pospOrgTmk', {
+  return request('/svc/ssp/pospOrgTmk', {
     method: 'GET',
     params,
   });
 }
 
 export async function save(params: TableListItem) {
-  return request('/pospOrgTmk', {
+  return request('/svc/ssp/pospOrgTmk', {
     method: 'PUT',
     data: {
       ...params,
@@ -19,23 +19,23 @@ export async function save(params: TableListItem) {
 }
 
 export async function get(params: TableListItem) {
-  return request(`/pospOrgTmk/${params.orgId.toString()}`, {
+  return request(`/svc/ssp/pospOrgTmk/${params.orgId.toString()}`, {
     method: 'PUT',
   });
 }
 
 export async function remove(params: TableListItem) {
-  return request(`/pospOrgTmk/${params.orgId.toString()}`, {
+  return request(`/svc/ssp/pospOrgTmk/${params.orgId.toString()}`, {
     method: 'DELETE',
   });
 }
 
 export async function exist(id: String) {
-  return request(`/pospOrgTmk/${id}/exists`);
+  return request(`/svc/ssp/pospOrgTmk/${id}/exists`);
 }
 
 export function getOrg() {
-  return request(`/org/second`);
+  return request(`/svc/ssp/org/second`);
 
   // return new Promise(resolve => {
   //   setTimeout(() => {

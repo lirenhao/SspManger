@@ -2,14 +2,14 @@ import { request } from 'umi';
 import { TableListParams, TableListItem } from './data.d';
 
 export async function query(params?: TableListParams) {
-  return request('/merLimit', {
+  return request('/svc/ssp/merLimit', {
     method: 'GET',
     params,
   });
 }
 
 export async function save(params: TableListItem) {
-  return request('/merLimit', {
+  return request('/svc/ssp/merLimit', {
     method: 'PUT',
     data: {
       ...params,
@@ -19,17 +19,17 @@ export async function save(params: TableListItem) {
 }
 
 export async function get(params: TableListItem) {
-  return request(`/merLimit/${params.merchantId.toString()}`, {
+  return request(`/svc/ssp/merLimit/${params.merchantId.toString()}`, {
     method: 'PUT',
   });
 }
 
 export async function remove(params: TableListItem) {
-  return request(`/merLimit/${params.merchantId.toString()}`, {
+  return request(`/svc/ssp/merLimit/${params.merchantId.toString()}`, {
     method: 'DELETE',
   });
 }
 
 export async function exist(id: String) {
-  return request(`/merLimit/${id}/exists`);
+  return request(`/svc/ssp/merLimit/${id}/exists`);
 }

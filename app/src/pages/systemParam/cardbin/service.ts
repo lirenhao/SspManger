@@ -2,14 +2,14 @@ import { request } from 'umi';
 import { TableListParams, TableListItem } from './data.d';
 
 export async function queryAll(params?: TableListParams) {
-  return request('/cupCardBin', {
+  return request('/svc/ssp/cupCardBin', {
     method: 'GET',
     params,
   });
 }
 
 export async function save(params: TableListItem) {
-  return request('/cupCardBin', {
+  return request('/svc/ssp/cupCardBin', {
     method: 'PUT',
     data: {
       ...params,
@@ -19,7 +19,7 @@ export async function save(params: TableListItem) {
 }
 
 export async function getOne(params: TableListItem) {
-  return request('/cupCardBin/'.concat(params.id.toString()), {
+  return request('/svc/ssp/cupCardBin/'.concat(params.id.toString()), {
     method: 'PUT',
   });
 }

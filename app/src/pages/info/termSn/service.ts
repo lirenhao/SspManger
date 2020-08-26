@@ -2,25 +2,25 @@ import { request } from 'umi';
 import { TableListParams } from './data';
 
 export async function fetchQuery(params?: TableListParams) {
-  return request('/svc/termSn', {
-    params
+  return request('/svc/ssp/termSn', {
+    params,
   });
 }
 
 export async function fetchApiOrg() {
-  return request('/svc/merApiOrg/list');
+  return request('/svc/ssp/merApiOrg/list');
 }
 
 export async function fetchMer() {
-  return request('/svc/merchant/orgId');
+  return request('/svc/ssp/merchant/orgId');
 }
 
 export async function fetchTerm(merchnatId: string) {
-  return request(`/svc/terminal/${merchnatId}`);
+  return request(`/svc/ssp/terminal/${merchnatId}`);
 }
 
 export async function fetchDel(vendorId: string, snNo: string) {
-  return request(`/svc/termSn/${vendorId}/${snNo}`, {
+  return request(`/svc/ssp/termSn/${vendorId}/${snNo}`, {
     method: 'DELETE',
   });
 }

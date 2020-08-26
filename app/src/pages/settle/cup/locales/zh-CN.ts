@@ -1,5 +1,5 @@
 export default {
-  'cup.lsId': '',
+  'cup.lsId': 'LsId',
   'cup.merchantId': 'MERCHANT ID',
   'cup.settleDate': 'SETT DATE',
   'cup.terminalId': '	TERMINAL ID',
@@ -14,7 +14,8 @@ export default {
   'cup.feeReceivable': 'FEE RECEIVABLE',
   'cup.feePayable': 'FEE PAYABLE',
   'cup.status': 'STATUS',
-  'settle.cup': 'CUP',
+  'cup.title': 'CUP UNILATERAL LIST',
+  'cupHandle.title': 'CUP MANUAL HANDLE LIST',
   // cup.'merMdr.cName' : '中文名称',
   // cup.'merMdr.eName' : '英文名称',
   // cup.'merMdr.merchantType' : '商户类型',

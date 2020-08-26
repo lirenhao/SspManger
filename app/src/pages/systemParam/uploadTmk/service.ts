@@ -1,5 +1,5 @@
 import { request } from 'umi';
 
 export function getOrg() {
-  return request(`/org/second`);
+  return request(`/svc/ssp/org/second`);
 }

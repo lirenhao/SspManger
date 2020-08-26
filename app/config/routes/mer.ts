@@ -13,19 +13,19 @@ const routes: IRoute[] = [
     path: '/mer/merAddon',
     name: 'merAddonName',
     component: './mer/merAddon',
-    locale: 'mer.merAddonName',
+    locale: 'merAddon.title',
   },
   {
     path: '/mer/merQrc',
     name: 'merQrc',
     component: './mer/merQrc',
-    locale: 'mer.merQrc',
+    locale: 'merQrc.title',
   },
   {
     path: '/mer/merMdr',
     name: 'merMdr',
     component: './mer/merMdr',
-    locale: 'mer.merMdr',
+    locale: 'merMdr.title',
   },
   {
     path: '/mer/webSubs',

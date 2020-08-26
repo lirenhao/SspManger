@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Modal, Input } from 'antd';
 import { useIntl } from 'umi';
-import { TableListItem } from '../data';
+import { TableListItem } from '../data.d';
 import { exist } from '../service';
 
 interface CreateFormProps {
@@ -24,7 +24,6 @@ const formLayout = {
 };
 
 const CreateForm: React.FC<CreateFormProps> = (props) => {
-
   const { modalVisible, onCancel, onSubmit } = props;
 
   const intl = useIntl();
@@ -38,10 +37,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
       onCancel={() => onCancel()}
       onOk={() => form.submit()}
     >
-      <Form {...formLayout}
-        form={form}
-        onFinish={values => onSubmit(values as TableListItem)}
-      >
+      <Form {...formLayout} form={form} onFinish={(values) => onSubmit(values as TableListItem)}>
         <Form.Item
           name="id"
           label={intl.formatMessage({ id: 'appRole.role' })}
@@ -55,10 +51,10 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
                 value === ''
                   ? Promise.resolve()
                   : exist(value).then((result: boolean) =>
-                    result
-                      ? Promise.reject(intl.formatMessage({ id: 'global.createExists' }))
-                      : Promise.resolve(),
-                  ),
+                      result
+                        ? Promise.reject(intl.formatMessage({ id: 'global.createExists' }))
+                        : Promise.resolve(),
+                    ),
             },
           ]}
         >

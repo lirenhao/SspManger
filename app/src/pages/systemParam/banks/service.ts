@@ -2,14 +2,14 @@ import { request } from 'umi';
 import { TableListParams, TableListItem } from './data.d';
 
 export async function query(params?: TableListParams) {
-  return request('/bankList', {
+  return request('/svc/ssp/bankList', {
     method: 'GET',
     params,
   });
 }
 
 export async function save(params: TableListItem) {
-  return request('/bankList', {
+  return request('/svc/ssp/bankList', {
     method: 'PUT',
     data: {
       ...params,
@@ -19,17 +19,17 @@ export async function save(params: TableListItem) {
 }
 
 export async function get(params: TableListItem) {
-  return request(`/bankList/${params.accountBankNo.toString()}`, {
+  return request(`/svc/ssp/bankList/${params.accountBankNo.toString()}`, {
     method: 'PUT',
   });
 }
 
 export async function remove(params: TableListItem) {
-  return request(`/bankList/${params.accountBankNo.toString()}`, {
+  return request(`/svc/ssp/bankList/${params.accountBankNo.toString()}`, {
     method: 'DELETE',
   });
 }
 
 export async function exist(id: String) {
-  return request(`/bankList/${id}/exists`);
+  return request(`/svc/ssp/bankList/${id}/exists`);
 }

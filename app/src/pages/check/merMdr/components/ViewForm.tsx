@@ -47,46 +47,46 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
   const renderContent = () => {
     return (
       <>
-        <Form.Item name="merchantId" label={intl.formatMessage({ id: 'merQrc.merchantId' })}>
+        <Form.Item name="merchantId" label={intl.formatMessage({ id: 'merMdr.merchantId' })}>
           <Input disabled />
         </Form.Item>
 
-        <Form.Item name="feeType" label={intl.formatMessage({ id: 'merQrc.feeType' })}>
+        <Form.Item name="feeType" label={intl.formatMessage({ id: 'merMdr.feeType' })}>
           <Input disabled />
         </Form.Item>
 
-        <Form.Item name="cardOrgNum" label={intl.formatMessage({ id: 'merQrc.cardOrgNum' })}>
+        <Form.Item name="cardOrgNum" label={intl.formatMessage({ id: 'merMdr.cardOrgNum' })}>
           <Input disabled />
         </Form.Item>
 
-        <Form.Item name="tranCnt" label={intl.formatMessage({ id: 'merQrc.tranCnt' })}>
+        <Form.Item name="tranCnt" label={intl.formatMessage({ id: 'merMdr.tranCnt' })}>
           <Input disabled />
         </Form.Item>
 
-        <Form.Item name="tranAmt" label={intl.formatMessage({ id: 'merQrc.tranAmt' })}>
+        <Form.Item name="tranAmt" label={intl.formatMessage({ id: 'merMdr.tranAmt' })}>
           <Input disabled />
         </Form.Item>
 
-        <Form.Item name="fee" label={intl.formatMessage({ id: 'merQrc.fee' })}>
+        <Form.Item name="fee" label={intl.formatMessage({ id: 'merMdr.fee' })}>
           <Input disabled />
         </Form.Item>
 
-        <Form.Item name="feeMinAmt" label={intl.formatMessage({ id: 'merQrc.feeMinAmt' })}>
+        <Form.Item name="feeMinAmt" label={intl.formatMessage({ id: 'merMdr.feeMinAmt' })}>
           <Input disabled />
         </Form.Item>
 
-        <Form.Item name="checkState" label={intl.formatMessage({ id: 'merQrc.checkState' })}>
+        <Form.Item name="checkState" label={intl.formatMessage({ id: 'merMdr.checkState' })}>
           <Input disabled />
         </Form.Item>
-        <Form.Item name="startDate" label={intl.formatMessage({ id: 'merQrc.startDate' })}>
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item name="closeDate" label={intl.formatMessage({ id: 'merQrc.closeDate' })}>
+        <Form.Item name="startDate" label={intl.formatMessage({ id: 'merMdr.startDate' })}>
           <Input disabled />
         </Form.Item>
 
-        <Form.Item name="operation" label={intl.formatMessage({ id: 'merQrc.operation' })}>
+        <Form.Item name="closeDate" label={intl.formatMessage({ id: 'merMdr.closeDate' })}>
+          <Input disabled />
+        </Form.Item>
+
+        <Form.Item name="operation" label={intl.formatMessage({ id: 'merMdr.operation' })}>
           <Input disabled />
         </Form.Item>
       </>
@@ -96,7 +96,7 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
   return (
     <Modal
       destroyOnClose
-      title={intl.formatMessage({ id: 'merQrc.updateCompoent' })}
+      title={intl.formatMessage({ id: 'merMdr.updateCompoent' })}
       visible={modalVisible}
       onCancel={() => onCancel()}
       onOk={() => onCancel()}

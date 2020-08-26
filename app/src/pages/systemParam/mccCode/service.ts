@@ -2,14 +2,14 @@ import { request } from 'umi';
 import { TableListParams, TableListItem } from './data';
 
 export async function queryMcc(params?: TableListParams) {
-  return request('/mccCode', {
+  return request('/svc/ssp/mccCode', {
     method: 'GET',
     params,
   });
 }
 
 export async function saveMcc(params: TableListItem) {
-  return request('/mccCode', {
+  return request('/svc/ssp/mccCode', {
     method: 'PUT',
     data: {
       ...params,
@@ -19,17 +19,17 @@ export async function saveMcc(params: TableListItem) {
 }
 
 export async function getMcc(params: TableListItem) {
-  return request(`/mccCode/${params.mcc}`, {
+  return request(`/svc/ssp/mccCode/${params.mcc}`, {
     method: 'PUT',
   });
 }
 
 export async function removeMcc(params: TableListItem) {
-  return request(`/mccCode/${params.mcc}`, {
+  return request(`/svc/ssp/mccCode/${params.mcc}`, {
     method: 'DELETE',
   });
 }
 
 export async function existMcc(id: String) {
-  return request(`/mccCode/${id}/exists`);
+  return request(`/svc/ssp/mccCode/${id}/exists`);
 }

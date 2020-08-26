@@ -10,4 +10,5 @@ export default {
   'currency.delete': 'DELETE',
   'currency.create': 'ADD',
   'ccy.updateCompoent': '修改',
+  'currency.title': 'Currency Management',
 };

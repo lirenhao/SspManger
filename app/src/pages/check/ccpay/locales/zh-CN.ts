@@ -22,5 +22,5 @@ export default {
   'ccpay.merchantType': '商户类型',
   'ccpay.create': '创建',
   'ccpay.view': '查看',
-  'check.ccpay': 'Ccpay Information Check',
+  'ccpayCheck.title': 'Ccpay Information Check',
 };

@@ -5,7 +5,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl, FormattedMessage, IntlShape } from 'umi';
 import CreateForm from './components/CreateForm';
-import { TableListItem } from './data';
+import { TableListItem } from './data.d';
 import { queryRole, saveRole } from './service';
 
 /**

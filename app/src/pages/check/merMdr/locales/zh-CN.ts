@@ -26,5 +26,5 @@ export default {
   'merMdr.merchantType': '商户类型',
   'merMdr.create': '创建',
   'merMdr.view': '查看',
-  'check.merMdr': 'Merchant Mdr Check',
+  'merMdrCheck.title': 'Merchant Mdr Check',
 };
