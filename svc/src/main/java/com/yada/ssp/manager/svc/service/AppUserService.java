@@ -42,7 +42,7 @@ public class AppUserService {
     }
 
     public AppUser findOne(AppUserPK appUserPK) {
-        return appUserDao.getOne(appUserPK);
+        return appUserDao.findById(appUserPK).orElse(new AppUser());
     }
 
     public Page<AppUser> findAll(AppUserQuery query, Pageable pageable) {

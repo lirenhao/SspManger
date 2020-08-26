@@ -44,3 +44,8 @@ export interface CcyTypeData {
   ccyType: string;
   ccyName: string;
 }
+
+export interface CheckData {
+  checkState: string;
+  checkReason: string;
+}

@@ -78,17 +78,17 @@ const TableList: React.FC<{}> = () => {
 
   const handleResetPwd = (merNo: string, loginName: string) => {
     confirm({
-      title: intl.formatMessage({ id: 'appUser.reset' }, { id: merNo + loginName }),
+      title: intl.formatMessage({ id: 'appUser.reset' }, { id: `${merNo}|${loginName}` }),
       okType: 'danger',
       onOk: async () => {
         try {
           await fetchResetPwd(merNo, loginName)
           notification.success({
-            message: intl.formatMessage({ id: 'appUser.reset.success' }, { id: merNo + loginName }),
+            message: intl.formatMessage({ id: 'appUser.reset.success' }, { id: `${merNo}|${loginName}` }),
           })
         } catch (err) {
           notification.error({
-            message: intl.formatMessage({ id: 'appUser.reset.error' }, { id: merNo + loginName }),
+            message: intl.formatMessage({ id: 'appUser.reset.error' }, { id: `${merNo}|${loginName}` }),
           });
         }
       }
@@ -100,17 +100,23 @@ const TableList: React.FC<{}> = () => {
       title: intl.formatMessage({ id: 'global.operate' }),
       render: (_, record) => (
         <>
-          <a onClick={() => beforeUpdate(record.merNo, record.loginName)}>
-            {intl.formatMessage({ id: 'global.edit' })}
-          </a>
-          <Divider type="vertical" />
-          <a onClick={() => handleDelete(record.merNo, record.loginName)}>
-            {intl.formatMessage({ id: 'global.delete' })}
-          </a>
-          <Divider type="vertical" />
-          <a onClick={() => handleResetPwd(record.merNo, record.loginName)}>
-            {intl.formatMessage({ id: 'appUser.reset.action' })}
-          </a>
+          {record.checkState !== '0' ? (
+            <>
+              <a onClick={() => beforeUpdate(record.merNo, record.loginName)}>
+                {intl.formatMessage({ id: 'global.edit' })}
+              </a>
+              <Divider type="vertical" />
+              <a onClick={() => handleDelete(record.merNo, record.loginName)}>
+                {intl.formatMessage({ id: 'global.delete' })}
+              </a>
+              <Divider type="vertical" />
+            </>
+          ) : null}
+          {(record.checkState !== '0' || record.operation !== '0') ? (
+            <a onClick={() => handleResetPwd(record.merNo, record.loginName)}>
+              {intl.formatMessage({ id: 'appUser.reset.action' })}
+            </a>
+          ) : null}
         </>
       ),
     },

@@ -99,7 +99,7 @@ public class AppUserCheckService {
             } else {
                 appUserCheck.setCheckState("1");
                 BeanUtils.copyProperties(appUserCheck, appUser);
-                AppUser curAppUser = appUserDao.getOne(new AppUserPK(merNo, loginName));
+                AppUser curAppUser = appUserDao.findById(new AppUserPK(merNo, loginName)).orElse(null);
                 if (curAppUser != null) {
                     appUser.setPassWord(curAppUser.getPassWord());
                 } else {

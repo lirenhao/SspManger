@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * Merchant APP用户API
  */
@@ -57,8 +59,8 @@ public class AppUserController {
     }
 
     @PutMapping("/{merNo}/{loginName}/check")
-    public void saveCheck(@PathVariable String merNo, @PathVariable String loginName, String checkState, String checkReason) {
-        appUserCheckService.saveCheck(checkState, checkReason, merNo, loginName);
+    public void saveCheck(@PathVariable String merNo, @PathVariable String loginName, @RequestBody Map<String, String> body) {
+        appUserCheckService.saveCheck(body.get("checkState"), body.get("checkReason"), merNo, loginName);
     }
 
     @PutMapping("/{merNo}/{loginName}/resetPwd")

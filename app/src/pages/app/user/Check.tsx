@@ -2,9 +2,9 @@ import React from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl, useModel } from 'umi';
-import { TableListItem, MerchantData, CcyTypeData } from './data';
+import { TableListItem, MerchantData, CcyTypeData, CheckData } from './data';
 import {
-  fetchAllMer, fetchCcyTypes, fetchQuery, fetchGet, fetchCheck
+  fetchAllMer, fetchCcyTypes, fetchQuery, fetchGet, fetchGetCheck, fetchCheck
 } from './service';
 import Check from './components/Check';
 
@@ -16,7 +16,8 @@ const TableList: React.FC<{}> = () => {
   const orgId = initialState?.currentUser?.orgId;
 
   const [isCheck, setIsCheck] = React.useState<boolean>(false);
-  const [info, setInfo] = React.useState<Partial<TableListItem>>({});
+  const [after, setAfter] = React.useState<Partial<TableListItem>>({});
+  const [before, setBefore] = React.useState<Partial<TableListItem>>({});
 
   const [merchants, setMerchants] = React.useState<MerchantData[]>([]);
   const [ccyTypes, setCcyTypes] = React.useState<CcyTypeData[]>([]);
@@ -28,17 +29,19 @@ const TableList: React.FC<{}> = () => {
 
   const beforeCheck = async (merNo: string, loginName: string) => {
     try {
-      const result = await fetchGet(merNo, loginName);
-      setInfo(result);
+      const info = await fetchGet(merNo, loginName);
+      const checkInfo = await fetchGetCheck(merNo, loginName);
+      setAfter(info);
+      setBefore(checkInfo);
       setIsCheck(true);
     } catch (err) {
       console.log(err.message);
     }
   }
 
-  const handleCheck = async (record: TableListItem) => {
+  const handleCheck = async (merNo: string, loginName: string, record: CheckData) => {
     try {
-      await fetchCheck(record);
+      await fetchCheck(merNo, loginName, record);
       setIsCheck(false);
       actionRef.current?.reload();
     } catch (err) {
@@ -51,9 +54,13 @@ const TableList: React.FC<{}> = () => {
       title: intl.formatMessage({ id: 'global.operate' }),
       render: (_, record) => (
         <>
-          <a onClick={() => beforeCheck(record.merNo, record.loginName)}>
-            {intl.formatMessage({ id: 'global.check' })}
-          </a>
+          {
+            record.checkState === '0' ? (
+              <a onClick={() => beforeCheck(record.merNo, record.loginName)}>
+                {intl.formatMessage({ id: 'global.check' })}
+              </a>
+            ) : null
+          }
         </>
       ),
     },
@@ -65,7 +72,7 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'appUser.merchantName' }),
       dataIndex: 'merNo',
-      renderText: text => merchants.filter(item => item.merchantId === text.split('@')[0])[0]?.merNameEng,
+      renderText: text => merchants.filter(item => item.merchantId === text)[0]?.merNameEng,
       hideInSearch: true,
     },
     {
@@ -145,7 +152,8 @@ const TableList: React.FC<{}> = () => {
       />
       <Check
         title={intl.formatMessage({ id: 'appUser.check.title' })}
-        info={info}
+        before={before}
+        after={after}
         modalVisible={isCheck}
         onCancel={() => setIsCheck(false)}
         onSubmit={handleCheck}

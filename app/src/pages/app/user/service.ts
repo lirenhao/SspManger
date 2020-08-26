@@ -1,5 +1,5 @@
 import { request } from 'umi';
-import { TableListParams, TableListItem } from './data';
+import { TableListParams, TableListItem, CheckData } from './data';
 
 export async function fetchQuery(params?: TableListParams) {
   return request('/svc/ssp/appUser', {
@@ -18,7 +18,7 @@ export async function fetchDel(merNo: string, loginName: string) {
 }
 
 export async function fetchResetPwd(merNo: string, loginName: string) {
-  return request(`/svc/ssp/appUser/${merNo}/${loginName}/reset`, {
+  return request(`/svc/ssp/appUser/${merNo}/${loginName}/resetPwd`, {
     method: 'PUT',
   });
 }
@@ -45,8 +45,8 @@ export async function fetchGetCheck(merNo: string, loginName: string) {
   return request(`/svc/ssp/appUser/${merNo}/${loginName}/check`);
 }
 
-export async function fetchCheck(params: TableListItem) {
-  return request(`/svc/ssp/appUser/${params.merNo}/${params.loginName}/check`, {
+export async function fetchCheck(merNo: string, loginName: string, params: CheckData) {
+  return request(`/svc/ssp/appUser/${merNo}/${loginName}/check`, {
     method: 'PUT',
     data: params,
   });
