@@ -9,6 +9,7 @@ import {
   fetchAllMer, fetchCcyTypes, fetchQuery, fetchGet, fetchSave, fetchUpdate, fetchDel, fetchResetPwd
 } from './service';
 import Form from './components/Form';
+import Show from './components/Show';
 
 const { confirm } = Modal;
 
@@ -21,6 +22,7 @@ const TableList: React.FC<{}> = () => {
 
   const [isCreate, setIsCreate] = React.useState<boolean>(false);
   const [isUpdate, setIsUpdate] = React.useState<boolean>(false);
+  const [isView, setIsView] = React.useState<boolean>(false);
   const [info, setInfo] = React.useState<Partial<TableListItem>>({});
 
   const [merchants, setMerchants] = React.useState<MerchantData[]>([]);
@@ -95,6 +97,16 @@ const TableList: React.FC<{}> = () => {
     });
   }
 
+  const handleView = async (merNo: string, loginName: string) => {
+    try {
+      const result = await fetchGet(merNo, loginName);
+      setInfo(result);
+      setIsView(true);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
   const columns: ProColumns<TableListItem>[] = [
     {
       title: intl.formatMessage({ id: 'global.operate' }),
@@ -113,10 +125,16 @@ const TableList: React.FC<{}> = () => {
             </>
           ) : null}
           {(record.checkState !== '0' || record.operation !== '0') ? (
-            <a onClick={() => handleResetPwd(record.merNo, record.loginName)}>
-              {intl.formatMessage({ id: 'appUser.reset.action' })}
-            </a>
+            <>
+              <a onClick={() => handleResetPwd(record.merNo, record.loginName)}>
+                {intl.formatMessage({ id: 'appUser.reset.action' })}
+              </a>
+              <Divider type="vertical" />
+            </>
           ) : null}
+          <a onClick={() => handleView(record.merNo, record.loginName)}>
+            {intl.formatMessage({ id: 'global.view' })}
+          </a>
         </>
       ),
     },
@@ -224,6 +242,11 @@ const TableList: React.FC<{}> = () => {
         modalVisible={isUpdate}
         onCancel={() => setIsUpdate(false)}
         onSubmit={handleUpdate}
+      />
+      <Show
+        info={info}
+        modalVisible={isView}
+        onCancel={() => setIsView(false)}
       />
     </PageContainer>
   );

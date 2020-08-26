@@ -1,5 +1,6 @@
 export default {
   'appUser.title': 'Merchant App User Mgr',
+  'appUser.view.title': 'Merchant App User View',
   'appUser.check.title': 'Merchant App User Check',
   'appUser.merNo': 'Merchant No',
   'appUser.merchantName': 'Merchant Name',

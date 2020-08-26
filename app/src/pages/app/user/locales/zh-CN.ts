@@ -1,5 +1,6 @@
 export default {
   'appUser.title': '商户App用户管理',
+  'appUser.view.title': '商户App用户详情',
   'appUser.check.title': '商户App用户审核',
   'appUser.merNo': '商户号',
   'appUser.merchantName': '商户名称',

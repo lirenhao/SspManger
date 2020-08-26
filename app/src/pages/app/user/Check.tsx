@@ -1,4 +1,5 @@
 import React from 'react';
+import { Divider } from 'antd';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl, useModel } from 'umi';
@@ -7,6 +8,7 @@ import {
   fetchAllMer, fetchCcyTypes, fetchQuery, fetchGet, fetchGetCheck, fetchCheck
 } from './service';
 import Check from './components/Check';
+import Show from './components/Show';
 
 const TableList: React.FC<{}> = () => {
 
@@ -16,6 +18,8 @@ const TableList: React.FC<{}> = () => {
   const orgId = initialState?.currentUser?.orgId;
 
   const [isCheck, setIsCheck] = React.useState<boolean>(false);
+  const [isView, setIsView] = React.useState<boolean>(false);
+
   const [after, setAfter] = React.useState<Partial<TableListItem>>({});
   const [before, setBefore] = React.useState<Partial<TableListItem>>({});
 
@@ -49,6 +53,16 @@ const TableList: React.FC<{}> = () => {
     }
   }
 
+  const handleView = async (merNo: string, loginName: string) => {
+    try {
+      const result = await fetchGet(merNo, loginName);
+      setAfter(result);
+      setIsView(true);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
   const columns: ProColumns<TableListItem>[] = [
     {
       title: intl.formatMessage({ id: 'global.operate' }),
@@ -56,11 +70,17 @@ const TableList: React.FC<{}> = () => {
         <>
           {
             record.checkState === '0' ? (
-              <a onClick={() => beforeCheck(record.merNo, record.loginName)}>
-                {intl.formatMessage({ id: 'global.check' })}
-              </a>
+              <>
+                <a onClick={() => beforeCheck(record.merNo, record.loginName)}>
+                  {intl.formatMessage({ id: 'global.check' })}
+                </a>
+                <Divider type="vertical" />
+              </>
             ) : null
           }
+          <a onClick={() => handleView(record.merNo, record.loginName)}>
+            {intl.formatMessage({ id: 'global.view' })}
+          </a>
         </>
       ),
     },
@@ -157,6 +177,11 @@ const TableList: React.FC<{}> = () => {
         modalVisible={isCheck}
         onCancel={() => setIsCheck(false)}
         onSubmit={handleCheck}
+      />
+      <Show
+        info={after}
+        modalVisible={isView}
+        onCancel={() => setIsView(false)}
       />
     </PageContainer>
   );
