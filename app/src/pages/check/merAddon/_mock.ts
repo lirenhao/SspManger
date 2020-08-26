@@ -99,11 +99,11 @@ function countryCode(req: Request, res: Response) {
 }
 
 export default {
-  'GET /merchantExtra': getAll,
-  'PUT /merchantExtra': save,
-  'PUT /merchantExtra/:id': getOne,
-  'DELETE /merchantExtra/:id': remove,
-  'GET /merchantExtra/:id/exists': exist,
-  'GET /ccyType/list': ccyType,
-  'GET /countryCode/list': countryCode,
+  'GET /svc/ssp/merchantExtra': getAll,
+  'PUT /svc/ssp/merchantExtra': save,
+  'PUT /svc/ssp/merchantExtra/:id': getOne,
+  'DELETE /svc/ssp/merchantExtra/:id': remove,
+  'GET /svc/ssp/merchantExtra/:id/exists': exist,
+  'GET /svc/ssp/ccyType/list': ccyType,
+  'GET /svc/ssp/countryCode/list': countryCode,
 };

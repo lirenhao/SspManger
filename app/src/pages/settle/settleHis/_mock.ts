@@ -119,10 +119,10 @@ function exist(req: Request, res: Response) {
 // }
 
 export default {
-  'GET /merSettle/success': getAll,
-  'GET /merSettle/failure': getAll,
-  'PUT /merSettle': save,
-  'PUT /merSettle/:id': getOne,
-  'DELETE /merSettle/:id': remove,
-  'GET /merSettle/:id/exists': exist,
+  'GET /svc/ssp/merSettle/success': getAll,
+  'GET /svc/ssp/merSettle/failure': getAll,
+  'PUT /svc/ssp/merSettle': save,
+  'PUT /svc/ssp/merSettle/:id': getOne,
+  'DELETE /svc/ssp/merSettle/:id': remove,
+  'GET /svc/ssp/merSettle/:id/exists': exist,
 };

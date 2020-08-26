@@ -55,9 +55,9 @@ function exist(req: Request, res: Response) {
 }
 
 export default {
-  'GET /mccCode': getAllMccCode,
-  'PUT /mccCode': saveMcc,
-  'PUT /mccCode/:id': getOneMcc,
-  'DELETE /mccCode/:id': removeMcc,
-  'GET /mccCode/:id/exists': exist,
+  'GET /svc/ssp/mccCode': getAllMccCode,
+  'PUT /svc/ssp/mccCode': saveMcc,
+  'PUT /svc/ssp/mccCode/:id': getOneMcc,
+  'DELETE /svc/ssp/mccCode/:id': removeMcc,
+  'GET /svc/ssp/mccCode/:id/exists': exist,
 };

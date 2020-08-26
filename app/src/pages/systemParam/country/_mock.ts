@@ -59,10 +59,10 @@ function exists(req: Request, res: Response) {
 }
 
 export default {
-  'GET /countryCode': getAllcountry,
-  'PUT /countryCode': savecountry,
-  'PUT /countryCode/country': getOnecountry,
-  'DELETE /countryCode/country': removecountry,
-  'GET /countryCode/id/exists': exists,
-  'GET /countryCode/{id}/exists': exists,
+  'GET /svc/ssp/countryCode': getAllcountry,
+  'PUT /svc/ssp/countryCode': savecountry,
+  'PUT /svc/ssp/countryCode/country': getOnecountry,
+  'DELETE /svc/ssp/countryCode/country': removecountry,
+  'GET /svc/ssp/countryCode/id/exists': exists,
+  'GET /svc/ssp/countryCode/{id}/exists': exists,
 };

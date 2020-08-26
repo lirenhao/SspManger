@@ -61,9 +61,9 @@ function exist(req: Request, res: Response) {
 }
 
 export default {
-  'GET /merLimit': getAllbanksCode,
-  'PUT /merLimit': savebanks,
-  'PUT /merLimit/:id': getOnebanks,
-  'DELETE /merLimit/:id': removebanks,
-  'GET /merLimit/:id/exists': exist,
+  'GET /svc/ssp/merLimit': getAllbanksCode,
+  'PUT /svc/ssp/merLimit': savebanks,
+  'PUT /svc/ssp/merLimit/:id': getOnebanks,
+  'DELETE /svc/ssp/merLimit/:id': removebanks,
+  'GET /svc/ssp/merLimit/:id/exists': exist,
 };

@@ -30,7 +30,7 @@ function tran(req: Request, res: Response) {
 }
 
 export default {
-  'GET /riskList': getAllriskList,
-  'PUT /riskList/:id': getOne,
-  'GET /riskList/:id/trans': tran,
+  'GET /svc/ssp/riskList': getAllriskList,
+  'PUT /svc/ssp/riskList/:id': getOne,
+  'GET /svc/ssp/riskList/:id/trans': tran,
 };

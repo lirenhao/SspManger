@@ -196,13 +196,13 @@ function exist(req: Request, res: Response) {
 // }
 
 export default {
-  'GET /terminal': getAll,
-  'PUT /terminal': save,
-  'PUT /terminal/:id': getOne,
-  'DELETE /terminal/:id': remove,
-  'GET /terminal/:id/exists': exist,
-  // 'GET /ccyType/list' : ccyType,
-  // 'GET /countryCode/list' : countryCode,
-  // 'GET /org/tree' : orgTree,
-  // 'GET /terminal/:id': terminal,
+  'GET /svc/ssp/terminal': getAll,
+  'PUT /svc/ssp/terminal': save,
+  'PUT /svc/ssp/terminal/:id': getOne,
+  'DELETE /svc/ssp/terminal/:id': remove,
+  'GET /svc/ssp/terminal/:id/exists': exist,
+  // 'GET /svc/ssp/ccyType/list' : ccyType,
+  // 'GET /svc/ssp/countryCode/list' : countryCode,
+  // 'GET /svc/ssp/org/tree' : orgTree,
+  // 'GET /svc/ssp/terminal/:id': terminal,
 };

@@ -132,14 +132,14 @@ function merchant(req: Request, res: Response) {
 // }
 
 export default {
-  'GET /ccpay': getAll,
-  'PUT /ccpay': save,
-  'PUT /ccpay/:id': getOne,
-  'DELETE /ccpay/:id': remove,
-  'GET /ccpay/:id/exists': exist,
-  'GET /merchant': merchant,
-  // 'GET /ccyType/list' : ccyType,
-  // 'GET /countryCode/list' : countryCode,
-  // 'GET /org/tree' : orgTree,
-  // 'GET /terminal/:id': terminal,
+  'GET /svc/ssp/ccpay': getAll,
+  'PUT /svc/ssp/ccpay': save,
+  'PUT /svc/ssp/ccpay/:id': getOne,
+  'DELETE /svc/ssp/ccpay/:id': remove,
+  'GET /svc/ssp/ccpay/:id/exists': exist,
+  'GET /svc/ssp/merchant': merchant,
+  // 'GET /svc/ssp/ccyType/list' : ccyType,
+  // 'GET /svc/ssp/countryCode/list' : countryCode,
+  // 'GET /svc/ssp/org/tree' : orgTree,
+  // 'GET /svc/ssp/terminal/:id': terminal,
 };

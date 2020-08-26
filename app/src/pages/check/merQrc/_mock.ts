@@ -150,13 +150,13 @@ function terminal(req: Request, res: Response) {
 }
 
 export default {
-  'GET /staticQrc': getAll,
-  'PUT /staticQrc': save,
-  'PUT /staticQrc/:id': getOne,
-  'DELETE /staticQrc/:id': remove,
-  'GET /staticQrc/:id/exists': exist,
-  'GET /ccyType/list': ccyType,
-  'GET /countryCode/list': countryCode,
-  'GET /org/tree': orgTree,
-  'GET /terminal/:id': terminal,
+  'GET /svc/ssp/staticQrc': getAll,
+  'PUT /svc/ssp/staticQrc': save,
+  'PUT /svc/ssp/staticQrc/:id': getOne,
+  'DELETE /svc/ssp/staticQrc/:id': remove,
+  'GET /svc/ssp/staticQrc/:id/exists': exist,
+  'GET /svc/ssp/ccyType/list': ccyType,
+  'GET /svc/ssp/countryCode/list': countryCode,
+  'GET /svc/ssp/org/tree': orgTree,
+  'GET /svc/ssp/terminal/:id': terminal,
 };

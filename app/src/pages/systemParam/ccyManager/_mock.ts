@@ -62,10 +62,10 @@ function existsCcy(req: Request, res: Response) {
 }
 
 export default {
-  'GET /ccyType': getAllCcy,
-  'PUT /ccyType': saveCcy,
-  'PUT /ccyType/ccy': getOneCcy,
-  'DELETE /ccyType/ccy': removeCcy,
-  'GET /ccyType/{id}/exists': existsCcy,
-  'GET /ccyType/aaa/exists': existsCcy,
+  'GET /svc/ssp/ccyType': getAllCcy,
+  'PUT /svc/ssp/ccyType': saveCcy,
+  'PUT /svc/ssp/ccyType/ccy': getOneCcy,
+  'DELETE /svc/ssp/ccyType/ccy': removeCcy,
+  'GET /svc/ssp/ccyType/{id}/exists': existsCcy,
+  'GET /svc/ssp/ccyType/aaa/exists': existsCcy,
 };

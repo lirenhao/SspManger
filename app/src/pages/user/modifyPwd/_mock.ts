@@ -1,3 +1,3 @@
 export default {
-  'GET /change_pwd': [],
+  'GET /svc/ssp/change_pwd': [],
 };

@@ -56,8 +56,8 @@ function exist(req: Request, res: Response) {
 }
 
 export default {
-  'GET /appRole': getAllRole,
-  'GET /appRole/id': getShow,
-  'PUT /appRole': save,
-  'GET /appRole/id/exists': exist,
+  'GET /svc/ssp/appRole': getAllRole,
+  'GET /svc/ssp/appRole/id': getShow,
+  'PUT /svc/ssp/appRole': save,
+  'GET /svc/ssp/appRole/id/exists': exist,
 };

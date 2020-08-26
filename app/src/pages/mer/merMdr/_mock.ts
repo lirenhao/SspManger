@@ -127,13 +127,13 @@ function exist(req: Request, res: Response) {
 // }
 
 export default {
-  'GET /merchantFee': getAll,
-  'PUT /merchantFee': save,
-  'PUT /merchantFee/:id': getOne,
-  'DELETE /merchantFee/:id': remove,
-  'GET /merchantFee/:id/exists': exist,
-  // 'GET /ccyType/list' : ccyType,
-  // 'GET /countryCode/list' : countryCode,
-  // 'GET /org/tree' : orgTree,
-  // 'GET /terminal/:id': terminal,
+  'GET /svc/ssp/merchantFee': getAll,
+  'PUT /svc/ssp/merchantFee': save,
+  'PUT /svc/ssp/merchantFee/:id': getOne,
+  'DELETE /svc/ssp/merchantFee/:id': remove,
+  'GET /svc/ssp/merchantFee/:id/exists': exist,
+  // 'GET /svc/ssp/ccyType/list' : ccyType,
+  // 'GET /svc/ssp/countryCode/list' : countryCode,
+  // 'GET /svc/ssp/org/tree' : orgTree,
+  // 'GET /svc/ssp/terminal/:id': terminal,
 };

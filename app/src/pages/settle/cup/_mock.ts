@@ -133,13 +133,13 @@ function exist(req: Request, res: Response) {
 // }
 
 export default {
-  'GET /cupAcomn': getAll,
-  'PUT /cupAcomn': save,
-  'PUT /cupAcomn/:id': getOne,
-  'DELETE /cupAcomn/:id': remove,
-  'GET /cupAcomn/:id/exists': exist,
-  // 'GET /ccyType/list' : ccyType,
-  // 'GET /countryCode/list' : countryCode,
-  // 'GET /org/tree' : orgTree,
-  // 'GET /terminal/:id': terminal,
+  'GET /svc/ssp/cupAcomn': getAll,
+  'PUT /svc/ssp/cupAcomn': save,
+  'PUT /svc/ssp/cupAcomn/:id': getOne,
+  'DELETE /svc/ssp/cupAcomn/:id': remove,
+  'GET /svc/ssp/cupAcomn/:id/exists': exist,
+  // 'GET /svc/ssp/ccyType/list' : ccyType,
+  // 'GET /svc/ssp/countryCode/list' : countryCode,
+  // 'GET /svc/ssp/org/tree' : orgTree,
+  // 'GET /svc/ssp/terminal/:id': terminal,
 };

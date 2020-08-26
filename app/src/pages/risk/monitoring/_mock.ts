@@ -38,6 +38,6 @@ function getOne(req: Request, res: Response) {
 }
 
 export default {
-  'GET /risk': getAllriskList,
-  'PUT /risk/:id': getOne,
+  'GET /svc/ssp/risk': getAllriskList,
+  'PUT /svc/ssp/risk/:id': getOne,
 };

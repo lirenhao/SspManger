@@ -79,7 +79,7 @@ function removecardbin(req: Request, res: Response) {
 }
 
 export default {
-  'GET /cupCardBin': getAllcardbin,
-  'PUT /cupCardBin/cardbin': getOnecardbin,
-  'DELETE /cupCardBin/cardbin': removecardbin,
+  'GET /svc/ssp/cupCardBin': getAllcardbin,
+  'PUT /svc/ssp/cupCardBin/cardbin': getOnecardbin,
+  'DELETE /svc/ssp/cupCardBin/cardbin': removecardbin,
 };

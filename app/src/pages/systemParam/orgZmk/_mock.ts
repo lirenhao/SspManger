@@ -70,9 +70,9 @@ function exist(req: Request, res: Response) {
 }
 
 export default {
-  'GET /pospOrgZmk': getAllorgzmkCode,
-  'PUT /pospOrgZmk': saveorgzmk,
-  'PUT /pospOrgZmk/:id': getOneorgzmk,
-  'DELETE /pospOrgZmk/:id': removeorgzmk,
-  'GET /pospOrgZmk/:id/exists': exist,
+  'GET /svc/ssp/pospOrgZmk': getAllorgzmkCode,
+  'PUT /svc/ssp/pospOrgZmk': saveorgzmk,
+  'PUT /svc/ssp/pospOrgZmk/:id': getOneorgzmk,
+  'DELETE /svc/ssp/pospOrgZmk/:id': removeorgzmk,
+  'GET /svc/ssp/pospOrgZmk/:id/exists': exist,
 };

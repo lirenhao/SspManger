@@ -79,9 +79,9 @@ function exist(req: Request, res: Response) {
 }
 
 export default {
-  'GET /manualSettle': getAll,
-  'PUT /manualSettle': save,
-  'PUT /manualSettle/:id': getOne,
-  'DELETE /manualSettle/:id': remove,
-  'GET /manualSettle/:id/exists': exist,
+  'GET /svc/ssp/manualSettle': getAll,
+  'PUT /svc/ssp/manualSettle': save,
+  'PUT /svc/ssp/manualSettle/:id': getOne,
+  'DELETE /svc/ssp/manualSettle/:id': remove,
+  'GET /svc/ssp/manualSettle/:id/exists': exist,
 };

@@ -22,5 +22,5 @@ function saveorgzmk(req: Request, res: Response) {
 }
 
 export default {
-  'POST /pospOrgTmk/upload': saveorgzmk,
+  'POST /svc/ssp/pospOrgTmk/upload': saveorgzmk,
 };

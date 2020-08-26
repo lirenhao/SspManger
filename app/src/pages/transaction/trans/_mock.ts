@@ -52,7 +52,6 @@ const pageResult = {
 };
 
 function getAll(req: Request, res: Response) {
-  console.error('getAll', pageResult);
   return res.json(pageResult);
 }
 function save(req: Request, res: Response) {
@@ -116,13 +115,13 @@ function exist(req: Request, res: Response) {
 // }
 
 export default {
-  'GET /trans': getAll,
-  'PUT /trans': save,
-  'PUT /trans/:id': getOne,
-  'DELETE /trans/:id': remove,
-  'GET /trans/:id/exists': exist,
-  // 'GET /ccyType/list' : ccyType,
-  // 'GET /countryCode/list' : countryCode,
-  // 'GET /org/tree' : orgTree,
-  // 'GET /terminal/:id': terminal,
+  'GET /svc/ssp/trans': getAll,
+  'PUT /svc/ssp/trans': save,
+  'PUT /svc/ssp/trans/:id': getOne,
+  'DELETE /svc/ssp/trans/:id': remove,
+  'GET /svc/ssp/trans/:id/exists': exist,
+  // 'GET /svc/ssp/ccyType/list' : ccyType,
+  // 'GET /svc/ssp/countryCode/list' : countryCode,
+  // 'GET /svc/ssp/org/tree' : orgTree,
+  // 'GET /svc/ssp/terminal/:id': terminal,
 };

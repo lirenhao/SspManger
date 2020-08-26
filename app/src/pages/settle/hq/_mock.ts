@@ -150,13 +150,13 @@ function terminal(req: Request, res: Response) {
 }
 
 export default {
-  'GET /hqReport': getAll,
-  'PUT /hqReport': save,
-  'PUT /hqReport/:id': getOne,
-  'DELETE /hqReport/:id': remove,
-  'GET /hqReport/:id/exists': exist,
-  'GET /ccyType/list': ccyType,
-  'GET /countryCode/list': countryCode,
-  'GET /org/tree': orgTree,
-  'GET /terminal/:id': terminal,
+  'GET /svc/ssp/hqReport': getAll,
+  'PUT /svc/ssp/hqReport': save,
+  'PUT /svc/ssp/hqReport/:id': getOne,
+  'DELETE /svc/ssp/hqReport/:id': remove,
+  'GET /svc/ssp/hqReport/:id/exists': exist,
+  'GET /svc/ssp/ccyType/list': ccyType,
+  'GET /svc/ssp/countryCode/list': countryCode,
+  'GET /svc/ssp/org/tree': orgTree,
+  'GET /svc/ssp/terminal/:id': terminal,
 };

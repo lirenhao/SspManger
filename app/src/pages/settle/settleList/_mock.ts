@@ -117,9 +117,9 @@ function exist(req: Request, res: Response) {
 // }
 
 export default {
-  'GET /cupqrcSettle': getAll,
-  'PUT /cupqrcSettle': save,
-  'PUT /cupqrcSettle/:id': getOne,
-  'DELETE /cupqrcSettle/:id': remove,
-  'GET /cupqrcSettle/:id/exists': exist,
+  'GET /svc/ssp/cupqrcSettle': getAll,
+  'PUT /svc/ssp/cupqrcSettle': save,
+  'PUT /svc/ssp/cupqrcSettle/:id': getOne,
+  'DELETE /svc/ssp/cupqrcSettle/:id': remove,
+  'GET /svc/ssp/cupqrcSettle/:id/exists': exist,
 };

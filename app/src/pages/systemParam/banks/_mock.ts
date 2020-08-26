@@ -59,9 +59,9 @@ function exist(req: Request, res: Response) {
 }
 
 export default {
-  'GET /bankList': getAllbanksCode,
-  'PUT /bankList': savebanks,
-  'PUT /bankList/:id': getOnebanks,
-  'DELETE /bankList/:id': removebanks,
-  'GET /bankList/:id/exists': exist,
+  'GET /svc/ssp/bankList': getAllbanksCode,
+  'PUT /svc/ssp/bankList': savebanks,
+  'PUT /svc/ssp/bankList/:id': getOnebanks,
+  'DELETE /svc/ssp/bankList/:id': removebanks,
+  'GET /svc/ssp/bankList/:id/exists': exist,
 };
