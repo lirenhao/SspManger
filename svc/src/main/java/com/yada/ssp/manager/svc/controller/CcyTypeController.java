@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 币种API
  */
@@ -30,6 +32,11 @@ public class CcyTypeController {
     @GetMapping
     public Page<CcyType> list(@ModelAttribute CcyTypeQuery query, @PageableDefault Pageable pageable) {
         return typeService.findAll(query, pageable);
+    }
+
+    @GetMapping("/list")
+    public List<CcyType> list() {
+        return typeService.findAll();
     }
 
     @PutMapping

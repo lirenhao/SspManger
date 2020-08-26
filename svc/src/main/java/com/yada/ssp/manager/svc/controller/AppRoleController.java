@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Merchant App角色API
  */
@@ -26,6 +28,11 @@ public class AppRoleController {
     @GetMapping
     public Page<AppRole> list(@ModelAttribute AppRoleQuery query, @PageableDefault Pageable pageable) {
         return appRoleService.findAll(query, pageable);
+    }
+
+    @GetMapping("/list")
+    public List<AppRole> list() {
+        return appRoleService.findAll();
     }
 
     @PutMapping

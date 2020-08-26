@@ -20,10 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Created by bjy on 2018/7/23.
  * APP用户Service
  */
-
 @Service
 @Transactional
 public class AppUserCheckService {
@@ -69,23 +67,19 @@ public class AppUserCheckService {
         return appUserCheckDao.existsById(appUserPK);
     }
 
-    public void saveAndUpdate(AppUserCheck appUserCheck) {
-        String password = appUserCheck.getPassWord();
-        if (password == null || password.equals("")) {
-            password = defaultPassword;
-        }
-        appUserCheck.setPassWord(md5.getkeyBeanofStr(password));
+    public void save(AppUserCheck appUserCheck) {
+        appUserCheck.setPassWord(md5.getkeyBeanofStr(defaultPassword));
         appUserCheck.setCheckState("0");
         appUserCheck.setOperation("0");
         appUserCheckDao.saveAndFlush(appUserCheck);
     }
 
-    public void updateUser(AppUserPK appUserPK, String userName, String roles, String termNo, String ccyType) {
+    public void updateUser(AppUserPK appUserPK, AppUserCheck appUser) {
         AppUserCheck appUserCheck = appUserCheckDao.getOne(appUserPK);
-        appUserCheck.setUserName(userName);
-        appUserCheck.setRoles(roles);
-        appUserCheck.setTermNo(termNo);
-        appUserCheck.setCcyType(ccyType);
+        appUserCheck.setUserName(appUser.getUserName());
+        appUserCheck.setRoles(appUser.getRoles());
+        appUserCheck.setTermNo(appUser.getTermNo());
+        appUserCheck.setCcyType(appUser.getCcyType());
         appUserCheck.setCheckState("0");
         appUserCheck.setOperation("1");
         appUserCheckDao.saveAndFlush(appUserCheck);

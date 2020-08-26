@@ -19,12 +19,17 @@ const routes: IRoute[] = [
     component: './check/merMdr',
     locale: 'merMdrCheck.title',
   },
-
   {
     path: '/check/ccpay',
     name: 'ccpay check',
     component: './check/ccpay',
     locale: 'ccpayCheck.title',
+  },
+  {
+    path: '/check/appUser',
+    name: 'appUser check',
+    component: './app/user/check',
+    locale: 'appUser.check.title',
   },
 ];
 

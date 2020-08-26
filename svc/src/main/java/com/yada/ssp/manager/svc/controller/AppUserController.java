@@ -38,12 +38,12 @@ public class AppUserController {
 
     @PostMapping
     public void save(@RequestBody AppUserCheck appUserCheck) {
-        appUserCheckService.saveAndUpdate(appUserCheck);
+        appUserCheckService.save(appUserCheck);
     }
 
-    @PutMapping
-    public void update(String merNo, String loginName, String userName, String roles, String termNo, String ccyType) {
-        appUserCheckService.updateUser(new AppUserPK(merNo, loginName), userName, roles, termNo, ccyType);
+    @PutMapping("/{merNo}/{loginName}")
+    public void update(@PathVariable String merNo, @PathVariable String loginName, @RequestBody AppUserCheck appUserCheck) {
+        appUserCheckService.updateUser(new AppUserPK(merNo, loginName), appUserCheck);
     }
 
     @GetMapping("/{merNo}/{loginName}")
@@ -57,8 +57,8 @@ public class AppUserController {
     }
 
     @PutMapping("/{merNo}/{loginName}/check")
-    public void saveCheck(@PathVariable String merNo, @PathVariable String loginName, String state, String checkReason) {
-        appUserCheckService.saveCheck(state, checkReason, merNo, loginName);
+    public void saveCheck(@PathVariable String merNo, @PathVariable String loginName, String checkState, String checkReason) {
+        appUserCheckService.saveCheck(checkState, checkReason, merNo, loginName);
     }
 
     @PutMapping("/{merNo}/{loginName}/resetPwd")

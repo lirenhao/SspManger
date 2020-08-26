@@ -9,21 +9,16 @@ export async function queryRole(params?: TableListParams) {
 }
 
 export async function getRole(params: TableListItem) {
-  return request('/svc/ssp/appRole/'.concat(params.id), {
-    method: 'GET',
-  });
+  return request(`/svc/ssp/appRole/${params.id}`);
 }
 
 export async function saveRole(params: TableListItem) {
-  return request('/svc/ssp/approle/save', {
+  return request('/svc/ssp/appRole', {
     method: 'PUT',
-    data: {
-      ...params,
-      method: 'update',
-    },
+    data: params,
   });
 }
 
 export async function exist(id: string) {
-  return request(`/svc/ssp/approle/${id}/exists`);
+  return request(`/svc/ssp/appRole/${id}/exists`);
 }

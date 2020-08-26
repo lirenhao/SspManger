@@ -23,12 +23,12 @@ values ('0001', 'Test');
 insert into T_B_TERM_SN (VENDOR_ID, SN_NO, MERCHANT_ID, TERMINAL_ID, LOCATION)
 values ('0001', '12345678', '104767011000006', '76002432', '1.000,1.2334');
 
-insert into T_B_APP_ROLE (ID, NAME)
-values ('admin', 'admin');
-insert into T_B_APP_ROLE (ID, NAME)
-values ('tran', 'tran');
-insert into T_B_APP_ROLE (ID, NAME)
-values ('user', 'user');
+insert into T_B_APP_ROLE (ID, NAME) values ('admin', 'admin');
+insert into T_B_APP_ROLE (ID, NAME) values ('tran', 'tran');
+insert into T_B_APP_ROLE (ID, NAME) values ('user', 'user');
+
+insert into T_D_CCY_TYPE (CCY_TYPE, CCY_NAME, ccy_Symbol) values ('USD', '美元', '$');
+insert into T_D_CCY_TYPE (CCY_TYPE, CCY_NAME, ccy_Symbol) values ('RMB', '人民币', '¥');
 
 insert into T_B_RISK (RISK_CODE, RISK_NAME, VALUE, VALUE_FORMAT)
 values ('0001', 'risk test', '10', 'This is %s count!');

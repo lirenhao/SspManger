@@ -28,6 +28,12 @@ const routes: IRoute[] = [
     locale: 'merMdr.title',
   },
   {
+    path: '/mer/appUser',
+    name: 'appUser',
+    component: './app/user',
+    locale: 'appUser.title',
+  },
+  {
     path: '/mer/webSubs',
     name: 'webSubs',
     component: './web/subs',

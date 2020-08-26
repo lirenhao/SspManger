@@ -6,19 +6,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Created by bjy on 2018/9/5.
  * 币种表
  */
-
 @Entity
 @Table(name = "T_D_CCY_TYPE")
 public class CcyType {
-
-    public static final String TABLE_ALIAS = "币种";
-    public static final String ALIAS_CCY_TYPE = "CURRENCY NUMBER";
-    public static final String ALIAS_CCY_NAME = "CURRENCY DESCRIPTION";
-    public static final String ALIAS_CCY_ENAME = "CURRENCY CODE";
-    public static final String ALIAS_CCY_SYMBOL = "CURRENCY SYMBOL";
 
     @Id
     @Column(nullable = false, length = 3)
