@@ -37,7 +37,7 @@ public class AppUserController {
     }
 
     @PostMapping
-    public void save(@ModelAttribute AppUserCheck appUserCheck) {
+    public void save(@RequestBody AppUserCheck appUserCheck) {
         appUserCheckService.saveAndUpdate(appUserCheck);
     }
 

@@ -36,7 +36,7 @@ public class MerchantExtraController {
     }
 
     @PutMapping
-    public void update(MerchantExtraCheck merchantExtraCheck) {
+    public void update(@RequestBody MerchantExtraCheck merchantExtraCheck) {
         merchantExtraCheckService.saveMerchantExtra(merchantExtraCheck);
     }
 

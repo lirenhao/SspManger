@@ -33,7 +33,7 @@ public class InternationalCodeController {
     }
 
     @PutMapping
-    public void save(@ModelAttribute InternationalCode internationalCode) {
+    public void save(@RequestBody InternationalCode internationalCode) {
         internationalCodeService.saveAndUpdate(internationalCode);
     }
 

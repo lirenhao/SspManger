@@ -24,7 +24,7 @@ public class RiskController {
     }
 
     @PutMapping
-    public void update(@ModelAttribute Risk risk) {
+    public void update(@RequestBody Risk risk) {
         riskService.update(risk);
     }
 }

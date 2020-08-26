@@ -33,12 +33,12 @@ public class MerApiOrgController {
     }
 
     @PostMapping
-    public void save(@ModelAttribute MerApiOrg merApiOrg) {
+    public void save(@RequestBody MerApiOrg merApiOrg) {
         merApiOrgService.save(merApiOrg);
     }
 
     @PutMapping
-    public void update(@ModelAttribute MerApiOrg merApiOrg) {
+    public void update(@RequestBody MerApiOrg merApiOrg) {
         merApiOrgService.update(merApiOrg);
     }
 

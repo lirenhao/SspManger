@@ -39,7 +39,7 @@ public class PospOrgTmkController {
     }
 
     @PostMapping
-    public void save(@ModelAttribute PospOrgTmk pospOrgTmk) {
+    public void save(@RequestBody PospOrgTmk pospOrgTmk) {
         pospOrgTmkService.saveAndUpdate(pospOrgTmk);
     }
 

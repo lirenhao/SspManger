@@ -46,12 +46,12 @@ public class MerLimitController {
     }
 
     @PostMapping
-    public void save(@ModelAttribute MerLimit merLimit) {
+    public void save(@RequestBody MerLimit merLimit) {
         merLimitService.saveAndUpdate(merLimit);
     }
 
     @PutMapping
-    public void update(@ModelAttribute MerLimit merLimit) {
+    public void update(@RequestBody MerLimit merLimit) {
         merLimitService.saveAndUpdate(merLimit);
     }
 

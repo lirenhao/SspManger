@@ -33,7 +33,7 @@ public class CcyTypeController {
     }
 
     @PutMapping
-    public void save(CcyType ccyType) {
+    public void save(@RequestBody CcyType ccyType) {
         typeService.saveAndUpdate(ccyType);
     }
 

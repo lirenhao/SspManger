@@ -29,7 +29,7 @@ public class MccController {
     }
 
     @PutMapping
-    public void save(Mcc mcc) {
+    public void save(@RequestBody Mcc mcc) {
         mccService.saveAndUpdate(mcc);
     }
 

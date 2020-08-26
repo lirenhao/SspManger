@@ -29,7 +29,7 @@ public class AppRoleController {
     }
 
     @PutMapping
-    public void save(AppRole appRole) {
+    public void save(@RequestBody AppRole appRole) {
         appRoleService.saveAndUpdate(appRole);
     }
 

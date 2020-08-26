@@ -29,7 +29,7 @@ public class UnionPayCardBinController {
     }
 
     @PutMapping
-    public void save(@ModelAttribute UnionPayCardBin unionPayCardBin) {
+    public void save(@RequestBody UnionPayCardBin unionPayCardBin) {
         unionPayCardBinService.saveAndUpdate(unionPayCardBin);
     }
 

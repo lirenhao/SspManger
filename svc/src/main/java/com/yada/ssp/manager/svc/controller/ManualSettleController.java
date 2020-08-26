@@ -32,7 +32,7 @@ public class ManualSettleController {
     }
 
     @PostMapping
-    public void save(@ModelAttribute ManualSettleCheck manualSettleCheck) {
+    public void save(@RequestBody ManualSettleCheck manualSettleCheck) {
         manualSettleCheck.setInputDate(DateUtil.getCurDate());
         manualSettleCheck.setCheckState("0");
         manualSettleCheck.setOperation("0");
@@ -40,7 +40,7 @@ public class ManualSettleController {
     }
 
     @PutMapping
-    public void update(@ModelAttribute ManualSettleCheck manualSettleCheck) {
+    public void update(@RequestBody ManualSettleCheck manualSettleCheck) {
         manualSettleCheck.setInputDate(DateUtil.getCurDate());
         manualSettleCheck.setCheckState("0");
         manualSettleCheck.setOperation("1");

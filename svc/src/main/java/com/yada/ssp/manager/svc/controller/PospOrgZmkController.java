@@ -31,7 +31,7 @@ public class PospOrgZmkController {
     }
 
     @PostMapping
-    public void save(@ModelAttribute PospOrgZmk pospOrgZmk) {
+    public void save(@RequestBody PospOrgZmk pospOrgZmk) {
         pospOrgZmkService.saveAndUpdate(pospOrgZmk);
     }
 

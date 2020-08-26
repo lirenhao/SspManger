@@ -24,7 +24,7 @@ public class MerPolicyController {
     }
 
     @PostMapping
-    public void save(@ModelAttribute MerPolicy merPolicy) {
+    public void save(@RequestBody MerPolicy merPolicy) {
         merPolicyService.saveAndUpdate(merPolicy);
     }
 

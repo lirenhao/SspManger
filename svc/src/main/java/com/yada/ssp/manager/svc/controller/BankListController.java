@@ -29,7 +29,7 @@ public class BankListController {
     }
 
     @PutMapping
-    public void save(@ModelAttribute BankList bankList) {
+    public void save(@RequestBody BankList bankList) {
         bankListService.saveAndUpdate(bankList);
     }
 

@@ -36,13 +36,13 @@ public class StaticQrcListCheckController {
     }
 
     @PostMapping
-    public void save(@ModelAttribute StaticQrcListCheck staticQrcListCheck) {
+    public void save(@RequestBody StaticQrcListCheck staticQrcListCheck) {
         staticQrcListCheck.setQrValue(staticQrcListCheck.getQrValue().trim());
         staticQrcListCheckService.save(staticQrcListCheck);
     }
 
     @PutMapping
-    public void update(@ModelAttribute StaticQrcListCheck staticQrcListCheck) {
+    public void update(@RequestBody StaticQrcListCheck staticQrcListCheck) {
         staticQrcListCheck.setQrValue(staticQrcListCheck.getQrValue().trim());
         staticQrcListCheckService.update(staticQrcListCheck);
     }

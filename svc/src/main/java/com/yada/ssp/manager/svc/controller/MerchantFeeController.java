@@ -41,12 +41,12 @@ public class MerchantFeeController {
     }
 
     @PostMapping
-    public void save(@ModelAttribute MerchantFeeCheck merchantFeeCheck) {
+    public void save(@RequestBody MerchantFeeCheck merchantFeeCheck) {
         merchantFeeCheckService.save(merchantFeeCheck);
     }
 
     @PutMapping
-    public String update(@ModelAttribute MerchantFeeCheck merchantFeeCheck) {
+    public String update(@RequestBody MerchantFeeCheck merchantFeeCheck) {
         merchantFeeCheckService.update(merchantFeeCheck);
         return "redirect:list";
     }

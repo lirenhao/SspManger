@@ -42,12 +42,12 @@ public class CcpayController {
     }
 
     @PostMapping
-    public void save(@ModelAttribute CcpayCheck ccpayCheck) {
+    public void save(@RequestBody CcpayCheck ccpayCheck) {
         ccpayCheckService.save(ccpayCheck);
     }
 
     @PutMapping
-    public void update(@ModelAttribute CcpayCheck ccpayCheck) {
+    public void update(@RequestBody CcpayCheck ccpayCheck) {
         ccpayCheckService.update(ccpayCheck);
     }
 
