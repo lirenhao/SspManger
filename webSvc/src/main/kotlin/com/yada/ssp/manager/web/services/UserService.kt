@@ -18,12 +18,10 @@ open class UserService @Autowired constructor(
 ) {
     fun get(id: String): Mono<User> = userRepo.findById(id)
 
-    fun getByOrgId(orgId: String): Flux<User> = userRepo.findByOrgIdOrderByIdAsc(orgId)
-
     fun getPage(orgId: String, userId: String, pageable: Pageable): Mono<PageImpl<User>> =
-            userRepo.countByOrgIdAndIdLike(orgId, userId, pageable.sort)
+            userRepo.countByOrgIdStartingWithAndIdLike(orgId, "${userId}@admin", pageable.sort)
                     .flatMap { count ->
-                        userRepo.findByOrgIdAndIdLike(orgId, userId, pageable.sort)
+                        userRepo.findByOrgIdStartingWithAndIdLike(orgId, "${userId}@admin", pageable.sort)
                                 .buffer(pageable.pageSize, (pageable.pageNumber + 1))
                                 .elementAt(pageable.pageNumber, listOf())
                                 .map { PageImpl<User>(it, pageable, count) }
@@ -88,5 +86,5 @@ open class UserService @Autowired constructor(
                 .defaultIfEmpty(false)
     }
 
-    fun getAll(): Flux<User> = userRepo.findAll()
+    fun getAll(): Flux<User> = userRepo.findAll().filter { it.id.indexOf("admin") > 0}
 }

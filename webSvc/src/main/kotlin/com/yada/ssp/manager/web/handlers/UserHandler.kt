@@ -10,10 +10,12 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.ServerResponse.ok
-import org.springframework.web.reactive.function.server.body
 import org.springframework.web.reactive.function.server.bodyToMono
 import org.springframework.web.server.ResponseStatusException
 import reactor.core.publisher.Mono
+import java.util.stream.Collector
+import java.util.stream.Collectors
+
 
 @Component
 class UserHandler @Autowired constructor(private val userService: UserService) {
@@ -28,7 +30,10 @@ class UserHandler @Autowired constructor(private val userService: UserService) {
                     )
             ).flatMap { ok().bodyValue(it) }
 
-    fun getList(req: ServerRequest): Mono<ServerResponse> = ok().body(userService.getAll())
+    fun getList(req: ServerRequest): Mono<ServerResponse> =
+            userService.getAll()
+                    .filter { it.id.indexOf("admin") > 0 }
+                    .collectList().flatMap { ok().bodyValue(it) }
 
     fun getOne(req: ServerRequest): Mono<ServerResponse> =
             userService.get(req.pathVariable("id"))
@@ -40,7 +45,8 @@ class UserHandler @Autowired constructor(private val userService: UserService) {
                     .flatMap { ok().bodyValue(it) }
 
     fun create(req: ServerRequest): Mono<ServerResponse> =
-            req.bodyToMono(User::class.java)
+            req.bodyToMono<UserCreateData>()
+                    .map { User(it.id, it.orgId, it.roles ?: setOf("admin"), it.status ?: "01", it.email) }
                     .flatMap { userService.create(it) }
                     .flatMap { ok().bodyValue(it) }
 

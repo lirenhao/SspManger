@@ -7,7 +7,7 @@ import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl, useModel } from 'umi';
 import { TableListItem, MerchantData } from './data';
 import {
-  fetchOrgTree, fetchOrgMap, fetchAllMer,
+  fetchOrgTree, fetchOrgMap, fetchAllMer, fetchMerByOrgId,
   fetchQuery, fetchGet, fetchSave, fetchUpdate, fetchDel, fetchResetPwd
 } from './service';
 import Form from './components/Form';
@@ -32,6 +32,7 @@ const TableList: React.FC<{}> = () => {
     fetchOrgTree().then(setOrgTree);
     fetchOrgMap().then(setOrgMap);
     fetchAllMer().then(setMerchants);
+    fetchMerByOrgId(orgId || '');
   }, []);
 
   const handleCreate = async (record: TableListItem) => {
@@ -41,19 +42,19 @@ const TableList: React.FC<{}> = () => {
         id: `${record.id}@admin`,
       });
       setIsCreate(false);
-      await actionRef.current?.reload();
+      actionRef.current?.reload();
     } catch (err) {
-
+      console.log(err.message);
     }
   }
 
   const beforeUpdate = async (id: string) => {
     try {
-      const info = await fetchGet(id);
-      setInfo(info);
+      const result = await fetchGet(id);
+      setInfo(result);
       setIsUpdate(true);
     } catch (err) {
-
+      console.log(err.message);
     }
   }
 
@@ -63,7 +64,7 @@ const TableList: React.FC<{}> = () => {
       setIsUpdate(false);
       actionRef.current?.reload();
     } catch (err) {
-
+      console.log(err.message);
     }
   }
 
@@ -76,7 +77,7 @@ const TableList: React.FC<{}> = () => {
           await fetchDel(id)
           actionRef.current?.reload();
         } catch (err) {
-
+          console.log(err.message);
         }
       }
     });
@@ -165,7 +166,7 @@ const TableList: React.FC<{}> = () => {
       <ProTable<TableListItem>
         headerTitle=""
         actionRef={actionRef}
-        rowKey="orgId"
+        rowKey="id"
         toolBarRender={() => [
           <Button type="primary" onClick={() => setIsCreate(true)}>
             <PlusOutlined />{intl.formatMessage({ id: 'global.create' })}

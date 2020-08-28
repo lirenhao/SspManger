@@ -59,9 +59,9 @@ interface UserRepository : ReactiveCrudRepository<User, String>, ReactiveSorting
 
     fun findByOrgIdOrderByIdAsc(orgId: String): Flux<User>
 
-    fun findByOrgIdAndIdLike(orgId: String, id: String, sort: Sort): Flux<User>
+    fun findByOrgIdStartingWithAndIdLike(orgId: String, id: String, sort: Sort): Flux<User>
 
-    fun countByOrgIdAndIdLike(orgId: String, id: String, sort: Sort): Mono<Long>
+    fun countByOrgIdStartingWithAndIdLike(orgId: String, id: String, sort: Sort): Mono<Long>
 
     fun deleteByOrgId(orgId: String): Mono<Void>
 }

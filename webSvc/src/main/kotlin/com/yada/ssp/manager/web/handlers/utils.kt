@@ -7,6 +7,8 @@ import org.springframework.web.reactive.function.server.ServerResponse.ok
 import org.springframework.web.server.ResponseStatusException
 import reactor.core.publisher.Mono
 
+data class UserCreateData(val id: String, val orgId: String, val roles: Set<String>?, val status: String?, val email: String)
+
 data class UserUpdateData(val orgId: String?, val roles: Set<String>?, val status: String?, val email: String?)
 
 inline fun <reified T : Any> withNotFound(m: Mono<T>, msg: String? = null): Mono<ServerResponse> =
