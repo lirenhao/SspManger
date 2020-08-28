@@ -134,7 +134,9 @@ function merchant(req: Request, res: Response) {
 export default {
   'GET /svc/ssp/ccpay': getAll,
   'PUT /svc/ssp/ccpay': save,
-  'PUT /svc/ssp/ccpay/:id': getOne,
+  'GET /svc/ssp/ccpay/:id': getOne,
+  'GET /svc/ssp/ccpay/:id/check': getOne,
+  'PUT /svc/ssp/ccpay/:id/check': save,
   'DELETE /svc/ssp/ccpay/:id': remove,
   'GET /svc/ssp/ccpay/:id/exists': exist,
   'GET /svc/ssp/merchant': merchant,

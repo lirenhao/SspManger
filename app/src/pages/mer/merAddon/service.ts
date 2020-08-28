@@ -20,7 +20,22 @@ export async function save(params: TableListItem) {
 
 export async function get(params: TableListItem) {
   return request(`/svc/ssp/merchantExtra/${params.merchantId}`, {
+    method: 'GET',
+  });
+}
+
+export async function getCheck(params: TableListItem) {
+  return request(`/svc/ssp/merchantExtra/${params.merchantId}/check`, {
+    method: 'GET',
+  });
+}
+
+export async function saveCheck(params: TableListItem) {
+  return request(`/svc/ssp/merchantExtra/${params.merchantId}/check`, {
     method: 'PUT',
+    data: {
+      ...params,
+    },
   });
 }
 

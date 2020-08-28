@@ -1,3 +1,7 @@
 export default {
-  'risk.control': 'RISK CONTROL',
+  'riskControl.title': 'RISK CONTROL',
+  'merLimit.merchantId': 'Merchant Id',
+  'merLimit.maxTrxCount': 'MAX TRX COUNT',
+  'merLimit.maxTrxAmount' : 'MAX TRX AMOUNT',
+  'merLimit.status' : 'Status',
 };

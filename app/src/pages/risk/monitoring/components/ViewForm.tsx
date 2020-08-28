@@ -48,13 +48,13 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   const renderContent = () => {
     return (
       <>
-        <Form.Item name="riskCode" label={intl.formatMessage({ id: 'riskReport.riskCode' })}>
+        <Form.Item name="riskCode" label={intl.formatMessage({ id: 'riskMonitoring.riskCode' })}>
           <Input disabled />
         </Form.Item>
-        <Form.Item name="riskName" label={intl.formatMessage({ id: 'riskReport.riskName' })}>
+        <Form.Item name="riskName" label={intl.formatMessage({ id: 'riskMonitoring.riskName' })}>
           <Input />
         </Form.Item>
-        <Form.Item name="value" label={intl.formatMessage({ id: 'riskReport.value' })}>
+        <Form.Item name="value" label={intl.formatMessage({ id: 'riskMonitoring.value' })}>
           <Input />
         </Form.Item>
       </>
@@ -65,7 +65,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
     <>
       <Modal
         destroyOnClose
-        title={intl.formatMessage({ id: 'riskReport.updateCompoent' })}
+        title={intl.formatMessage({ id: 'riskMonitoring.updateCompoent' })}
         visible={modalVisible}
         onCancel={() => onCancel()}
         onOk={() => handleSubmit()}

@@ -11,4 +11,7 @@ export default {
   'merAddon.title': 'Merchant Add-On',
   'mer.merAddonName': 'MERCHANT ADD-ON',
   'merAddon.updateCompoent': '修改',
+  'merAddon.check.before' : '修改前',
+  'merAddon.check.after' : '修改后',
+  'merAddon.check.checkState' : '审核状态',
 };

@@ -4,7 +4,7 @@ const routes: IRoute[] = [
   {
     path: '/check/merAddon',
     name: 'merAddonName check',
-    component: './check/merAddon',
+    component: './mer/merAddon',
     locale: 'merAddonCheck.title',
   },
   {
@@ -22,7 +22,7 @@ const routes: IRoute[] = [
   {
     path: '/check/ccpay',
     name: 'ccpay check',
-    component: './check/ccpay',
+    component: './ccpay/mng',
     locale: 'ccpayCheck.title',
   },
   {

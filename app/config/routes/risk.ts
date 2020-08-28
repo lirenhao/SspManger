@@ -5,19 +5,19 @@ const routes: IRoute[] = [
     path: '/risk/control',
     name: 'cup',
     component: './risk/control',
-    locale: 'risk.control',
+    locale: 'riskControl.title',
   },
   {
     path: '/risk/monitoring',
     name: 'monitoring',
     component: './risk/monitoring',
-    locale: 'risk.monitoring',
+    locale: 'riskMonitoring.title',
   },
   {
     path: '/risk/report',
     name: 'report',
     component: './risk/report',
-    locale: 'risk.report',
+    locale: 'riskReport.title',
   },
 ];
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Modal, Input, Select } from 'antd';
 import { useIntl } from 'umi';
-import { TableListItem, StatusEnum } from '../data';
+import { TableListItem, StatusEnum } from '../data.d';
 import { exist } from '../service';
 import formLayout from '../../../../formLayout';
 
@@ -110,11 +110,6 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
       <Form
         {...formLayout}
         form={form}
-        initialValues={{
-          accountBankNo: formVals.accountBankNo,
-          bankName: formVals.bankName,
-          bic: formVals.bic,
-        }}
       >
         {renderContent()}
       </Form>

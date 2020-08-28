@@ -20,9 +20,29 @@ export async function save(params: TableListItem) {
 
 export async function get(params: TableListItem) {
   return request(`/svc/ssp/ccpay/${params.merchantId}`, {
-    method: 'PUT',
+    method: 'GET',
   });
 }
+
+export async function fetchGet(params: TableListItem) {
+  return request(`/svc/ssp/ccpay/${params.merchantId}`,{
+    method:'GET',
+  });
+}
+
+export async function fetchGetCheck(params: TableListItem) {
+  return request(`/svc/ssp/ccpay/${params.merchantId}/check`);
+}
+
+export async function saveCheck(params: TableListItem) {
+  return request(`/svc/ssp/ccpay/${params.merchantId}/check`,{
+    method:'PUT',
+    data: {
+      ...params,
+    },
+  });
+}
+
 
 export async function remove(params: TableListItem) {
   return request(`/svc/ssp/ccpay/${params.merchantId}`, {
@@ -53,6 +73,7 @@ export async function fetchGetAllMer() {
 export async function getTerminal(id: String) {
   return request(`/svc/ssp/terminal/${id}`);
 }
+
 
 // export async function getCountryCode() {
 //   return request('/svc/ssp/countryCode/list', {

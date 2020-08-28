@@ -1,3 +1,6 @@
 export default {
-  'risk.report': 'RISK REPORT',
+  'riskReport.title': 'RISK REPORT',
+  'riskReport.riskDate': 'RISK Date',
+  'riskReport.merchantId': 'Merchant Id',
+  'riskReport.riskCode': 'RISK CODE',
 };

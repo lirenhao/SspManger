@@ -25,4 +25,9 @@ export default {
   'ccpay.title': 'Ccpay Management',
   'ccpay.staticQrc': 'QR CODE',
   'ccpay.updateCompoent': '修改',
+  'ccpayCheck.title': 'Ccpay Information Check',
+  'ccpay.checkCompoent' : '审核',
+  'ccpay.check.before' : '修改前',
+  'ccpay.check.after' : '修改后',
+  'ccpay.merchantIdNecessary':'MerchantId 是必须的',
 };

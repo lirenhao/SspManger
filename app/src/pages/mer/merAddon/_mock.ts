@@ -101,7 +101,9 @@ function countryCode(req: Request, res: Response) {
 export default {
   'GET /svc/ssp/merchantExtra': getAll,
   'PUT /svc/ssp/merchantExtra': save,
-  'PUT /svc/ssp/merchantExtra/:id': getOne,
+  'GET /svc/ssp/merchantExtra/:id': getOne,
+  'GET /svc/ssp/merchantExtra/:id/check': getOne,
+  'PUT /svc/ssp/merchantExtra/:id/check': save,
   'DELETE /svc/ssp/merchantExtra/:id': remove,
   'GET /svc/ssp/merchantExtra/:id/exists': exist,
   'GET /svc/ssp/ccyType/list': ccyType,

@@ -5,7 +5,7 @@ export interface TableListItem {
   checkState?: string;
   checkReason?: string;
   operation?: string;
-  merchant: {
+  merchant?: {
     merchantId?: string;
     merNameChn?: string;
     merNameEng?: string;

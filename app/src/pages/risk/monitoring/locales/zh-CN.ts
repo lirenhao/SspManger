@@ -1,3 +1,6 @@
 export default {
-  'risk.monitoring': 'RISK MONITORING',
+  'riskMonitoring.title': 'RISK MONITORING',
+  'riskMonitoring.riskCode':'Risk Code',
+  'riskMonitoring.riskName':'Risk Name',
+  'riskMonitoring.value':'Value',
 };
