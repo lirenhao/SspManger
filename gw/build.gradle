@@ -133,6 +133,10 @@ task("buildSvc") {
             workingDir "../svc"
             commandLine "mvn", "clean", "package"
         }
+        exec {
+            workingDir "../webSvc"
+            commandLine "gradle", "clean", "bootJar"
+        }
     }
 }
 
@@ -175,6 +179,15 @@ task("copyJar") {
             from '../svc/src/main/resources'
             into '../dist/ssp'
             include('application*', '*.xml')
+        }
+        copy {
+            from '../webSvc/build/libs/web-0.0.1-SNAPSHOT.jar'
+            into '../dist/web'
+        }
+        copy {
+            from '../webSvc/src/main/resources'
+            into '../dist/web'
+            include('*.*')
         }
     }
 }

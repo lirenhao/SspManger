@@ -5,9 +5,9 @@ import { history, RequestConfig, Link } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import { ResponseError } from 'umi-request';
+import logoSvg from '@/assets/logo.svg';
 import { queryCurrent } from './services/user';
 import defaultSettings from '../config/defaultSettings';
-import logoSvg from '@/assets/logo.svg';
 
 export async function getInitialState(): Promise<{
   currentUser?: API.CurrentUser;
@@ -38,7 +38,7 @@ export const layout = ({
     disableContentMargin: false,
     footerRender: () => <Footer />,
     menuHeaderRender: undefined,
-    itemRender: route => (<Link to={route.path}>{route.breadcrumbName}</Link>),
+    itemRender: (route) => <Link to={route.path}>{route.breadcrumbName}</Link>,
     logo: logoSvg,
     ...initialState?.settings,
   };
@@ -72,10 +72,14 @@ const errorHandler = (error: ResponseError) => {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
 
-    notification.error({
-      message: `请求错误 ${status}`,
-      description: `${errorText}[${url.split('?')[0]}]`,
-    });
+    if (status === 401) {
+      window.location.reload();
+    } else {
+      notification.error({
+        message: `请求错误 ${status}`,
+        description: `${errorText}[${url.split('?')[0]}]`,
+      });
+    }
   }
 
   if (!response) {
