@@ -1,5 +1,5 @@
 /* eslint-disable import/no-named-as-default-member */
-import { message, Button } from 'antd';
+import { message, Button, Divider } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -9,7 +9,8 @@ import { PlusOutlined } from '@ant-design/icons';
 import CreateForm from './components/CreateForm';
 import ViewForm from './components/ViewForm';
 import { TableListItem, checkStateEnum, operEnmu, cardAssoEnum, feeTypeEnum } from './data.d';
-import { query, save } from './service';
+import CheckForm from './components/CheckForm';
+import { query, save,get,getCheck,saveCheck } from './service';
 
 /**
  * 添加
@@ -30,27 +31,22 @@ const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
   }
 };
 
-// const OptionArr = {};
+const handleSaveCheck = async (fields: TableListItem, intl: IntlShape) => {
+  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
 
-// Object.keys(data).forEach((key) => {
-//   OptionArr[key] = { text: data[key], status: key };
-// });
+  try {
+    await saveCheck({ ...fields });
+    hide();
+    message.success(intl.formatMessage({ id: 'global.success' }));
+    return true;
+  } catch (error) {
+    hide();
+    message.error(intl.formatMessage({ id: 'global.error' }));
+    return false;
+  }
+};
 
-// const checkStateArr = {};
-// const useCaseArr = {};
-// const operArr = {};
 
-// Object.keys(checkStateEnum).forEach((key) => {
-//   checkStateArr[key] = { text: checkStateEnum[key], status: key };
-// });
-
-// Object.keys(useCaseEnmu).forEach((key) => {
-//   useCaseArr[key] = { text: useCaseEnmu[key], status: key };
-// });
-
-// Object.keys(operEnmu).forEach((key) => {
-//   operArr[key] = { text: operEnmu[key], status: key };
-// });
 
 const TableList: React.FC<{}> = () => {
   const [createModalViewVisible, handleModalViewVisible] = useState<boolean>(false);
@@ -58,6 +54,26 @@ const TableList: React.FC<{}> = () => {
   const [stepFormValues, setStepFormValues] = useState({});
   const intl = useIntl();
   const actionRef = useRef<ActionType>();
+
+  //
+  const [after, setAfter] = React.useState<Partial<TableListItem>>({});
+  const [before, setBefore] = React.useState<Partial<TableListItem>>({});
+  
+  const [isCheck, setIsCheck] = React.useState<boolean>(false);
+
+  const beforeCheck = async (params: TableListItem) => {
+    try {
+      const info = await get(params);
+      const checkInfo = await getCheck(params);
+      setAfter(info);
+      setBefore(checkInfo);
+      setIsCheck(true);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  //
 
   const columns: ProColumns<TableListItem>[] = [
     {
@@ -74,6 +90,14 @@ const TableList: React.FC<{}> = () => {
             }}
           >
             <FormattedMessage id="global.view" />
+          </a>
+          <Divider type="vertical" />
+          <a
+            onClick={() => {
+              beforeCheck(record);
+            }}
+          >
+            <FormattedMessage id="global.check" />
           </a>
         </>
       ),
@@ -211,6 +235,22 @@ const TableList: React.FC<{}> = () => {
           const success = await handleSaveAndUpdate(value, intl);
           if (success) {
             handleModalViewVisible(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
+        }}
+      />
+      <CheckForm
+        // values={stepFormValues}
+        onCancel={() => setIsCheck(false)}
+        modalVisible={isCheck}
+        before = {before}
+        after = {after}
+        onSubmit={async (value) => {
+          const success = await handleSaveCheck(value,intl);
+          if (success) {
+            setIsCheck(false);
             if (actionRef.current) {
               actionRef.current.reload();
             }

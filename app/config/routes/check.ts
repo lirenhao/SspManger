@@ -3,31 +3,31 @@ import { IRoute } from 'umi';
 const routes: IRoute[] = [
   {
     path: '/check/merAddon',
-    name: 'merAddonName check',
+    name: '/check/merAddon',
     component: './mer/merAddon',
     locale: 'merAddonCheck.title',
   },
   {
     path: '/check/merQrc',
-    name: 'merQrc check',
-    component: './check/merQrc',
+    name: '/check/merQrc',
+    component: './mer/merQrc',
     locale: 'merQrcCheck.title',
   },
   {
     path: '/check/merMdr',
-    name: 'merMdr check',
-    component: './check/merMdr',
+    name: '/check/merMdr',
+    component: './mer/merMdr',
     locale: 'merMdrCheck.title',
   },
   {
     path: '/check/ccpay',
-    name: 'ccpay check',
+    name: '/check/ccpay',
     component: './ccpay/mng',
     locale: 'ccpayCheck.title',
   },
   {
     path: '/check/appUser',
-    name: 'appUser check',
+    name: '/check/appUser',
     component: './app/user/check',
     locale: 'appUser.check.title',
   },

@@ -129,7 +129,9 @@ function exist(req: Request, res: Response) {
 export default {
   'GET /svc/ssp/merchantFee': getAll,
   'PUT /svc/ssp/merchantFee': save,
-  'PUT /svc/ssp/merchantFee/:id': getOne,
+  'GET /svc/ssp/merchantFee/:id': getOne,
+  'GET /svc/ssp/merchantFee/:id/check': getOne,
+  'PUT /svc/ssp/merchantFee/:id/check': save,
   'DELETE /svc/ssp/merchantFee/:id': remove,
   'GET /svc/ssp/merchantFee/:id/exists': exist,
   // 'GET /svc/ssp/ccyType/list' : ccyType,

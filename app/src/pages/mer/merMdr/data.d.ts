@@ -11,7 +11,7 @@ export interface TableListItem {
   closeDate?: string;
   checkState?: string;
   operation?: string;
-  merchant: {
+  merchant?: {
     merchantId?: string;
     merNameChn?: string;
     merNameEng?: string;
