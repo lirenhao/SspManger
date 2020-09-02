@@ -39,8 +39,3 @@ yada:
   security:
     defaultPwd: 111111
 #yada.db.mongo.uri: 'mongodb://localhost/yada_auth?replicaSet=rs'
-
-spring:
-  thymeleaf:
-    prefix: file:src/main/resources/templates/
-    cache: false
