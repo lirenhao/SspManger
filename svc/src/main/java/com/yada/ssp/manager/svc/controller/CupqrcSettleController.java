@@ -11,7 +11,6 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -67,8 +66,8 @@ public class CupqrcSettleController {
     /**
      * TODO 查询时默认日期是昨天
      */
-    @RequestMapping("/handle")
-    public Page<CupqrcSettle> handleList(Model model, @RequestAttribute("auth") Auth auth,
+    @GetMapping("/handle")
+    public Page<CupqrcSettle> handleList(@RequestAttribute("auth") Auth auth,
                                          @ModelAttribute CupqrcSettleQuery query, @PageableDefault Pageable pageable) {
         query.setOrgId(auth.getOrgId());
         query.setStatus("2");
