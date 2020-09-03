@@ -3,9 +3,9 @@ export interface TableListItem {
   pwd1?: string;
   pwd2?: string;
   checkValue?: string;
-  lmkzmk?: string;
-  org: {
-    name: string;
+  zmkLmk?: string;
+  org?: {
+    name?: string;
   };
 }
 

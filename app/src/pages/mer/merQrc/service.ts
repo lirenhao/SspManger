@@ -56,6 +56,8 @@ export async function fetchOrgTree() {
   return request('/svc/ssp/org/tree');
 }
 
+
+
 export async function getTerminal(id: String) {
   return request(`/svc/ssp/terminal/${id}`);
 }

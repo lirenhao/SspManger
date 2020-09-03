@@ -103,8 +103,8 @@ const TableList: React.FC<{}> = () => {
       hideInSearch: true,
     },
     {
-      title: intl.formatMessage({ id: 'orgzmk.lmkzmk' }),
-      dataIndex: 'lmkzmk',
+      title: intl.formatMessage({ id: 'orgzmk.zmkLmk' }),
+      dataIndex: 'zmkLmk',
       hideInSearch: true,
     },
     {

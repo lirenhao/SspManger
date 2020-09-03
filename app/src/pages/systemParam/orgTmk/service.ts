@@ -10,10 +10,9 @@ export async function query(params?: TableListParams) {
 
 export async function save(params: TableListItem) {
   return request('/svc/ssp/pospOrgTmk', {
-    method: 'PUT',
+    method: 'POST',
     data: {
       ...params,
-      method: 'put',
     },
   });
 }
@@ -25,7 +24,7 @@ export async function get(params: TableListItem) {
 }
 
 export async function remove(params: TableListItem) {
-  return request(`/svc/ssp/pospOrgTmk/${params.orgId.toString()}`, {
+  return request(`/svc/ssp/pospOrgTmk/${params.orgId.toString()}/${params.tmkZmk}`, {
     method: 'DELETE',
   });
 }

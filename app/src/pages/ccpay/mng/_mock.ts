@@ -95,18 +95,23 @@ function exist(req: Request, res: Response) {
 }
 
 function merchant(req: Request, res: Response) {
-  res.send([
-    {
-      merchantId: 'string',
-      merNameChn: 'string1',
-      merNameEng: 'string',
-    },
-    {
-      merchantId: 'string11',
-      merNameChn: 'string22',
-      merNameEng: 'string33',
-    },
-  ]);
+  const result = {
+    content:[
+      {
+        merchantId: 'string',
+        merNameChn: 'string1',
+        merNameEng: 'string',
+      },
+      {
+        merchantId: 'string11',
+        merNameChn: 'string22',
+        merNameEng: 'string33',
+      },
+    ]
+  }
+
+
+  res.send(result);
 }
 
 // function ccyType(req: Request, res: Response) {

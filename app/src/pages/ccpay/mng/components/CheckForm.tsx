@@ -158,11 +158,11 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
         <Col span={8}>
         <Form.Item
               name="checkState"
-              label={intl.formatMessage({ id: 'ccpay.check.checkState' })}
+              label={intl.formatMessage({ id: 'ccpay.checkState' })}
               rules={[
                 {
                   required: true,
-                  message: intl.formatMessage({ id: 'ccpay.check.checkState.required' }),
+                  message: intl.formatMessage({ id: 'ccpay.checkState.required' }),
                 }
               ]}
             >

@@ -58,8 +58,8 @@ public class ManualSettleController {
     }
 
     @PutMapping("/{lsId}/check")
-    public void saveCheck(@PathVariable String lsId, String checkReason, String state) {
-        manualSettleService.check(lsId, checkReason, state);
+    public void saveCheck(@PathVariable String lsId, String checkReason, String checkState) {
+        manualSettleService.check(lsId, checkReason, checkState);
     }
 
     @GetMapping("/{lsId}/check")

@@ -22,9 +22,6 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
     orgId: '',
     tmkZmk: '',
     tmkWeb: '',
-    org: {
-      name: '',
-    },
   });
 
   const [form] = Form.useForm();
@@ -78,7 +75,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
         </Form.Item>
 
         <Form.Item
-          name="pwd1"
+          name="tmkZmk"
           rules={[
             {
               required: true,
@@ -97,13 +94,13 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
               },
             },
           ]}
-          label={intl.formatMessage({ id: 'orgtmk.pwd1' })}
+          label={intl.formatMessage({ id: 'orgtmk.tmkZmk' })}
         >
           <Input.TextArea rows={2} maxLength={48} />
         </Form.Item>
 
         <Form.Item
-          name="pwd2"
+          name="tmkWeb"
           rules={[
             {
               required: true,
@@ -122,7 +119,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
               },
             },
           ]}
-          label={intl.formatMessage({ id: 'orgtmk.pwd1' })}
+          label={intl.formatMessage({ id: 'orgtmk.tmkWeb' })}
         >
           <Input.TextArea rows={2} maxLength={48} />
         </Form.Item>

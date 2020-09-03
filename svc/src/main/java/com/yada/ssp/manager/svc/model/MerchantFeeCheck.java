@@ -38,9 +38,12 @@ public class MerchantFeeCheck {
     @Column(nullable = false, length = 32)
     private String lsId;
     //商户号
+    @Column
+    private String merchantId;
+    //商户号
     @JsonIgnore
     @OneToOne(targetEntity = Merchant.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "merchantId", referencedColumnName = "merchantId")
+    @JoinColumn(name = "merchantId", referencedColumnName = "merchantId", insertable = false, updatable = false)
     private Merchant merchant;
     //交易量或交易金额
     @Column
@@ -178,5 +181,12 @@ public class MerchantFeeCheck {
 
     public void setOperation(String operation) {
         this.operation = operation;
+    }
+    public String getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(String merchantId) {
+        this.merchantId = merchantId;
     }
 }

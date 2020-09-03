@@ -34,9 +34,33 @@ export async function exist(id: String) {
 }
 
 export async function download(params?: TableListParams) {
-  return request('/svc/ssp/cupAcomn/download', {
+  let queryPara='';
+  if(params){
+    Object.keys(params).forEach( key=>{
+      queryPara = `${queryPara  }&${  key  }=${  params[key]}`;
+    })
+  }
+  const fileName = 'CUP_ACOMN.xls';
+  // const query = `lsId=${params?.lsId}&merchantId=${params?.merchantId}&settleDate=${params?.settleDate}&page=${params?.page}`;
+  fetch(`/svc/ssp/cupAcomn/download?a=1&${queryPara}`, {
     method: 'GET',
-    params,
+    credentials: 'include',
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    })
+  }).then((response) => {
+    response.blob().then(blob => {
+      const aLink = document.createElement('a');
+      document.body.appendChild(aLink);
+      aLink.style.display='none';
+      const objectUrl = window.URL.createObjectURL(blob);
+      aLink.href = objectUrl;
+      aLink.download = fileName;
+      aLink.click();
+      document.body.removeChild(aLink);
+    });
+  }).catch((error) => {
+    console.error(error);
   });
 }
 export async function handle(params?: TableListParams) {

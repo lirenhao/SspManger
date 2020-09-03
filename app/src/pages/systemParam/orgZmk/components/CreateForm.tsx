@@ -23,9 +23,6 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
     orgId: '',
     pwd1: '',
     pwd2: '',
-    org: {
-      name: '',
-    },
   });
 
   const [form] = Form.useForm();

@@ -11,12 +11,11 @@ export default {
   'orgtmk.pwd2Format': 'TMKWEB格式错误',
   'orgtmk.pwd2Length': 'TMKWEB长度需要达到48位',
 
-  'orgtmk.lmkzmk': 'enc zmk',
-  'orgtmk.checkValue': 'check value',
+  'orgtmk.terminalId': '终端ID',
 
   'orgtmk.createCompoent': '新建TMK',
   'orgtmk.updateCompoent': '修改TMK',
   'orgtmk.delete': '删除',
   'orgtmk.create': '增加',
-  'menu.orgTmk': 'organization tmk',
+  'orgtmk.title': 'Posp Org TMK',
 };

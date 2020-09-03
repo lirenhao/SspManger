@@ -4,8 +4,8 @@ export interface TableListItem {
   tmkWeb?: string;
   terminalId?: string;
   lmkzmk?: string;
-  org: {
-    name: string;
+  org?: {
+    name?: string;
   };
 }
 

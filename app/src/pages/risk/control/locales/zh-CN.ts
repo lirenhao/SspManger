@@ -4,4 +4,5 @@ export default {
   'merLimit.maxTrxCount': 'MAX TRX COUNT',
   'merLimit.maxTrxAmount' : 'MAX TRX AMOUNT',
   'merLimit.status' : 'Status',
+  'merLimit.createCompoent' : '新增',
 };

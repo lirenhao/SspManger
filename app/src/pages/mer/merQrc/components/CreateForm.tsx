@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Form, Modal, Select, TreeSelect, Input } from 'antd';
+import { Form, Modal, Select, Input } from 'antd';
 import { FormInstance } from 'antd/lib/form';
-import { DataNode } from 'antd/lib/tree';
 import { useIntl } from 'umi';
 import { TableListItem, useCaseEnmu, cardAssoEnum } from '../data.d';
 import formLayout from '../../../../formLayout';
-import { getCcyType, fetchOrgTree, getTerminal } from '../service';
+import { getCcyType, getTerminal } from '../service';
 
 interface CreateFormProps {
   modalVisible: boolean;
@@ -23,7 +22,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   const { modalVisible, onCancel, onSubmit } = props;
   const ccyArray: { ccyType: string; ccyName: string }[] = [];
   const [ccyData, setCcy] = useState(ccyArray);
-  const [orgTree, setOrgTree] = useState<DataNode[]>([]);
+  // const [orgTree, setOrgTree] = useState<DataNode[]>([]);
   const terminalsArray: { terminalId: string }[] = [];
   const [terminals, setTerminals] = useState(terminalsArray);
   const formVals = {
@@ -58,9 +57,9 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
     getCcyType().then(setCcy);
   }, []);
 
-  React.useEffect(() => {
-    fetchOrgTree().then(setOrgTree);
-  }, []);
+  // React.useEffect(() => {
+  //   fetchOrgTree().then(setOrgTree);
+  // }, []);
 
   const renderUseCaseOption = () => {
     const { Option } = Select;
@@ -108,18 +107,18 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   };
 
   const handleMerChange = (
-    value: string,
+    e: React.FocusEvent<HTMLInputElement>,
     thisForm: FormInstance,
     onChange?: (value: any) => void,
   ) => {
-    if (onChange) onChange(value);
-    if (value) {
+    if (onChange) onChange(e.target.value);
+    if (e.target.value) {
       thisForm.setFieldsValue({
         ...thisForm.getFieldsValue(),
         terminalId: undefined,
       });
 
-      getTerminal(value).then(setTerminals);
+      getTerminal(e.target.value).then(setTerminals);
     }
   };
 
@@ -129,23 +128,13 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
         <Form.Item
           name="merchantId"
           label={intl.formatMessage({ id: 'merQrc.merchantId' })}
-          // rules={[
-          //   {
-          //     validator: (_, value:any) =>{
-          //       if(value === ''){
-          //         Promise.resolve()
-          //       }else{
-          //         setOrgSelect(value)
-          //         Promise.resolve()
-          //       }
-          //   },}
-          // ]}
         >
-          <TreeSelect
+          {/* <TreeSelect
             treeDefaultExpandAll
             treeData={orgTree}
             onChange={(value: string) => handleMerChange(value, form, undefined)}
-          />
+          /> */}
+          <Input onBlur={(e) => handleMerChange(e, form, undefined)}/>
         </Form.Item>
 
         <Form.Item name="terminalId" label={intl.formatMessage({ id: 'merQrc.terminalId' })}>

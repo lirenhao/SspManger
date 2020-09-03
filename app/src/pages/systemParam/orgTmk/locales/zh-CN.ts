@@ -1,5 +1,5 @@
 export default {
-  'orgtmk.orgId': '机构',
+  'orgtmk.orgId': '机构 ID',
   'orgtmk.orgIdNecessary': '机构必须选择',
   'orgtmk.pwd1': 'TMKPOS',
   'orgtmk.pwd1Necessary': 'TMKPOS是必须的',
@@ -17,5 +17,5 @@ export default {
   'orgtmk.updateCompoent': '修改TMK',
   'orgtmk.delete': '删除',
   'orgtmk.create': '增加',
-  'orgtmk.title': 'Posp Org TMK',
+  'orgtmk.title': 'TMK管理',
 };

@@ -137,7 +137,6 @@ export default {
   'PUT /svc/ssp/ccpay/:id': getOne,
   'DELETE /svc/ssp/ccpay/:id': remove,
   'GET /svc/ssp/ccpay/:id/exists': exist,
-  'GET /svc/ssp/merchant': merchant,
   // 'GET /svc/ssp/ccyType/list' : ccyType,
   // 'GET /svc/ssp/countryCode/list' : countryCode,
   // 'GET /svc/ssp/org/tree' : orgTree,

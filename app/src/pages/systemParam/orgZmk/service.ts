@@ -10,10 +10,9 @@ export async function query(params?: TableListParams) {
 
 export async function save(params: TableListItem) {
   return request('/svc/ssp/pospOrgZmk', {
-    method: 'PUT',
+    method: 'POST',
     data: {
-      ...params,
-      method: 'put',
+      ...params
     },
   });
 }

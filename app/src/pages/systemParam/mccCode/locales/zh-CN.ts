@@ -6,5 +6,5 @@ export default {
   'mcc.updateCompoent': '修改mcc',
   'mcc.delete': '删除',
   'mcc.create': '增加',
-  'mcc.title': 'Mcc Code Management',
+  'mcc.title': 'Mcc管理',
 };

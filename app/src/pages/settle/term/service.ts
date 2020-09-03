@@ -17,9 +17,39 @@ export async function save(params: TableListItem) {
   });
 }
 
+// export async function download(params?: TableListParams) {
+//   return request('/svc/ssp/termCount/download', {
+//     method: 'GET',
+//     params,
+//   });
+// }
+
 export async function download(params?: TableListParams) {
-  return request('/svc/ssp/termCount/download', {
+  let queryPara='';
+  if(params){
+    Object.keys(params).forEach( key=>{
+      queryPara = `${queryPara  }&${  key  }=${  params[key]}`;
+    })
+  }
+  const fileName = 'merSettle.xls';
+  fetch(`/svc/ssp/merSettle/download?a=1&${queryPara}`, {
     method: 'GET',
-    params,
+    credentials: 'include',
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    })
+  }).then((response) => {
+    response.blob().then(blob => {
+      const aLink = document.createElement('a');
+      document.body.appendChild(aLink);
+      aLink.style.display='none';
+      const objectUrl = window.URL.createObjectURL(blob);
+      aLink.href = objectUrl;
+      aLink.download = fileName;
+      aLink.click();
+      document.body.removeChild(aLink);
+    });
+  }).catch((error) => {
+    console.error(error);
   });
 }

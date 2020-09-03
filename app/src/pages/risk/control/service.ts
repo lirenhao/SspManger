@@ -33,3 +33,9 @@ export async function remove(params: TableListItem) {
 export async function exist(id: String) {
   return request(`/svc/ssp/merLimit/${id}/exists`);
 }
+
+export async function fetchGetAllMer() {
+  return request('/svc/ssp/merchant', {
+    method: 'GET',
+  });
+}

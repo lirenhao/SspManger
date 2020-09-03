@@ -176,7 +176,7 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
   return (
     <Modal
       destroyOnClose
-      title={intl.formatMessage({ id: 'terminal.updateCompoent' })}
+      title={intl.formatMessage({ id: 'terminal.viewCompoent' })}
       visible={modalVisible}
       onCancel={() => onCancel()}
       onOk={() => onCancel()}

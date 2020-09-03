@@ -211,12 +211,12 @@ const TableList: React.FC<{}> = () => {
 
       <CheckForm
         values={stepFormValues}
-        onCancel={() => handleModalViewVisible(false)}
+        onCancel={() => handleModalCheckVisible(false)}
         modalVisible={checkVisible}
         onSubmit={async (value) => {
           const success = await handleCheck(value, intl);
           if (success) {
-            handleModalViewVisible(false);
+            handleModalCheckVisible(false);
             if (actionRef.current) {
               actionRef.current.reload();
             }

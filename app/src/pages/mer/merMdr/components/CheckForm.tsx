@@ -126,7 +126,7 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: intl.formatMessage({ id: 'merAddon.check.checkState.required' }),
+                  message: intl.formatMessage({ id: 'merMdr.checkStateRequired' }),
                 }
               ]}
             >

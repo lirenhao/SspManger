@@ -54,7 +54,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
             },
           ]}
         >
-          <Input />
+          <Input maxLength={2}/>
         </Form.Item>
         <Form.Item
           name="codeName"

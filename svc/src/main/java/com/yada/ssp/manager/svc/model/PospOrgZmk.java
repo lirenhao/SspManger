@@ -27,7 +27,6 @@ public class PospOrgZmk {
     @Transient
     private String pwd2;
 
-    @JsonIgnore
     @OneToOne(targetEntity = Org.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "orgId", referencedColumnName = "ORG_ID", insertable=false, updatable=false)
     private Org org;

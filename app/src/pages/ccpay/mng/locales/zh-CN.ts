@@ -14,7 +14,6 @@ export default {
   'ccpay.feeCreate': 'MDR RATES(eg: 1=0.1% 10=1% 100=10%)',
   'ccpay.feeCreateNecessary': '费率是必须的',
   'ccy.createCompoent': '创建',
-  'ccpay.checkState': '检查状态',
   'ccpay.checkReason': '检查原因',
   'ccpay.operation': '操作状态',
   'ccpay.cName': '中文名称',
@@ -30,4 +29,6 @@ export default {
   'ccpay.check.before' : '修改前',
   'ccpay.check.after' : '修改后',
   'ccpay.merchantIdNecessary':'MerchantId 是必须的',
+  'ccpay.checkState' : '检查状态',
+  'ccpay.checkState.required' : '检查状态是必选的',
 };

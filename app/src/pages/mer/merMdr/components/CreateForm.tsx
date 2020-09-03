@@ -50,8 +50,8 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   // }, []);
 
   const [merchants, setMerchants] = React.useState<
-    { merchantId: ''; merNameChn: ''; merNameEng: '' }[]
-  >([]);
+    {content:{ merchantId: ''; merNameChn: ''; merNameEng: '' }[]}
+  >({content:[]});
 
   React.useEffect(() => {
     fetchGetAllMer().then(setMerchants);
@@ -60,11 +60,10 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   const renderMerChantOption = () => {
     const { Option } = Select;
     const OptionArr: JSX.Element[] = [];
-
-    merchants.forEach((element) => {
+    merchants.content.forEach((element) => {
       OptionArr.push(
         <Option key={element.merchantId} value={element.merchantId}>
-          {element.merNameChn}
+          {element.merchantId}-{element.merNameEng}
         </Option>,
       );
     });
@@ -109,7 +108,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
 
   const handleSubmit = async () => {
     const fieldsValue = await form.validateFields();
-    onSubmit({ ...{ merchant: {} }, ...fieldsValue });
+    onSubmit({ ...fieldsValue,...{startDate:form.getFieldValue('startDate').format('YYYYMMDD'),checkState:'0',merchant:{merchantId:form.getFieldValue('merchantId')}} });
   };
 
   const renderContent = () => {

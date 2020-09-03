@@ -48,9 +48,15 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
               required: true,
               message: intl.formatMessage({ id: 'currency.ccyTypeNecessary' }),
             },
+            {
+              required: true,
+              message: intl.formatMessage({ id: 'currency.ccyTypeNecessary' }),
+            },
 
             {
-              validator: (_, value) =>
+              validator: (_, value:string) =>
+
+              
                 value === ''
                   ? Promise.resolve()
                   : existCcy(value).then((result: boolean) =>
@@ -61,7 +67,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
             },
           ]}
         >
-          <Input />
+          <Input maxLength={3}/>
         </Form.Item>
         <Form.Item
           name="ccyName"

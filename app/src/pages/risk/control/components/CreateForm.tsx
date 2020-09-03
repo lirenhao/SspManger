@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Form, Modal, Input, Select } from 'antd';
 import { useIntl } from 'umi';
 import { TableListItem, StatusEnum } from '../data.d';
-import { exist } from '../service';
 import formLayout from '../../../../formLayout';
+
+import { fetchGetAllMer } from '../service';
 
 interface CreateFormProps {
   modalVisible: boolean;
@@ -27,9 +28,32 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
 
   const [form] = Form.useForm();
 
+  const [merchants, setMerchants] = React.useState<
+  {content:{ merchantId: ''; merNameChn: ''; merNameEng: '' }[]}
+>({content:[]});
+
+React.useEffect(() => {
+  fetchGetAllMer().then(setMerchants);
+}, []);
+
   const handleSubmit = async () => {
     const fieldsValue = await form.validateFields();
     onSubmit({ ...formVals, ...fieldsValue });
+  };
+
+  const renderMerChantOption = () => {
+    const { Option } = Select;
+    const OptionArr: JSX.Element[] = [];
+
+    merchants.content.forEach((element) => {
+      OptionArr.push(
+        <Option key={element.merchantId} value={element.merchantId}>
+          {element.merchantId}-{element.merNameEng}
+        </Option>,
+      );
+    });
+
+    return OptionArr;
   };
 
   const renderStatusOption = () => {
@@ -57,19 +81,9 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
               required: true,
               message: intl.formatMessage({ id: 'merLimit.merchantIdNecessary' }),
             },
-            {
-              validator: (_, value) =>
-                value === ''
-                  ? Promise.resolve()
-                  : exist(value).then((result: boolean) =>
-                      result
-                        ? Promise.reject(intl.formatMessage({ id: 'global.createExists' }))
-                        : Promise.resolve(),
-                    ),
-            },
           ]}
         >
-          <Input />
+        <Select>{renderMerChantOption()}</Select>
         </Form.Item>
         <Form.Item
           name="maxTrxCount"

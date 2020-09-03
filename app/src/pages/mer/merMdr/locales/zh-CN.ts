@@ -20,6 +20,7 @@ export default {
   'merMdr.startDate': 'EFFECTIVE DATE',
 
   'merMdr.checkState': '检查状态',
+  'merMdr.checkStateRequired': '检查状态是必选的',
   'merMdr.checkReason': '检查原因',
   'merMdr.operation': '操作状态',
   'merMdr.cName': '中文名称',

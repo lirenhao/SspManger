@@ -1,7 +1,7 @@
 import React from 'react';
-import { Form, Modal, Input } from 'antd';
+import { Form, Modal, Input,Select } from 'antd';
 import { useIntl } from 'umi';
-import { TableListItem } from '../data';
+import { TableListItem,StatusEnum } from '../data.d';
 import formLayout from '../../../../formLayout';
 
 interface CreateFormProps {
@@ -23,58 +23,62 @@ export interface UpdateFormState {
 const CreateForm: React.FC<CreateFormProps> = (props) => {
   const intl = useIntl();
   const { modalVisible, onCancel, onSubmit } = props;
-  const formVals = {
-    accountBankNo: props.values.accountBankNo ? props.values.accountBankNo : '',
-    bankName: props.values.bankName ? props.values.bankName : '',
-    bic: props.values.bic ? props.values.bic : '',
-  };
 
   const [form] = Form.useForm();
-  form.setFieldsValue(formVals);
+  form.setFieldsValue(props.values);
   const handleSubmit = async () => {
     const fieldsValue = await form.validateFields();
-    onSubmit({ ...formVals, ...fieldsValue });
+    onSubmit({...{merchantId:'',maxTrxCount:'',maxTrxAmount:'',status:''},...props.values, ...fieldsValue });
+  };
+
+  const renderStatusOption = () => {
+    const { Option } = Select;
+    const OptionArr: JSX.Element[] = [];
+    Object.keys(StatusEnum).forEach((key) => {
+      OptionArr.push(
+        <Option key={key} value={key}>
+          {' '}
+          {StatusEnum[key]}{' '}
+        </Option>,
+      );
+    });
+    return OptionArr;
   };
 
   const renderContent = () => {
     return (
       <>
         <Form.Item
-          name="accountBankNo"
-          label={intl.formatMessage({ id: 'banks.accountBankNo' })}
-          rules={[
-            {
-              required: true,
-              message: intl.formatMessage({ id: 'banks.banknameNecessary' }),
-            },
-          ]}
+          name="merchantId"
+          label={intl.formatMessage({ id: 'merLimit.merchantId' })}
         >
           <Input disabled />
         </Form.Item>
         <Form.Item
-          name="bankName"
+          name="maxTrxCount"
           rules={[
             {
               required: true,
-              message: intl.formatMessage({ id: 'banks.banknameNecessary' }),
+              message: intl.formatMessage({ id: 'merLimit.maxTrxCount' }),
             },
           ]}
-          label={intl.formatMessage({ id: 'banks.bankname' })}
+          label={intl.formatMessage({ id: 'merLimit.maxTrxCount' })}
         >
           <Input />
         </Form.Item>
-        <Form.Item
-          name="bic"
-          label={intl.formatMessage({ id: 'banks.bic' })}
-          rules={[
-            {
-              required: true,
-              message: intl.formatMessage({ id: 'banks.bicNecessary' }),
-            },
-          ]}
-        >
+        <Form.Item name="maxTrxAmount" label={intl.formatMessage({ id: 'merLimit.maxTrxAmount' })}>
           <Input />
         </Form.Item>
+        <Form.Item name="status" label={intl.formatMessage({ id: 'merLimit.status' })}>
+          <Select
+            showSearch
+            style={{ width: 200 }}
+            placeholder={intl.formatMessage({ id: 'merLimit.status' })}
+          >
+            {renderStatusOption()}
+          </Select>
+        </Form.Item>
+
       </>
     );
   };
@@ -90,11 +94,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
       <Form
         {...formLayout}
         form={form}
-        initialValues={{
-          accountBankNo: formVals.accountBankNo,
-          bankName: formVals.bankName,
-          bic: formVals.bic,
-        }}
+
       >
         {renderContent()}
       </Form>

@@ -117,8 +117,6 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
         onFinish={values => {
           onSubmit({...{merchantId:''},...afterFormVals,...values})
       }
-    
-        // onSubmit(props.after.merchantId || '', values as CheckData)
     }
       >
       <Row>
