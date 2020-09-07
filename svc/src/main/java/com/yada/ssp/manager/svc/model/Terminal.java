@@ -16,50 +16,16 @@ import java.io.Serializable;
 @IdClass(TerminalPK.class)
 public class Terminal implements Serializable {
 
-    public static final String TABLE_ALIAS = "终端信息";
-    public static final String ALIAS_TERMINAL_ID = "TERMINAL ID";
-    public static final String ALIAS_MERCHANT_ID = "MERCHANT ID";
-    public static final String ALIAS_ACQ_ORG_ID = "ACQUIRER CODE";
-    public static final String ALIAS_TERMINAL_TYPE = "TERMINAL TYPE";
-    public static final String ALIAS_STATUS = "TERMINAL STATUS";
-    public static final String ALIAS_ATTRIBUTE = "POS TERMINAL PROPERTIES";
-    public static final String ALIAS_WILDCARD_FLAG = "CARD ASSOCIATION ACCEPTED";
-    public static final String ALIAS_TRAN_CTL = "TERMINAL FEATURES";
-    public static final String ALIAS_SIGN_FLAG = "TERMINAL PARAMETERS STATUS";
-    public static final String ALIAS_BATCH_NO = "TERMINAL BATCH NUMBER";
-    public static final String ALIAS_TERMINAL_PARAM = "TERMINAL PARAMETERS";
-    public static final String ALIAS_TMK_ZMK = "TERMINAL TMK KEYS";
-    public static final String ALIAS_TERMINAL_BRAND = "TERMINAL BRAND";
-    public static final String ALIAS_TERMINAL_MODEL = "TERMINAL SERIAL NUMBER";
-    public static final String ALIAS_LINE_CONDITION = "CONNECTION STATUS";
-    public static final String ALIAS_INSTALL_ADDRESS = "INSTALLATION ADDRESS";
-    public static final String ALIAS_INSTALL_DATE = "INSTALLATION DATE";
-    public static final String ALIAS_PERSON = "CONTACT PERSON";
-    public static final String ALIAS_TELEPHONE = "PHONE NO.";
-    public static final String ALIAS_COUNTER_NAME = "OUTLET NAME";
-    public static final String ALIAS_COUNTER_PHONE = "OUTLET CONTACT NUMBER";
-    public static final String ALIAS_TERMINAL_DESC = "TERMINAL DESCRIPTION";
-    public static final String ALIAS_AREA_CODE = "AREA CODE";
-    public static final String ALIAS_TIME_ZONE = "TIME";
-    public static final String ALIAS_HIS_INSTALL_ADDRESS = "HISTORICAL INSTALLED ADDRESS";
-    public static final String ALIAS_RECODE_STAT = "RECORD STATUS";
-    public static final String ALIAS_LASTOPER_FLAG = "FINAL OPERATION FLAG";
-    public static final String ALIAS_MODIFY_OPER = "MODIFIED USER IDENTITY";
-    public static final String ALIAS_MODIFY_DATE = "MODIFIED TIME";
-    public static final String ALIAS_CREATE_DATE = "CREATION TIME";
-
     //终端号
     @Id
     @Column(nullable = false)
     private String terminalId;
     //商户号
     @Id
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "merchantId", referencedColumnName = "merchantId")
     private Merchant merchant;
     //收单机构代码
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ACQ_ORG_ID", referencedColumnName = "ACQ_ORG_ID")
     private Org org;
