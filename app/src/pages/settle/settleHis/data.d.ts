@@ -9,8 +9,6 @@ export interface TableListItem {
   accountName?: string;
   bicCode?: string;
   accountBankName?: string;
-  tranCount?: string;
-  tranAmt?: string;
   fee?: string;
   settleAmt?: string;
   merchant: {
@@ -35,7 +33,7 @@ export interface TableListData {
 
 export interface TableListParams {
   merchantId?: string;
-  settleDate?: string;
+  settleDate?: string[];
   lsId?: string;
   size?: number;
   page?: number;

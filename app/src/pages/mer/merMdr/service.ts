@@ -19,26 +19,26 @@ export async function save(params: TableListItem) {
 }
 
 export async function get(params: TableListItem) {
-  return request(`/svc/ssp/merchantFee/${params.merchantId}`, {
+  return request(`/svc/ssp/merchantFee/${params.lsId}`, {
     method: 'GET',
   });
 }
 
 export async function getCheck(params: TableListItem) {
-  return request(`/svc/ssp/merchantFee/${params.merchantId}/check`, {
+  return request(`/svc/ssp/merchantFee/${params.lsId}/check`, {
     method: 'GET',
   });
 }
 
 
 export async function saveCheck(params: TableListItem) {
-  return request(`/svc/ssp/merchantFee/${params.merchantId}/check`, {
+  return request(`/svc/ssp/merchantFee/${params.lsId}/check`, {
     method: 'PUT',
   });
 }
 
 export async function remove(params: TableListItem) {
-  return request(`/svc/ssp/merchantFee/${params.merchantId}`, {
+  return request(`/svc/ssp/merchantFee/${params.lsId}`, {
     method: 'DELETE',
   });
 }
@@ -62,7 +62,7 @@ export async function getTerminal(id: String) {
 }
 
 export async function fetchGetAllMer() {
-  return request('/svc/ssp/merchant', {
+  return request('/svc/ssp/merchant/orgId', {
     method: 'GET',
   });
 }

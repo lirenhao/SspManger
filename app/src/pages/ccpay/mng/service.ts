@@ -65,7 +65,7 @@ export async function getCcyType() {
 // }
 
 export async function fetchGetAllMer() {
-  return request('/svc/ssp/merchant', {
+  return request('/svc/ssp/merchant/orgId', {
     method: 'GET',
   });
 }

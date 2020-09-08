@@ -5,6 +5,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl } from 'umi';
 import { DataNode } from 'antd/lib/tree';
+import moment from 'moment';
 
 import { TableListItem } from './data.d';
 import { query, getCcyType, fetchOrgTree } from './service';
@@ -50,6 +51,9 @@ const TableList: React.FC<{}> = () => {
     ccyArr[element.ccyType] = { text: element.ccyName, status: element.ccyType };
   });
 
+  const year = moment().format('YYYY').toString();
+
+
   const columns: ProColumns<TableListItem>[] = [
     {
       title: intl.formatMessage({ id: 'hq.orgId', defaultMessage: '' }),
@@ -70,7 +74,17 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'month',
       hideInSearch: true,
     },
-
+    {
+      title: intl.formatMessage({ id: 'hq.month' }),
+      dataIndex: 'month',
+      hideInSearch: true,
+    },
+    {
+      title: intl.formatMessage({ id: 'hq.year' }),
+      dataIndex: 'year',
+      initialValue: year,
+      hideInTable: true,
+    },
     {
       title: intl.formatMessage({ id: 'hq.merNum' }),
       dataIndex: 'merNum',

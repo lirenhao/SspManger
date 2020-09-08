@@ -4,7 +4,7 @@ import { TableListParams, TableListItem } from './data.d';
 export async function query(params?: TableListParams) {
   return request('/svc/ssp/cupqrcSettle', {
     method: 'GET',
-    params,
+    params: {...params,...{settleDate:params?.settleDate?.replaceAll('-','')}}
   });
 }
 

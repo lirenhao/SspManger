@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Modal, Input } from 'antd';
 import { useIntl } from 'umi';
-import { TableListItem, cardAssoEnum, checkStateEnum, operEnmu, useCaseEnmu } from '../data.d';
+import { TableListItem } from '../data.d';
 import formLayout from '../../../../formLayout';
 
 interface UpdateFormProps {
@@ -19,29 +19,11 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
   const intl = useIntl();
   const { modalVisible, onCancel } = props;
 
-  const formVals = {
-    merchantId: props.values.merchantId,
-    terminalId: props.values.terminalId,
-    useCase: props.values.useCase ? useCaseEnmu[props.values.useCase] : '',
-    qrValue: props.values.qrValue,
-    cardAsso: props.values.cardAsso ? cardAssoEnum[props.values.cardAsso] : '',
-    checkState: props.values.checkState ? checkStateEnum[props.values.checkState] : '',
-    checkReason: props.values.checkReason,
-    operation: props.values.operation ? operEnmu[props.values.operation] : '',
-    ccyCode: {
-      ccyName: props.values.ccyCode?.ccyName,
-    },
-    merchant: {
-      merchantId: props.values.merchant ? props.values.merchant.merchantId : '',
-      merNameChn: props.values.merchant ? props.values.merchant.merNameChn : '',
-      merNameEng: props.values.merchant ? props.values.merchant.merNameEng : '',
-      merchantType: props.values.merchant ? props.values.merchant.merchantType : '',
-    },
-  };
+
 
   const [form] = Form.useForm();
 
-  form.setFieldsValue(formVals);
+  form.setFieldsValue(props.values);
 
   const renderContent = () => {
     return (
@@ -98,19 +80,7 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
       <Form
         {...formLayout}
         form={form}
-        initialValues={{
-          merchantId: formVals.merchantId,
-          terminalId: formVals.terminalId,
-          useCase: formVals.useCase,
-          qrValue: formVals.qrValue,
-          cardAsso: formVals.cardAsso,
-          ccyCode: {
-            ccyName: formVals.ccyCode.ccyName,
-          },
-          checkState: formVals.checkState,
-          checkReason: formVals.checkReason,
-          operation: formVals.operation,
-        }}
+        
         // initialValues={values}
       >
         {renderContent()}

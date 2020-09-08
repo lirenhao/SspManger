@@ -37,7 +37,7 @@ public class CcpayCheckService {
     }
 
     public CcpayCheck findOne(String merchantId) {
-        return ccpayCheckDao.getOne(merchantId);
+        return ccpayCheckDao.findById(merchantId).orElse(new CcpayCheck());
     }
 
     public Page<CcpayCheck> findAll(CcpayCheckQuery query, Pageable pageable) {

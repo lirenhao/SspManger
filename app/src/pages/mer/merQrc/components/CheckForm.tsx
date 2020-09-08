@@ -32,6 +32,7 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
     ccyCode: {
       ccyName: props.before.ccyCode?.ccyName,
     },
+    ccyType: props.before.ccyType,
     merchant: {
       merchantId: props.before.merchant ? props.before.merchant.merchantId : '',
       merNameChn: props.before.merchant ? props.before.merchant.merNameChn : '',
@@ -52,6 +53,7 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
     ccyCode: {
       ccyName: props.after.ccyCode?.ccyName,
     },
+    ccyType: props.after.ccyType,
     merchant: {
       merchantId: props.after.merchant ? props.after.merchant.merchantId : '',
       merNameChn: props.after.merchant ? props.after.merchant.merNameChn : '',
@@ -91,7 +93,7 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
         </Form.Item>
 
         <Form.Item
-          name={['ccyCode', 'ccyName']}
+          name='ccyType'
           label={intl.formatMessage({ id: 'merQrc.ccyName' })}
         >
           <Input disabled />
@@ -107,46 +109,21 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
   return (
     <Modal
       destroyOnClose
-      title={intl.formatMessage({ id: 'merQrc.updateCompoent' })}
+      title={intl.formatMessage({ id: 'merQrc.checkCompoent' })}
       visible={modalVisible}
       onCancel={() => onCancel()}
       width={1040}
       onOk={() => form.submit()}
-      // footer={
-      //   <>
-      //     <Button
-      //       onClick={() => {
-      //         onSubmit({
-      //           ...formVals,
-      //           ...{ checkState: '1', checkReason: form.getFieldValue('checkReason') },
-      //         } as TableListItem);
-      //       }}
-      //     >
-      //       {intl.formatMessage({ id: 'check.approval' })}
-      //     </Button>
-
-      //     <Button
-      //       onClick={() => {
-      //         onSubmit({
-      //           ...formVals,
-      //           ...{ checkState: '2', checkReason: form.getFieldValue('checkReason') },
-      //         } as TableListItem);
-      //       }}
-      //     >
-      //       {intl.formatMessage({ id: 'check.reject' })}
-      //     </Button>
-
-      //     <Button
-      //       onClick={() => {
-      //         onCancel();
-      //       }}
-      //     >
-      //       {intl.formatMessage({ id: 'check.cancel' })}
-      //     </Button>
-      //   </>
-      // }
     >
 <Row>
+    
+    <Col span={12}>
+            <Card title={intl.formatMessage({ id: 'merAddon.check.after' })}>
+                <Form {...formLayout} form={formAfter}>
+                    {renderContent()}
+                </Form>
+            </Card>
+      </Col>
         <Col span={12}>
             <Card title={intl.formatMessage({ id: 'merAddon.check.before' })}>
         <Form {...formLayout} form={form}>
@@ -154,13 +131,7 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
         </Form>
             </Card>
         </Col>
-        <Col span={12}>
-            <Card title={intl.formatMessage({ id: 'merAddon.check.after' })}>
-                <Form {...formLayout} form={formAfter}>
-                    {renderContent()}
-                </Form>
-            </Card>
-      </Col>
+
       </Row>
       <br/>
       <Form

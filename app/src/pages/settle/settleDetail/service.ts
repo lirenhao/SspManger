@@ -2,9 +2,13 @@ import { request } from 'umi';
 import { TableListParams, TableListItem } from './data.d';
 
 export async function query(params?: TableListParams) {
+  let dateStartEnd={}
+  if(params?.settleDate){
+   dateStartEnd = {settleStartDate:params.settleDate[0].replaceAll('-',''),settleEndDate:params.settleDate[1].replaceAll('-','')}
+  }
   return request('/svc/ssp/settleDetail/', {
     method: 'GET',
-    params,
+    params:{...params,...dateStartEnd}
   });
 }
 
@@ -52,4 +56,19 @@ export async function download(params?: TableListParams) {
   }).catch((error) => {
     console.error(error);
   });
+}
+
+export async function fetchGetAllMer() {
+  return request('/svc/ssp/merchant/orgId', {
+    method: 'GET',
+  });
+}
+
+export  function getMerEnum(responseResult : {merchantId : string,merNameEng : string}[]) {
+  const merEnum = {}
+  responseResult.forEach(mer=>{
+    merEnum[mer.merchantId] = `${mer.merchantId}-${mer.merNameEng}`
+  })
+  return merEnum;
+
 }

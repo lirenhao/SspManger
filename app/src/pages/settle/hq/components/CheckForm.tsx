@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Modal, Input, Button } from 'antd';
 import { useIntl } from 'umi';
-import { TableListItem, cardAssoEnum, operEnmu, useCaseEnmu } from '../data.d';
+import { TableListItem} from '../data.d';
 import formLayout from '../../../../formLayout';
 
 interface CheckFormProps {
@@ -19,29 +19,11 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
   const intl = useIntl();
   const { modalVisible, onCancel, onSubmit } = props;
 
-  const formVals = {
-    merchantId: props.values.merchantId,
-    terminalId: props.values.terminalId,
-    useCase: props.values.useCase ? useCaseEnmu[props.values.useCase] : '',
-    qrValue: props.values.qrValue,
-    cardAsso: props.values.cardAsso ? cardAssoEnum[props.values.cardAsso] : '',
-    checkState: '',
-    checkReason: '',
-    operation: props.values.operation ? operEnmu[props.values.operation] : '',
-    ccyCode: {
-      ccyName: props.values.ccyCode?.ccyName,
-    },
-    merchant: {
-      merchantId: props.values.merchant ? props.values.merchant.merchantId : '',
-      merNameChn: props.values.merchant ? props.values.merchant.merNameChn : '',
-      merNameEng: props.values.merchant ? props.values.merchant.merNameEng : '',
-      merchantType: props.values.merchant ? props.values.merchant.merchantType : '',
-    },
-  };
+  
 
   const [form] = Form.useForm();
 
-  form.setFieldsValue(formVals);
+  form.setFieldsValue(props.values);
 
   const renderContent = () => {
     return (
@@ -95,7 +77,7 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
           <Button
             onClick={() => {
               onSubmit({
-                ...formVals,
+                ...props.values,
                 ...{ checkState: '1', checkReason: form.getFieldValue('checkReason') },
               } as TableListItem);
             }}
@@ -106,7 +88,7 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
           <Button
             onClick={() => {
               onSubmit({
-                ...formVals,
+                ...props.values,
                 ...{ checkState: '2', checkReason: form.getFieldValue('checkReason') },
               } as TableListItem);
             }}

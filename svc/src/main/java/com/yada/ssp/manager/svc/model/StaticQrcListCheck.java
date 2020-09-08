@@ -41,10 +41,14 @@ public class StaticQrcListCheck {
     //创建日期
     @Column
     private String createDate;
+
+
+
+    @Column
+    private String ccyType;
     //币种
-    @JsonIgnore
     @OneToOne(targetEntity = CcyType.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "ccyCode", referencedColumnName = "ccyType")
+    @JoinColumn(name = "ccyCode", referencedColumnName = "ccyType",insertable = false,updatable = false)
     private CcyType ccyCode;
     //二维码用途
     @Column
@@ -164,5 +168,13 @@ public class StaticQrcListCheck {
 
     public void setOperation(String operation) {
         this.operation = operation;
+    }
+
+    public String getCcyType() {
+        return ccyType;
+    }
+
+    public void setCcyType(String ccyType) {
+        this.ccyType = ccyType;
     }
 }

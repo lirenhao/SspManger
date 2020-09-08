@@ -59,17 +59,27 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
           rules={[
             {
               required: true,
-              message: intl.formatMessage({ id: 'merLimit.maxTrxCount' }),
+              message: intl.formatMessage({ id: 'global.required' }),
             },
           ]}
           label={intl.formatMessage({ id: 'merLimit.maxTrxCount' })}
         >
           <Input />
         </Form.Item>
-        <Form.Item name="maxTrxAmount" label={intl.formatMessage({ id: 'merLimit.maxTrxAmount' })}>
+        <Form.Item name="maxTrxAmount"           rules={[
+            {
+              required: true,
+              message: intl.formatMessage({ id: 'global.required' }),
+            },
+          ]} label={intl.formatMessage({ id: 'merLimit.maxTrxAmount' })}>
           <Input />
         </Form.Item>
-        <Form.Item name="status" label={intl.formatMessage({ id: 'merLimit.status' })}>
+        <Form.Item name="status" rules={[
+            {
+              required: true,
+              message: intl.formatMessage({ id: 'global.required' }),
+            },
+          ]}  label={intl.formatMessage({ id: 'merLimit.status' })}>
           <Select
             showSearch
             style={{ width: 200 }}

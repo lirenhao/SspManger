@@ -18,6 +18,7 @@ const TableList: React.FC<{ isSuccess: boolean }> = (props) => {
     {
       title: intl.formatMessage({ id: 'settleList.settleDate' }),
       dataIndex: 'settleDate',
+      valueType: 'dateRange'
     },
 
     {
@@ -42,16 +43,6 @@ const TableList: React.FC<{ isSuccess: boolean }> = (props) => {
     {
       title: intl.formatMessage({ id: 'settleList.accountBankName' }),
       dataIndex: 'accountBankName',
-      hideInSearch: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'settleList.tranCount' }),
-      dataIndex: 'tranCount',
-      hideInSearch: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'settleList.tranAmt' }),
-      dataIndex: 'tranAmt',
       hideInSearch: true,
     },
     {

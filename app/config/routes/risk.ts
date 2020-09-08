@@ -2,16 +2,16 @@ import { IRoute } from 'umi';
 
 const routes: IRoute[] = [
   {
-    path: '/risk/control',
-    name: 'cup',
-    component: './risk/control',
-    locale: 'riskControl.title',
-  },
-  {
     path: '/risk/monitoring',
     name: 'monitoring',
     component: './risk/monitoring',
     locale: 'riskMonitoring.title',
+  },
+  {
+    path: '/risk/control',
+    name: 'cup',
+    component: './risk/control',
+    locale: 'riskControl.title',
   },
   {
     path: '/risk/report',

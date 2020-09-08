@@ -69,17 +69,19 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
           <Input disabled />
         </Form.Item>
 
-        <Form.Item name="staticQrc" label={intl.formatMessage({ id: 'ccpay.staticQrc' })}>
+        <Form.Item name="fee" label={intl.formatMessage({ id: 'ccpay.fee' })}>
           <Input disabled />
         </Form.Item>
 
-        <Form.Item name="fee" label={intl.formatMessage({ id: 'ccpay.fee' })}>
+        <Form.Item name="checkState" label={intl.formatMessage({ id: 'ccpay.checkState' })}>
           <Input disabled />
         </Form.Item>
 
         <Form.Item name="operation" label={intl.formatMessage({ id: 'ccpay.operation' })}>
           <Input disabled />
         </Form.Item>
+
+
       </>
     );
   };
@@ -92,42 +94,18 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
       width={1040}
       onCancel={() => onCancel()}
       onOk={() => form.submit()}
-    //   footer={
-    //     <>
-    //       <Button
-    //         onClick={() => {
-    //           onSubmit({
-    //             ...formVals,
-    //             ...{ checkState: '1', checkReason: form.getFieldValue('checkReason') },
-    //           } as TableListItem);
-    //         }}
-    //       >
-    //         {intl.formatMessage({ id: 'check.approval' })}
-    //       </Button>
-
-    //       <Button
-    //         onClick={() => {
-    //           onSubmit({
-    //             ...formVals,
-    //             ...{ checkState: '2', checkReason: form.getFieldValue('checkReason') },
-    //           } as TableListItem);
-    //         }}
-    //       >
-    //         {intl.formatMessage({ id: 'check.reject' })}
-    //       </Button>
-
-    //       <Button
-    //         onClick={() => {
-    //           onCancel();
-    //         }}
-    //       >
-    //         {intl.formatMessage({ id: 'check.cancel' })}
-    //       </Button>
-    //     </>
-    //   }
+    
     >
               
     <Row>
+    <Col span={12}>
+            <Card title={intl.formatMessage({ id: 'ccpay.check.after' })}>
+                <Form {...formLayout} form={formAfter}>
+                    {renderContent()}
+                </Form>
+            </Card>
+      </Col>
+
         <Col span={12}>
             <Card title={intl.formatMessage({ id: 'ccpay.check.before' })}>
         <Form {...formLayout} form={form}>
@@ -135,13 +113,7 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
         </Form>
             </Card>
         </Col>
-        <Col span={12}>
-            <Card title={intl.formatMessage({ id: 'ccpay.check.after' })}>
-                <Form {...formLayout} form={formAfter}>
-                    {renderContent()}
-                </Form>
-            </Card>
-      </Col>
+
       </Row>
       <br/>
       <Form

@@ -10,7 +10,7 @@ import CreateForm from './components/CreateForm';
 import CheckForm from './components/CheckForm';
 import ViewForm from './components/ViewForm';
 import { TableListItem, checkStateEnum, operEnmu } from './data.d';
-import { query, save, check } from './service';
+import { query, save, check,fetchGetAllMer,getMerEnum } from './service';
 
 const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
   const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
@@ -50,6 +50,15 @@ const TableList: React.FC<{}> = () => {
   const [manualVisible, handelVisibleManual] = useState(false);
   const [stepFormValues, setStepFormValues] = useState({});
 
+  const [merchants, setMerchants] = React.useState({});
+
+React.useEffect(() => {
+  fetchGetAllMer().then(mer=>{
+    const merEnum = getMerEnum(mer);
+    setMerchants(merEnum)
+  });
+}, []);
+
   /**
    * 添加
    * @param fields
@@ -87,16 +96,19 @@ const TableList: React.FC<{}> = () => {
       title: intl.formatMessage({ id: 'manualSettle.lsId' }),
       dataIndex: 'lsId',
       hideInSearch: true,
+      hideInTable:true,
       hideInForm: true,
     },
     {
       title: intl.formatMessage({ id: 'manualSettle.inputDate' }),
       dataIndex: 'inputDate',
+      valueType: 'date',
     },
 
     {
       title: intl.formatMessage({ id: 'manualSettle.merchantId' }),
       dataIndex: 'merchantId',
+      valueEnum: merchants
     },
     {
       title: intl.formatMessage({ id: 'manualSettle.tranAmt' }),
@@ -121,7 +133,6 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'manualSettle.checkState' }),
       dataIndex: 'checkState',
-      hideInSearch: true,
       initialValue: undefined,
       valueEnum: checkStateEnum,
     },
@@ -133,7 +144,6 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'manualSettle.operation' }),
       dataIndex: 'operation',
-      hideInSearch: true,
       initialValue: undefined,
       valueEnum: operEnmu,
     },

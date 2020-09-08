@@ -29,7 +29,7 @@ export interface TableListData {
 }
 
 export interface TableListParams {
-  yearmon?: string;
+  month?: string;
   lsId?: string;
   size?: number;
   page?: number;

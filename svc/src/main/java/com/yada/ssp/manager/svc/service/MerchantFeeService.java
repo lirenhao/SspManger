@@ -26,7 +26,7 @@ public class MerchantFeeService {
     }
 
     public MerchantFee findOne(String lsId) {
-        return merchantFeeDao.getOne(lsId);
+        return merchantFeeDao.findById(lsId).orElse(new MerchantFee());
     }
 
     public Page<MerchantFee> findAll(MerchantFeeQuery query, Pageable pageable) {

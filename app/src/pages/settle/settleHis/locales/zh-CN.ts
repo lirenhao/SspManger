@@ -1,23 +1,20 @@
+
+
+
 export default {
   'settleDetail.lsId': 'lsId',
   'settleDetail.merchantId': '',
-  'settleDetail.terminalId': 'TERMINAL ID',
-  'settleDetail.cardNo': 'CARD NO',
-  'settleDetail.tranDate': 'TXN DATE',
-  'settleDetail.tranTime': 'TXN TIME',
-  'settleDetail.tranAmt': 'TXN AMT',
-  'settleDetail.fee': 'FEE',
-  'settleDetail.settleAmt': 'SETT AMT',
-  'settleDetail.settleDate': 'SETT DATE',
-  'settleDetail.tranName': 'TXN NAME',
-  'settleDetail.rrn': 'TXN RRN',
+  'settleDetail.terminalId': '终端ID',
+  'settleDetail.cardNo': '卡号',
+  'settleDetail.tranDate': '交易日期',
+  'settleDetail.tranTime': '交易时间',
+  'settleDetail.tranAmt': '交易金额',
+  'settleDetail.fee': '手续费',
+  'settleDetail.settleAmt': '结算金额',
+  'settleDetail.settleDate': '结算日期',
+  'settleDetail.tranName': '交易名称',
+  'settleDetail.rrn': '交易RRN',
 
-  'settleHisSuccess.title': 'SETT SUCCESS HISTORY',
-  'settleHisFail.title': 'SETT FAILURE HISTORY',
-
-  // settleDetail.'merMdr.cName' : '中文名称',
-  // settleDetail.'merMdr.eName' : '英文名称',
-  // settleDetail.'merMdr.merchantType' : '商户类型',
-  // settleDetail.'merMdr.create' : '创建',
-  // settleDetail.'merMdr.view' : '查看',
+  'settleHisSuccess.title': '结算成功历史',
+  'settleHisFail.title': '结算失败历史',
 };

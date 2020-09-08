@@ -4,7 +4,7 @@ import { TableListParams, TableListItem } from './data.d';
 export async function query(params?: TableListParams) {
   return request('/svc/ssp/manualSettle', {
     method: 'GET',
-    params,
+    params: {...params,...{inputDate:params?.inputDate?.replaceAll('-','')}}
   });
 }
 
@@ -95,7 +95,16 @@ export async function handle(params?: TableListParams) {
   });
 }
 export async function fetchGetAllMer() {
-  return request('/svc/ssp/merchant', {
+  return request('/svc/ssp/merchant/orgId', {
     method: 'GET',
   });
+}
+
+export  function getMerEnum(responseResult : {merchantId : string,merNameEng : string}[]) {
+  const merEnum = {}
+  responseResult.forEach(mer=>{
+    merEnum[mer.merchantId] = `${mer.merchantId}-${mer.merNameEng}`
+  })
+  return merEnum;
+
 }

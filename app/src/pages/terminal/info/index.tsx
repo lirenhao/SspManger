@@ -1,5 +1,5 @@
-/* eslint-disable import/no-named-as-default-member */
-import { message } from 'antd';
+
+import { message, TreeSelect } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -7,7 +7,8 @@ import { useIntl, FormattedMessage, IntlShape } from 'umi';
 
 import ViewForm from './components/ViewForm';
 import { TableListItem } from './data.d';
-import { query, save } from './service';
+import { query, save,fetchOrgTree } from './service';
+import { DataNode } from 'antd/lib/tree';
 
 /**
  * 添加
@@ -31,8 +32,14 @@ const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
 const TableList: React.FC<{}> = () => {
   const [modalViewVisible, handleModalViewVisible] = useState(false);
   const [viewValues, setViewValues] = useState({});
+  
+  const [orgTree, setOrgTree] = useState<DataNode[]>([]);
   const intl = useIntl();
   const actionRef = useRef<ActionType>();
+
+  React.useEffect(() => {
+    fetchOrgTree().then(setOrgTree);
+  }, []);
 
   const columns: ProColumns<TableListItem>[] = [
     {
@@ -68,6 +75,16 @@ const TableList: React.FC<{}> = () => {
       // valueEnum: merchantTypeEnmu
     },
     {
+      title: intl.formatMessage({ id: 'terminal.orgId', defaultMessage: '' }),
+      dataIndex: 'orgId',
+      renderFormItem: (item, { onChange, ...rest }) => (
+        <TreeSelect treeDefaultExpandAll treeData={orgTree}
+          {...item.formItemProps} {...rest} onChange={onChange}
+        />
+      ),
+      hideInTable: true,
+    },
+    {
       title: intl.formatMessage({ id: 'terminal.terminalType' }),
       dataIndex: 'terminalType',
       hideInSearch: true,
@@ -75,6 +92,7 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'terminal.status' }),
       dataIndex: 'status',
+      hideInSearch: true,
     },
 
     {

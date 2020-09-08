@@ -50,8 +50,8 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   // }, []);
 
   const [merchants, setMerchants] = React.useState<
-    {content:{ merchantId: ''; merNameChn: ''; merNameEng: '' }[]}
-  >({content:[]});
+    { merchantId: ''; merNameChn: ''; merNameEng: '' }[]
+  >([]);
 
   React.useEffect(() => {
     fetchGetAllMer().then(setMerchants);
@@ -60,7 +60,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   const renderMerChantOption = () => {
     const { Option } = Select;
     const OptionArr: JSX.Element[] = [];
-    merchants.content.forEach((element) => {
+    merchants.forEach((element) => {
       OptionArr.push(
         <Option key={element.merchantId} value={element.merchantId}>
           {element.merchantId}-{element.merNameEng}
@@ -114,19 +114,6 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   const renderContent = () => {
     return (
       <>
-        {/* <Form.Item
-          name="merchantId"
-          label={intl.formatMessage({ id: 'merMdr.merchantId' })} rules={[
-            {
-              required: true,
-              message: intl.formatMessage({ id: 'merMdr.merchantIdNecessary' }),
-            },
-          ]}
-        >
-          <TreeSelect treeDefaultExpandAll treeData={orgTree} 
-        />
-        </Form.Item> */}
-
         <Form.Item
           name="merchantId"
           label={intl.formatMessage({ id: 'merMdr.merchantId' })}

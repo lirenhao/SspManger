@@ -1,8 +1,12 @@
 export default {
-  'mcc.mcc': 'mcc',
-  'mcc.mccNameNecessary': 'mcc 是必须的',
-  'mcc.remark': 'remark',
-  'mcc.createCompoent': '新建mcc',
-  'mcc.updateCompoent': '修改mcc',
-  'mcc.delete': '删除',
+  'riskReport.title': 'RISK REPORT',
+  'riskReport.riskDate': 'RISK Date',
+  'riskReport.merchantId': 'Merchant Id',
+  'riskReport.riskCode': 'RISK CODE',
+  'riskReport.terminalId':'TERMINAL ID',
+  'riskReport.cardNo': 'CARD NO',
+  'riskReport.tranDate' : 'TRANS DATE	',
+  'riskReport.tranTime' : 'TRANS TIME',
+  'riskReport.tranAmt' : 'TRANS AMOUNT',
+  'riskReport.tranCode': 'TRANS CODE'
 };

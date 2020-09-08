@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Divider } from 'antd';
+import { Button, message } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -7,7 +7,7 @@ import { useIntl, FormattedMessage, IntlShape } from 'umi';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { TableListItem } from './data';
-import { query, save, remove } from './service';
+import { query, save } from './service';
 
 /**
  * 添加
@@ -28,23 +28,6 @@ const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
   }
 };
 
-/**
- * 添加
- * @param fields
- */
-const handleDel = async (fields: TableListItem, intl: IntlShape) => {
-  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
-  try {
-    await remove({ ...fields });
-    hide();
-    message.success(intl.formatMessage({ id: 'global.success' }));
-    return true;
-  } catch (error) {
-    hide();
-    message.success(intl.formatMessage({ id: 'global.error' }));
-    return false;
-  }
-};
 
 // const handleGet = async (fields: TableListItem) => {
 //   const hide = message.loading('global.running');
@@ -81,15 +64,6 @@ const TableList: React.FC<{}> = () => {
             }}
           >
             <FormattedMessage id="global.edit" />
-          </a>
-          <Divider type="vertical" />
-          <a
-            onClick={() => {
-              handleDel(record, intl);
-              actionRef.current?.reload();
-            }}
-          >
-            <FormattedMessage id="global.delete" />
           </a>
         </>
       ),

@@ -30,8 +30,8 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   // }, []);
 
   const [merchants, setMerchants] = React.useState<
-    {content:{ merchantId: ''; merNameChn: ''; merNameEng: '' }[]}
-  >({content:[]});
+    { merchantId: ''; merNameChn: ''; merNameEng: '' }[]
+  >([]);
 
   React.useEffect(() => {
     fetchGetAllMer().then(setMerchants);
@@ -41,7 +41,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
     const { Option } = Select;
     const OptionArr: JSX.Element[] = [];
 
-    merchants.content.forEach((element) => {
+    merchants.forEach((element) => {
       OptionArr.push(
         <Option key={element.merchantId} value={element.merchantId}>
           {element.merchantId}-{element.merNameEng}

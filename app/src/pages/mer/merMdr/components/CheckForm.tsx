@@ -44,9 +44,6 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
         >
           <Input disabled />
         </Form.Item>
-        <Form.Item name="checkReason" label={intl.formatMessage({ id: 'merAddon.checkReason' })}>
-          <Input />
-        </Form.Item>
       </>
     );
   };
@@ -94,6 +91,13 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
       // }
     >
 <Row>
+  <Col span={12}>
+            <Card title={intl.formatMessage({ id: 'merAddon.check.after' })}>
+                <Form {...formLayout} form={formAfter}>
+                    {renderContent()}
+                </Form>
+            </Card>
+      </Col>
         <Col span={12}>
             <Card title={intl.formatMessage({ id: 'merAddon.check.before' })}>
         <Form {...formLayout} form={form}>
@@ -101,13 +105,7 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
         </Form>
             </Card>
         </Col>
-        <Col span={12}>
-            <Card title={intl.formatMessage({ id: 'merAddon.check.after' })}>
-                <Form {...formLayout} form={formAfter}>
-                    {renderContent()}
-                </Form>
-            </Card>
-      </Col>
+        
       </Row>
       <br/>
       <Form

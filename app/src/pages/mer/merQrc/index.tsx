@@ -72,13 +72,13 @@ const TableList: React.FC<{}> = () => {
   const beforeCheck = async (params: TableListItem) => {
     try {
       const info = await get(params);
-      const checkInfo = await getCheck(params);
       setAfter(info);
+      const checkInfo = await getCheck(params);
       setBefore(checkInfo);
-      setIsCheck(true);
     } catch (err) {
       console.error(err.message);
     }
+    setIsCheck(true);
   }
 
   ccyData.forEach((element) => {
@@ -113,18 +113,15 @@ const TableList: React.FC<{}> = () => {
       ),
     },
     {
-      title: intl.formatMessage({ id: 'merQrc.merchantId' }),
       dataIndex: 'lsId',
       hideInSearch: true,
       hideInForm: true,
+      hideInTable:true,
     },
 
     {
       title: intl.formatMessage({ id: 'merQrc.merchantId' }),
       dataIndex: 'merchantId',
-      // initialValue: undefined,
-      // valueEnum: merchantTypeEnmu,
-      hideInSearch: true,
     },
     {
       title: intl.formatMessage({ id: 'merQrc.terminalId' }),
@@ -135,6 +132,12 @@ const TableList: React.FC<{}> = () => {
       dataIndex: ['ccyCode', 'ccyType'],
       initialValue: undefined,
       valueEnum: ccyArr,
+      hideInTable:true
+    },
+    {
+      title: intl.formatMessage({ id: 'merQrc.ccyCode' }),
+      dataIndex: 'ccyType',
+      hideInSearch:true
     },
     {
       title: intl.formatMessage({ id: 'merQrc.useCase' }),
@@ -147,10 +150,12 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'cardAsso',
       initialValue: undefined,
       valueEnum: cardAssoEnum,
+      hideInSearch:true,
     },
     {
       title: intl.formatMessage({ id: 'merQrc.qrValue' }),
       dataIndex: 'qrValue',
+      hideInSearch:true,
     },
 
     {
