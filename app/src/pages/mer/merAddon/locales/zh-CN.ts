@@ -8,10 +8,11 @@ export default {
   'merAddon.cName': '中文名称',
   'merAddon.eName': '英文名称',
   'merAddon.merchantType': '商户类型',
-  'merAddon.title': 'Merchant Add-On',
-  'mer.merAddonName': 'MERCHANT ADD-ON',
+  'merAddon.title': '商户附加信息',
+  'mer.merAddonName': '商户附加信息',
   'merAddon.updateCompoent': '修改',
   'merAddon.check.before' : '修改前',
   'merAddon.check.after' : '修改后',
   'merAddon.check.checkState' : '审核状态',
+  'merAddonCheck.title': '商户附加信息审核',
 };

@@ -41,6 +41,7 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'bcfes.settleDate' }),
       dataIndex: 'settleDate',
+      valueType: 'date',
     },
 
     {

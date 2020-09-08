@@ -35,7 +35,7 @@ export async function exist(id: String) {
 }
 
 export async function fetchGetAllMer() {
-  return request('/svc/ssp/merchant', {
+  return request('/svc/ssp/merchant/orgId', {
     method: 'GET',
   });
 }

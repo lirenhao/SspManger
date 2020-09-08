@@ -95,13 +95,7 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
       // }
     >
       <Row>
-        <Col span={12}>
-            <Card title={intl.formatMessage({ id: 'merAddon.check.before' })}>
-        <Form {...formLayout} form={form}>
-            {renderContent()}
-        </Form>
-            </Card>
-        </Col>
+        
         <Col span={12}>
             <Card title={intl.formatMessage({ id: 'merAddon.check.after' })}>
                 <Form {...formLayout} form={formAfter}>
@@ -109,6 +103,13 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
                 </Form>
             </Card>
       </Col>
+      <Col span={12}>
+            <Card title={intl.formatMessage({ id: 'merAddon.check.before' })}>
+        <Form {...formLayout} form={form}>
+            {renderContent()}
+        </Form>
+            </Card>
+        </Col>
       </Row>
       <br/>
       <Form

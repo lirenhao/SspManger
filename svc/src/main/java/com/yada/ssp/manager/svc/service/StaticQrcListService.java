@@ -28,7 +28,7 @@ public class StaticQrcListService {
     }
 
     public StaticQrcList findOne(String lsId) {
-        return staticQrcListDao.getOne(lsId);
+        return staticQrcListDao.findById(lsId).orElse(new StaticQrcList());
     }
 
     public Page<StaticQrcList> findAll(StaticQrcListQuery query, Pageable pageable) {

@@ -2,9 +2,10 @@ import { request } from 'umi';
 import { TableListParams, TableListItem } from './data.d';
 
 export async function query(params?: TableListParams) {
+
   return request('/svc/ssp/cupAcomn', {
     method: 'GET',
-    params,
+    params: {...params,...{settleDate:params?.settleDate?.replaceAll('-','')}}
   });
 }
 

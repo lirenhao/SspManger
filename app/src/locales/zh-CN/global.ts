@@ -13,4 +13,5 @@ export default {
   'global.view': '查看',
   'global.check': '审核',
   'global.download': '下载',
+  'global.required': '该域是必须的'
 };

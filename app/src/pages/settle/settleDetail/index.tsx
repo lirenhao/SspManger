@@ -7,32 +7,59 @@ import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl, FormattedMessage } from 'umi';
 
 import { TableListItem, TableListParams } from './data.d';
-import { query, download } from './service';
+import { query, download,fetchGetAllMer,getMerEnum } from './service';
 
 const TableList: React.FC<{}> = () => {
   const intl = useIntl();
   const actionRef = useRef<ActionType>();
   const [downloadparams, setDownloadParams] = useState<TableListParams>({});
+  const [merchants, setMerchants] = React.useState({});
 
+React.useEffect(() => {
+  fetchGetAllMer().then(mer=>{
+    const merEnum = getMerEnum(mer);
+    setMerchants(merEnum)
+  });
+}, []);
   const columns: ProColumns<TableListItem>[] = [
     {
       title: intl.formatMessage({ id: 'settleDetail.lsId' }),
       dataIndex: 'lsId',
       hideInSearch: true,
       hideInForm: true,
+      hideInTable:true,
+    },
+    {
+      title: intl.formatMessage({ id: 'settleList.merchantId' }),
+      dataIndex: 'merchantId',
+      valueEnum: merchants,
+      hideInTable:true,
+    },
+    {
+      title: intl.formatMessage({ id: 'settleDetail.terminalId' }),
+      dataIndex: 'terminalId',
+      hideInSearch: true,
     },
     {
       title: intl.formatMessage({ id: 'settleDetail.cardNo' }),
       dataIndex: 'cardNo',
+      hideInSearch: true,
     },
 
     {
       title: intl.formatMessage({ id: 'settleDetail.tranDate' }),
       dataIndex: 'tranDate',
+      hideInSearch:true
     },
     {
       title: intl.formatMessage({ id: 'settleDetail.tranTime' }),
       dataIndex: 'tranTime',
+      hideInSearch: true,
+    },
+    {
+      title: intl.formatMessage({ id: 'settleDetail.tranAmt' }),
+      dataIndex: 'tranAmt',
+      hideInSearch: true,
     },
     {
       title: intl.formatMessage({ id: 'settleDetail.fee' }),
@@ -48,16 +75,12 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'settleDetail.settleDate' }),
       dataIndex: 'settleDate',
-      hideInSearch: true,
+      valueType: 'dateRange',
+      hideInTable:true
     },
     {
       title: intl.formatMessage({ id: 'settleDetail.tranName' }),
       dataIndex: 'tranName',
-      hideInSearch: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'settleDetail.tranAmt' }),
-      dataIndex: 'tranAmt',
       hideInSearch: true,
     },
     {

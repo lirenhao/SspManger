@@ -15,18 +15,28 @@ const TableList: React.FC<{}> = () => {
   const [downloadparams, setDownloadParams] = useState<TableListParams>({});
 
   const columns: ProColumns<TableListItem>[] = [
+
+    {
+      title: intl.formatMessage({ id: 'termCount.month' }),
+      dataIndex: 'month',
+      hideInTable:true
+    },
+
     {
       title: intl.formatMessage({ id: 'termCount.merNameEng' }),
       dataIndex: 'merNameEng',
+      hideInSearch: true,
     },
 
     {
       title: intl.formatMessage({ id: 'termCount.merchantId' }),
       dataIndex: 'merchantId',
+      hideInSearch: true,
     },
     {
       title: intl.formatMessage({ id: 'termCount.terminalId' }),
       dataIndex: 'terminalId',
+      hideInSearch: true,
     },
     {
       title: intl.formatMessage({ id: 'termCount.vendorName' }),

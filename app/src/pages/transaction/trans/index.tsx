@@ -38,6 +38,7 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'trans.traceNo' }),
       dataIndex: 'traceNo',
+      hideInSearch:true
     },
 
     {
@@ -52,8 +53,13 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'tranType',
     },
     {
+      title: intl.formatMessage({ id: 'trans.tranDate' }),
+      dataIndex: 'tranDate',
+    },
+    {
       title: intl.formatMessage({ id: 'trans.channel' }),
       dataIndex: 'channel',
+      hideInSearch:true
     },
 
     {
@@ -69,7 +75,6 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'trans.merNo' }),
       dataIndex: 'merNo',
-      hideInSearch: true,
     },
     {
       title: intl.formatMessage({ id: 'trans.termNo' }),

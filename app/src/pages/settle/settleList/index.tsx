@@ -7,7 +7,7 @@ import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl, FormattedMessage } from 'umi';
 
 import { TableListItem, TableListParams } from './data.d';
-import { query, download, handle } from './service';
+import { query, download } from './service';
 
 const TableList: React.FC<{}> = () => {
   const intl = useIntl();
@@ -15,23 +15,7 @@ const TableList: React.FC<{}> = () => {
   const [downloadparams, setDownloadParams] = useState<TableListParams>({});
 
   const columns: ProColumns<TableListItem>[] = [
-    {
-      title: intl.formatMessage({ id: 'global.operate' }),
-      dataIndex: 'option',
-      valueType: 'option',
 
-      render: (_, record) => (
-        <>
-          <a
-            onClick={() => {
-              handle({ lsId: record.lsId ? record.lsId : '' });
-            }}
-          >
-            <FormattedMessage id="global.operate" />
-          </a>
-        </>
-      ),
-    },
 
     {
       title: intl.formatMessage({ id: 'settleList.settleDate' }),

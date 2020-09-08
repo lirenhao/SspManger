@@ -2,8 +2,8 @@ export default {
   'check.approval': '审核通过',
   'check.reject': '审核拒绝',
   'check.cancel': '取消',
-  'hq.title': 'HQ Report',
-  'hq.orgId': 'orgId',
+  'hq.title': '总部报告',
+  'hq.orgId': '机构Id',
   'hq.month': '月份',
   'hq.merNum': '存量商户数',
   'hq.merNumMonthPer': '存量商户数环比上月（%）',
@@ -20,4 +20,5 @@ export default {
   'hq.posNumMonthPer': 'POS终端数环比上月增长率（%）',
   'hq.posNumYearPer': 'POS终端数同比上年增长率（%）',
   'hq.barNum': '二维码终端数',
+  'hq.year': '年份',
 };

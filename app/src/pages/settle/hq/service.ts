@@ -1,10 +1,11 @@
 import { request } from 'umi';
+import moment from 'moment';
 import { TableListParams } from './data.d';
 
 export async function query(params?: TableListParams) {
   return request('/svc/ssp/hqReport', {
     method: 'GET',
-    params,
+    params: {...{year:moment().format('YYYY')},...params},
   });
 }
 

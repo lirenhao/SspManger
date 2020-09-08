@@ -1,6 +1,7 @@
+
 export default {
   'merQrc.merchantId': '商户ID',
-  'merQrc.useCase': 'TRANSACTION TYPE',
+  'merQrc.useCase': '交易类型',
   'merQrc.ccyType': '现金类型',
   'merQrc.internationalCode': '国际码',
   'merQrc.checkState': '检查状态',
@@ -12,11 +13,12 @@ export default {
   'merQrc.create': '创建',
   'merQrc.view': '查看',
   'merQrc.ccyName': '现金类型',
-  'merQrc.qrValue': 'MERCHANT QR CODE',
-  'merQrc.cardAsso': 'CARD ASSOCIATION',
-  'merQrc.terminalId': 'TERMINAL ID',
-  'merQrc.updateCompoent': '修改QR',
-  'merQrc.ccyCode': 'CURRENCY',
-  'merQrc.fee': 'Fee Type',
-  'merQrc.title': 'Merchant Static-QRC',
+  'merQrc.qrValue': '商户QR值',
+  'merQrc.cardAsso': '卡协会',
+  'merQrc.terminalId': '终端ID',
+  'merQrc.viewCompoent': '查看QR',
+  'merQrc.ccyCode': '货币',
+  'merQrc.fee': '手续费类型',
+  'merQrc.title': '商户静态QR管理',
+  'merQrcCheck.title': '商户QR码审核',
 };

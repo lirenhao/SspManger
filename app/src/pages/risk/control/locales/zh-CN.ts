@@ -1,8 +1,8 @@
 export default {
-  'riskControl.title': 'RISK CONTROL',
-  'merLimit.merchantId': 'Merchant Id',
-  'merLimit.maxTrxCount': 'MAX TRX COUNT',
-  'merLimit.maxTrxAmount' : 'MAX TRX AMOUNT',
-  'merLimit.status' : 'Status',
+  'riskControl.title': '风险控制',
+  'merLimit.merchantId': '商户ID',
+  'merLimit.maxTrxCount': '最大交易数量',
+  'merLimit.maxTrxAmount' : '最大交易金额',
+  'merLimit.status' : '状态',
   'merLimit.createCompoent' : '新增',
 };

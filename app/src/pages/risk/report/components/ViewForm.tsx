@@ -110,6 +110,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
         visible={modalVisible}
         onCancel={() => onCancel()}
         onOk={() => onCancel()}
+        width= {600}
       >
         <Form {...formLayout} form={form}>
           {renderContent()}
@@ -142,6 +143,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
             actionRef={actionRef}
             rowKey="riskId"
             columns={columns}
+            search={false}
           />
         </Form>
       </Modal>

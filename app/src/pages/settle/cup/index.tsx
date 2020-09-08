@@ -35,12 +35,14 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'cup.lsId' }),
       dataIndex: 'lsId',
+      hideInTable: true,
       hideInSearch: true,
       hideInForm: true,
     },
     {
       title: intl.formatMessage({ id: 'cup.settleDate' }),
       dataIndex: 'settleDate',
+      valueType: 'date',
     },
 
     {

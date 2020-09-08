@@ -32,7 +32,7 @@ public class CcpayService {
     }
 
     public Ccpay findOne(String merchantId) {
-        return ccpayDao.getOne(merchantId);
+        return ccpayDao.findById(merchantId).orElse(new Ccpay());
     }
 
     public Page<Ccpay> findAll(CcpayQuery query, Pageable pageable) {

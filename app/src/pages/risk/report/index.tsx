@@ -1,30 +1,31 @@
-import { message } from 'antd';
+// import { message } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { useIntl, FormattedMessage, IntlShape } from 'umi';
+import { useIntl, FormattedMessage } from 'umi';
 import ViewForm from './components/ViewForm';
 import { TableListItem } from './data';
-import { query, save } from './service';
+// eslint-disable-next-line import/named
+import { query, queryRisk,getCodeEnum } from './service';
 
 /**
  * 添加
  * @param fields
  */
-const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
-  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
+// const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
+//   const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
 
-  try {
-    await save({ ...fields });
-    hide();
-    message.success(intl.formatMessage({ id: 'global.success' }));
-    return true;
-  } catch (error) {
-    hide();
-    message.error(intl.formatMessage({ id: 'global.error' }));
-    return false;
-  }
-};
+//   try {
+//     await save({ ...fields });
+//     hide();
+//     message.success(intl.formatMessage({ id: 'global.success' }));
+//     return true;
+//   } catch (error) {
+//     hide();
+//     message.error(intl.formatMessage({ id: 'global.error' }));
+//     return false;
+//   }
+// };
 
 /**
  * 添加
@@ -37,8 +38,18 @@ const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
 const TableList: React.FC<{}> = () => {
   const [viewModalVisible, handleViewModalVisible] = useState<boolean>(false);
   const [stepFormValues, setStepFormValues] = useState({});
+  const [riskCode, setRiskCode] = useState({});
   const intl = useIntl();
   const actionRef = useRef<ActionType>();
+
+  React.useEffect(() => {
+    queryRisk().then(result=>{
+      const riskCodeResult = getCodeEnum(result);
+      setRiskCode(riskCodeResult);
+    });
+  },[])
+
+
 
   const columns: ProColumns<TableListItem>[] = [
     {
@@ -69,6 +80,7 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'riskReport.riskCode' }),
       dataIndex: 'riskCode',
+      valueEnum: riskCode,
     },
   ];
 
@@ -109,14 +121,8 @@ const TableList: React.FC<{}> = () => {
           values={stepFormValues}
           onCancel={() => handleViewModalVisible(false)}
           modalVisible={viewModalVisible}
-          onSubmit={async (value) => {
-            const success = await handleSaveAndUpdate(value, intl);
-            if (success) {
-              handleViewModalVisible(false);
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
-            }
+          onSubmit={async () => {
+            handleViewModalVisible(false);
           }}
         />
       ) : null}

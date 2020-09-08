@@ -35,7 +35,7 @@ export interface TableListData {
 
 export interface TableListParams {
   merchantId?: string;
-  settleDate?: string;
+  inputDate?: string;
   lsId?: string;
   size?: number;
   page?: number;

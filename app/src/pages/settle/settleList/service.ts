@@ -2,9 +2,13 @@ import { request } from 'umi';
 import { TableListParams, TableListItem } from './data.d';
 
 export async function query(params?: TableListParams) {
+  let dateStartEnd={}
+  if(params?.settleDate){
+   dateStartEnd = {settleStartDate:params.settleDate[0].replaceAll('-',''),settleEndDate:params.settleDate[1].replaceAll('-','')}
+  }
   return request('/svc/ssp/merSettle', {
     method: 'GET',
-    params,
+    params:{...params,...dateStartEnd}
   });
 }
 

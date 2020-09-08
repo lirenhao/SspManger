@@ -29,8 +29,8 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   const [form] = Form.useForm();
 
   const [merchants, setMerchants] = React.useState<
-  {content:{ merchantId: ''; merNameChn: ''; merNameEng: '' }[]}
->({content:[]});
+  { merchantId: ''; merNameChn: ''; merNameEng: '' }[]
+>([]);
 
 React.useEffect(() => {
   fetchGetAllMer().then(setMerchants);
@@ -45,7 +45,7 @@ React.useEffect(() => {
     const { Option } = Select;
     const OptionArr: JSX.Element[] = [];
 
-    merchants.content.forEach((element) => {
+    merchants.forEach((element) => {
       OptionArr.push(
         <Option key={element.merchantId} value={element.merchantId}>
           {element.merchantId}-{element.merNameEng}
@@ -79,7 +79,7 @@ React.useEffect(() => {
           rules={[
             {
               required: true,
-              message: intl.formatMessage({ id: 'merLimit.merchantIdNecessary' }),
+              message: intl.formatMessage({ id: 'global.required' }),
             },
           ]}
         >
@@ -90,17 +90,31 @@ React.useEffect(() => {
           rules={[
             {
               required: true,
-              message: intl.formatMessage({ id: 'merLimit.maxTrxCountNecessary' }),
+              message: intl.formatMessage({ id: 'global.required' }),
             },
           ]}
           label={intl.formatMessage({ id: 'merLimit.maxTrxCount' })}
         >
           <Input />
         </Form.Item>
-        <Form.Item name="maxTrxAmount" label={intl.formatMessage({ id: 'merLimit.maxTrxAmount' })}>
+        <Form.Item name="maxTrxAmount" 
+                  rules={[
+                    {
+                      required: true,
+                      message: intl.formatMessage({ id: 'global.required' }),
+                    },
+                  ]}
+          label={intl.formatMessage({ id: 'merLimit.maxTrxAmount' })}>
           <Input />
         </Form.Item>
-        <Form.Item name="status" label={intl.formatMessage({ id: 'merLimit.status' })}>
+        <Form.Item name="status" 
+                          rules={[
+                            {
+                              required: true,
+                              message: intl.formatMessage({ id: 'global.required' }),
+                            },
+                          ]}
+        label={intl.formatMessage({ id: 'merLimit.status' })}>
           <Select
             showSearch
             style={{ width: 200 }}
