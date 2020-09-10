@@ -1,4 +1,7 @@
+import { Moment } from "moment";
+
 export interface TableListItem {
+  lsId:string;
   orgId?: string;
   yearmon?: string;
   merNameEng?: string;
@@ -29,7 +32,7 @@ export interface TableListData {
 }
 
 export interface TableListParams {
-  month?: string;
+  month?: Moment;
   lsId?: string;
   size?: number;
   page?: number;

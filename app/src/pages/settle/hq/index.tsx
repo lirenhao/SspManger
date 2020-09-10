@@ -1,5 +1,5 @@
 /* eslint-disable import/no-named-as-default-member */
-import { TreeSelect } from 'antd';
+import { TreeSelect, DatePicker } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -75,15 +75,20 @@ const TableList: React.FC<{}> = () => {
       hideInSearch: true,
     },
     {
-      title: intl.formatMessage({ id: 'hq.month' }),
-      dataIndex: 'month',
-      hideInSearch: true,
-    },
-    {
       title: intl.formatMessage({ id: 'hq.year' }),
       dataIndex: 'year',
+      // initialValue: year,
+      renderFormItem: () =>(
+      <DatePicker picker="year" >{year}</DatePicker>
+   ),
+    },
+    {
+      title:intl.formatMessage({ id: 'hq.year' }),
       initialValue: year,
-      hideInTable: true,
+      renderFormItem: () =>(
+           <DatePicker picker="year" />
+      ),
+
     },
     {
       title: intl.formatMessage({ id: 'hq.merNum' }),
@@ -163,6 +168,7 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'barNumbarNum',
       hideInSearch: true,
     },
+
   ];
 
   return (

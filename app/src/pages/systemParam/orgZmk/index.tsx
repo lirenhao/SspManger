@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Divider } from 'antd';
+import { Button, message, Divider} from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -50,6 +50,7 @@ const TableList: React.FC<{}> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
   const [stepFormValues, setStepFormValues] = useState({});
+
   const intl = useIntl();
   const actionRef = useRef<ActionType>();
   const [data, setOrg] = useState({});
@@ -179,6 +180,9 @@ const TableList: React.FC<{}> = () => {
         />
       ) : null}
     </PageContainer>
+    // </Col>
+    // </Row>
+    // </>
   );
 };
 

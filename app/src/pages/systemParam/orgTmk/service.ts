@@ -36,11 +36,23 @@ export async function exist(id: String) {
 export function getOrg() {
   return request(`/svc/ssp/org/second`);
 
-  // return new Promise(resolve => {
-  //   setTimeout(() => {
-  //     resolve("dddddddd");
-  //   }, 1000);
-  // });
+}
 
-  // return Promise.resolve({"001":"BANK OF CHINA SINGAPORE BRANCH"})
+export function getScalar() {
+  return request(`/svc/ssp/pospOrgTmk/scalar`);
+}
+
+export async function fetchGetAllMer() {
+  return request('/svc/ssp/merchant/orgId', {
+    method: 'GET',
+  });
+}
+
+export  function getMerEnum(responseResult : {merchantId : string,merNameEng : string}[]) {
+  const merEnum = {}
+  responseResult.forEach(mer=>{
+    merEnum[mer.merchantId] = `${mer.merchantId}-${mer.merNameEng}`
+  })
+  return merEnum;
+
 }

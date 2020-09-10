@@ -108,6 +108,7 @@ const TableList: React.FC<{}> = () => {
       title: intl.formatMessage({ id: 'mcc.remark' }),
       dataIndex: 'remark',
       valueType: 'textarea',
+      hideInSearch: true,
     },
   ];
 

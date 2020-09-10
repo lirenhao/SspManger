@@ -1,3 +1,5 @@
+import { Moment } from "moment";
+
 export interface TableListItem {
   month: string;
   /*  存量商户数 */
@@ -46,7 +48,7 @@ export interface TableListData {
 
 export interface TableListParams {
   orgId?: string;
-  year?: string;
+  year?: Moment;
   size?: number;
   page?: number;
   sort?: string[];

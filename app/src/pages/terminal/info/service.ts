@@ -48,6 +48,8 @@ export async function getTerminal(id: String) {
   return request(`/svc/ssp/terminal/${id}`);
 }
 
+
+
 // export async function getCountryCode() {
 //   return request('/svc/ssp/countryCode/list', {
 //     method: 'GET',

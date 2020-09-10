@@ -1,12 +1,12 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, message } from 'antd';
+import { PlusOutlined, MailOutlined, UnlockOutlined, LockOutlined, GlobalOutlined } from '@ant-design/icons';
+import { Button, message, Row, Col, Card } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl, FormattedMessage, IntlShape } from 'umi';
 import CreateForm from './components/CreateForm';
 import { TableListItem } from './data';
-import { query, save, remove, getOrg } from './service';
+import { query, save, remove, getOrg,getScalar,getMerEnum,fetchGetAllMer } from './service';
 
 /**
  * 添加
@@ -50,9 +50,20 @@ const TableList: React.FC<{}> = () => {
   const actionRef = useRef<ActionType>();
 
   const [data, setOrg] = useState({});
+  const [scalar, setScalar] = useState({total:'',enable:'',unable:'',termNum:''});
+
+  const [merchants, setMerchants] = React.useState({});
 
   React.useEffect(() => {
+
+  }, []);
+  React.useEffect(() => {
     getOrg().then(setOrg);
+    getScalar().then(setScalar);
+    fetchGetAllMer().then(mer=>{
+      const merEnum = getMerEnum(mer);
+      setMerchants(merEnum)
+    });
   }, []);
 
   const OptionArr = {};
@@ -103,12 +114,35 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'orgtmk.terminalId' }),
       dataIndex: 'terminalId',
-      hideInSearch: true,
+    },
+    {
+      title: intl.formatMessage({ id: 'orgtmk.merchantId' }),
+      dataIndex: 'merchantId',
+      hideInTable:true,
+      valueEnum: merchants,
     },
   ];
 
   return (
+    <>
+
     <PageContainer>
+    <Row>
+    <Col span={6}>
+    <Card style={{backgroundColor:'blue',color:'white',fontSize:'18px'}}><MailOutlined />     {intl.formatMessage({ id: 'orgtmk.total' })}:{scalar.total}</Card>
+    </Col>
+    <Col span={6}>
+    <Card style={{backgroundColor:'green',color:'white',fontSize:'18px'}}><UnlockOutlined />     {intl.formatMessage({ id: 'orgtmk.enable' })}:{scalar.enable}</Card>
+    </Col>
+    <Col span={6}>
+    <Card style={{backgroundColor:'red',color:'white',fontSize:'18px'}}><LockOutlined />      {intl.formatMessage({ id: 'orgtmk.unable' })}:{scalar.unable}</Card>
+    </Col>
+    <Col span={6}>
+    <Card style={{backgroundColor:'violet',color:'white',fontSize:'18px'}}><GlobalOutlined />     {intl.formatMessage({ id: 'orgtmk.termNum' })}:{scalar.termNum}</Card>
+    </Col>
+    </Row>
+    <Row>
+    <Col span={24}>
       <ProTable<TableListItem>
         request={async (params = {}, sort = {}) => {
           try {
@@ -117,6 +151,10 @@ const TableList: React.FC<{}> = () => {
               size: params.pageSize,
               page: (params.current as number) - 1,
               sort: Object.keys(sort).map((key) => `${key},desc${sort[key]?.replace('end', '')}`),
+            });
+            result.content.forEach((element: { orgIdTmkZmk: string; orgId: string; tmkZmk: string; }) => {
+              // eslint-disable-next-line no-param-reassign
+              element.orgIdTmkZmk = element.orgId+element.tmkZmk;
             });
             return {
               data: result.content,
@@ -133,7 +171,7 @@ const TableList: React.FC<{}> = () => {
         }}
         headerTitle=""
         actionRef={actionRef}
-        rowKey="orgId"
+        rowKey="orgIdTmkZmk"
         toolBarRender={() => [
           <Button type="primary" onClick={() => handleModalVisible(true)}>
             <PlusOutlined /> <FormattedMessage id="global.create" />
@@ -155,7 +193,11 @@ const TableList: React.FC<{}> = () => {
           }
         }}
       />
+          </Col>
+    </Row>
     </PageContainer>
+
+    </>
   );
 };
 

@@ -18,4 +18,10 @@ export default {
   'orgtmk.delete': '删除',
   'orgtmk.create': '增加',
   'orgtmk.title': 'TMK管理',
+  'orgtmk.merchantId':'商户ID',
+  
+  'orgtmk.total': '               总数',
+  'orgtmk.enable': '               可用',
+  'orgtmk.unable': '               已用',
+  'orgtmk.termNum': '               终端',
 };

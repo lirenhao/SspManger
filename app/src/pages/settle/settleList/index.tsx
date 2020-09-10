@@ -88,6 +88,10 @@ const TableList: React.FC<{}> = () => {
             setDownloadParams(queryParams);
 
             const result = await query(queryParams);
+            result.content.forEach((element: { lsId: string; settleDate: string ;merchantId: string; }) => {
+              // eslint-disable-next-line no-param-reassign
+              element.lsId = element.settleDate  +element.merchantId ;
+            });
             return {
               data: result.content,
               page: result.totalPages,
@@ -103,7 +107,7 @@ const TableList: React.FC<{}> = () => {
         }}
         headerTitle=""
         actionRef={actionRef}
-        rowKey="merchantId"
+        rowKey="lsId"
         columns={columns}
         toolBarRender={() => [
           <Button

@@ -1,5 +1,5 @@
 /* eslint-disable import/no-named-as-default-member */
-import { Button } from 'antd';
+import { Button, DatePicker } from 'antd';
 import { CloudDownloadOutlined } from '@ant-design/icons';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
@@ -19,8 +19,12 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'termCount.month' }),
       dataIndex: 'month',
-      hideInTable:true
+      hideInTable:true,
+      renderFormItem: () =>(
+        <DatePicker format = 'YYYYMM' picker="month" />
+      ),
     },
+    
 
     {
       title: intl.formatMessage({ id: 'termCount.merNameEng' }),
@@ -100,6 +104,10 @@ const TableList: React.FC<{}> = () => {
             setDownloadParams(queryParams);
 
             const result = await query(queryParams);
+            result.content.forEach((element: { lsId: string; yearmon: string; orgId: string; terminalId: string; merchantId: string; }) => {
+              // eslint-disable-next-line no-param-reassign
+              element.lsId = element.yearmon +element.orgId+element.terminalId +element.merchantId ;
+            });
             return {
               data: result.content,
               page: result.totalPages,
@@ -115,7 +123,7 @@ const TableList: React.FC<{}> = () => {
         }}
         headerTitle=""
         actionRef={actionRef}
-        rowKey="merchantId"
+        rowKey="lsId"
         columns={columns}
         toolBarRender={() => [
           <Button

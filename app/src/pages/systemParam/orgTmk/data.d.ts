@@ -7,6 +7,7 @@ export interface TableListItem {
   org?: {
     name?: string;
   };
+  orgIdTmkZmk:string;
 }
 
 export interface TableListPagination {
@@ -23,6 +24,10 @@ export interface TableListData {
 
 export interface TableListParams {
   orgId?: string;
+  merchantId?:string;
+  tmkZmk?: string;
+  tmkWeb?: string;
+  terminalId?: string;
   size?: number;
   page?: number;
   sort?: string[];

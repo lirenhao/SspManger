@@ -3,10 +3,18 @@ import moment from 'moment';
 import { TableListParams } from './data.d';
 
 export async function query(params?: TableListParams) {
+
+  if(params?.year){
+    return request('/svc/ssp/hqReport', {
+      method: 'GET',
+      params: {...{year:moment().format('YYYY')},...params,...{year:params?.year?.format('YYYY')}},
+    });
+  }
   return request('/svc/ssp/hqReport', {
     method: 'GET',
     params: {...{year:moment().format('YYYY')},...params},
   });
+
 }
 
 export async function exist(id: String) {

@@ -35,12 +35,7 @@ export async function exist(id: String) {
 
 export function getOrg() {
   return request(`/svc/ssp/org/second`);
-
-  // return new Promise(resolve => {
-  //   setTimeout(() => {
-  //     resolve("dddddddd");
-  //   }, 1000);
-  // });
-
-  // return Promise.resolve({"001":"BANK OF CHINA SINGAPORE BRANCH"})
 }
+
+
+

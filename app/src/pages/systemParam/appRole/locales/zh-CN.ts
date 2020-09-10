@@ -1,9 +1,9 @@
 export default {
-  'appRole.roleName': 'ROLE NAME',
-  'appRole.roleNameNecessary': 'ROLE NAME 是必须的',
-  'appRole.role': 'ROLE',
-  'appRole.roleNecessary': 'ROLE 是必须的',
-  'appRole.desc': 'DESCRIPT',
-  'appRole.create': 'create',
+  'appRole.roleName': '角色名称',
+  'appRole.roleNameNecessary': '角色名称是必须的',
+  'appRole.role': '角色',
+  'appRole.roleNecessary': '角色是必须的',
+  'appRole.desc': '描述',
+  'appRole.create': '创建',
   'appRole.createCompoent': '新建角色',
 };
