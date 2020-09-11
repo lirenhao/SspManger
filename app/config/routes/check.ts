@@ -4,25 +4,25 @@ const routes: IRoute[] = [
   {
     path: '/check/merAddon',
     name: '/check/merAddon',
-    component: './mer/merAddon',
+    component: './check/merAddon',
     locale: 'merAddonCheck.title',
   },
   {
     path: '/check/merQrc',
     name: '/check/merQrc',
-    component: './mer/merQrc',
+    component: './check/merQrc',
     locale: 'merQrcCheck.title',
   },
   {
     path: '/check/merMdr',
     name: '/check/merMdr',
-    component: './mer/merMdr',
+    component: './check/merMdr',
     locale: 'merMdrCheck.title',
   },
   {
     path: '/check/ccpay',
     name: '/check/ccpay',
-    component: './ccpay/mng',
+    component: './check/ccpay/mng',
     locale: 'ccpayCheck.title',
   },
   {

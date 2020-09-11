@@ -9,10 +9,9 @@ export interface TableListItem {
   feeMinAmt?: string;
   startDate?: string;
   closeDate?: string;
-  checkReason?: string;
   checkState?: string;
   operation?: string;
-  merchant: {
+  merchant?: {
     merchantId?: string;
     merNameChn?: string;
     merNameEng?: string;

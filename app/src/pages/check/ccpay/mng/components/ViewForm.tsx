@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Modal, Input } from 'antd';
 import { useIntl } from 'umi';
 import { TableListItem, checkStateEnum, operEnmu, ccyNotifyFlagEnum } from '../data.d';
-import formLayout from '../../../../formLayout';
+import formLayout from '../../../../../formLayout';
 
 interface UpdateFormProps {
   modalVisible: boolean;

@@ -4,9 +4,11 @@ import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl, FormattedMessage, IntlShape } from 'umi';
 import ViewForm from './components/ViewForm';
+import UpdateForm from './components/UpdateForm';
 import CheckForm from './components/CheckForm';
+
 import { TableListItem, checkStateEnum, merchantTypeEnmu, operEnmu } from './data.d';
-import { query, save } from './service';
+import { query, save,get,getCheck,saveCheck } from './service';
 
 /**
  * 添加
@@ -27,35 +29,49 @@ const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
   }
 };
 
-// const OptionArr = {};
+const handleSaveCheck = async (fields: TableListItem, intl: IntlShape) => {
+  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
 
-// Object.keys(data).forEach((key) => {
-//   OptionArr[key] = { text: data[key], status: key };
-// });
-
-// const checkStateArr = {};
-// const merchantTypeArr = {};
-// const operArr = {};
-
-// Object.keys(checkStateEnum).forEach((key) => {
-//   checkStateArr[key] = { text: checkStateEnum[key], status: key };
-// });
-
-// Object.keys(merchantTypeEnmu).forEach((key) => {
-//   merchantTypeArr[key] = { text: merchantTypeEnmu[key], status: key };
-// });
-
-// Object.keys(operEnmu).forEach((key) => {
-//   operArr[key] = { text: operEnmu[key], status: key };
-// });
+  try {
+    await saveCheck({ ...fields });
+    hide();
+    message.success(intl.formatMessage({ id: 'global.success' }));
+    return true;
+  } catch (error) {
+    hide();
+    message.error(intl.formatMessage({ id: 'global.error' }));
+    return false;
+  }
+};
 
 const TableList: React.FC<{}> = () => {
   const [createModalViewVisible, handleModalViewVisible] = useState<boolean>(false);
-
-  const [checkModalVisible, handleCheckModalVisible] = useState<boolean>(false);
+  const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
   const [stepFormValues, setStepFormValues] = useState({});
   const intl = useIntl();
   const actionRef = useRef<ActionType>();
+
+  //
+  const [after, setAfter] = React.useState<Partial<TableListItem>>({});
+  const [before, setBefore] = React.useState<Partial<TableListItem>>({});
+  
+  const [isCheck, setIsCheck] = React.useState<boolean>(false);
+
+  const beforeCheck = async (params: TableListItem) => {
+    try {
+      const info = await get(params);
+      const checkInfo = await getCheck(params);
+      setAfter(info);
+      setBefore(checkInfo);
+      setIsCheck(true);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  //
+
+
 
   const columns: ProColumns<TableListItem>[] = [
     {
@@ -64,6 +80,8 @@ const TableList: React.FC<{}> = () => {
       valueType: 'option',
       render: (_, record) => (
         <>
+
+          <Divider type="vertical" />
           <a
             onClick={() => {
               setStepFormValues(record);
@@ -75,8 +93,7 @@ const TableList: React.FC<{}> = () => {
           <Divider type="vertical" />
           <a
             onClick={() => {
-              setStepFormValues(record);
-              handleCheckModalVisible(true);
+              beforeCheck(record);
             }}
           >
             <FormattedMessage id="global.check" />
@@ -181,14 +198,14 @@ const TableList: React.FC<{}> = () => {
         }}
       />
       {stepFormValues && Object.keys(stepFormValues).length ? (
-        <CheckForm
+        <UpdateForm
           values={stepFormValues}
-          onCancel={() => handleCheckModalVisible(false)}
-          modalVisible={checkModalVisible}
+          onCancel={() => handleUpdateModalVisible(false)}
+          modalVisible={updateModalVisible}
           onSubmit={async (value) => {
             const success = await handleSaveAndUpdate(value, intl);
             if (success) {
-              handleCheckModalVisible(false);
+              handleUpdateModalVisible(false);
               if (actionRef.current) {
                 actionRef.current.reload();
               }
@@ -196,6 +213,23 @@ const TableList: React.FC<{}> = () => {
           }}
         />
       ) : null}
+
+      <CheckForm
+        // values={stepFormValues}
+        onCancel={() => setIsCheck(false)}
+        modalVisible={isCheck}
+        before = {before}
+        after = {after}
+        onSubmit={async (value) => {
+          const success = await handleSaveCheck(value,intl);
+          if (success) {
+            setIsCheck(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
+        }}
+      />
     </PageContainer>
   );
 };

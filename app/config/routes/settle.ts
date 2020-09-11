@@ -10,7 +10,7 @@ const routes: IRoute[] = [
   {
     path: '/settle/cupHandle',
     name: 'cupHandle',
-    component: './settle/cup',
+    component: './settle/cupManu',
     locale: 'cupHandle.title',
   },
   {
@@ -22,7 +22,7 @@ const routes: IRoute[] = [
   {
     path: '/settle/bcfesHandle',
     name: 'bcfesHandle',
-    component: './settle/bcfes',
+    component: './settle/bcfesManu',
     locale: 'bcfesHandle.title',
   },
   {
@@ -34,7 +34,7 @@ const routes: IRoute[] = [
   {
     path: '/settle/adjInputVerify',
     name: 'adjInputVerify',
-    component: './settle/merchantManual',
+    component: './settle/merchantManualVerify',
     locale: 'adjInputVerify.title',
   },
 
@@ -48,7 +48,7 @@ const routes: IRoute[] = [
   {
     path: '/settle/settleHisSuccess',
     name: 'settleHisSuccess',
-    component: './settle/settleHis',
+    component: './settle/settleHisSuccess',
     locale: 'settleHisSuccess.title',
   },
   {

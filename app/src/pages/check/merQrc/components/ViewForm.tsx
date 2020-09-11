@@ -67,7 +67,7 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
         </Form.Item>
 
         <Form.Item
-          name={['ccyCode', 'ccyName']}
+          name='ccyType'
           label={intl.formatMessage({ id: 'merQrc.ccyName' })}
         >
           <Input disabled />
@@ -90,10 +90,10 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
   return (
     <Modal
       destroyOnClose
-      title={intl.formatMessage({ id: 'merQrc.updateCompoent' })}
+      title={intl.formatMessage({ id: 'merQrc.viewCompoent' })}
       visible={modalVisible}
       onCancel={() => onCancel()}
-      onOk={() => onCancel()}
+      onOk={() => {}}
     >
       <Form
         {...formLayout}

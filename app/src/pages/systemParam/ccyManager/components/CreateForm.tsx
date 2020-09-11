@@ -48,10 +48,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
               required: true,
               message: intl.formatMessage({ id: 'currency.ccyTypeNecessary' }),
             },
-            {
-              required: true,
-              message: intl.formatMessage({ id: 'currency.ccyTypeNecessary' }),
-            },
+
 
             {
               validator: (_, value:string) =>
@@ -81,10 +78,21 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
         >
           <Input />
         </Form.Item>
-        <Form.Item name="ccyEname" label={intl.formatMessage({ id: 'currency.eName' })}>
+        <Form.Item           
+         rules={[
+            {
+              required: true,
+              message: intl.formatMessage({ id: 'currency.eNameNecessary' }),
+            },
+          ]} name="ccyEname" label={intl.formatMessage({ id: 'currency.eName' }) }>
           <Input />
         </Form.Item>
-        <Form.Item name="ccySymbol" label={intl.formatMessage({ id: 'currency.symbol' })}>
+        <Form.Item rules={[
+            {
+              required: true,
+              message: intl.formatMessage({ id: 'currency.ccySymbolNecessary' }),
+            },
+          ]} name="ccySymbol" label={intl.formatMessage({ id: 'currency.symbol' })}>
           <Input />
         </Form.Item>
       </>

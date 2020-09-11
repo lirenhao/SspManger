@@ -11,4 +11,6 @@ export default {
   'currency.create': 'ADD',
   'ccy.updateCompoent': '修改',
   'currency.title': 'Currency Management',
+  'currency.eNameNecessary':'货币编号是必须的',
+  'currency.ccySymbolNecessary':'货币记号是必须的',
 };

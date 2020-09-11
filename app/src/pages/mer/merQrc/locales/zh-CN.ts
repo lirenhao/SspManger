@@ -21,4 +21,5 @@ export default {
   'merQrc.fee': '手续费类型',
   'merQrc.title': '商户静态QR管理',
   'merQrcCheck.title': '商户QR码审核',
+  'merQrc.checkCompoent':'商户QR码审核'
 };

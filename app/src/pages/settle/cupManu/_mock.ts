@@ -4,37 +4,49 @@ import Code from './data.d';
 const TableListDataSource: Code.TableListItem[] = [];
 
 TableListDataSource.push({
+  lsId: '111',
   merchantId: '11',
-  ccpayMerName: '32',
-  ccpayMerPass: '3',
-  staticQrc: '4',
-  fee: '3',
-  notifyFlag: '5',
-  checkState: '6',
-  checkReason: '2',
-  operation: '1',
+  settleDate: '20200815',
+  terminalId: '',
+  messageType: '',
+  procCode: '',
+  pan: '',
+  tranAmt: '123',
+  tranDate: '',
+  tranTime: '',
+  rrn: '',
+  authCode: '',
+  feeReceivable: '',
+  feePayable: '',
+  status: '',
   merchant: {
-    merchantId: '1',
-    merNameChn: '2',
-    merNameEng: '3',
-    merchantType: '4',
+    merchantId: '',
+    merNameChn: '',
+    merNameEng: '',
+    merchantType: '',
   },
 });
 TableListDataSource.push({
-  merchantId: '121',
-  ccpayMerName: '232',
-  ccpayMerPass: '33',
-  staticQrc: '44',
-  fee: '2',
-  notifyFlag: '55',
-  checkState: '66',
-  checkReason: '2',
-  operation: '1',
+  lsId: '222',
+  merchantId: '11',
+  settleDate: '20200815',
+  terminalId: '',
+  messageType: '',
+  procCode: '',
+  pan: '',
+  tranAmt: '321',
+  tranDate: '',
+  tranTime: '',
+  rrn: '',
+  authCode: '',
+  feeReceivable: '',
+  feePayable: '',
+  status: '',
   merchant: {
-    merchantId: '121',
-    merNameChn: '222',
-    merNameEng: '3',
-    merchantType: '4',
+    merchantId: '',
+    merNameChn: '',
+    merNameEng: '',
+    merchantType: '',
   },
 });
 const Result = {
@@ -57,22 +69,26 @@ function getAll(req: Request, res: Response) {
   return res.json(pageResult);
 }
 function save(req: Request, res: Response) {
-  Result.data[0] = {
-    merchantId: '12221',
-    ccpayMerName: '3332',
-    ccpayMerPass: '3333',
-    staticQrc: '444',
-    notifyFlag: '55',
-    checkState: '1',
-    checkReason: '772',
-    operation: '81',
-    merchant: {
-      merchantId: '1',
-      merNameChn: '2',
-      merNameEng: '3',
-      merchantType: '4',
-    },
-  };
+  // Result.data[0] = {
+  //   lsId: 'string23',
+  //   merchantId:'asdasda1',
+  //   feeType:'1',
+  //   tranCnt:'0',
+  //   tranAmt:'1',
+  //   fee:'2',
+  //   feeMinAmt:'3',
+  //   startDate: '20200101',
+  //   closeDate: '20200102',
+  //   cardOrgNum:'2',
+  //   checkState:'1',
+  //   operation:'0',
+  //   merchant:{
+  //     merchantId : 'mId',
+  //     merNameChn:'cn11',
+  //     merNameEng:'en22',
+  //     merchantType:'J33',
+  //   }
+  // };
   res.send(200);
 }
 
@@ -92,21 +108,6 @@ function remove(req: Request, res: Response) {
 function exist(req: Request, res: Response) {
   // console.log(req.param.id)
   res.send(false);
-}
-
-function merchant(req: Request, res: Response) {
-  res.send([
-    {
-      merchantId: 'string',
-      merNameChn: 'string1',
-      merNameEng: 'string',
-    },
-    {
-      merchantId: 'string11',
-      merNameChn: 'string22',
-      merNameEng: 'string33',
-    },
-  ]);
 }
 
 // function ccyType(req: Request, res: Response) {
@@ -132,11 +133,11 @@ function merchant(req: Request, res: Response) {
 // }
 
 export default {
-  'GET /svc/ssp/ccpay': getAll,
-  'PUT /svc/ssp/ccpay': save,
-  'PUT /svc/ssp/ccpay/:id': getOne,
-  'DELETE /svc/ssp/ccpay/:id': remove,
-  'GET /svc/ssp/ccpay/:id/exists': exist,
+  'GET /svc/ssp/cupAcomn': getAll,
+  'PUT /svc/ssp/cupAcomn': save,
+  'PUT /svc/ssp/cupAcomn/:id': getOne,
+  'DELETE /svc/ssp/cupAcomn/:id': remove,
+  'GET /svc/ssp/cupAcomn/:id/exists': exist,
   // 'GET /svc/ssp/ccyType/list' : ccyType,
   // 'GET /svc/ssp/countryCode/list' : countryCode,
   // 'GET /svc/ssp/org/tree' : orgTree,

@@ -62,10 +62,10 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
   return (
     <Modal
       destroyOnClose
-      title={intl.formatMessage({ id: 'merAddon.view' })}
+      title={intl.formatMessage({ id: 'merAddon.updateCompoent' })}
       visible={modalVisible}
       onCancel={() => onCancel()}
-      onOk={() => onCancel()}
+      onOk={() => {}}
     >
       <Form
         {...formLayout}

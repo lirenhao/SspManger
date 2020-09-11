@@ -152,7 +152,9 @@ function terminal(req: Request, res: Response) {
 export default {
   'GET /svc/ssp/staticQrc': getAll,
   'PUT /svc/ssp/staticQrc': save,
-  'PUT /svc/ssp/staticQrc/:id': getOne,
+  'GET /svc/ssp/staticQrc/:id': getOne,
+  'GET /svc/ssp/staticQrc/:id/check': getOne,
+  'PUT /svc/ssp/staticQrc/:id/check': save,
   'DELETE /svc/ssp/staticQrc/:id': remove,
   'GET /svc/ssp/staticQrc/:id/exists': exist,
   'GET /svc/ssp/ccyType/list': ccyType,

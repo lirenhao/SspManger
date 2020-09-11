@@ -67,7 +67,7 @@ const TableList: React.FC<{}> = () => {
 
     {
       title: intl.formatMessage({ id: 'terminal.merchantId' }),
-      dataIndex: 'merchantId',
+      dataIndex: ['merchant','merchantId'],
     },
     {
       title: intl.formatMessage({ id: 'terminal.orgId' }),

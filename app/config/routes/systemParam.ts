@@ -2,6 +2,31 @@ import { IRoute } from 'umi';
 
 const routes: IRoute[] = [
   {
+    path: '/systemParam/appRole',
+    name: 'appRole',
+    component: './app/role',
+    locale: 'appRole.title',
+  },
+  {
+    path: '/systemParam/mccCode',
+    name: 'mccCode',
+    component: './systemParam/mccCode',
+    locale: 'mcc.title',
+  },
+
+  {
+    path: '/systemParam/currency',
+    name: 'currency',
+    component: './systemParam/ccyManager',
+    locale: 'currency.title',
+  },
+  {
+    path: '/systemParam/country',
+    name: 'country',
+    component: './systemParam/country',
+    locale: 'country.title',
+  },
+  {
     path: '/systemParam/merchant',
     name: 'merchant',
     component: './info/merchant',
@@ -27,30 +52,10 @@ const routes: IRoute[] = [
     component: './api/org/mapping',
     locale: 'apiOrg.mapping.title',
   },
-  {
-    path: '/systemParam/appRole',
-    name: 'appRole',
-    component: './app/role',
-    locale: 'appRole.title',
-  },
-  {
-    path: '/systemParam/mccCode',
-    name: 'mccCode',
-    component: './systemParam/mccCode',
-    locale: 'mcc.title',
-  },
-  {
-    path: '/systemParam/currency',
-    name: 'currency',
-    component: './systemParam/ccyManager',
-    locale: 'currency.title',
-  },
-  {
-    path: '/systemParam/country',
-    name: 'country',
-    component: './systemParam/country',
-    locale: 'country.title',
-  },
+
+
+
+
   {
     path: '/systemParam/banks',
     name: 'bank list',

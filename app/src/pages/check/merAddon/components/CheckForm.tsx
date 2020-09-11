@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Modal, Input, Button } from 'antd';
+import { Form, Modal, Input, Row, Col, Card, Radio } from 'antd';
 import { useIntl } from 'umi';
 import { TableListItem } from '../data';
 import formLayout from '../../../../formLayout';
@@ -8,7 +8,9 @@ interface UpdateFormProps {
   modalVisible: boolean;
   onCancel: () => void;
   onSubmit: (values: TableListItem) => void;
-  values: Partial<TableListItem>;
+  // values: Partial<TableListItem>;
+  before: Partial<TableListItem>;
+  after : Partial<TableListItem>;
 }
 
 export interface UpdateFormState {
@@ -17,28 +19,19 @@ export interface UpdateFormState {
 
 const CreateForm: React.FC<UpdateFormProps> = (props) => {
   const intl = useIntl();
-  const { modalVisible, onCancel, values, onSubmit } = props;
+  const { modalVisible, onCancel, onSubmit } = props;
 
-  const formVals = {
-    merchantId: props.values.merchantId,
-    ccyType: props.values.ccyType,
-    internationalCode: props.values.internationalCode,
-    checkState: props.values.checkState,
-    checkReason: props.values.checkReason,
-    operation: props.values.operation,
-    merchant: {
-      merchantId: props.values.merchant ? props.values.merchant.merchantId : '',
-      merNameChn: props.values.merchant ? props.values.merchant.merNameChn : '',
-      merNameEng: props.values.merchant ? props.values.merchant.merNameEng : '',
-      merchantType: props.values.merchant ? props.values.merchant.merchantType : '',
-    },
-  };
+
 
   const [form] = Form.useForm();
-  form.setFieldsValue(formVals);
+  form.setFieldsValue(props.before);
+  const [formAfter]  = Form.useForm();
+  formAfter.setFieldsValue(props.after);
 
-  const emptyVal = {};
-  form.setFieldsValue({ ...emptyVal, ...values });
+  const afterFormVals = props.after;
+
+  // const emptyVal = {};
+  // form.setFieldsValue({ ...emptyVal, ...values });
 
   const renderContent = () => {
     return (
@@ -55,9 +48,6 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
         >
           <Input disabled />
         </Form.Item>
-        <Form.Item name="checkReason" label={intl.formatMessage({ id: 'merAddon.checkReason' })}>
-          <Input />
-        </Form.Item>
       </>
     );
   };
@@ -67,60 +57,97 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
       destroyOnClose
       title={intl.formatMessage({ id: 'merAddon.updateCompoent' })}
       visible={modalVisible}
-      footer={
-        <>
-          <Button
-            onClick={() => {
-              onSubmit({
-                ...formVals,
-                ...{ checkState: '1', checkReason: form.getFieldValue('checkReason') },
-              } as TableListItem);
-            }}
-          >
-            {intl.formatMessage({ id: 'check.approval' })}
-          </Button>
+      width={1040}
+      onCancel={() => onCancel()}
+      onOk={() => form.submit()}
+      // footer={
+      //   <>
+      //     <Button
+      //       onClick={() => {
+      //         onSubmit({
+      //           ...formVals,
+      //           ...{ checkState: '1', checkReason: form.getFieldValue('checkReason') },
+      //         } as TableListItem);
+      //       }}
+      //     >
+      //       {intl.formatMessage({ id: 'check.approval' })}
+      //     </Button>
 
-          <Button
-            onClick={() => {
-              onSubmit({
-                ...formVals,
-                ...{ checkState: '2', checkReason: form.getFieldValue('checkReason') },
-              } as TableListItem);
-            }}
-          >
-            {intl.formatMessage({ id: 'check.reject' })}
-          </Button>
+      //     <Button
+      //       onClick={() => {
+      //         onSubmit({
+      //           ...formVals,
+      //           ...{ checkState: '2', checkReason: form.getFieldValue('checkReason') },
+      //         } as TableListItem);
+      //       }}
+      //     >
+      //       {intl.formatMessage({ id: 'check.reject' })}
+      //     </Button>
 
-          <Button
-            onClick={() => {
-              onCancel();
-            }}
-          >
-            {intl.formatMessage({ id: 'check.cancel' })}
-          </Button>
-        </>
-      }
+      //     <Button
+      //       onClick={() => {
+      //         onCancel();
+      //       }}
+      //     >
+      //       {intl.formatMessage({ id: 'check.cancel' })}
+      //     </Button>
+      //   </>
+      // }
     >
+      <Row>
+        
+        <Col span={12}>
+            <Card title={intl.formatMessage({ id: 'merAddon.check.after' })}>
+                <Form {...formLayout} form={formAfter}>
+                    {renderContent()}
+                </Form>
+            </Card>
+      </Col>
+      <Col span={12}>
+            <Card title={intl.formatMessage({ id: 'merAddon.check.before' })}>
+        <Form {...formLayout} form={form}>
+            {renderContent()}
+        </Form>
+            </Card>
+        </Col>
+      </Row>
+      <br/>
       <Form
-        {...formLayout}
         form={form}
-        initialValues={{
-          merchantId: formVals.merchantId,
-          ccyType: formVals.ccyType,
-          internationalCode: formVals.internationalCode,
-          checkState: formVals.checkState,
-          checkReason: formVals.checkReason,
-          operation: formVals.operation,
-          merchant: {
-            merchantId: formVals.merchant.merchantId,
-            merNameChn: formVals.merchant.merNameChn,
-            merNameEng: formVals.merchant.merNameEng,
-            merchantType: formVals.merchant.merchantType,
-          },
-        }}
-        // initialValues={values}
+        initialValues={{ checkState: '0' }}
+        onFinish={values => {
+          onSubmit({...{merchantId:''},...afterFormVals,...values})
+      }
+    }
       >
-        {renderContent()}
+      <Row>
+        <Col span={8}>
+        <Form.Item
+              name="checkState"
+              label={intl.formatMessage({ id:'merAddon.check.checkState'})}
+              rules={[
+                {
+                  required: true,
+                  message: intl.formatMessage({ id: 'merAddon.check.checkState.required' }),
+                }
+              ]}
+            >
+              <Radio.Group>
+                <Radio value="0">{intl.formatMessage({ id: 'appUser.check.checkState.0' })}</Radio>
+                <Radio value="1">{intl.formatMessage({ id: 'appUser.check.checkState.1' })}</Radio>
+              </Radio.Group>
+            </Form.Item>
+        </Col>
+        <Col span={16}>
+            <Form.Item
+              name="checkReason"
+              label={intl.formatMessage({ id: 'appUser.check.checkReason' })}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+          
+      </Row>
       </Form>
     </Modal>
   );

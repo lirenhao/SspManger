@@ -32,16 +32,46 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
   const renderContent = () => {
     return (
       <>
-        <Form.Item name="merchantId" label={intl.formatMessage({ id: 'merAddon.merchantId' })}>
+        <Form.Item name="merchantId" label={intl.formatMessage({ id: 'merMdr.merchantId' })}>
           <Input disabled />
         </Form.Item>
-        <Form.Item name="ccyType" label={intl.formatMessage({ id: 'merAddon.ccyType' })}>
+
+        <Form.Item name="feeType" label={intl.formatMessage({ id: 'merMdr.feeType' })}>
           <Input disabled />
         </Form.Item>
-        <Form.Item
-          name="internationalCode"
-          label={intl.formatMessage({ id: 'merAddon.internationalCode' })}
-        >
+
+        <Form.Item name="cardOrgNum" label={intl.formatMessage({ id: 'merMdr.cardOrgNum' })}>
+          <Input disabled />
+        </Form.Item>
+
+        <Form.Item name="tranCnt" label={intl.formatMessage({ id: 'merMdr.tranCnt' })}>
+          <Input disabled />
+        </Form.Item>
+
+        <Form.Item name="tranAmt" label={intl.formatMessage({ id: 'merMdr.tranAmt' })}>
+          <Input disabled />
+        </Form.Item>
+
+        <Form.Item name="fee" label={intl.formatMessage({ id: 'merMdr.fee' })}>
+          <Input disabled />
+        </Form.Item>
+
+        <Form.Item name="feeMinAmt" label={intl.formatMessage({ id: 'merMdr.feeMinAmt' })}>
+          <Input disabled />
+        </Form.Item>
+
+        <Form.Item name="checkState" label={intl.formatMessage({ id: 'merMdr.checkState' })}>
+          <Input disabled />
+        </Form.Item>
+        <Form.Item name="startDate" label={intl.formatMessage({ id: 'merMdr.startDate' })}>
+          <Input disabled />
+        </Form.Item>
+
+        <Form.Item name="closeDate" label={intl.formatMessage({ id: 'merMdr.closeDate' })}>
+          <Input disabled />
+        </Form.Item>
+
+        <Form.Item name="operation" label={intl.formatMessage({ id: 'merMdr.operation' })}>
           <Input disabled />
         </Form.Item>
       </>
@@ -56,39 +86,7 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
       width={1040}
       onCancel={() => onCancel()}
       onOk={() => form.submit()}
-      // footer={
-      //   <>
-      //     <Button
-      //       onClick={() => {
-      //         onSubmit({
-      //           ...formVals,
-      //           ...{ checkState: '1', checkReason: form.getFieldValue('checkReason') },
-      //         } as TableListItem);
-      //       }}
-      //     >
-      //       {intl.formatMessage({ id: 'check.approval' })}
-      //     </Button>
-
-      //     <Button
-      //       onClick={() => {
-      //         onSubmit({
-      //           ...formVals,
-      //           ...{ checkState: '2', checkReason: form.getFieldValue('checkReason') },
-      //         } as TableListItem);
-      //       }}
-      //     >
-      //       {intl.formatMessage({ id: 'check.reject' })}
-      //     </Button>
-
-      //     <Button
-      //       onClick={() => {
-      //         onCancel();
-      //       }}
-      //     >
-      //       {intl.formatMessage({ id: 'check.cancel' })}
-      //     </Button>
-      //   </>
-      // }
+      
     >
 <Row>
   <Col span={12}>

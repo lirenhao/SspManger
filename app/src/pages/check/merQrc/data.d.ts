@@ -7,13 +7,14 @@ export interface TableListItem {
     ccyType?: string;
     ccyName?: string;
   };
+  ccyType?: string;
   useCase?: string;
   qrValue?: string;
   cardAsso?: string;
   checkState?: string;
   checkReason?: string;
   operation?: string;
-  merchant?: {
+  merchant: {
     merchantId?: string;
     merNameChn?: string;
     merNameEng?: string;
@@ -35,7 +36,10 @@ export interface TableListData {
 
 export interface TableListParams {
   merchantId?: string;
-  ccyType?: string;
+  
+  ccyCode?:{
+    ccyType?: string;
+  }
   internationalCode?: string;
   checkState?: string;
   operation?: string;

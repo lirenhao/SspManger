@@ -1,5 +1,5 @@
 /* eslint-disable import/no-named-as-default-member */
-import { message, Button, Divider } from 'antd';
+import { message, Button } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -9,8 +9,8 @@ import { PlusOutlined } from '@ant-design/icons';
 import CreateForm from './components/CreateForm';
 import ViewForm from './components/ViewForm';
 import { TableListItem, checkStateEnum, operEnmu, cardAssoEnum, feeTypeEnum } from './data.d';
-import CheckForm from './components/CheckForm';
-import { query, save,get,getCheck,saveCheck } from './service';
+// import CheckForm from './components/CheckForm';
+import { query, save} from './service';
 
 /**
  * 添加
@@ -31,20 +31,20 @@ const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
   }
 };
 
-const handleSaveCheck = async (fields: TableListItem, intl: IntlShape) => {
-  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
+// const handleSaveCheck = async (fields: TableListItem, intl: IntlShape) => {
+//   const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
 
-  try {
-    await saveCheck({ ...fields });
-    hide();
-    message.success(intl.formatMessage({ id: 'global.success' }));
-    return true;
-  } catch (error) {
-    hide();
-    message.error(intl.formatMessage({ id: 'global.error' }));
-    return false;
-  }
-};
+//   try {
+//     await saveCheck({ ...fields });
+//     hide();
+//     message.success(intl.formatMessage({ id: 'global.success' }));
+//     return true;
+//   } catch (error) {
+//     hide();
+//     message.error(intl.formatMessage({ id: 'global.error' }));
+//     return false;
+//   }
+// };
 
 
 
@@ -56,22 +56,22 @@ const TableList: React.FC<{}> = () => {
   const actionRef = useRef<ActionType>();
 
   //
-  const [after, setAfter] = React.useState<Partial<TableListItem>>({});
-  const [before, setBefore] = React.useState<Partial<TableListItem>>({});
+  // const [after, setAfter] = React.useState<Partial<TableListItem>>({});
+  // const [before, setBefore] = React.useState<Partial<TableListItem>>({});
   
-  const [isCheck, setIsCheck] = React.useState<boolean>(false);
+  // const [isCheck, setIsCheck] = React.useState<boolean>(false);
 
-  const beforeCheck = async (params: TableListItem) => {
-    try {
-      const info = await get(params);
-      const checkInfo = await getCheck(params);
-      setAfter(info);
-      setBefore(checkInfo);
-      setIsCheck(true);
-    } catch (err) {
-      console.error(err.message);
-    }
-  }
+  // const beforeCheck = async (params: TableListItem) => {
+  //   try {
+  //     const info = await get(params);
+  //     const checkInfo = await getCheck(params);
+  //     setAfter(info);
+  //     setBefore(checkInfo);
+  //     setIsCheck(true);
+  //   } catch (err) {
+  //     console.error(err.message);
+  //   }
+  // }
 
   //
 
@@ -91,14 +91,14 @@ const TableList: React.FC<{}> = () => {
           >
             <FormattedMessage id="global.view" />
           </a>
-          <Divider type="vertical" />
+          {/* <Divider type="vertical" />
           <a
             onClick={() => {
               beforeCheck(record);
             }}
           >
             <FormattedMessage id="global.check" />
-          </a>
+          </a> */}
         </>
       ),
     },
@@ -112,8 +112,6 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'merMdr.merchantId' }),
       dataIndex: 'merchantId',
-      // initialValue: undefined,
-      // valueEnum: merchantTypeEnmu,
       hideInSearch: true,
     },
     {
@@ -241,8 +239,7 @@ const TableList: React.FC<{}> = () => {
           }
         }}
       />
-      <CheckForm
-        // values={stepFormValues}
+      {/* <CheckForm
         onCancel={() => setIsCheck(false)}
         modalVisible={isCheck}
         before = {before}
@@ -256,7 +253,7 @@ const TableList: React.FC<{}> = () => {
             }
           }
         }}
-      />
+      /> */}
     </PageContainer>
   );
 };
