@@ -51,7 +51,6 @@ const TableList: React.FC<{}> = () => {
   const intl = useIntl();
   const actionRef = useRef<ActionType>();
 
-  //
   const [after, setAfter] = React.useState<Partial<TableListItem>>({});
   const [before, setBefore] = React.useState<Partial<TableListItem>>({});
   

@@ -27,7 +27,7 @@ export async function download(params?: TableListParams) {
   let queryPara='';
   if(params){
     Object.keys(params).forEach( key=>{
-      queryPara = `${queryPara  }&${  key  }=${  params[key]}`;
+      queryPara = `${queryPara  }&${  key  }=${  key==='month'?params.month?.format('YYYYMM'):params[key]}`;
     })
   }
   const fileName = 'merSettle.xls';

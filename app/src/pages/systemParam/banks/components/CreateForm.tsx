@@ -68,7 +68,12 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
         >
           <Input />
         </Form.Item>
-        <Form.Item name="bic" label={intl.formatMessage({ id: 'banks.bic' })}>
+        <Form.Item name="bic"           rules={[
+            {
+              required: true,
+              message: intl.formatMessage({ id: 'banks.bicNecessary' }),
+            },
+          ]} label={intl.formatMessage({ id: 'banks.bic' })}>
           <Input />
         </Form.Item>
       </>

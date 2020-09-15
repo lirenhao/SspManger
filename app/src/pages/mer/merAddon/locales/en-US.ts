@@ -15,4 +15,6 @@ export default {
   'merAddon.check.after' : '修改后',
   'merAddon.check.checkState' : '审核状态',
   'merAddonCheck.title': 'Merchant Add-On Check',
+  'merAddon.ccyTypeNecessary': '货币类型是必须的',
+  'merAddon.internationalCodeNecessary': '国家代码是必须的',
 };

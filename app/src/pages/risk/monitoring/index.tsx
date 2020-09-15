@@ -67,17 +67,17 @@ const TableList: React.FC<{}> = () => {
       ),
     },
     {
-      title: intl.formatMessage({ id: 'riskReport.riskCode' }),
+      title: intl.formatMessage({ id: 'riskMonitoring.riskCode' }),
       dataIndex: 'riskCode',
       hideInSearch:true
     },
     {
-      title: intl.formatMessage({ id: 'riskReport.riskName' }),
+      title: intl.formatMessage({ id: 'riskMonitoring.riskName' }),
       dataIndex: 'riskName',
       hideInSearch:true
     },
     {
-        title: intl.formatMessage({ id: 'riskReport.value' }),
+        title: intl.formatMessage({ id: 'riskMonitoring.value' }),
         dataIndex: 'value',
         hideInSearch:true
       },

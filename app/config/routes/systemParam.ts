@@ -27,6 +27,12 @@ const routes: IRoute[] = [
     locale: 'country.title',
   },
   {
+    path: '/systemParam/cardbin',
+    name: 'bank list',
+    component: './systemParam/cardbin',
+    locale: 'cardbin.title',
+  },
+  {
     path: '/systemParam/merchant',
     name: 'merchant',
     component: './info/merchant',
@@ -34,6 +40,31 @@ const routes: IRoute[] = [
     access: 'canShow',
     roles: ['admin', 'user'],
   },
+  {
+    path: '/systemParam/banks',
+    name: 'bank list',
+    component: './systemParam/banks',
+    locale: 'banks.title',
+  },{
+    path: '/systemParam/orgZmk',
+    name: 'orgzmk',
+    component: './systemParam/orgZmk',
+
+    locale: 'orgzmk.title',
+  },
+  {
+    path: '/systemParam/orgTmk',
+    name: 'orgtmk',
+    component: './systemParam/orgTmk',
+    locale: 'orgtmk.title',
+  },
+  {
+    path: '/systemParam/uploadTmk',
+    name: 'uploadTmk',
+    component: './systemParam/uploadTmk',
+    locale: 'uploadTmk.title',
+  },
+
   {
     path: '/systemParam/termSn',
     name: 'termSn',
@@ -56,37 +87,8 @@ const routes: IRoute[] = [
 
 
 
-  {
-    path: '/systemParam/banks',
-    name: 'bank list',
-    component: './systemParam/banks',
-    locale: 'banks.title',
-  },
-  {
-    path: '/systemParam/cardbin',
-    name: 'bank list',
-    component: './systemParam/cardbin',
-    locale: 'cardbin.title',
-  },
-  {
-    path: '/systemParam/orgZmk',
-    name: 'orgzmk',
-    component: './systemParam/orgZmk',
 
-    locale: 'orgzmk.title',
-  },
-  {
-    path: '/systemParam/orgTmk',
-    name: 'orgtmk',
-    component: './systemParam/orgTmk',
-    locale: 'orgtmk.title',
-  },
-  {
-    path: '/systemParam/uploadTmk',
-    name: 'uploadTmk',
-    component: './systemParam/uploadTmk',
-    locale: 'uploadTmk.title',
-  },
+  
   {
     path: '/systemParam/policy',
     name: 'policy',

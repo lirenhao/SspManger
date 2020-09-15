@@ -50,7 +50,11 @@ export async function download(isSuccess: boolean, params?: TableListParams) {
   let fileName = '.xls';
   if(params){
     Object.keys(params).forEach( key=>{
-      queryPara = `${queryPara  }&${  key  }=${  params[key]}`;
+      if(key==='settleDate'&&params.settleDate){
+        queryPara = `${queryPara  }&settleStartDate=${  params.settleDate[0].replaceAll('-','')}&settleEndDate=${  params.settleDate[1].replaceAll('-','')}`;
+      }else{
+        queryPara = `${queryPara  }&${  key  }=${  params[key]}`;
+      }
     })
   }
   if (isSuccess) {

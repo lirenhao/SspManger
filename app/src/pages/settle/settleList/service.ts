@@ -47,7 +47,11 @@ export async function download(params?: TableListParams) {
   let queryPara='';
   if(params){
     Object.keys(params).forEach( key=>{
-      queryPara = `${queryPara  }&${  key  }=${  params[key]}`;
+      if(key==='settleDate'&&params.settleDate){
+        queryPara = `${queryPara  }&settleStartDate=${  params.settleDate[0].replaceAll('-','')}&settleEndDate=${  params.settleDate[1].replaceAll('-','')}`;
+      }else{
+        queryPara = `${queryPara  }&${  key  }=${  params[key]}`;
+      }
     })
   }
   const fileName = 'merSettle.xls';

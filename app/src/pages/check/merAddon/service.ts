@@ -2,7 +2,7 @@ import { request } from 'umi';
 import { TableListParams, TableListItem } from './data';
 
 export async function query(params?: TableListParams) {
-  return request('/svc/ssp/merchant', {
+  return request('/svc/ssp/merchantExtra', {
     method: 'GET',
     params,
   });

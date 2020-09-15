@@ -58,7 +58,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
               required: true,
               message: intl.formatMessage({ id: 'banks.banknameNecessary' }),
             },
-          ]}
+          ]} 
           label={intl.formatMessage({ id: 'banks.bankname' })}
         >
           <Input />

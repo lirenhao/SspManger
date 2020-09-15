@@ -29,7 +29,9 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
     getCcyType().then(setCcy);
   }, []);
   React.useEffect(() => {
-    getCountryCode().then(setCountry);
+    getCountryCode().then(element=>{
+      setCountry(element.content)
+    });
   }, []);
 
   const formVals = {
@@ -90,11 +92,22 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
         <Form.Item name="merchantId" label={intl.formatMessage({ id: 'merAddon.merchantId' })}>
           <Input disabled />
         </Form.Item>
-        <Form.Item name="ccyType" label={intl.formatMessage({ id: 'merAddon.ccyType' })}>
+        <Form.Item rules={[
+                {
+                  required: true,
+                  message: intl.formatMessage({ id: 'merAddon.ccyTypeNecessary' }),
+                },
+              ]} name="ccyType" label={intl.formatMessage({ id: 'merAddon.ccyType' })}>
           <Select>{renderCcyOption()}</Select>
         </Form.Item>
         <Form.Item
           name="internationalCode"
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({ id: 'merAddon.internationalCodeNecessary' }),
+            },
+          ]}
           label={intl.formatMessage({ id: 'merAddon.internationalCode' })}
         >
           <Select>{renderCountryOption()}</Select>

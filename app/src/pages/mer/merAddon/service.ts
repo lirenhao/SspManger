@@ -2,7 +2,7 @@ import { request } from 'umi';
 import { TableListParams, TableListItem } from './data';
 
 export async function query(params?: TableListParams) {
-  return request('/svc/ssp/merchantExtra', {
+  return request('/svc/ssp/merchant', {
     method: 'GET',
     params,
   });
@@ -56,7 +56,7 @@ export async function getCcyType() {
 }
 
 export async function getCountryCode() {
-  return request('/svc/ssp/countryCode/list', {
+  return request('/svc/ssp/countryCode', {
     method: 'GET',
   });
 }

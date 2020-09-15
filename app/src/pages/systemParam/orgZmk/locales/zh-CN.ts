@@ -11,7 +11,7 @@ export default {
   'orgzmk.pwd2Format': '密码2格式错误',
   'orgzmk.pwd2Length': '密码2长度需要达到48位',
 
-  'orgzmk.lmkzmk': 'ZMK',
+  'orgzmk.zmkLmk': 'ZMK',
   'orgzmk.checkValue': 'check 值',
 
   'orgzmk.createCompoent': '新建ZMK',
