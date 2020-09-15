@@ -38,7 +38,8 @@ export async function download(params?: TableListParams) {
   let queryPara='';
   if(params){
     Object.keys(params).forEach( key=>{
-      queryPara = `${queryPara  }&${  key  }=${  params[key]}`;
+
+      queryPara = `${queryPara  }&${  key  }=${  key==='settleDate'? params[key]?.replaceAll('-',''):params[key]}`;
     })
   }
   const fileName = 'CUP_ACOMN.xls';
