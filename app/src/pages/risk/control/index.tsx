@@ -6,7 +6,7 @@ import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl, FormattedMessage, IntlShape } from 'umi';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
-import { TableListItem } from './data';
+import { TableListItem, StatusEnum } from './data.d';
 import { query, save } from './service';
 
 /**
@@ -27,7 +27,6 @@ const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
     return false;
   }
 };
-
 
 // const handleGet = async (fields: TableListItem) => {
 //   const hide = message.loading('global.running');
@@ -75,17 +74,17 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'merLimit.maxTrxCount' }),
       dataIndex: 'maxTrxCount',
-      hideInSearch:true,
+      hideInSearch: true,
     },
     {
       title: intl.formatMessage({ id: 'merLimit.maxTrxAmount' }),
       dataIndex: 'maxTrxAmount',
-      hideInSearch:true,
+      hideInSearch: true,
     },
     {
       title: intl.formatMessage({ id: 'merLimit.status' }),
       dataIndex: 'status',
-      hideInSearch:true,
+      valueEnum: StatusEnum,
     },
   ];
 
@@ -98,7 +97,7 @@ const TableList: React.FC<{}> = () => {
               ...params,
               size: params.pageSize,
               page: (params.current as number) - 1,
-              sort: Object.keys(sort).map((key) => `${key},desc${sort[key].replace('end', '')}`),
+              sort: Object.keys(sort).map((key) => `${key},desc${sort[key]?.replace('end', '')}`),
             });
             return {
               data: result.content,

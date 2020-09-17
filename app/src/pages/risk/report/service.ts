@@ -4,7 +4,7 @@ import { TableListParams } from './data';
 export async function query(params?: TableListParams) {
   return request('/svc/ssp/riskList', {
     method: 'GET',
-    params,
+    params: { ...params, ...{ riskDate: params?.riskDate?.replaceAll('-', '') } },
   });
 }
 
@@ -31,10 +31,10 @@ export async function queryRisk(params?: TableListParams) {
   });
 }
 
-export function getCodeEnum(response : {riskCode:string}[]){
-  const codeEnum = {}
-  response.forEach(e=>{
-    codeEnum[e.riskCode]=e.riskCode
-  })
+export function getCodeEnum(response: { riskCode: string }[]) {
+  const codeEnum = {};
+  response.forEach((e) => {
+    codeEnum[e.riskCode] = e.riskCode;
+  });
   return codeEnum;
 }

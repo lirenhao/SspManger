@@ -6,7 +6,7 @@ import { useIntl, FormattedMessage } from 'umi';
 import ViewForm from './components/ViewForm';
 import { TableListItem } from './data';
 // eslint-disable-next-line import/named
-import { query, queryRisk,getCodeEnum } from './service';
+import { query, queryRisk, getCodeEnum } from './service';
 
 /**
  * 添加
@@ -32,9 +32,6 @@ import { query, queryRisk,getCodeEnum } from './service';
  * @param fields
  */
 
-
-
-
 const TableList: React.FC<{}> = () => {
   const [viewModalVisible, handleViewModalVisible] = useState<boolean>(false);
   const [stepFormValues, setStepFormValues] = useState({});
@@ -43,13 +40,11 @@ const TableList: React.FC<{}> = () => {
   const actionRef = useRef<ActionType>();
 
   React.useEffect(() => {
-    queryRisk().then(result=>{
+    queryRisk().then((result) => {
       const riskCodeResult = getCodeEnum(result);
       setRiskCode(riskCodeResult);
     });
-  },[])
-
-
+  }, []);
 
   const columns: ProColumns<TableListItem>[] = [
     {
@@ -72,6 +67,7 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'riskReport.riskDate' }),
       dataIndex: 'riskDate',
+      valueType: 'date',
     },
     {
       title: intl.formatMessage({ id: 'riskReport.merchantId' }),
@@ -93,7 +89,7 @@ const TableList: React.FC<{}> = () => {
               ...params,
               size: params.pageSize,
               page: (params.current as number) - 1,
-              sort: Object.keys(sort).map((key) => `${key},desc${sort[key].replace('end', '')}`),
+              sort: Object.keys(sort).map((key) => `${key},desc${sort[key]?.replace('end', '')}`),
             });
             return {
               data: result.content,
@@ -111,8 +107,7 @@ const TableList: React.FC<{}> = () => {
         headerTitle=""
         actionRef={actionRef}
         rowKey="riskDate"
-        toolBarRender={() => [
-        ]}
+        toolBarRender={() => []}
         columns={columns}
       />
       {stepFormValues && Object.keys(stepFormValues).length ? (
