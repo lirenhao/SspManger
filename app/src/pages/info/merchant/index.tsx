@@ -9,7 +9,6 @@ import { fetchQuery, fetchGet, fetchOrgTree } from './service';
 import Show from './components/Show';
 
 const TableList: React.FC<{}> = () => {
-
   const intl = useIntl();
   const actionRef = useRef<ActionType>();
   const { initialState } = useModel('@@initialState');
@@ -25,13 +24,13 @@ const TableList: React.FC<{}> = () => {
 
   const handleView = async (id: string) => {
     try {
-      const info = await fetchGet(id);
-      setInfo(info);
+      const viewInfo = await fetchGet(id);
+      setInfo(viewInfo);
       setIsView(true);
     } catch (err) {
-
+      console.error(err);
     }
-  }
+  };
 
   const columns: ProColumns<TableListItem>[] = [
     {
@@ -45,10 +44,8 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'merchant.orgId', defaultMessage: '' }),
       dataIndex: 'orgId',
-      renderFormItem: (item, { onChange, ...rest }) => (
-        <TreeSelect treeDefaultExpandAll treeData={orgTree}
-          {...item.formItemProps} {...rest} onChange={onChange}
-        />
+      renderFormItem: (item) => (
+        <TreeSelect treeDefaultExpandAll treeData={orgTree} {...item.formItemProps} />
       ),
       hideInTable: true,
     },
@@ -70,18 +67,31 @@ const TableList: React.FC<{}> = () => {
       title: intl.formatMessage({ id: 'merchant.merchantType', defaultMessage: '' }),
       dataIndex: 'merchantType',
       valueEnum: {
-        'J': { text: intl.formatMessage({ id: 'merchant.merchantType.J', defaultMessage: 'SUB GROUP' }) },
-        'D': { text: intl.formatMessage({ id: 'merchant.merchantType.D', defaultMessage: 'OUTLETS' }) },
-        'O': { text: intl.formatMessage({ id: 'merchant.merchantType.O', defaultMessage: 'ORGANISATION' }) },
+        J: {
+          text: intl.formatMessage({ id: 'merchant.merchantType.J', defaultMessage: 'SUB GROUP' }),
+        },
+        D: {
+          text: intl.formatMessage({ id: 'merchant.merchantType.D', defaultMessage: 'OUTLETS' }),
+        },
+        O: {
+          text: intl.formatMessage({
+            id: 'merchant.merchantType.O',
+            defaultMessage: 'ORGANISATION',
+          }),
+        },
       },
     },
     {
       title: intl.formatMessage({ id: 'merchant.merStatus', defaultMessage: '' }),
       dataIndex: 'merStatus',
       valueEnum: {
-        '0': { text: intl.formatMessage({ id: 'merchant.merStatus.0', defaultMessage: 'PENDING' }) },
+        '0': {
+          text: intl.formatMessage({ id: 'merchant.merStatus.0', defaultMessage: 'PENDING' }),
+        },
         '1': { text: intl.formatMessage({ id: 'merchant.merStatus.1', defaultMessage: 'NORMAL' }) },
-        '3': { text: intl.formatMessage({ id: 'merchant.merStatus.3', defaultMessage: 'TERMINATED' }) },
+        '3': {
+          text: intl.formatMessage({ id: 'merchant.merStatus.3', defaultMessage: 'TERMINATED' }),
+        },
       },
       hideInSearch: true,
     },
@@ -100,20 +110,20 @@ const TableList: React.FC<{}> = () => {
             const result = await fetchQuery({
               ...params,
               size: params.pageSize,
-              page: params.current as number - 1,
-              sort: Object.keys(sort).map(key => `${key},desc${sort[key]?.replace('end', '')}`),
+              page: (params.current as number) - 1,
+              sort: Object.keys(sort).map((key) => `${key},desc${sort[key]?.replace('end', '')}`),
             });
             return {
               data: result.content,
               page: result.totalPages,
               total: result.totalElements,
               success: true,
-            }
+            };
           } catch (err) {
             return {
               data: [],
               success: false,
-            }
+            };
           }
         }}
         columns={columns}

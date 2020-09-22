@@ -1,11 +1,11 @@
-import {  message } from 'antd';
+import { message } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl, FormattedMessage, IntlShape } from 'umi';
 import UpdateForm from './components/ViewForm';
 import { TableListItem } from './data';
-import { save,query  } from './service';
+import { save, query } from './service';
 
 /**
  * 添加
@@ -25,8 +25,6 @@ const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
     return false;
   }
 };
-
-
 
 // const handleGet = async (fields: TableListItem) => {
 //   const hide = message.loading('global.running');
@@ -69,18 +67,18 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'riskMonitoring.riskCode' }),
       dataIndex: 'riskCode',
-      hideInSearch:true
+      hideInSearch: true,
     },
     {
       title: intl.formatMessage({ id: 'riskMonitoring.riskName' }),
       dataIndex: 'riskName',
-      hideInSearch:true
+      hideInSearch: true,
     },
     {
-        title: intl.formatMessage({ id: 'riskMonitoring.value' }),
-        dataIndex: 'value',
-        hideInSearch:true
-      },
+      title: intl.formatMessage({ id: 'riskMonitoring.value' }),
+      dataIndex: 'value',
+      hideInSearch: true,
+    },
   ];
 
   return (
@@ -92,7 +90,7 @@ const TableList: React.FC<{}> = () => {
               ...params,
               size: params.pageSize,
               page: (params.current as number) - 1,
-              sort: Object.keys(sort).map((key) => `${key},desc${sort[key].replace('end', '')}`),
+              sort: Object.keys(sort).map((key) => `${key},desc${sort[key]?.replace('end', '')}`),
             });
             return {
               data: result.content,
@@ -110,11 +108,11 @@ const TableList: React.FC<{}> = () => {
         headerTitle=""
         actionRef={actionRef}
         rowKey="mcc"
-        toolBarRender={() => [
-        ]}
+        search={false}
+        toolBarRender={() => []}
         columns={columns}
       />
-    
+
       {stepFormValues && Object.keys(stepFormValues).length ? (
         <UpdateForm
           intl={intl}

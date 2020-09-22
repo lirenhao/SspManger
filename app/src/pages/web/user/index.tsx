@@ -7,15 +7,22 @@ import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl, useModel } from 'umi';
 import { TableListItem, MerchantData } from './data';
 import {
-  fetchOrgTree, fetchOrgMap, fetchAllMer, fetchMerByOrgId,
-  fetchQuery, fetchGet, fetchSave, fetchUpdate, fetchDel, fetchResetPwd
+  fetchOrgTree,
+  fetchOrgMap,
+  fetchAllMer,
+  fetchMerByOrgId,
+  fetchQuery,
+  fetchGet,
+  fetchSave,
+  fetchUpdate,
+  fetchDel,
+  fetchResetPwd,
 } from './service';
 import Form from './components/Form';
 
 const { confirm } = Modal;
 
 const TableList: React.FC<{}> = () => {
-
   const intl = useIntl();
   const actionRef = React.useRef<ActionType>();
   const { initialState } = useModel('@@initialState');
@@ -46,7 +53,7 @@ const TableList: React.FC<{}> = () => {
     } catch (err) {
       console.log(err.message);
     }
-  }
+  };
 
   const beforeUpdate = async (id: string) => {
     try {
@@ -56,7 +63,7 @@ const TableList: React.FC<{}> = () => {
     } catch (err) {
       console.log(err.message);
     }
-  }
+  };
 
   const handleUpdate = async (record: TableListItem) => {
     try {
@@ -66,7 +73,7 @@ const TableList: React.FC<{}> = () => {
     } catch (err) {
       console.log(err.message);
     }
-  }
+  };
 
   const handleDelete = (id: string) => {
     confirm({
@@ -74,14 +81,14 @@ const TableList: React.FC<{}> = () => {
       okType: 'danger',
       onOk: async () => {
         try {
-          await fetchDel(id)
+          await fetchDel(id);
           actionRef.current?.reload();
         } catch (err) {
           console.log(err.message);
         }
-      }
+      },
     });
-  }
+  };
 
   const handleResetPwd = (id: string) => {
     confirm({
@@ -89,27 +96,25 @@ const TableList: React.FC<{}> = () => {
       okType: 'danger',
       onOk: async () => {
         try {
-          await fetchResetPwd(id)
+          await fetchResetPwd(id);
           notification.success({
             message: intl.formatMessage({ id: 'webUser.reset.success' }, { id }),
-          })
+          });
         } catch (err) {
           notification.error({
             message: intl.formatMessage({ id: 'webUser.reset.error' }, { id }),
           });
         }
-      }
+      },
     });
-  }
+  };
 
   const columns: ProColumns<TableListItem>[] = [
     {
       title: intl.formatMessage({ id: 'global.operate' }),
       render: (_, record) => (
         <>
-          <a onClick={() => beforeUpdate(record.id)}>
-            {intl.formatMessage({ id: 'global.edit' })}
-          </a>
+          <a onClick={() => beforeUpdate(record.id)}>{intl.formatMessage({ id: 'global.edit' })}</a>
           <Divider type="vertical" />
           <a onClick={() => handleDelete(record.id)}>
             {intl.formatMessage({ id: 'global.delete' })}
@@ -124,22 +129,21 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'webUser.orgId' }),
       dataIndex: 'orgId',
-      renderFormItem: (item, { onChange, ...rest }) => (
-        <TreeSelect treeDefaultExpandAll treeData={orgTree}
-          {...item.formItemProps} {...rest} onChange={onChange}
-        />
+      renderFormItem: (item) => (
+        <TreeSelect treeDefaultExpandAll treeData={orgTree} {...item.formItemProps} />
       ),
-      renderText: key => orgMap[key],
+      renderText: (key) => orgMap[key],
     },
     {
       title: intl.formatMessage({ id: 'webUser.merchantId' }),
       dataIndex: 'id',
-      renderText: text => text.split('@')[0],
+      renderText: (text) => text.split('@')[0],
     },
     {
       title: intl.formatMessage({ id: 'webUser.merchantName' }),
       dataIndex: 'id',
-      renderText: text => merchants.filter(item => item.merchantId === text.split('@')[0])[0]?.merNameEng,
+      renderText: (text) =>
+        merchants.filter((item) => item.merchantId === text.split('@')[0])[0]?.merNameEng,
       hideInSearch: true,
     },
     {
@@ -169,7 +173,8 @@ const TableList: React.FC<{}> = () => {
         rowKey="id"
         toolBarRender={() => [
           <Button type="primary" onClick={() => setIsCreate(true)}>
-            <PlusOutlined />{intl.formatMessage({ id: 'global.create' })}
+            <PlusOutlined />
+            {intl.formatMessage({ id: 'global.create' })}
           </Button>,
         ]}
         options={{ density: false, fullScreen: true, reload: true, setting: false }}
@@ -179,20 +184,20 @@ const TableList: React.FC<{}> = () => {
             const result = await fetchQuery({
               ...params,
               size: params.pageSize,
-              page: params.current as number - 1,
-              sort: Object.keys(sort).map(key => `${key},desc${sort[key]?.replace('end', '')}`),
+              page: (params.current as number) - 1,
+              sort: Object.keys(sort).map((key) => `${key},desc${sort[key]?.replace('end', '')}`),
             });
             return {
               data: result.content,
               page: result.totalPages,
               total: result.totalElements,
               success: true,
-            }
+            };
           } catch (err) {
             return {
               data: [],
               success: false,
-            }
+            };
           }
         }}
         columns={columns}

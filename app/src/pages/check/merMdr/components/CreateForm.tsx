@@ -1,5 +1,5 @@
 import React /* ,{useState} */ from 'react';
-import { Form, Modal, Select, /* TreeSelect, */ Input, DatePicker } from 'antd';
+import { Form, Modal, Select, Input, DatePicker } from 'antd';
 import { useIntl } from 'umi';
 import { TableListItem, cardAssoEnum, feeTypeEnum } from '../data.d';
 import formLayout from '../../../../formLayout';
@@ -108,7 +108,14 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
 
   const handleSubmit = async () => {
     const fieldsValue = await form.validateFields();
-    onSubmit({ ...fieldsValue,...{startDate:form.getFieldValue('startDate').format('YYYYMMDD'),checkState:'0',merchant:{merchantId:form.getFieldValue('merchantId')}} });
+    onSubmit({
+      ...fieldsValue,
+      ...{
+        startDate: form.getFieldValue('startDate').format('YYYYMMDD'),
+        checkState: '0',
+        merchant: { merchantId: form.getFieldValue('merchantId') },
+      },
+    });
   };
 
   const renderContent = () => {

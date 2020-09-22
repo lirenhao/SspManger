@@ -4,7 +4,10 @@ import { TableListParams, TableListItem } from './data.d';
 export async function query(params?: TableListParams) {
   return request('/svc/ssp/termCount/', {
     method: 'GET',
-    params: {...params,...{month:params?.month?.format('YYYYMM')}}
+    params: {
+      ...params,
+      ...{ month: params?.month?.toString().substring(0, 7).replaceAll('-', '') },
+    },
   });
 }
 
@@ -24,31 +27,35 @@ export async function save(params: TableListItem) {
 // }
 
 export async function download(params?: TableListParams) {
-  let queryPara='';
-  if(params){
-    Object.keys(params).forEach( key=>{
-      queryPara = `${queryPara  }&${  key  }=${  key==='month'?params.month?.format('YYYYMM'):params[key]}`;
-    })
+  let queryPara = '';
+  if (params) {
+    Object.keys(params).forEach((key) => {
+      queryPara = `${queryPara}&${key}=${
+        key === 'month' ? params.month?.format('YYYYMM') : params[key]
+      }`;
+    });
   }
   const fileName = 'merSettle.xls';
   fetch(`/svc/ssp/merSettle/download?a=1&${queryPara}`, {
     method: 'GET',
     credentials: 'include',
     headers: new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+    }),
+  })
+    .then((response) => {
+      response.blob().then((blob) => {
+        const aLink = document.createElement('a');
+        document.body.appendChild(aLink);
+        aLink.style.display = 'none';
+        const objectUrl = window.URL.createObjectURL(blob);
+        aLink.href = objectUrl;
+        aLink.download = fileName;
+        aLink.click();
+        document.body.removeChild(aLink);
+      });
     })
-  }).then((response) => {
-    response.blob().then(blob => {
-      const aLink = document.createElement('a');
-      document.body.appendChild(aLink);
-      aLink.style.display='none';
-      const objectUrl = window.URL.createObjectURL(blob);
-      aLink.href = objectUrl;
-      aLink.download = fileName;
-      aLink.click();
-      document.body.removeChild(aLink);
+    .catch((error) => {
+      console.error(error);
     });
-  }).catch((error) => {
-    console.error(error);
-  });
 }

@@ -8,7 +8,7 @@ import { DataNode } from 'antd/lib/tree';
 import moment from 'moment';
 
 import { TableListItem } from './data.d';
-import { query, getCcyType, fetchOrgTree } from './service';
+import { query, getCcyType, fetchOrgTree, fetchOrgMap } from './service';
 
 // const OptionArr = {};
 
@@ -35,9 +35,11 @@ const ccyArr = {};
 
 const TableList: React.FC<{}> = () => {
   const [orgTree, setOrgTree] = useState<DataNode[]>([]);
+  const [orgMap, setOrgMap] = React.useState<Object>({});
 
   React.useEffect(() => {
     fetchOrgTree().then(setOrgTree);
+    fetchOrgMap().then(setOrgMap);
   }, []);
   const ccyArray: { ccyType: string; ccyName: string }[] = [];
   const [ccyData, setCcy] = useState(ccyArray);
@@ -53,21 +55,15 @@ const TableList: React.FC<{}> = () => {
 
   const year = moment().format('YYYY').toString();
 
-
   const columns: ProColumns<TableListItem>[] = [
     {
       title: intl.formatMessage({ id: 'hq.orgId', defaultMessage: '' }),
       dataIndex: 'orgId',
-      renderFormItem: (item, { onChange, ...rest }) => (
-        <TreeSelect
-          treeDefaultExpandAll
-          treeData={orgTree}
-          {...item.formItemProps}
-          {...rest}
-          onChange={onChange}
-        />
+      renderFormItem: (item) => (
+        <TreeSelect treeDefaultExpandAll treeData={orgTree} {...item.formItemProps} />
       ),
       hideInTable: true,
+      renderText: (key) => orgMap[key],
     },
     {
       title: intl.formatMessage({ id: 'hq.month' }),
@@ -78,17 +74,12 @@ const TableList: React.FC<{}> = () => {
       title: intl.formatMessage({ id: 'hq.year' }),
       dataIndex: 'year',
       // initialValue: year,
-      renderFormItem: () =>(
-      <DatePicker picker="year" >{year}</DatePicker>
-   ),
+      renderFormItem: () => <DatePicker picker="year">{year}</DatePicker>,
     },
     {
-      title:intl.formatMessage({ id: 'hq.year' }),
+      title: intl.formatMessage({ id: 'hq.year' }),
       initialValue: year,
-      renderFormItem: () =>(
-           <DatePicker picker="year" />
-      ),
-
+      renderFormItem: () => <DatePicker picker="year" />,
     },
     {
       title: intl.formatMessage({ id: 'hq.merNum' }),
@@ -168,7 +159,6 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'barNumbarNum',
       hideInSearch: true,
     },
-
   ];
 
   return (
@@ -176,6 +166,7 @@ const TableList: React.FC<{}> = () => {
       <ProTable<TableListItem>
         request={async (params = {}, sort = {}) => {
           try {
+            console.error(params);
             const result = await query({
               ...params,
               size: params.pageSize,
