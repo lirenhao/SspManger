@@ -37,10 +37,10 @@ public class MerchantExtraService {
     }
 
     public List<MerchantExtra> findListByCcyType(String ccyType) {
-        return merchantExtraDao.findByCcyTypeCcyType(ccyType);
+        return merchantExtraDao.findByCcyType(ccyType);
     }
 
     public List<MerchantExtra> findListByInternationalCode(String internationalCode) {
-        return merchantExtraDao.findByInternationalCodeInternationalCode(internationalCode);
+        return merchantExtraDao.findByInternationalCode(internationalCode);
     }
 }

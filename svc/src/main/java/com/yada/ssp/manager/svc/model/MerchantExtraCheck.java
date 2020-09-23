@@ -12,36 +12,21 @@ import javax.persistence.*;
 @Table(name = "T_B_MERCHANT_EXTRA_CHECK")
 public class MerchantExtraCheck {
 
-    public static final String TABLE_ALIAS = "商户附加信息";
-    public static final String ALIAS_MERNO = "MERCHANT ID";
-    public static final String ALIAS_CCY_TYPE = "CURRENCY";
-    public static final String ALIAS_INTERNATIONAL_CODE = "COUNTRY CODE";
-    public static final String ALIAS_CHECK_STATE = "CHECK STATE";
-    public static final String ALIAS_CHECK_REASON = "REJECT REASON";
-    public static final String ALIAS_OPERATION = "OPERATION";
-
     //商户附加信息ID
     @Id
-    @Column(nullable = false)
     private String merchantId;
 
     //商户信息
-    @JsonIgnore
     @OneToOne(targetEntity = Merchant.class,fetch = FetchType.EAGER)
     @JoinColumn(name = "merchantId", referencedColumnName = "merchantId")
     private Merchant merchant;
 
     //币种
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ccyType", referencedColumnName = "ccyType")
-    private CcyType ccyType;
-
+    @Column
+    private String ccyType;
     //国家代码
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "internationalCode", referencedColumnName = "internationalCode")
-    private InternationalCode internationalCode;
+    @Column
+    private String internationalCode;
     //审核状态
     @Column
     private String checkState;
@@ -60,19 +45,27 @@ public class MerchantExtraCheck {
         this.merchantId = merchantId;
     }
 
-    public CcyType getCcyType() {
+    public Merchant getMerchant() {
+        return merchant;
+    }
+
+    public void setMerchant(Merchant merchant) {
+        this.merchant = merchant;
+    }
+
+    public String getCcyType() {
         return ccyType;
     }
 
-    public void setCcyType(CcyType ccyType) {
+    public void setCcyType(String ccyType) {
         this.ccyType = ccyType;
     }
 
-    public InternationalCode getInternationalCode() {
+    public String getInternationalCode() {
         return internationalCode;
     }
 
-    public void setInternationalCode(InternationalCode internationalCode) {
+    public void setInternationalCode(String internationalCode) {
         this.internationalCode = internationalCode;
     }
 
@@ -98,13 +91,5 @@ public class MerchantExtraCheck {
 
     public void setOperation(String operation) {
         this.operation = operation;
-    }
-
-    public Merchant getMerchant() {
-        return merchant;
-    }
-
-    public void setMerchant(Merchant merchant) {
-        this.merchant = merchant;
     }
 }
