@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 商户费率表
@@ -77,8 +78,8 @@ public class MerchantFeeController {
     }
 
     @PutMapping("/{id}/check")
-    public void check(@PathVariable String id, String state, String checkReason) {
-        merchantFeeCheckService.saveCheck(id, state, checkReason);
+    public void check(@PathVariable String id, @RequestBody Map<String, String> body) {
+        merchantFeeCheckService.saveCheck(id, body.get("checkReason"), body.get("checkState"));
     }
 
     // TODO 修改时费率状态控制

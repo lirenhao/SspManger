@@ -30,6 +30,9 @@ insert into T_B_APP_ROLE (ID, NAME) values ('user', 'user');
 insert into T_D_CCY_TYPE (CCY_TYPE, CCY_NAME, ccy_Symbol) values ('USD', '美元', '$');
 insert into T_D_CCY_TYPE (CCY_TYPE, CCY_NAME, ccy_Symbol) values ('RMB', '人民币', '¥');
 
+insert into t_d_international_code (code_ename, code_name, international_code) values ('China', '中国', 'CN');
+insert into t_d_international_code (code_ename, code_name, international_code) values ('Singapore', '新加坡', 'SG');
+
 insert into T_B_RISK (RISK_CODE, RISK_NAME, VALUE, VALUE_FORMAT)
 values ('0001', 'risk test', '10', 'This is %s count!');
 

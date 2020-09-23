@@ -15,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 /**
  * CCPAY参数配置API
@@ -73,8 +74,8 @@ public class CcpayController {
     }
 
     @PutMapping("/{merchantId}/check")
-    public void saveCheck(@PathVariable String merchantId, String checkReason, String state) {
-        ccpayCheckService.saveCheck(merchantId, checkReason, state);
+    public void saveCheck(@PathVariable String merchantId, @RequestBody Map<String, String> body) {
+        ccpayCheckService.saveCheck(merchantId, body.get("checkReason"), body.get("checkState"));
     }
 
     /**

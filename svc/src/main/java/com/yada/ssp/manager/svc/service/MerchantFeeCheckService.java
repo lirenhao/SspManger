@@ -92,7 +92,7 @@ public class MerchantFeeCheckService {
         return merchantFeeCheckDao.findByMerchantMerchantId(merchantId);
     }
 
-    public void saveCheck(String lsId, String state, String checkReason) {
+    public void saveCheck(String lsId, String checkReason, String state) {
         MerchantFeeCheck merchantFeeCheck = merchantFeeCheckDao.getOne(lsId);
         merchantFeeCheck.setCheckReason(checkReason);
         MerchantFee merchantFee = new MerchantFee();

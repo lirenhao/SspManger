@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * 商户静态码审核API
  */
@@ -63,8 +65,8 @@ public class StaticQrcListCheckController {
     }
 
     @PutMapping("/{lsId}/check")
-    public void saveCheck(@PathVariable String lsId, String checkReason, String state) {
-        staticQrcListCheckService.saveCheck(lsId, checkReason, state);
+    public void saveCheck(@PathVariable String lsId, @RequestBody Map<String, String> body) {
+        staticQrcListCheckService.saveCheck(lsId, body.get("checkReason"), body.get("checkState"));
     }
 
 }
