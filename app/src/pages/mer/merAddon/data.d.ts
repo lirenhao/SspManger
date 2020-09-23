@@ -11,6 +11,7 @@ export interface TableListItem {
     merNameEng?: string;
     merchantType?: string;
   };
+  hasMerchantExtra?: boolean;
 }
 
 export interface TableListPagination {

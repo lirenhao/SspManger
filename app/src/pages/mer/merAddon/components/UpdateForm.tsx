@@ -29,8 +29,8 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
     getCcyType().then(setCcy);
   }, []);
   React.useEffect(() => {
-    getCountryCode().then(element=>{
-      setCountry(element.content)
+    getCountryCode().then((element) => {
+      setCountry(element.content);
     });
   }, []);
 
@@ -41,12 +41,6 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
     checkState: props.values.checkState,
     checkReason: props.values.checkReason,
     operation: props.values.operation,
-    merchant: {
-      merchantId: props.values.merchant ? props.values.merchant.merchantId : '',
-      merNameChn: props.values.merchant ? props.values.merchant.merNameChn : '',
-      merNameEng: props.values.merchant ? props.values.merchant.merNameEng : '',
-      merchantType: props.values.merchant ? props.values.merchant.merchantType : '',
-    },
   };
 
   const [form] = Form.useForm();
@@ -57,7 +51,7 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
 
   const handleSubmit = async () => {
     const fieldsValue = await form.validateFields();
-    onSubmit({ ...{ merchant: {} }, ...values, ...fieldsValue });
+    onSubmit({ ...values, ...fieldsValue });
   };
 
   const renderCcyOption = () => {
@@ -92,12 +86,16 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
         <Form.Item name="merchantId" label={intl.formatMessage({ id: 'merAddon.merchantId' })}>
           <Input disabled />
         </Form.Item>
-        <Form.Item rules={[
-                {
-                  required: true,
-                  message: intl.formatMessage({ id: 'merAddon.ccyTypeNecessary' }),
-                },
-              ]} name="ccyType" label={intl.formatMessage({ id: 'merAddon.ccyType' })}>
+        <Form.Item
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({ id: 'merAddon.ccyTypeNecessary' }),
+            },
+          ]}
+          name="ccyType"
+          label={intl.formatMessage({ id: 'merAddon.ccyType' })}
+        >
           <Select>{renderCcyOption()}</Select>
         </Form.Item>
         <Form.Item
@@ -134,14 +132,7 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
           checkState: formVals.checkState,
           checkReason: formVals.checkReason,
           operation: formVals.operation,
-          merchant: {
-            merchantId: formVals.merchant.merchantId,
-            merNameChn: formVals.merchant.merNameChn,
-            merNameEng: formVals.merchant.merNameEng,
-            merchantType: formVals.merchant.merchantType,
-          },
         }}
-        // initialValues={values}
       >
         {renderContent()}
       </Form>

@@ -7,7 +7,7 @@ import ViewForm from './components/ViewForm';
 import UpdateForm from './components/UpdateForm';
 
 import { TableListItem, checkStateEnum, merchantTypeEnmu, operEnmu } from './data.d';
-import { query, save } from './service';
+import { query, save, remove } from './service';
 
 /**
  * 添加
@@ -18,6 +18,34 @@ const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
 
   try {
     await save({ ...fields });
+    hide();
+    message.success(intl.formatMessage({ id: 'global.success' }));
+    return true;
+  } catch (error) {
+    hide();
+    message.error(intl.formatMessage({ id: 'global.error' }));
+    return false;
+  }
+};
+
+const displayDelete = (params: TableListItem) => {
+  return params.hasMerchantExtra && params.checkState !== '0';
+};
+const displayEdit = (params: TableListItem) => {
+  if (!params.hasMerchantExtra) {
+    return true;
+  }
+  if (params.checkState !== '0') {
+    return true;
+  }
+  return false;
+};
+
+const handleDelCheck = async (fields: TableListItem, intl: IntlShape) => {
+  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
+
+  try {
+    await remove({ ...fields });
     hide();
     message.success(intl.formatMessage({ id: 'global.success' }));
     return true;
@@ -43,6 +71,7 @@ const TableList: React.FC<{}> = () => {
       render: (_, record) => (
         <>
           <a
+            style={displayEdit(record) ? { display: 'block' } : { display: 'none' }}
             onClick={() => {
               setStepFormValues(record);
               handleUpdateModalVisible(true);
@@ -50,7 +79,10 @@ const TableList: React.FC<{}> = () => {
           >
             <FormattedMessage id="global.edit" />
           </a>
-          <Divider type="vertical" />
+          <Divider
+            type="vertical"
+            style={displayEdit(record) ? { display: 'block' } : { display: 'none' }}
+          />
           <a
             onClick={() => {
               setStepFormValues(record);
@@ -59,14 +91,19 @@ const TableList: React.FC<{}> = () => {
           >
             <FormattedMessage id="global.view" />
           </a>
-          {/* <Divider type="vertical" />
+          <Divider
+            style={displayDelete(record) ? { display: 'block' } : { display: 'none' }}
+            type="vertical"
+          />
           <a
+            style={displayDelete(record) ? { display: 'block' } : { display: 'none' }}
             onClick={() => {
-              beforeCheck(record);
+              handleDelCheck(record, intl);
+              actionRef.current?.reload();
             }}
           >
-            <FormattedMessage id="global.check" />
-          </a> */}
+            <FormattedMessage id="global.delete" />
+          </a>
         </>
       ),
     },
@@ -76,31 +113,31 @@ const TableList: React.FC<{}> = () => {
     },
     {
       title: intl.formatMessage({ id: 'merAddon.cName' }),
-      dataIndex: ['merchant', 'merNameChn'],
+      dataIndex: 'merNameChn',
       valueType: 'textarea',
       hideInSearch: true,
     },
     {
       title: intl.formatMessage({ id: 'merAddon.eName' }),
-      dataIndex: ['merchant', 'merNameEng'],
+      dataIndex: 'merNameEng',
       valueType: 'textarea',
       hideInSearch: true,
     },
     {
       title: intl.formatMessage({ id: 'merAddon.merchantType' }),
-      dataIndex: ['merchant', 'merchantType'],
+      dataIndex: 'merchantType',
       initialValue: undefined,
       valueEnum: merchantTypeEnmu,
     },
 
     {
       title: intl.formatMessage({ id: 'merAddon.ccyType' }),
-      dataIndex: ['ccyType', 'ccyType'],
+      dataIndex: 'ccyType',
       hideInSearch: true,
     },
     {
       title: intl.formatMessage({ id: 'merAddon.internationalCode' }),
-      dataIndex: ['internationalCode', 'internationalCode'],
+      dataIndex: 'internationalCode',
       hideInSearch: true,
     },
     {
@@ -108,12 +145,6 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'checkState',
       initialValue: undefined,
       valueEnum: checkStateEnum,
-    },
-    {
-      title: intl.formatMessage({ id: 'merAddon.checkReason' }),
-      dataIndex: 'checkReason',
-      valueType: 'textarea',
-      hideInSearch: true,
     },
     {
       title: intl.formatMessage({ id: 'merAddon.operation' }),

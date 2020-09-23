@@ -4,7 +4,7 @@ const routes: IRoute[] = [
   {
     path: '/check/merAddon',
     name: '/check/merAddon',
-    component: './mer/merAddon/indexCheck',
+    component: './mer/merAddon/check',
     locale: 'merAddonCheck.title',
   },
   {

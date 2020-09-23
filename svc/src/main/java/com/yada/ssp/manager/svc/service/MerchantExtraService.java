@@ -25,7 +25,7 @@ public class MerchantExtraService {
     }
 
     public MerchantExtra findOne(String merchantId) {
-        return merchantExtraDao.getOne(merchantId);
+        return merchantExtraDao.findById(merchantId).orElse(new MerchantExtra());
     }
 
     public List<MerchantExtra> findAll() {

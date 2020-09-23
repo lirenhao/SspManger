@@ -48,6 +48,21 @@ public class Merchant {
     @JoinColumn(name = "merchantId", referencedColumnName = "merchantId")
     private MerchantExtra merchantExtra;
 
+    @Transient
+    private boolean hasMerchantExtra;
+
+    @Transient
+    private String ccyType;
+
+    @Transient
+    private String internationalCode;
+    @Transient
+    private String checkState;
+    @Transient
+    private String operation;
+
+
+
     //商户附加资料审核
     @JsonIgnore
     @OneToOne(targetEntity = MerchantExtraCheck.class,fetch = FetchType.EAGER)
@@ -755,5 +770,61 @@ public class Merchant {
 
     public void setWebSubs(Set<Merchant> webSubs) {
         this.webSubs = webSubs;
+    }
+
+    public boolean isHasMerchantExtra() {
+        if(merchantExtraCheck==null){
+            return false;
+        }
+        return true;
+    }
+
+    public void setHasMerchantExtra(boolean hasMerchantExtra) {
+        this.hasMerchantExtra = hasMerchantExtra;
+    }
+
+    public String getCcyType() {
+        if(merchantExtraCheck!=null){
+            return merchantExtraCheck.getCcyType();
+        }
+
+        return ccyType;
+    }
+
+    public void setCcyType(String ccyType) {
+        this.ccyType = ccyType;
+    }
+
+    public String getInternationalCode() {
+        if(merchantExtraCheck!=null){
+            return merchantExtraCheck.getInternationalCode();
+        }
+        return internationalCode;
+    }
+
+    public void setInternationalCode(String internationalCode) {
+        this.internationalCode = internationalCode;
+    }
+
+    public String getCheckState() {
+        if(merchantExtraCheck!=null){
+            return merchantExtraCheck.getCheckState();
+        }
+        return checkState;
+    }
+
+    public void setCheckState(String checkState) {
+        this.checkState = checkState;
+    }
+
+    public String getOperation() {
+        if(merchantExtraCheck!=null){
+            return merchantExtraCheck.getOperation();
+        }
+        return operation;
+    }
+
+    public void setOperation(String operation) {
+        this.operation = operation;
     }
 }

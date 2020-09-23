@@ -20,7 +20,6 @@ export async function save(params: TableListItem) {
     method: 'PUT',
     data: {
       ...params,
-      method: 'put',
     },
   });
 }
@@ -39,10 +38,11 @@ export async function getCheck(params: TableListItem) {
 }
 
 export async function saveCheck(params: TableListItem) {
-  return request(`/svc/ssp/merchantExtra/${params.merchantId}/check`, {
+  return request(`/svc/ssp/merchantExtra/${params.merchant?.merchantId}/check`, {
     method: 'PUT',
     data: {
-      ...params,
+      checkReason: params.checkReason,
+      checkState: params.checkState,
     },
   });
 }
