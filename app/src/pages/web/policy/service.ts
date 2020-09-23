@@ -20,12 +20,11 @@ export async function fetchIssue(id: string) {
     method: 'PUT',
     data: { id },
   });
-
 }
 
 export async function fetchPut(params: TableListItem) {
   return request('/svc/ssp/merPolicy', {
-    method: 'PUT',
+    method: 'POST',
     data: params,
   });
 }

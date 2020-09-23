@@ -3,18 +3,18 @@ import moment from 'moment';
 import { TableListParams } from './data.d';
 
 export async function query(params?: TableListParams) {
-
-  if(params?.year){
+  if (params?.year !== undefined) {
+    const year = params?.year.toString().substring(0, 4);
+    const revertParams = { ...params, ...{ year } };
     return request('/svc/ssp/hqReport', {
       method: 'GET',
-      params: {...{year:moment().format('YYYY')},...params,...{year:params?.year?.format('YYYY')}},
+      params: revertParams,
     });
   }
   return request('/svc/ssp/hqReport', {
     method: 'GET',
-    params: {...{year:moment().format('YYYY')},...params},
+    params: { ...{ year: moment().format('YYYY') }, ...params },
   });
-
 }
 
 export async function exist(id: String) {
@@ -33,4 +33,7 @@ export async function fetchOrgTree() {
 
 export async function getTerminal(id: String) {
   return request(`/svc/ssp/terminal/${id}`);
+}
+export async function fetchOrgMap() {
+  return request('/svc/ssp/org/map');
 }

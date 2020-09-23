@@ -3,7 +3,7 @@ import { Button, message } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { useIntl, FormattedMessage, IntlShape } from 'umi';
+import { useIntl, FormattedMessage } from 'umi';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { TableListItem, StatusEnum } from './data.d';
@@ -13,7 +13,7 @@ import { query, save } from './service';
  * 添加
  * @param fields
  */
-const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
+const handleSaveAndUpdate = async (fields: TableListItem, intl: any) => {
   const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
 
   try {
