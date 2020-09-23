@@ -31,6 +31,10 @@ const FormView: React.FC<FormProps> = (props) => {
   const intl = useIntl();
   const [form] = Form.useForm();
 
+  React.useEffect(() => {
+    form.setFieldsValue(info);
+  }, [info]);
+
   return (
     <Modal
       destroyOnClose
@@ -42,33 +46,40 @@ const FormView: React.FC<FormProps> = (props) => {
       okText={intl.formatMessage({ id: 'global.submit' })}
     >
       <Form
+        preserve={false}
         {...formLayout}
         form={form}
         initialValues={info}
-        onFinish={values => onSubmit({ ...info, ...values } as TableListItem)}
+        onFinish={(values) => onSubmit({ ...info, ...values } as TableListItem)}
       >
         {info.orgId ? (
           <Form.Item label={intl.formatMessage({ id: 'api.org.orgId' })}>
             <Input value={info.orgId} readOnly />
           </Form.Item>
         ) : (
-            <Form.Item
-              name="orgId"
-              label={intl.formatMessage({ id: 'api.org.orgId' })}
-              rules={[
-                {
-                  required: true,
-                  message: intl.formatMessage({ id: 'api.org.orgId.required' }),
-                },
-                {
-                  validator: (_, value) => (value === '' || value === info.orgId) ? Promise.resolve() :
-                    fetchExistOrgId(value).then((result: boolean) => result ? Promise.reject(intl.formatMessage({ id: 'api.org.orgId.validator' })) : Promise.resolve()),
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          )}
+          <Form.Item
+            name="orgId"
+            label={intl.formatMessage({ id: 'api.org.orgId' })}
+            rules={[
+              {
+                required: true,
+                message: intl.formatMessage({ id: 'api.org.orgId.required' }),
+              },
+              {
+                validator: (_, value) =>
+                  value === '' || value === info.orgId
+                    ? Promise.resolve()
+                    : fetchExistOrgId(value).then((result: boolean) =>
+                        result
+                          ? Promise.reject(intl.formatMessage({ id: 'api.org.orgId.validator' }))
+                          : Promise.resolve(),
+                      ),
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        )}
         <Form.Item
           name="orgName"
           label={intl.formatMessage({ id: 'api.org.orgName' })}
@@ -92,10 +103,18 @@ const FormView: React.FC<FormProps> = (props) => {
           ]}
         >
           <Select>
-            <Select.Option value="0">{intl.formatMessage({ id: 'api.org.orgType.0' })}</Select.Option>
-            <Select.Option value="1">{intl.formatMessage({ id: 'api.org.orgType.1' })}</Select.Option>
-            <Select.Option value="2">{intl.formatMessage({ id: 'api.org.orgType.2' })}</Select.Option>
-            <Select.Option value="9">{intl.formatMessage({ id: 'api.org.orgType.9' })}</Select.Option>
+            <Select.Option value="0">
+              {intl.formatMessage({ id: 'api.org.orgType.0' })}
+            </Select.Option>
+            <Select.Option value="1">
+              {intl.formatMessage({ id: 'api.org.orgType.1' })}
+            </Select.Option>
+            <Select.Option value="2">
+              {intl.formatMessage({ id: 'api.org.orgType.2' })}
+            </Select.Option>
+            <Select.Option value="9">
+              {intl.formatMessage({ id: 'api.org.orgType.9' })}
+            </Select.Option>
           </Select>
         </Form.Item>
         <Form.Item
@@ -139,7 +158,7 @@ const FormView: React.FC<FormProps> = (props) => {
           <Input.TextArea rows={4} />
         </Form.Item>
       </Form>
-    </Modal >
+    </Modal>
   );
 };
 
