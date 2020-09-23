@@ -31,17 +31,29 @@ public class MerchantExtraCheck {
     @JoinColumn(name = "merchantId", referencedColumnName = "merchantId")
     private Merchant merchant;
 
+
+    //币种
+    @Column
+    private String ccyType;
+
     //币种
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ccyType", referencedColumnName = "ccyType")
-    private CcyType ccyType;
+    @JoinColumn(name = "ccyType", referencedColumnName = "ccyType", insertable = false, updatable = false)
+    private CcyType ccyTypeObject;
+
+
+
+
+    //国家代码
+    @Column
+    private String internationalCode;
 
     //国家代码
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "internationalCode", referencedColumnName = "internationalCode")
-    private InternationalCode internationalCode;
+    @JoinColumn(name = "internationalCode", referencedColumnName = "internationalCode", insertable = false, updatable = false)
+    private InternationalCode internationalCodeObject;
     //审核状态
     @Column
     private String checkState;
@@ -60,20 +72,20 @@ public class MerchantExtraCheck {
         this.merchantId = merchantId;
     }
 
-    public CcyType getCcyType() {
-        return ccyType;
+    public CcyType getCcyTypeObject() {
+        return ccyTypeObject;
     }
 
-    public void setCcyType(CcyType ccyType) {
-        this.ccyType = ccyType;
+    public void setCcyTypeObject(CcyType ccyTypeObject) {
+        this.ccyTypeObject = ccyTypeObject;
     }
 
-    public InternationalCode getInternationalCode() {
-        return internationalCode;
+    public InternationalCode getInternationalCodeObject() {
+        return internationalCodeObject;
     }
 
-    public void setInternationalCode(InternationalCode internationalCode) {
-        this.internationalCode = internationalCode;
+    public void setInternationalCodeObject(InternationalCode internationalCodeObject) {
+        this.internationalCodeObject = internationalCodeObject;
     }
 
     public String getCheckState() {
@@ -106,5 +118,21 @@ public class MerchantExtraCheck {
 
     public void setMerchant(Merchant merchant) {
         this.merchant = merchant;
+    }
+
+    public String getCcyType() {
+        return ccyType;
+    }
+
+    public void setCcyType(String ccyType) {
+        this.ccyType = ccyType;
+    }
+
+    public String getInternationalCode() {
+        return internationalCode;
+    }
+
+    public void setInternationalCode(String internationalCode) {
+        this.internationalCode = internationalCode;
     }
 }

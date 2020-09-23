@@ -8,6 +8,13 @@ export async function query(params?: TableListParams) {
   });
 }
 
+export async function queryCheck(params?: TableListParams) {
+  return request('/svc/ssp/merchantExtra', {
+    method: 'GET',
+    params,
+  });
+}
+
 export async function save(params: TableListItem) {
   return request('/svc/ssp/merchantExtra', {
     method: 'PUT',
@@ -17,13 +24,14 @@ export async function save(params: TableListItem) {
     },
   });
 }
-
+// url不带check是修改后的
 export async function get(params: TableListItem) {
   return request(`/svc/ssp/merchantExtra/${params.merchantId}`, {
     method: 'GET',
   });
 }
 
+// url带check是修改前的
 export async function getCheck(params: TableListItem) {
   return request(`/svc/ssp/merchantExtra/${params.merchantId}/check`, {
     method: 'GET',

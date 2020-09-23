@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface MerchantExtraDao extends BaseDao<MerchantExtra, String> {
 
-    List<MerchantExtra> findByCcyTypeCcyType(String ccyType);
+    List<MerchantExtra> findByCcyType(String ccyType);
 
-    List<MerchantExtra> findByInternationalCodeInternationalCode(String internationalCode);
+    List<MerchantExtra> findByInternationalCode(String internationalCode);
 }

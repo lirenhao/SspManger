@@ -103,7 +103,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
               },
             },
           ]}
-          label={intl.formatMessage({ id: 'orgzmk.pwd1' })}
+          label={intl.formatMessage({ id: 'orgzmk.pwd2' })}
         >
           <Input.TextArea rows={2} maxLength={48} />
         </Form.Item>
