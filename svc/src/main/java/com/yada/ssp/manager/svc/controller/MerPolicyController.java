@@ -23,7 +23,7 @@ public class MerPolicyController {
         return merPolicyService.findAll();
     }
 
-    @PostMapping
+    @PutMapping
     public void save(@RequestBody MerPolicy merPolicy) {
         merPolicyService.saveAndUpdate(merPolicy);
     }
