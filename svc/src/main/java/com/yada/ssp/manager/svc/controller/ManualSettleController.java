@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * 手工调账
  */
@@ -58,8 +60,8 @@ public class ManualSettleController {
     }
 
     @PutMapping("/{lsId}/check")
-    public void saveCheck(@PathVariable String lsId, String checkReason, String checkState) {
-        manualSettleService.check(lsId, checkReason, checkState);
+    public void saveCheck(@PathVariable String lsId, @RequestBody Map<String, String> body) {
+        manualSettleService.check(lsId, body.get("checkReason"), body.get("checkState"));
     }
 
     @GetMapping("/{lsId}/check")

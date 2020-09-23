@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * 商户附加资料API
  */
@@ -40,6 +42,11 @@ public class MerchantExtraController {
         merchantExtraCheckService.saveMerchantExtra(merchantExtraCheck);
     }
 
+    @GetMapping("/{id}")
+    public MerchantExtraCheck get(@PathVariable String id) {
+        return merchantExtraCheckService.findOne(id);
+    }
+
     @DeleteMapping("/{id}")
     public void merchantExtraDelete(@PathVariable String id) {
         merchantExtraCheckService.merchantExtraDelete(id);
@@ -51,7 +58,7 @@ public class MerchantExtraController {
     }
 
     @PutMapping("/{id}/check")
-    public void check(@PathVariable String id, String checkReason, String state) {
-        merchantExtraCheckService.saveCheck(id, checkReason, state);
+    public void check(@PathVariable String id, @RequestBody Map<String, String> body) {
+        merchantExtraCheckService.saveCheck(id, body.get("checkReason"), body.get("checkState"));
     }
 }
