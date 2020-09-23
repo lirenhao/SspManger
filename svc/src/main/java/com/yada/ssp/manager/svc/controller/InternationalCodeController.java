@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 国家代码API
@@ -30,6 +31,11 @@ public class InternationalCodeController {
     @GetMapping
     public Page<InternationalCode> list(@ModelAttribute InternationalCodeQuery query, @PageableDefault Pageable pageable) {
         return internationalCodeService.findAll(query, pageable);
+    }
+
+    @GetMapping("/list")
+    public List<InternationalCode> list() {
+        return internationalCodeService.findAll();
     }
 
     @PutMapping
