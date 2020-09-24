@@ -1,4 +1,3 @@
-
 export default {
   'merQrc.merchantId': '商户ID',
   'merQrc.useCase': '交易类型',
@@ -21,5 +20,6 @@ export default {
   'merQrc.fee': '手续费类型',
   'merQrc.title': '商户静态QR管理',
   'merQrcCheck.title': '商户QR码审核',
-  'merQrc.checkCompoent':'商户QR码审核'
+  'merQrc.checkCompoent': '商户QR码审核',
+  'merQrc.createDate': '生效日期',
 };

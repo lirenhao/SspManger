@@ -19,4 +19,5 @@ export default {
   'merQrc.ccyCode': 'CURRENCY',
   'merQrc.fee': 'Fee Type',
   'merQrc.title': 'Merchant Static-QRC',
+  'merQrc.createDate': 'EFFECTIVE DATE',
 };
