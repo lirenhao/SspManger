@@ -1,26 +1,40 @@
 /* eslint-disable import/no-named-as-default-member */
-import { message, Button } from 'antd';
+import { message, Divider } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl, FormattedMessage, IntlShape } from 'umi';
-import { PlusOutlined } from '@ant-design/icons';
 
 import CreateForm from './components/CreateForm';
 import ViewForm from './components/ViewForm';
 
-// import CheckForm from './components/CheckForm';
+import CheckForm from './components/CheckForm';
 import { TableListItem, checkStateEnum, operEnmu, useCaseEnmu, cardAssoEnum } from './data.d';
-import { query, save, getCcyType } from './service';
+import { query, save, get, getCheck, getCcyType, saveCheck } from './service';
 
 /**
  * 添加
  * @param fields
  */
-const handleSave = async (fields: TableListItem, intl: IntlShape) => {
+const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
   const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
+
   try {
     await save({ ...fields });
+    hide();
+    message.success(intl.formatMessage({ id: 'global.success' }));
+    return true;
+  } catch (error) {
+    hide();
+    message.error(intl.formatMessage({ id: 'global.error' }));
+    return false;
+  }
+};
+
+const handleSaveCheck = async (fields: TableListItem, intl: IntlShape) => {
+  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
+  try {
+    await saveCheck({ ...fields });
     hide();
     message.success(intl.formatMessage({ id: 'global.success' }));
     return true;
@@ -45,6 +59,23 @@ const TableList: React.FC<{}> = () => {
     getCcyType().then(setCcy);
   }, []);
 
+  const [after, setAfter] = React.useState<Partial<TableListItem>>({});
+  const [before, setBefore] = React.useState<Partial<TableListItem>>({});
+
+  const [isCheck, setIsCheck] = React.useState<boolean>(false);
+
+  const beforeCheck = async (params: TableListItem) => {
+    try {
+      const info = await get(params);
+      setAfter(info);
+      const checkInfo = await getCheck(params);
+      setBefore(checkInfo);
+    } catch (err) {
+      console.error(err.message);
+    }
+    setIsCheck(true);
+  };
+
   ccyData.forEach((element) => {
     ccyArr[element.ccyType] = { text: element.ccyName, status: element.ccyType };
   });
@@ -65,21 +96,20 @@ const TableList: React.FC<{}> = () => {
           >
             <FormattedMessage id="global.view" />
           </a>
-          {/* <Divider type="vertical" />
+          <Divider type="vertical" />
           <a
             onClick={() => {
               beforeCheck(record);
             }}
           >
             <FormattedMessage id="global.check" />
-          </a> */}
+          </a>
         </>
       ),
     },
     {
       dataIndex: 'lsId',
       hideInSearch: true,
-      hideInForm: true,
       hideInTable: true,
     },
 
@@ -120,12 +150,6 @@ const TableList: React.FC<{}> = () => {
       title: intl.formatMessage({ id: 'merQrc.qrValue' }),
       dataIndex: 'qrValue',
       hideInSearch: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'merQrc.createDate' }),
-      dataIndex: 'createDate',
-      hideInSearch: true,
-      hideInTable: true,
     },
 
     {
@@ -169,11 +193,6 @@ const TableList: React.FC<{}> = () => {
         headerTitle=""
         actionRef={actionRef}
         rowKey="lsId"
-        toolBarRender={() => [
-          <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> <FormattedMessage id="global.create" />
-          </Button>,
-        ]}
         columns={columns}
       />
 
@@ -181,7 +200,7 @@ const TableList: React.FC<{}> = () => {
         onCancel={() => handleModalVisible(false)}
         modalVisible={createModalVisible}
         onSubmit={async (value) => {
-          const success = await handleSave(value, intl);
+          const success = await handleSaveAndUpdate(value, intl);
           if (success) {
             handleModalVisible(false);
             if (actionRef.current) {
@@ -196,7 +215,7 @@ const TableList: React.FC<{}> = () => {
         onCancel={() => handleModalViewVisible(false)}
         modalVisible={createModalViewVisible}
         onSubmit={async (value) => {
-          const success = await handleSave(value, intl);
+          const success = await handleSaveAndUpdate(value, intl);
           if (success) {
             handleModalViewVisible(false);
             if (actionRef.current) {
@@ -206,13 +225,14 @@ const TableList: React.FC<{}> = () => {
         }}
       />
 
-      {/* <CheckForm
+      <CheckForm
+        // values={stepFormValues}
         onCancel={() => setIsCheck(false)}
         modalVisible={isCheck}
-        before = {before}
-        after = {after}
+        before={before}
+        after={after}
         onSubmit={async (value) => {
-          const success = await handleSaveCheck(value,intl);
+          const success = await handleSaveCheck(value, intl);
           if (success) {
             setIsCheck(false);
             if (actionRef.current) {
@@ -220,7 +240,7 @@ const TableList: React.FC<{}> = () => {
             }
           }
         }}
-      />     */}
+      />
     </PageContainer>
   );
 };

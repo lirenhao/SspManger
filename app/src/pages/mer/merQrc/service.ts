@@ -2,22 +2,21 @@ import { request } from 'umi';
 import { TableListParams, TableListItem } from './data.d';
 
 export async function query(params?: TableListParams) {
-
   const ccyCode = params?.ccyCode?.ccyType;
 
   return request('/svc/ssp/staticQrc', {
     method: 'GET',
-    params: {...params,...{ccyCode}}
+    params: { ...params, ...{ ccyCode } },
   });
 }
 
 export async function save(params: TableListItem) {
   const ccyType = params?.ccyCode?.ccyType;
   return request('/svc/ssp/staticQrc', {
-    method: 'PUT',
+    method: 'POST',
     data: {
       ...params,
-      ...{ccyType}
+      ...{ ccyType },
     },
   });
 }
@@ -37,6 +36,7 @@ export async function getCheck(params: TableListItem) {
 export async function saveCheck(params: TableListItem) {
   return request(`/svc/ssp/staticQrc/${params.lsId}/check`, {
     method: 'PUT',
+    data: { checkState: params.checkState, checkReason: params.checkReason },
   });
 }
 
@@ -60,14 +60,20 @@ export async function fetchOrgTree() {
   return request('/svc/ssp/org/tree');
 }
 
-
-
 export async function getTerminal(id: String) {
   return request(`/svc/ssp/terminal/${id}`);
 }
 
-// export async function getCountryCode() {
-//   return request('/svc/ssp/countryCode/list', {
-//     method: 'GET',
-//   });
-// }
+export async function fetchGetAllMer() {
+  return request('/svc/ssp/merchant/orgId', {
+    method: 'GET',
+  });
+}
+
+export function getMerEnum(responseResult: { merchantId: string; merNameEng: string }[]) {
+  const merEnum = {};
+  responseResult.forEach((mer) => {
+    merEnum[mer.merchantId] = `${mer.merchantId}-${mer.merNameEng}`;
+  });
+  return merEnum;
+}
