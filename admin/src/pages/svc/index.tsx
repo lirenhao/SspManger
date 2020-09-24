@@ -4,7 +4,7 @@ import { PageContainer, GridContent } from '@ant-design/pro-layout';
 import { CloseOutlined } from '@ant-design/icons';
 import { Spin, Menu, Modal, Card, List, Row, Col, Tooltip, Button, notification } from 'antd';
 import { connect } from 'dva';
-import { SvcData, ResData } from './data.d';
+import { SvcData, ResData } from './data';
 import { ModelState } from './model';
 import SvcForm from './components/SvcForm';
 import SvcUpdate from './components/SvcUpdate';

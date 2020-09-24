@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { SvcData } from './data.d';
+import { SvcData } from './data';
 
 const data: SvcData[] = [
   {

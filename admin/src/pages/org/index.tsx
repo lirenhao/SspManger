@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Table, Button, Divider, Modal, notification } from 'antd';
 import { connect } from 'dva';
-import { OrgTreeData, OrgData } from './data.d';
+import { OrgTreeData, OrgData } from './data';
 import { ModelState } from './model';
 import Form from './components/Form';
 

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { OrgTreeData, OrgData } from './data.d';
+import { OrgTreeData, OrgData } from './data';
 
 const orgData: OrgData[] = [
   {
