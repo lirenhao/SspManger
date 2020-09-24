@@ -28,9 +28,8 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
     checkState: props.values.checkState ? checkStateEnum[props.values.checkState] : '',
     checkReason: props.values.checkReason,
     operation: props.values.operation ? operEnmu[props.values.operation] : '',
-    ccyCode: {
-      ccyName: props.values.ccyCode?.ccyName,
-    },
+    ccyType: props.values.ccyType,
+    createDate: props.values.createDate,
     merchant: {
       merchantId: props.values.merchant ? props.values.merchant.merchantId : '',
       merNameChn: props.values.merchant ? props.values.merchant.merNameChn : '',
@@ -66,13 +65,13 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
           <Input disabled />
         </Form.Item>
 
-        <Form.Item
-          name='ccyType'
-          label={intl.formatMessage({ id: 'merQrc.ccyName' })}
-        >
+        <Form.Item name="createDate" label={intl.formatMessage({ id: 'merQrc.createDate' })}>
           <Input disabled />
         </Form.Item>
 
+        <Form.Item name="ccyType" label={intl.formatMessage({ id: 'merQrc.ccyName' })}>
+          <Input disabled />
+        </Form.Item>
         <Form.Item name="checkState" label={intl.formatMessage({ id: 'merQrc.checkState' })}>
           <Input disabled />
         </Form.Item>
@@ -98,19 +97,6 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
       <Form
         {...formLayout}
         form={form}
-        initialValues={{
-          merchantId: formVals.merchantId,
-          terminalId: formVals.terminalId,
-          useCase: formVals.useCase,
-          qrValue: formVals.qrValue,
-          cardAsso: formVals.cardAsso,
-          ccyCode: {
-            ccyName: formVals.ccyCode.ccyName,
-          },
-          checkState: formVals.checkState,
-          checkReason: formVals.checkReason,
-          operation: formVals.operation,
-        }}
         // initialValues={values}
       >
         {renderContent()}

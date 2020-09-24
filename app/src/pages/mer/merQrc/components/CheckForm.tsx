@@ -9,7 +9,7 @@ interface CheckFormProps {
   onCancel: () => void;
   onSubmit: (values: TableListItem) => void;
   before: Partial<TableListItem>;
-  after : Partial<TableListItem>;
+  after: Partial<TableListItem>;
 }
 
 export interface CheckFormState {
@@ -42,6 +42,7 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
   };
 
   const afterFormVals = {
+    lsId: props.after.lsId,
     merchantId: props.after.merchantId,
     terminalId: props.after.terminalId,
     useCase: props.after.useCase ? useCaseEnmu[props.after.useCase] : '',
@@ -66,7 +67,7 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
 
   form.setFieldsValue(formVals);
 
-  const [formAfter]  = Form.useForm();
+  const [formAfter] = Form.useForm();
   formAfter.setFieldsValue(afterFormVals);
 
   const renderContent = () => {
@@ -92,10 +93,7 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
           <Input disabled />
         </Form.Item>
 
-        <Form.Item
-          name='ccyType'
-          label={intl.formatMessage({ id: 'merQrc.ccyName' })}
-        >
+        <Form.Item name="ccyType" label={intl.formatMessage({ id: 'merQrc.ccyName' })}>
           <Input disabled />
         </Form.Item>
 
@@ -115,43 +113,43 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
       width={1040}
       onOk={() => form.submit()}
     >
-<Row>
-    
-    <Col span={12}>
-            <Card title={intl.formatMessage({ id: 'merAddon.check.after' })}>
-                <Form {...formLayout} form={formAfter}>
-                    {renderContent()}
-                </Form>
-            </Card>
-      </Col>
+      <Row>
         <Col span={12}>
-            <Card title={intl.formatMessage({ id: 'merAddon.check.before' })}>
-        <Form {...formLayout} form={form}>
-            {renderContent()}
-        </Form>
-            </Card>
+          <Card title={intl.formatMessage({ id: 'merAddon.check.after' })}>
+            <Form {...formLayout} form={formAfter}>
+              {renderContent()}
+            </Form>
+          </Card>
         </Col>
-
+        <Col span={12}>
+          <Card title={intl.formatMessage({ id: 'merAddon.check.before' })}>
+            <Form {...formLayout} form={form}>
+              {renderContent()}
+            </Form>
+          </Card>
+        </Col>
       </Row>
-      <br/>
+      <br />
       <Form
         form={form}
         initialValues={{ checkState: '0' }}
-        onFinish={values => {
-          onSubmit({...{merchantId:''},...afterFormVals,...values})
-      }
-    }
+        onFinish={(values: TableListItem) => {
+          onSubmit({
+            ...afterFormVals,
+            ...{ checkState: values.checkState, checkReason: values.checkReason },
+          });
+        }}
       >
-      <Row>
-        <Col span={8}>
-        <Form.Item
+        <Row>
+          <Col span={8}>
+            <Form.Item
               name="checkState"
-              label={intl.formatMessage({ id:'merAddon.check.checkState'})}
+              label={intl.formatMessage({ id: 'merAddon.check.checkState' })}
               rules={[
                 {
                   required: true,
                   message: intl.formatMessage({ id: 'merAddon.check.checkState.required' }),
-                }
+                },
               ]}
             >
               <Radio.Group>
@@ -159,8 +157,8 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
                 <Radio value="1">{intl.formatMessage({ id: 'appUser.check.checkState.1' })}</Radio>
               </Radio.Group>
             </Form.Item>
-        </Col>
-        <Col span={16}>
+          </Col>
+          <Col span={16}>
             <Form.Item
               name="checkReason"
               label={intl.formatMessage({ id: 'appUser.check.checkReason' })}
@@ -168,8 +166,7 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
               <Input />
             </Form.Item>
           </Col>
-          
-      </Row>
+        </Row>
       </Form>
     </Modal>
   );

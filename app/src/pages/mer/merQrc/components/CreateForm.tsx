@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Form, Modal, Select, Input } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { useIntl } from 'umi';
+import { SelectValue } from 'antd/lib/select';
 import { TableListItem, useCaseEnmu, cardAssoEnum } from '../data.d';
+import { getCcyType, getTerminal, fetchGetAllMer, getMerEnum } from '../service';
 import formLayout from '../../../../formLayout';
-import { getCcyType, getTerminal } from '../service';
 
 interface CreateFormProps {
   modalVisible: boolean;
@@ -25,6 +26,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   // const [orgTree, setOrgTree] = useState<DataNode[]>([]);
   const terminalsArray: { terminalId: string }[] = [];
   const [terminals, setTerminals] = useState(terminalsArray);
+  const [merchants, setMerchants] = React.useState({});
   const formVals = {
     merchantId: '',
     terminal: '',
@@ -55,11 +57,24 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
 
   React.useEffect(() => {
     getCcyType().then(setCcy);
+    fetchGetAllMer().then((mer) => {
+      const merEnum = getMerEnum(mer);
+      setMerchants(merEnum);
+    });
   }, []);
 
-  // React.useEffect(() => {
-  //   fetchOrgTree().then(setOrgTree);
-  // }, []);
+  const renderMerchantOption = () => {
+    const { Option } = Select;
+    const OptionArr: JSX.Element[] = [];
+    Object.keys(merchants).forEach((key) => {
+      OptionArr.push(
+        <Option key={key} value={key}>
+          {merchants[key]}
+        </Option>,
+      );
+    });
+    return OptionArr;
+  };
 
   const renderUseCaseOption = () => {
     const { Option } = Select;
@@ -106,35 +121,40 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
     onSubmit({ ...{ merchant: {}, ccyCode: {} }, ...fieldsValue });
   };
 
-  const handleMerChange = (
-    e: React.FocusEvent<HTMLInputElement>,
-    thisForm: FormInstance,
-    onChange?: (value: any) => void,
-  ) => {
-    if (onChange) onChange(e.target.value);
-    if (e.target.value) {
+  // const handleMerChange = (
+  //   e: React.FocusEvent<HTMLInputElement>,
+  //   thisForm: FormInstance,
+  //   onChange?: (value: any) => void,
+  // ) => {
+  //   if (onChange) onChange(e.target.value);
+  //   if (e.target.value) {
+  //     thisForm.setFieldsValue({
+  //       ...thisForm.getFieldsValue(),
+  //       terminalId: undefined,
+  //     });
+
+  //     getTerminal(e.target.value).then(setTerminals);
+  //   }
+  // };
+
+  const handleMerChange = (value: SelectValue, thisForm: FormInstance) => {
+    if (value) {
       thisForm.setFieldsValue({
         ...thisForm.getFieldsValue(),
         terminalId: undefined,
       });
-
-      getTerminal(e.target.value).then(setTerminals);
+      getTerminal(value.toString()).then(setTerminals);
     }
   };
 
   const renderContent = () => {
     return (
       <>
-        <Form.Item
-          name="merchantId"
-          label={intl.formatMessage({ id: 'merQrc.merchantId' })}
-        >
-          {/* <TreeSelect
-            treeDefaultExpandAll
-            treeData={orgTree}
-            onChange={(value: string) => handleMerChange(value, form, undefined)}
-          /> */}
-          <Input onBlur={(e) => handleMerChange(e, form, undefined)}/>
+        <Form.Item name="merchantId" label={intl.formatMessage({ id: 'merQrc.merchantId' })}>
+          <Select onChange={(selectValue) => handleMerChange(selectValue, form)}>
+            {renderMerchantOption()}
+          </Select>
+          {/* <Input onBlur={(e) => handleMerChange(e, form, undefined)}/> */}
         </Form.Item>
 
         <Form.Item name="terminalId" label={intl.formatMessage({ id: 'merQrc.terminalId' })}>
@@ -169,23 +189,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
       onCancel={() => onCancel()}
       onOk={() => handleSubmit()}
     >
-      <Form
-        {...formLayout}
-        form={form}
-        initialValues={{
-          merchantId: '',
-          terminalId: '',
-          useCase: '',
-          qrValue: '',
-          cardAsso: '',
-          ccyCode: {
-            ccyName: '',
-          },
-          checkState: '',
-          checkReason: '',
-          operation: '',
-        }}
-      >
+      <Form {...formLayout} form={form} preserve={false}>
         {renderContent()}
       </Form>
     </Modal>
