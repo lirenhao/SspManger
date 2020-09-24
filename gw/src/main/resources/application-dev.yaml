@@ -33,6 +33,10 @@ management.endpoints:
 
 jwt.secret: yadajwt
 
+jasypt:
+  encryptor:
+    password: yada
+
 yada:
   recaptcha:
     type: None
