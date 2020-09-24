@@ -1,9 +1,11 @@
-import React /* ,{useState} */ from 'react';
-import { Form, Modal, Select, /* TreeSelect, */ Input, DatePicker } from 'antd';
+import React from 'react';
+import { Form, Modal, Select, Input, DatePicker } from 'antd';
 import { useIntl } from 'umi';
+import { SelectValue } from 'antd/lib/select';
+import { FormInstance } from 'antd/lib/form';
 import { TableListItem, cardAssoEnum, feeTypeEnum } from '../data.d';
-import formLayout from '../../../../formLayout';
-import { /* fetchOrgTree, */ fetchGetAllMer } from '../service';
+
+import { fetchGetAllMer } from '../service';
 
 interface CreateFormProps {
   modalVisible: boolean;
@@ -14,6 +16,19 @@ interface CreateFormProps {
 export interface CreateFormState {
   formVals: TableListItem;
 }
+
+const formLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 24 },
+    md: { span: 8 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 24 },
+    md: { span: 16 },
+  },
+};
 
 const CreateForm: React.FC<CreateFormProps> = (props) => {
   const intl = useIntl();
@@ -44,10 +59,8 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   const curFieldValue = form.getFieldsValue();
   form.setFieldsValue({ ...formVals, ...curFieldValue });
 
-  // const [orgTree, setOrgTree] = useState<DataNode[]>([]);
-  // React.useEffect(() => {
-  //   fetchOrgTree().then(setOrgTree);
-  // }, []);
+  const [tranAmtDisable, setTranAmtDisable] = React.useState<boolean>(false);
+  const [tranCntDisable, setTranCntDisable] = React.useState<boolean>(false);
 
   const [merchants, setMerchants] = React.useState<
     { merchantId: ''; merNameChn: ''; merNameEng: '' }[]
@@ -56,6 +69,18 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   React.useEffect(() => {
     fetchGetAllMer().then(setMerchants);
   }, []);
+
+  const handleFeeTypeChange = (value: SelectValue, thisForm: FormInstance) => {
+    if (value === '1') {
+      thisForm.setFieldsValue({ tranAmt: null });
+      setTranAmtDisable(true);
+      setTranCntDisable(false);
+    } else if (value === '2') {
+      thisForm.setFieldsValue({ tranCnt: null });
+      setTranCntDisable(true);
+      setTranAmtDisable(false);
+    }
+  };
 
   const renderMerChantOption = () => {
     const { Option } = Select;
@@ -108,7 +133,14 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
 
   const handleSubmit = async () => {
     const fieldsValue = await form.validateFields();
-    onSubmit({ ...fieldsValue,...{startDate:form.getFieldValue('startDate').format('YYYYMMDD'),checkState:'0',merchant:{merchantId:form.getFieldValue('merchantId')}} });
+    onSubmit({
+      ...fieldsValue,
+      ...{
+        startDate: form.getFieldValue('startDate').format('YYYYMMDD'),
+        checkState: '0',
+        merchant: { merchantId: form.getFieldValue('merchantId') },
+      },
+    });
   };
 
   const renderContent = () => {
@@ -137,7 +169,9 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
             },
           ]}
         >
-          <Select>{renderFeeTypeOption()}</Select>
+          <Select onChange={(selectValue) => handleFeeTypeChange(selectValue, form)}>
+            {renderFeeTypeOption()}
+          </Select>
         </Form.Item>
 
         <Form.Item
@@ -154,11 +188,11 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
         </Form.Item>
 
         <Form.Item name="tranCnt" label={intl.formatMessage({ id: 'merMdr.tranCnt' })}>
-          <Input />
+          <Input disabled={tranCntDisable} />
         </Form.Item>
 
         <Form.Item name="tranAmt" label={intl.formatMessage({ id: 'merMdr.tranAmt' })}>
-          <Input />
+          <Input disabled={tranAmtDisable} />
         </Form.Item>
         <Form.Item
           name="fee"
@@ -199,7 +233,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
       onCancel={() => onCancel()}
       onOk={() => handleSubmit()}
     >
-      <Form {...formLayout} form={form}>
+      <Form {...formLayout} form={form} preserve={false}>
         {renderContent()}
       </Form>
     </Modal>

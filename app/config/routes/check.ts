@@ -10,7 +10,7 @@ const routes: IRoute[] = [
   {
     path: '/check/merQrc',
     name: '/check/merQrc',
-    component: './check/merQrc',
+    component: './mer/merQrc/check',
     locale: 'merQrcCheck.title',
   },
   {

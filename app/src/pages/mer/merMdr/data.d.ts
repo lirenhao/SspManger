@@ -46,6 +46,8 @@ const checkStateEnum = {
   '0': 'pending',
   '1': 'approved',
   '2': 'reject',
+  '3': 'unknow',
+  '4': 'NOT APPLICABLE',
 };
 
 const useCaseEnmu = {
