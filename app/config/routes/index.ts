@@ -38,7 +38,7 @@ export default [
   {
     path: '/mer',
     name: 'mer',
-    icon: 'team',
+    icon: 'shop',
     locale: 'menu.mer',
     routes: mer,
   },
