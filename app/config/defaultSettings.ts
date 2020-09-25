@@ -6,7 +6,7 @@ export default {
   layout: 'mix',
   contentWidth: 'Fluid',
   fixedHeader: false,
-  fixSiderbar: true,
+  fixSiderbar: false,
   colorWeak: false,
   splitMenus: false,
   menu: {
