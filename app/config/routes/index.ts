@@ -2,11 +2,13 @@ import { IRoute } from 'umi';
 import SystemParamRoutes from './systemParam';
 import mer from './mer';
 import terminal from './terminal';
+import user from './user';
 import ccpay from './ccpay';
 import trans from './trans';
 import check from './check';
 import settle from './settle';
 import risk from './risk';
+import other from './other';
 
 export default [
   {
@@ -27,13 +29,14 @@ export default [
     locale: 'menu.modifyPwd',
     hideInMenu: true,
   },
-
   {
     path: '/systemParam',
     name: 'systemParam',
     icon: 'setting',
     locale: 'menu.systemParam',
     routes: SystemParamRoutes,
+    access: 'canShow',
+    roles: ['admin', 'Finance Operator'],
   },
   {
     path: '/mer',
@@ -41,6 +44,8 @@ export default [
     icon: 'shop',
     locale: 'menu.mer',
     routes: mer,
+    access: 'canShow',
+    roles: ['admin', 'Merchant Operator', 'Merchant Checker'],
   },
   {
     path: '/terminal',
@@ -48,14 +53,26 @@ export default [
     icon: 'desktop',
     locale: 'menu.terminal',
     routes: terminal,
+    access: 'canShow',
+    roles: ['admin', 'Merchant Operator', 'Merchant Checker'],
   },
-  // mobile
+  {
+    path: '/user',
+    name: 'merchantUser',
+    icon: 'mobile',
+    locale: 'menu.merUser',
+    routes: user,
+    access: 'canShow',
+    roles: ['admin', 'Merchant Operator'],
+  },
   {
     path: '/ccpay',
     name: 'ccpay',
     icon: 'bank',
     locale: 'menu.ccpay',
     routes: ccpay,
+    access: 'canShow',
+    roles: ['admin', 'Merchant Operator'],
   },
   {
     path: '/transaction',
@@ -63,6 +80,8 @@ export default [
     icon: 'search',
     locale: 'menu.trans',
     routes: trans,
+    access: 'canShow',
+    roles: ['admin', 'Merchant Operator'],
   },
   {
     path: '/check',
@@ -70,6 +89,8 @@ export default [
     icon: 'checkSquare',
     locale: 'menu.check',
     routes: check,
+    access: 'canShow',
+    roles: ['admin', 'Merchant Checker'],
   },
   {
     path: '/settle',
@@ -77,6 +98,8 @@ export default [
     icon: 'unorderedList',
     locale: 'menu.settle',
     routes: settle,
+    access: 'canShow',
+    roles: ['admin', 'Merchant Operator', 'Finance Operator', 'Finance Checker'],
   },
   {
     path: '/risk',
@@ -84,8 +107,18 @@ export default [
     icon: 'warning',
     locale: 'menu.risk',
     routes: risk,
+    access: 'canShow',
+    roles: ['admin', 'Risk Operator'],
   },
-  // (other)
+  {
+    path: '/other',
+    name: 'other',
+    icon: 'ellipsis',
+    locale: 'menu.other',
+    routes: other,
+    access: 'canShow',
+    roles: ['admin', 'Finance Operator', 'Merchant Checker', 'Finance Checker'],
+  },
   {
     component: './404',
   },

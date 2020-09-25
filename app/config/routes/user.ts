@@ -2,10 +2,10 @@ import { IRoute } from 'umi';
 
 const routes: IRoute[] = [
   {
-    path: '/ccpay/mng',
-    name: 'ccpayManager',
-    component: './ccpay/mng',
-    locale: 'ccpay.title',
+    path: '/user/appUser',
+    name: 'appUser',
+    component: './app/user',
+    locale: 'appUser.title',
     access: 'canShow',
     roles: ['admin', 'Merchant Operator'],
   },

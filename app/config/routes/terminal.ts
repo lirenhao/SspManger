@@ -6,6 +6,32 @@ const routes: IRoute[] = [
     name: 'terminal info',
     component: './terminal/info',
     locale: 'terminal.info',
+    access: 'canShow',
+    roles: ['admin', 'Merchant Operator', 'Merchant Checker'],
+  },
+  {
+    path: '/terminal/termSn',
+    name: 'termSn',
+    component: './info/termSn',
+    locale: 'termSn.title',
+    access: 'canShow',
+    roles: ['admin', 'Merchant Operator', 'Merchant Checker'],
+  },
+  {
+    path: '/terminal/orgTmk',
+    name: 'orgTmk',
+    component: './systemParam/orgTmk',
+    locale: 'orgtmk.title',
+    access: 'canShow',
+    roles: ['admin', 'Merchant Checker'],
+  },
+  {
+    path: '/terminal/uploadTmk',
+    name: 'uploadTmk',
+    component: './systemParam/uploadTmk',
+    locale: 'uploadTmk.title',
+    access: 'canShow',
+    roles: ['admin', 'Merchant Checker'],
   },
 ];
 

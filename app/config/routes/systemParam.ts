@@ -6,94 +6,72 @@ const routes: IRoute[] = [
     name: 'appRole',
     component: './app/role',
     locale: 'appRole.title',
+    access: 'canShow',
+    roles: ['admin'],
   },
   {
     path: '/systemParam/mccCode',
     name: 'mccCode',
     component: './systemParam/mccCode',
     locale: 'mcc.title',
+    access: 'canShow',
+    roles: ['admin'],
   },
-
   {
     path: '/systemParam/currency',
     name: 'currency',
     component: './systemParam/ccyManager',
     locale: 'currency.title',
+    access: 'canShow',
+    roles: ['admin'],
   },
   {
     path: '/systemParam/country',
     name: 'country',
     component: './systemParam/country',
     locale: 'country.title',
+    access: 'canShow',
+    roles: ['admin'],
   },
   {
     path: '/systemParam/cardbin',
-    name: 'bank list',
+    name: 'cupCardBin',
     component: './systemParam/cardbin',
     locale: 'cardbin.title',
-  },
-  {
-    path: '/systemParam/merchant',
-    name: 'merchant',
-    component: './info/merchant',
-    locale: 'merchant.title',
     access: 'canShow',
-    roles: ['admin', 'user'],
-  },
-  {
-    path: '/systemParam/banks',
-    name: 'bank list',
-    component: './systemParam/banks',
-    locale: 'banks.title',
-  },{
-    path: '/systemParam/orgZmk',
-    name: 'orgzmk',
-    component: './systemParam/orgZmk',
-
-    locale: 'orgzmk.title',
-  },
-  {
-    path: '/systemParam/orgTmk',
-    name: 'orgtmk',
-    component: './systemParam/orgTmk',
-    locale: 'orgtmk.title',
-  },
-  {
-    path: '/systemParam/uploadTmk',
-    name: 'uploadTmk',
-    component: './systemParam/uploadTmk',
-    locale: 'uploadTmk.title',
-  },
-
-  {
-    path: '/systemParam/termSn',
-    name: 'termSn',
-    component: './info/termSn',
-    locale: 'termSn.title',
+    roles: ['admin'],
   },
   {
     path: '/systemParam/apiOrg',
     name: 'apiOrg',
     component: './api/org',
     locale: 'apiOrg.title',
+    access: 'canShow',
+    roles: ['admin'],
   },
   {
-    path: '/systemParam/apiOrgMapping',
-    name: 'apiOrgMapping',
-    component: './api/org/mapping',
-    locale: 'apiOrg.mapping.title',
+    path: '/systemParam/banks',
+    name: 'bankList',
+    component: './systemParam/banks',
+    locale: 'banks.title',
+    access: 'canShow',
+    roles: ['admin', 'Finance Operator'],
   },
-
-
-
-
-
-  
+  {
+    path: '/systemParam/orgZmk',
+    name: 'orgzmk',
+    component: './systemParam/orgZmk',
+    locale: 'orgzmk.title',
+    access: 'canShow',
+    roles: ['admin'],
+  },
   {
     path: '/systemParam/policy',
     name: 'policy',
     component: './web/policy',
     locale: 'policy.title',
+    access: 'canShow',
+    roles: ['admin'],
   },
 ];
 
