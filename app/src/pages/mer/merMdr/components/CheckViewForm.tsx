@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Modal, Input, Col, Radio, Row, Card } from 'antd';
+import { Form, Modal, Input, Col, Row, Card } from 'antd';
 import { useIntl } from 'umi';
 import { TableListItem } from '../data';
 import formLayout from '../../../../formLayout';
@@ -7,7 +7,6 @@ import formLayout from '../../../../formLayout';
 interface UpdateFormProps {
   modalVisible: boolean;
   onCancel: () => void;
-  onSubmit: (values: TableListItem) => void;
   before: Partial<TableListItem>;
   after: Partial<TableListItem>;
 }
@@ -18,7 +17,7 @@ export interface UpdateFormState {
 
 const CreateForm: React.FC<UpdateFormProps> = (props) => {
   const intl = useIntl();
-  const { modalVisible, onCancel, onSubmit } = props;
+  const { modalVisible, onCancel } = props;
 
   const [form] = Form.useForm();
   const [formAfter] = Form.useForm();
@@ -67,6 +66,10 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
           <Input disabled />
         </Form.Item>
 
+        <Form.Item name="checkReason" label={intl.formatMessage({ id: 'merMdr.checkReason' })}>
+          <Input disabled />
+        </Form.Item>
+
         <Form.Item name="operation" label={intl.formatMessage({ id: 'merMdr.operation' })}>
           <Input disabled />
         </Form.Item>
@@ -81,7 +84,7 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
       visible={modalVisible}
       width={1040}
       onCancel={() => onCancel()}
-      onOk={() => form.submit()}
+      onOk={() => onCancel()}
     >
       <Row>
         <Col span={12}>
@@ -99,42 +102,6 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
           </Card>
         </Col>
       </Row>
-      <br />
-      <Form
-        form={form}
-        initialValues={{ checkState: '0' }}
-        onFinish={(values) => {
-          onSubmit({ ...props.after, ...values });
-        }}
-      >
-        <Row>
-          <Col span={8}>
-            <Form.Item
-              name="checkState"
-              label={intl.formatMessage({ id: 'merAddon.check.checkState' })}
-              rules={[
-                {
-                  required: true,
-                  message: intl.formatMessage({ id: 'merMdr.checkStateRequired' }),
-                },
-              ]}
-            >
-              <Radio.Group>
-                <Radio value="0">{intl.formatMessage({ id: 'appUser.check.checkState.0' })}</Radio>
-                <Radio value="1">{intl.formatMessage({ id: 'appUser.check.checkState.1' })}</Radio>
-              </Radio.Group>
-            </Form.Item>
-          </Col>
-          <Col span={16}>
-            <Form.Item
-              name="checkReason"
-              label={intl.formatMessage({ id: 'appUser.check.checkReason' })}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
-      </Form>
     </Modal>
   );
 };

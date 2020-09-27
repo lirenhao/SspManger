@@ -197,6 +197,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
         <Form.Item
           name="fee"
           label={intl.formatMessage({ id: 'merMdr.feeCreate' })}
+          extra={intl.formatMessage({ id: 'merMdr.feeCreateExtra' })}
           rules={[
             {
               required: true,

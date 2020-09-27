@@ -7,10 +7,10 @@ import { useIntl, FormattedMessage, IntlShape } from 'umi';
 
 import CreateForm from './components/CreateForm';
 import CheckViewForm from './components/CheckViewForm';
-
 import CheckForm from './components/CheckForm';
-import { TableListItem, checkStateEnum, operEnmu, useCaseEnmu, cardAssoEnum } from './data.d';
-import { query, save, get, getCheck, getCcyType, saveCheck } from './service';
+import { TableListItem, checkStateEnum, operEnmu, ccyNotifyFlagEnum } from './data.d';
+
+import { query, save, get, fetchGetCheck, saveCheck } from './service';
 
 /**
  * 添加
@@ -33,6 +33,7 @@ const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
 
 const handleSaveCheck = async (fields: TableListItem, intl: IntlShape) => {
   const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
+
   try {
     await saveCheck({ ...fields });
     hide();
@@ -45,19 +46,11 @@ const handleSaveCheck = async (fields: TableListItem, intl: IntlShape) => {
   }
 };
 
-const ccyArr = {};
-
 const TableList: React.FC<{}> = () => {
   const [createModalViewVisible, handleModalViewVisible] = useState<boolean>(false);
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
-  const ccyArray: { ccyType: string; ccyName: string }[] = [];
-  const [ccyData, setCcy] = useState(ccyArray);
-  const intl = useIntl();
-  const actionRef = useRef<ActionType>();
-  React.useEffect(() => {
-    getCcyType().then(setCcy);
-  }, []);
 
+  //
   const [after, setAfter] = React.useState<Partial<TableListItem>>({});
   const [before, setBefore] = React.useState<Partial<TableListItem>>({});
 
@@ -66,17 +59,18 @@ const TableList: React.FC<{}> = () => {
   const beforeCheck = async (params: TableListItem) => {
     try {
       const info = await get(params);
+      const checkInfo = await fetchGetCheck(params);
       setAfter(info);
-      const checkInfo = await getCheck(params);
       setBefore(checkInfo);
     } catch (err) {
       console.error(err.message);
     }
   };
 
-  ccyData.forEach((element) => {
-    ccyArr[element.ccyType] = { text: element.ccyName, status: element.ccyType };
-  });
+  //
+
+  const intl = useIntl();
+  const actionRef = useRef<ActionType>();
 
   const columns: ProColumns<TableListItem>[] = [
     {
@@ -94,6 +88,7 @@ const TableList: React.FC<{}> = () => {
           >
             <FormattedMessage id="global.view" />
           </a>
+
           <Divider type="vertical" />
           <a
             onClick={() => {
@@ -107,58 +102,35 @@ const TableList: React.FC<{}> = () => {
       ),
     },
     {
-      dataIndex: 'lsId',
-      hideInSearch: true,
-      hideInTable: true,
-    },
-
-    {
-      title: intl.formatMessage({ id: 'merQrc.merchantId' }),
+      title: intl.formatMessage({ id: 'ccpay.merchantId' }),
       dataIndex: 'merchantId',
     },
+
     {
-      title: intl.formatMessage({ id: 'merQrc.terminalId' }),
-      dataIndex: 'terminalId',
+      title: intl.formatMessage({ id: 'ccpay.ccpayMerName' }),
+      dataIndex: 'ccpayMerName',
     },
     {
-      title: intl.formatMessage({ id: 'merQrc.ccyCode' }),
-      dataIndex: ['ccyCode', 'ccyType'],
-      initialValue: undefined,
-      valueEnum: ccyArr,
-      hideInTable: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'merQrc.ccyCode' }),
-      dataIndex: 'ccyType',
+      title: intl.formatMessage({ id: 'ccpay.notifyFlag' }),
+      dataIndex: 'notifyFlag',
       hideInSearch: true,
+      valueEnum: ccyNotifyFlagEnum,
     },
     {
-      title: intl.formatMessage({ id: 'merQrc.useCase' }),
-      dataIndex: 'useCase',
-      initialValue: undefined,
-      valueEnum: useCaseEnmu,
-    },
-    {
-      title: intl.formatMessage({ id: 'merQrc.cardAsso' }),
-      dataIndex: 'cardAsso',
-      initialValue: undefined,
-      valueEnum: cardAssoEnum,
-      hideInSearch: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'merQrc.qrValue' }),
-      dataIndex: 'qrValue',
+      title: intl.formatMessage({ id: 'ccpay.fee' }),
+      dataIndex: 'fee',
       hideInSearch: true,
     },
 
     {
-      title: intl.formatMessage({ id: 'merQrc.checkState' }),
+      title: intl.formatMessage({ id: 'ccpay.checkState' }),
       dataIndex: 'checkState',
       initialValue: undefined,
       valueEnum: checkStateEnum,
     },
+
     {
-      title: intl.formatMessage({ id: 'merQrc.operation' }),
+      title: intl.formatMessage({ id: 'ccpay.operation' }),
       dataIndex: 'operation',
       initialValue: undefined,
       valueEnum: operEnmu,
@@ -191,7 +163,12 @@ const TableList: React.FC<{}> = () => {
         }}
         headerTitle=""
         actionRef={actionRef}
-        rowKey="lsId"
+        rowKey="merchantId"
+        // toolBarRender={() => [
+        //   <Button type="primary" onClick={() => handleModalVisible(true)}>
+        //     <PlusOutlined /> <FormattedMessage id="global.create" />
+        //   </Button>,
+        // ]}
         columns={columns}
       />
 
@@ -215,7 +192,6 @@ const TableList: React.FC<{}> = () => {
         before={before}
         after={after}
       />
-
       <CheckForm
         // values={stepFormValues}
         onCancel={() => setIsCheck(false)}

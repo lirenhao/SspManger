@@ -4,35 +4,14 @@ import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import { useIntl, FormattedMessage, IntlShape } from 'umi';
-
-import CreateForm from './components/CreateForm';
 import CheckViewForm from './components/CheckViewForm';
-
+import { TableListItem, checkStateEnum, operEnmu, cardAssoEnum, feeTypeEnum } from './data.d';
 import CheckForm from './components/CheckForm';
-import { TableListItem, checkStateEnum, operEnmu, useCaseEnmu, cardAssoEnum } from './data.d';
-import { query, save, get, getCheck, getCcyType, saveCheck } from './service';
-
-/**
- * 添加
- * @param fields
- */
-const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
-  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
-
-  try {
-    await save({ ...fields });
-    hide();
-    message.success(intl.formatMessage({ id: 'global.success' }));
-    return true;
-  } catch (error) {
-    hide();
-    message.error(intl.formatMessage({ id: 'global.error' }));
-    return false;
-  }
-};
+import { query, saveCheck, get, getCheck } from './service';
 
 const handleSaveCheck = async (fields: TableListItem, intl: IntlShape) => {
   const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
+
   try {
     await saveCheck({ ...fields });
     hide();
@@ -45,38 +24,25 @@ const handleSaveCheck = async (fields: TableListItem, intl: IntlShape) => {
   }
 };
 
-const ccyArr = {};
-
 const TableList: React.FC<{}> = () => {
   const [createModalViewVisible, handleModalViewVisible] = useState<boolean>(false);
-  const [createModalVisible, handleModalVisible] = useState<boolean>(false);
-  const ccyArray: { ccyType: string; ccyName: string }[] = [];
-  const [ccyData, setCcy] = useState(ccyArray);
-  const intl = useIntl();
-  const actionRef = useRef<ActionType>();
-  React.useEffect(() => {
-    getCcyType().then(setCcy);
-  }, []);
-
   const [after, setAfter] = React.useState<Partial<TableListItem>>({});
   const [before, setBefore] = React.useState<Partial<TableListItem>>({});
-
   const [isCheck, setIsCheck] = React.useState<boolean>(false);
 
   const beforeCheck = async (params: TableListItem) => {
     try {
       const info = await get(params);
-      setAfter(info);
       const checkInfo = await getCheck(params);
+      setAfter(info);
       setBefore(checkInfo);
     } catch (err) {
       console.error(err.message);
     }
   };
 
-  ccyData.forEach((element) => {
-    ccyArr[element.ccyType] = { text: element.ccyName, status: element.ccyType };
-  });
+  const intl = useIntl();
+  const actionRef = useRef<ActionType>();
 
   const columns: ProColumns<TableListItem>[] = [
     {
@@ -113,52 +79,66 @@ const TableList: React.FC<{}> = () => {
     },
 
     {
-      title: intl.formatMessage({ id: 'merQrc.merchantId' }),
+      title: intl.formatMessage({ id: 'merMdr.merchantId' }),
       dataIndex: 'merchantId',
-    },
-    {
-      title: intl.formatMessage({ id: 'merQrc.terminalId' }),
-      dataIndex: 'terminalId',
-    },
-    {
-      title: intl.formatMessage({ id: 'merQrc.ccyCode' }),
-      dataIndex: ['ccyCode', 'ccyType'],
-      initialValue: undefined,
-      valueEnum: ccyArr,
-      hideInTable: true,
-    },
-    {
-      title: intl.formatMessage({ id: 'merQrc.ccyCode' }),
-      dataIndex: 'ccyType',
       hideInSearch: true,
     },
     {
-      title: intl.formatMessage({ id: 'merQrc.useCase' }),
-      dataIndex: 'useCase',
-      initialValue: undefined,
-      valueEnum: useCaseEnmu,
+      title: intl.formatMessage({ id: 'merMdr.feeType' }),
+      dataIndex: 'feeType',
+      hideInSearch: true,
+      valueEnum: feeTypeEnum,
     },
     {
-      title: intl.formatMessage({ id: 'merQrc.cardAsso' }),
-      dataIndex: 'cardAsso',
+      title: intl.formatMessage({ id: 'merMdr.cardOrgNum' }),
+      dataIndex: 'cardOrgNum',
       initialValue: undefined,
       valueEnum: cardAssoEnum,
+    },
+
+    {
+      title: intl.formatMessage({ id: 'merMdr.tranCnt' }),
+      dataIndex: 'tranCnt',
       hideInSearch: true,
     },
     {
-      title: intl.formatMessage({ id: 'merQrc.qrValue' }),
-      dataIndex: 'qrValue',
+      title: intl.formatMessage({ id: 'merMdr.tranAmt' }),
+      dataIndex: 'tranAmt',
+      hideInSearch: true,
+    },
+    {
+      title: intl.formatMessage({ id: 'merMdr.fee' }),
+      dataIndex: 'fee',
+      hideInSearch: true,
+    },
+    {
+      title: intl.formatMessage({ id: 'merMdr.feeMinAmt' }),
+      dataIndex: 'feeMinAmt',
       hideInSearch: true,
     },
 
     {
-      title: intl.formatMessage({ id: 'merQrc.checkState' }),
+      title: intl.formatMessage({ id: 'merMdr.checkState' }),
       dataIndex: 'checkState',
       initialValue: undefined,
       valueEnum: checkStateEnum,
     },
+
     {
-      title: intl.formatMessage({ id: 'merQrc.operation' }),
+      title: intl.formatMessage({ id: 'merMdr.startDate' }),
+      dataIndex: 'startDate',
+      initialValue: undefined,
+      hideInSearch: true,
+    },
+    {
+      title: intl.formatMessage({ id: 'merMdr.closeDate' }),
+      dataIndex: 'closeDate',
+      initialValue: undefined,
+      hideInSearch: true,
+    },
+
+    {
+      title: intl.formatMessage({ id: 'merMdr.operation' }),
       dataIndex: 'operation',
       initialValue: undefined,
       valueEnum: operEnmu,
@@ -195,29 +175,13 @@ const TableList: React.FC<{}> = () => {
         columns={columns}
       />
 
-      <CreateForm
-        onCancel={() => handleModalVisible(false)}
-        modalVisible={createModalVisible}
-        onSubmit={async (value) => {
-          const success = await handleSaveAndUpdate(value, intl);
-          if (success) {
-            handleModalVisible(false);
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          }
-        }}
-      />
-
       <CheckViewForm
         onCancel={() => handleModalViewVisible(false)}
         modalVisible={createModalViewVisible}
         before={before}
         after={after}
       />
-
       <CheckForm
-        // values={stepFormValues}
         onCancel={() => setIsCheck(false)}
         modalVisible={isCheck}
         before={before}

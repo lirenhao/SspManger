@@ -22,7 +22,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
 
   const [form] = Form.useForm();
   const curFieldValue = form.getFieldsValue();
-  form.setFieldsValue({  ...curFieldValue});
+  form.setFieldsValue({ ...curFieldValue });
 
   const [merchants, setMerchants] = React.useState<
     { merchantId: ''; merNameChn: ''; merNameEng: '' }[]
@@ -55,20 +55,6 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
     }
     return false;
   };
-
-  // const renderTerminalIdOption = () => {
-  //   const { Option } = Select;
-  //   const OptionArr: JSX.Element[] = [];
-
-  //   terminals.forEach((element)=>{
-  //     OptionArr.push(
-  //       <Option key={element.terminalId} value={element.terminalId}>
-  //         {element.terminalId}
-  //       </Option>,
-  //     );
-  //   })
-  //   return OptionArr;
-  // };
 
   const handleSubmit = async () => {
     const fieldsValue = await form.validateFields();
@@ -126,12 +112,13 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
             },
           ]}
         >
-          <Input />
+          <Input.Password />
         </Form.Item>
 
         <Form.Item
           name="fee"
           label={intl.formatMessage({ id: 'ccpay.feeCreate' })}
+          extra={intl.formatMessage({ id: 'ccpay.feeCreateExtra' })}
           rules={[
             {
               required: true,

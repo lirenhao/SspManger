@@ -10,7 +10,7 @@ import CreateForm from './components/CreateForm';
 import ViewForm from './components/ViewForm';
 import { TableListItem, checkStateEnum, operEnmu, cardAssoEnum, feeTypeEnum } from './data.d';
 // import CheckForm from './components/CheckForm';
-import { query, save} from './service';
+import { query, save } from './service';
 
 /**
  * 添加
@@ -46,34 +46,12 @@ const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
 //   }
 // };
 
-
-
 const TableList: React.FC<{}> = () => {
   const [createModalViewVisible, handleModalViewVisible] = useState<boolean>(false);
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [stepFormValues, setStepFormValues] = useState({});
   const intl = useIntl();
   const actionRef = useRef<ActionType>();
-
-  //
-  // const [after, setAfter] = React.useState<Partial<TableListItem>>({});
-  // const [before, setBefore] = React.useState<Partial<TableListItem>>({});
-  
-  // const [isCheck, setIsCheck] = React.useState<boolean>(false);
-
-  // const beforeCheck = async (params: TableListItem) => {
-  //   try {
-  //     const info = await get(params);
-  //     const checkInfo = await getCheck(params);
-  //     setAfter(info);
-  //     setBefore(checkInfo);
-  //     setIsCheck(true);
-  //   } catch (err) {
-  //     console.error(err.message);
-  //   }
-  // }
-
-  //
 
   const columns: ProColumns<TableListItem>[] = [
     {
@@ -103,7 +81,6 @@ const TableList: React.FC<{}> = () => {
       ),
     },
     {
-      title: intl.formatMessage({ id: 'merMdr.merchantId' }),
       dataIndex: 'lsId',
       hideInSearch: true,
       hideInTable: true,

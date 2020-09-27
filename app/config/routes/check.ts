@@ -20,7 +20,7 @@ const routes: IRoute[] = [
   {
     path: '/check/merMdr',
     name: '/check/merMdr',
-    component: './check/merMdr',
+    component: './mer/merMdr/check',
     locale: 'merMdrCheck.title',
     access: 'canShow',
     roles: ['admin', 'Merchant Checker'],
@@ -36,7 +36,7 @@ const routes: IRoute[] = [
   {
     path: '/check/ccpay',
     name: '/check/ccpay',
-    component: './check/ccpay/mng',
+    component: './ccpay/mng/check',
     locale: 'ccpayCheck.title',
     access: 'canShow',
     roles: ['admin', 'Merchant Checker'],

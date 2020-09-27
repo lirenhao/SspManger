@@ -7,7 +7,7 @@ import { useIntl, FormattedMessage } from 'umi';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { TableListItem, StatusEnum } from './data.d';
-import { query, save } from './service';
+import { query, save, fetchGetAllMer } from './service';
 
 /**
  * 添加
@@ -49,6 +49,21 @@ const TableList: React.FC<{}> = () => {
   const intl = useIntl();
   const actionRef = useRef<ActionType>();
 
+  const [merchants, setMerchants] = React.useState({});
+
+  React.useEffect(() => {
+    fetchGetAllMer().then(
+      (merchantsResult: { merchantId: ''; merNameChn: ''; merNameEng: '' }[]) => {
+        const revertMerchant = {};
+        merchantsResult.forEach((merchant) => {
+          revertMerchant[merchant.merchantId] = `${merchant.merNameEng}-${merchant.merchantId}`;
+        });
+        console.error(revertMerchant);
+        setMerchants(revertMerchant);
+      },
+    );
+  }, []);
+
   const columns: ProColumns<TableListItem>[] = [
     {
       title: intl.formatMessage({ id: 'global.operate' }),
@@ -70,6 +85,7 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'merLimit.merchantId' }),
       dataIndex: 'merchantId',
+      valueEnum: merchants,
     },
     {
       title: intl.formatMessage({ id: 'merLimit.maxTrxCount' }),

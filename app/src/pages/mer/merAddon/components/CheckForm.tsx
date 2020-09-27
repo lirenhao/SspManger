@@ -22,8 +22,8 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
   const { modalVisible, onCancel, onSubmit } = props;
 
   const [form] = Form.useForm();
-  form.setFieldsValue(props.before);
   const [formAfter] = Form.useForm();
+  form.setFieldsValue(props.before);
   formAfter.setFieldsValue(props.after);
 
   const afterFormVals = props.after;
@@ -95,14 +95,14 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
       <Row>
         <Col span={12}>
           <Card title={intl.formatMessage({ id: 'merAddon.check.after' })}>
-            <Form {...formLayout} form={formAfter}>
+            <Form {...formLayout} form={formAfter} name="after">
               {renderContent()}
             </Form>
           </Card>
         </Col>
         <Col span={12}>
           <Card title={intl.formatMessage({ id: 'merAddon.check.before' })}>
-            <Form {...formLayout} form={form}>
+            <Form {...formLayout} form={form} name="before">
               {renderContent()}
             </Form>
           </Card>
