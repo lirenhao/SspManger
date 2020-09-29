@@ -2,48 +2,33 @@ import { message } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { useIntl, FormattedMessage, IntlShape } from 'umi';
+import { useIntl } from 'umi';
 import UpdateForm from './components/ViewForm';
 import { TableListItem } from './data';
 import { save, query } from './service';
-
-/**
- * 添加
- * @param fields
- */
-const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
-  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
-
-  try {
-    await save({ ...fields });
-    hide();
-    message.success(intl.formatMessage({ id: 'global.success' }));
-    return true;
-  } catch (error) {
-    hide();
-    message.error(intl.formatMessage({ id: 'global.error' }));
-    return false;
-  }
-};
-
-// const handleGet = async (fields: TableListItem) => {
-//   const hide = message.loading('global.running');
-//   try {
-//     await getMcc({ ...fields });
-//     hide();
-//     message.success('global.success');
-//     return true;
-//   } catch (error) {
-//     hide();
-//     message.error('global.error');
-//     return false;
-//   }
-// };
 
 const TableList: React.FC<{}> = () => {
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
   const [stepFormValues, setStepFormValues] = useState({});
   const intl = useIntl();
+  /**
+   * 添加
+   * @param fields
+   */
+  const handleSaveAndUpdate = async (fields: TableListItem) => {
+    const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
+
+    try {
+      await save({ ...fields });
+      hide();
+      message.success(intl.formatMessage({ id: 'global.success' }));
+      return true;
+    } catch (error) {
+      hide();
+      message.error(intl.formatMessage({ id: 'global.error' }));
+      return false;
+    }
+  };
   const actionRef = useRef<ActionType>();
 
   const columns: ProColumns<TableListItem>[] = [
@@ -59,7 +44,7 @@ const TableList: React.FC<{}> = () => {
               setStepFormValues(record);
             }}
           >
-            <FormattedMessage id="global.edit" />
+            {intl.formatMessage({ id: 'global.edit' })}
           </a>
         </>
       ),
@@ -120,7 +105,7 @@ const TableList: React.FC<{}> = () => {
           onCancel={() => handleUpdateModalVisible(false)}
           modalVisible={updateModalVisible}
           onSubmit={async (value) => {
-            const success = await handleSaveAndUpdate(value, intl);
+            const success = await handleSaveAndUpdate(value);
             if (success) {
               handleUpdateModalVisible(false);
               if (actionRef.current) {

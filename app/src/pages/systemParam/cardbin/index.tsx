@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { useIntl, FormattedMessage } from 'umi';
+import { useIntl } from 'umi';
 import ViewForm from './components/ViewForm';
 // import UpdateForm from './components/UpdateForm';
 import { TableListItem } from './data.d';
@@ -30,7 +30,7 @@ const TableList: React.FC<{}> = () => {
               setStepFormValues(record);
             }}
           >
-            <FormattedMessage id="global.view" />
+            {intl.formatMessage({ id: 'global.view' })}
           </a>
         </>
       ),

@@ -4,10 +4,10 @@ import { CloudDownloadOutlined } from '@ant-design/icons';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { useIntl, FormattedMessage } from 'umi';
+import { useIntl } from 'umi';
 
 import { TableListItem, TableListParams } from './data.d';
-import { query, download,fetchGetAllMer,getMerEnum } from './service';
+import { query, download, fetchGetAllMer, getMerEnum } from './service';
 
 const TableList: React.FC<{}> = () => {
   const intl = useIntl();
@@ -15,25 +15,25 @@ const TableList: React.FC<{}> = () => {
   const [downloadparams, setDownloadParams] = useState<TableListParams>({});
   const [merchants, setMerchants] = React.useState({});
 
-React.useEffect(() => {
-  fetchGetAllMer().then(mer=>{
-    const merEnum = getMerEnum(mer);
-    setMerchants(merEnum)
-  });
-}, []);
+  React.useEffect(() => {
+    fetchGetAllMer().then((mer) => {
+      const merEnum = getMerEnum(mer);
+      setMerchants(merEnum);
+    });
+  }, []);
   const columns: ProColumns<TableListItem>[] = [
     {
       title: intl.formatMessage({ id: 'settleDetail.lsId' }),
       dataIndex: 'lsId',
       hideInSearch: true,
       hideInForm: true,
-      hideInTable:true,
+      hideInTable: true,
     },
     {
       title: intl.formatMessage({ id: 'settleList.merchantId' }),
       dataIndex: 'merchantId',
       valueEnum: merchants,
-      hideInTable:true,
+      hideInTable: true,
     },
     {
       title: intl.formatMessage({ id: 'settleDetail.terminalId' }),
@@ -49,7 +49,7 @@ React.useEffect(() => {
     {
       title: intl.formatMessage({ id: 'settleDetail.tranDate' }),
       dataIndex: 'tranDate',
-      hideInSearch:true
+      hideInSearch: true,
     },
     {
       title: intl.formatMessage({ id: 'settleDetail.tranTime' }),
@@ -76,7 +76,7 @@ React.useEffect(() => {
       title: intl.formatMessage({ id: 'settleDetail.settleDate' }),
       dataIndex: 'settleDate',
       valueType: 'dateRange',
-      hideInTable:true
+      hideInTable: true,
     },
     {
       title: intl.formatMessage({ id: 'settleDetail.tranName' }),
@@ -128,7 +128,7 @@ React.useEffect(() => {
               download(downloadparams);
             }}
           >
-            <CloudDownloadOutlined /> <FormattedMessage id="global.download" />
+            <CloudDownloadOutlined /> {intl.formatMessage({ id: 'global.download' })}
           </Button>,
         ]}
       />

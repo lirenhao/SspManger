@@ -1,40 +1,37 @@
-
 import { message, TreeSelect } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { useIntl, FormattedMessage, IntlShape } from 'umi';
-
+import { useIntl } from 'umi';
+import { DataNode } from 'antd/lib/tree';
 import ViewForm from './components/ViewForm';
 import { TableListItem } from './data.d';
-import { query, save,fetchOrgTree } from './service';
-import { DataNode } from 'antd/lib/tree';
-
-/**
- * 添加
- * @param fields
- */
-const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
-  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
-
-  try {
-    await save({ ...fields });
-    hide();
-    message.success(intl.formatMessage({ id: 'global.success' }));
-    return true;
-  } catch (error) {
-    hide();
-    message.error(intl.formatMessage({ id: 'global.error' }));
-    return false;
-  }
-};
+import { query, save, fetchOrgTree } from './service';
 
 const TableList: React.FC<{}> = () => {
   const [modalViewVisible, handleModalViewVisible] = useState(false);
   const [viewValues, setViewValues] = useState({});
-  
+
   const [orgTree, setOrgTree] = useState<DataNode[]>([]);
   const intl = useIntl();
+  /**
+   * 添加
+   * @param fields
+   */
+  const handleSaveAndUpdate = async (fields: TableListItem) => {
+    const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
+
+    try {
+      await save({ ...fields });
+      hide();
+      message.success(intl.formatMessage({ id: 'global.success' }));
+      return true;
+    } catch (error) {
+      hide();
+      message.error(intl.formatMessage({ id: 'global.error' }));
+      return false;
+    }
+  };
   const actionRef = useRef<ActionType>();
 
   React.useEffect(() => {
@@ -55,7 +52,7 @@ const TableList: React.FC<{}> = () => {
               handleModalViewVisible(true);
             }}
           >
-            <FormattedMessage id="global.view" />
+            {intl.formatMessage({ id: 'global.view' })}
           </a>
         </>
       ),
@@ -67,7 +64,7 @@ const TableList: React.FC<{}> = () => {
 
     {
       title: intl.formatMessage({ id: 'terminal.merchantId' }),
-      dataIndex: ['merchant','merchantId'],
+      dataIndex: ['merchant', 'merchantId'],
     },
     {
       title: intl.formatMessage({ id: 'terminal.orgId' }),
@@ -78,8 +75,12 @@ const TableList: React.FC<{}> = () => {
       title: intl.formatMessage({ id: 'terminal.orgId', defaultMessage: '' }),
       dataIndex: 'orgId',
       renderFormItem: (item, { onChange, ...rest }) => (
-        <TreeSelect treeDefaultExpandAll treeData={orgTree}
-          {...item.formItemProps} {...rest} onChange={onChange}
+        <TreeSelect
+          treeDefaultExpandAll
+          treeData={orgTree}
+          {...item.formItemProps}
+          {...rest}
+          onChange={onChange}
         />
       ),
       hideInTable: true,
@@ -290,7 +291,7 @@ const TableList: React.FC<{}> = () => {
         rowKey="terminalId"
         // toolBarRender={() => [
         //   <Button type="primary" onClick={() => handleModalVisible(true)}>
-        //     <PlusOutlined /> <FormattedMessage id="global.create" />
+        //     <PlusOutlined /> {intl.formatMessage({id:"global.create"})}
         //   </Button>,
         // ]}
         columns={columns}
@@ -301,7 +302,7 @@ const TableList: React.FC<{}> = () => {
         onCancel={() => handleModalViewVisible(false)}
         modalVisible={modalViewVisible}
         onSubmit={async (value) => {
-          const success = await handleSaveAndUpdate(value, intl);
+          const success = await handleSaveAndUpdate(value);
           if (success) {
             handleModalViewVisible(false);
             if (actionRef.current) {

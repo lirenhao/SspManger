@@ -4,46 +4,45 @@ import { PlusOutlined } from '@ant-design/icons';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { useIntl, IntlShape } from 'umi';
+import { useIntl } from 'umi';
 
 import CreateForm from './components/CreateForm';
 import CheckForm from './components/CheckForm';
 import ViewForm from './components/ViewForm';
 import { TableListItem, checkStateEnum, operEnmu } from './data.d';
-import { query, save, check,fetchGetAllMer,getMerEnum } from './service';
-
-const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
-  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
-
-  try {
-    await save({ ...fields });
-    hide();
-    message.success(intl.formatMessage({ id: 'global.success' }));
-    return true;
-  } catch (error) {
-    hide();
-    message.error(intl.formatMessage({ id: 'global.error' }));
-    return false;
-  }
-};
-
-const handleCheck = async (fields: TableListItem, intl: IntlShape) => {
-  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
-
-  try {
-    await check({ ...fields });
-    hide();
-    message.success(intl.formatMessage({ id: 'global.success' }));
-    return true;
-  } catch (error) {
-    hide();
-    message.error(intl.formatMessage({ id: 'global.error' }));
-    return false;
-  }
-};
+import { query, save, check, fetchGetAllMer, getMerEnum } from './service';
 
 const TableList: React.FC<{}> = () => {
   const intl = useIntl();
+  const handleSaveAndUpdate = async (fields: TableListItem) => {
+    const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
+
+    try {
+      await save({ ...fields });
+      hide();
+      message.success(intl.formatMessage({ id: 'global.success' }));
+      return true;
+    } catch (error) {
+      hide();
+      message.error(intl.formatMessage({ id: 'global.error' }));
+      return false;
+    }
+  };
+
+  const handleCheck = async (fields: TableListItem) => {
+    const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
+
+    try {
+      await check({ ...fields });
+      hide();
+      message.success(intl.formatMessage({ id: 'global.success' }));
+      return true;
+    } catch (error) {
+      hide();
+      message.error(intl.formatMessage({ id: 'global.error' }));
+      return false;
+    }
+  };
   const actionRef = useRef<ActionType>();
   const [viewVisible, handleModalViewVisible] = useState(false);
   const [checkVisible, handleModalCheckVisible] = useState(false);
@@ -52,12 +51,12 @@ const TableList: React.FC<{}> = () => {
 
   const [merchants, setMerchants] = React.useState({});
 
-React.useEffect(() => {
-  fetchGetAllMer().then(mer=>{
-    const merEnum = getMerEnum(mer);
-    setMerchants(merEnum)
-  });
-}, []);
+  React.useEffect(() => {
+    fetchGetAllMer().then((mer) => {
+      const merEnum = getMerEnum(mer);
+      setMerchants(merEnum);
+    });
+  }, []);
 
   /**
    * 添加
@@ -96,7 +95,7 @@ React.useEffect(() => {
       title: intl.formatMessage({ id: 'manualSettle.lsId' }),
       dataIndex: 'lsId',
       hideInSearch: true,
-      hideInTable:true,
+      hideInTable: true,
       hideInForm: true,
     },
     {
@@ -108,7 +107,7 @@ React.useEffect(() => {
     {
       title: intl.formatMessage({ id: 'manualSettle.merchantId' }),
       dataIndex: 'merchantId',
-      valueEnum: merchants
+      valueEnum: merchants,
     },
     {
       title: intl.formatMessage({ id: 'manualSettle.tranAmt' }),
@@ -194,7 +193,7 @@ React.useEffect(() => {
         onCancel={() => handelVisibleManual(false)}
         modalVisible={manualVisible}
         onSubmit={async (value) => {
-          const success = await handleSaveAndUpdate(value, intl);
+          const success = await handleSaveAndUpdate(value);
           if (success) {
             handelVisibleManual(false);
             if (actionRef.current) {
@@ -209,7 +208,7 @@ React.useEffect(() => {
         onCancel={() => handleModalViewVisible(false)}
         modalVisible={viewVisible}
         onSubmit={async (value) => {
-          const success = await handleSaveAndUpdate(value, intl);
+          const success = await handleSaveAndUpdate(value);
           if (success) {
             handleModalViewVisible(false);
             if (actionRef.current) {
@@ -224,7 +223,7 @@ React.useEffect(() => {
         onCancel={() => handleModalCheckVisible(false)}
         modalVisible={checkVisible}
         onSubmit={async (value) => {
-          const success = await handleCheck(value, intl);
+          const success = await handleCheck(value);
           if (success) {
             handleModalCheckVisible(false);
             if (actionRef.current) {

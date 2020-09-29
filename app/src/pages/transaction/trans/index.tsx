@@ -3,7 +3,7 @@
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { useIntl, FormattedMessage /* IntlShape */ } from 'umi';
+import { useIntl /* IntlShape */ } from 'umi';
 import ViewForm from './components/ViewForm';
 
 import { TableListItem } from './data.d';
@@ -30,7 +30,7 @@ const TableList: React.FC<{}> = () => {
               handleModalViewVisible(true);
             }}
           >
-            <FormattedMessage id="global.view" />
+            {intl.formatMessage({ id: 'global.view' })}
           </a>
         </>
       ),
@@ -38,7 +38,7 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'trans.traceNo' }),
       dataIndex: 'traceNo',
-      hideInSearch:true
+      hideInSearch: true,
     },
 
     {
@@ -59,7 +59,7 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'trans.channel' }),
       dataIndex: 'channel',
-      hideInSearch:true
+      hideInSearch: true,
     },
 
     {
@@ -138,7 +138,7 @@ const TableList: React.FC<{}> = () => {
         values={stepFormValues}
         onCancel={() => handleModalViewVisible(false)}
         modalVisible={createModalViewVisible}
-        onSubmit={async () => { }}
+        onSubmit={async () => {}}
       />
     </PageContainer>
   );

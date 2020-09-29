@@ -3,7 +3,7 @@ import { message, Divider } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { useIntl, FormattedMessage, IntlShape } from 'umi';
+import { useIntl } from 'umi';
 
 import CreateForm from './components/CreateForm';
 import CheckViewForm from './components/CheckViewForm';
@@ -11,39 +11,6 @@ import CheckViewForm from './components/CheckViewForm';
 import CheckForm from './components/CheckForm';
 import { TableListItem, checkStateEnum, operEnmu, useCaseEnmu, cardAssoEnum } from './data.d';
 import { query, save, get, getCheck, getCcyType, saveCheck } from './service';
-
-/**
- * 添加
- * @param fields
- */
-const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
-  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
-
-  try {
-    await save({ ...fields });
-    hide();
-    message.success(intl.formatMessage({ id: 'global.success' }));
-    return true;
-  } catch (error) {
-    hide();
-    message.error(intl.formatMessage({ id: 'global.error' }));
-    return false;
-  }
-};
-
-const handleSaveCheck = async (fields: TableListItem, intl: IntlShape) => {
-  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
-  try {
-    await saveCheck({ ...fields });
-    hide();
-    message.success(intl.formatMessage({ id: 'global.success' }));
-    return true;
-  } catch (error) {
-    hide();
-    message.error(intl.formatMessage({ id: 'global.error' }));
-    return false;
-  }
-};
 
 const ccyArr = {};
 
@@ -53,6 +20,38 @@ const TableList: React.FC<{}> = () => {
   const ccyArray: { ccyType: string; ccyName: string }[] = [];
   const [ccyData, setCcy] = useState(ccyArray);
   const intl = useIntl();
+  /**
+   * 添加
+   * @param fields
+   */
+  const handleSaveAndUpdate = async (fields: TableListItem) => {
+    const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
+
+    try {
+      await save({ ...fields });
+      hide();
+      message.success(intl.formatMessage({ id: 'global.success' }));
+      return true;
+    } catch (error) {
+      hide();
+      message.error(intl.formatMessage({ id: 'global.error' }));
+      return false;
+    }
+  };
+
+  const handleSaveCheck = async (fields: TableListItem) => {
+    const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
+    try {
+      await saveCheck({ ...fields });
+      hide();
+      message.success(intl.formatMessage({ id: 'global.success' }));
+      return true;
+    } catch (error) {
+      hide();
+      message.error(intl.formatMessage({ id: 'global.error' }));
+      return false;
+    }
+  };
   const actionRef = useRef<ActionType>();
   React.useEffect(() => {
     getCcyType().then(setCcy);
@@ -92,7 +91,7 @@ const TableList: React.FC<{}> = () => {
               handleModalViewVisible(true);
             }}
           >
-            <FormattedMessage id="global.view" />
+            {intl.formatMessage({ id: 'global.view' })}
           </a>
           <Divider type="vertical" />
           <a
@@ -101,7 +100,7 @@ const TableList: React.FC<{}> = () => {
               setIsCheck(true);
             }}
           >
-            <FormattedMessage id="global.check" />
+            {intl.formatMessage({ id: 'global.check' })}
           </a>
         </>
       ),
@@ -199,7 +198,7 @@ const TableList: React.FC<{}> = () => {
         onCancel={() => handleModalVisible(false)}
         modalVisible={createModalVisible}
         onSubmit={async (value) => {
-          const success = await handleSaveAndUpdate(value, intl);
+          const success = await handleSaveAndUpdate(value);
           if (success) {
             handleModalVisible(false);
             if (actionRef.current) {
@@ -223,7 +222,7 @@ const TableList: React.FC<{}> = () => {
         before={before}
         after={after}
         onSubmit={async (value) => {
-          const success = await handleSaveCheck(value, intl);
+          const success = await handleSaveCheck(value);
           if (success) {
             setIsCheck(false);
             if (actionRef.current) {

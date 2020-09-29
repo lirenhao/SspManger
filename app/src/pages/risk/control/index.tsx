@@ -3,7 +3,7 @@ import { Button, message } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { useIntl, FormattedMessage } from 'umi';
+import { useIntl } from 'umi';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { TableListItem, StatusEnum } from './data.d';
@@ -77,7 +77,7 @@ const TableList: React.FC<{}> = () => {
               setStepFormValues(record);
             }}
           >
-            <FormattedMessage id="global.edit" />
+            {intl.formatMessage({ id: 'global.edit' })}
           </a>
         </>
       ),
@@ -133,7 +133,7 @@ const TableList: React.FC<{}> = () => {
         rowKey="mcc"
         toolBarRender={() => [
           <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> <FormattedMessage id="global.create" />
+            <PlusOutlined /> {intl.formatMessage({ id: 'global.create' })}
           </Button>,
         ]}
         columns={columns}

@@ -4,12 +4,12 @@ import { CloudDownloadOutlined } from '@ant-design/icons';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { useIntl, FormattedMessage } from 'umi';
+import { useIntl } from 'umi';
 
 import { TableListItem, TableListParams } from './data.d';
 import { query, download } from './service';
 
-const TableList: React.FC<> = (props) => {
+const TableList: React.FC = () => {
   const intl = useIntl();
   const actionRef = useRef<ActionType>();
   const [downloadparams, setDownloadParams] = useState<TableListParams>({});
@@ -18,7 +18,7 @@ const TableList: React.FC<> = (props) => {
     {
       title: intl.formatMessage({ id: 'settleList.settleDate' }),
       dataIndex: 'settleDate',
-      valueType: 'dateRange'
+      valueType: 'dateRange',
     },
 
     {
@@ -66,10 +66,12 @@ const TableList: React.FC<> = (props) => {
             setDownloadParams(queryParams);
 
             const result = await query(isSuccess, queryParams);
-            result.content.forEach((element: { lsId: string; settleDate: string ;merchantId: string; }) => {
-              // eslint-disable-next-line no-param-reassign
-              element.lsId = element.settleDate  +element.merchantId ;
-            });
+            result.content.forEach(
+              (element: { lsId: string; settleDate: string; merchantId: string }) => {
+                // eslint-disable-next-line no-param-reassign
+                element.lsId = element.settleDate + element.merchantId;
+              },
+            );
             return {
               data: result.content,
               page: result.totalPages,
@@ -94,7 +96,7 @@ const TableList: React.FC<> = (props) => {
               download(isSuccess, downloadparams);
             }}
           >
-            <CloudDownloadOutlined /> <FormattedMessage id="global.download" />
+            <CloudDownloadOutlined /> {intl.formatMessage({ id: 'global.download' })}
           </Button>,
         ]}
       />

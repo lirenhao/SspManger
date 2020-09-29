@@ -4,7 +4,7 @@ import { CloudDownloadOutlined } from '@ant-design/icons';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { useIntl, FormattedMessage } from 'umi';
+import { useIntl } from 'umi';
 
 import { TableListItem, TableListParams } from './data.d';
 import { query, download } from './service';
@@ -15,16 +15,12 @@ const TableList: React.FC<{}> = () => {
   const [downloadparams, setDownloadParams] = useState<TableListParams>({});
 
   const columns: ProColumns<TableListItem>[] = [
-
     {
       title: intl.formatMessage({ id: 'termCount.month' }),
       dataIndex: 'month',
-      hideInTable:true,
-      renderFormItem: () =>(
-        <DatePicker format = 'YYYYMM' picker="month" />
-      ),
+      hideInTable: true,
+      renderFormItem: () => <DatePicker format="YYYYMM" picker="month" />,
     },
-    
 
     {
       title: intl.formatMessage({ id: 'termCount.merNameEng' }),
@@ -104,10 +100,19 @@ const TableList: React.FC<{}> = () => {
             setDownloadParams(queryParams);
 
             const result = await query(queryParams);
-            result.content.forEach((element: { lsId: string; yearmon: string; orgId: string; terminalId: string; merchantId: string; }) => {
-              // eslint-disable-next-line no-param-reassign
-              element.lsId = element.yearmon +element.orgId+element.terminalId +element.merchantId ;
-            });
+            result.content.forEach(
+              (element: {
+                lsId: string;
+                yearmon: string;
+                orgId: string;
+                terminalId: string;
+                merchantId: string;
+              }) => {
+                // eslint-disable-next-line no-param-reassign
+                element.lsId =
+                  element.yearmon + element.orgId + element.terminalId + element.merchantId;
+              },
+            );
             return {
               data: result.content,
               page: result.totalPages,
@@ -132,7 +137,7 @@ const TableList: React.FC<{}> = () => {
               download(downloadparams);
             }}
           >
-            <CloudDownloadOutlined /> <FormattedMessage id="global.download" />
+            <CloudDownloadOutlined /> {intl.formatMessage({ id: 'global.download' })}
           </Button>,
         ]}
       />

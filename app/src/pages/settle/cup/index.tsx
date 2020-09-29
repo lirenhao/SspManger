@@ -4,7 +4,7 @@ import { CloudDownloadOutlined } from '@ant-design/icons';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { useIntl, FormattedMessage } from 'umi';
+import { useIntl } from 'umi';
 
 import { TableListItem, statusEnum, TableListParams } from './data.d';
 import { query, download, handle } from './service';
@@ -27,7 +27,7 @@ const TableList: React.FC<{}> = () => {
               handle({ lsId: record.lsId ? record.lsId : '' });
             }}
           >
-            <FormattedMessage id="global.operate" />
+            {intl.formatMessage({ id: 'global.operate' })}
           </a>
         </>
       ),
@@ -148,7 +148,7 @@ const TableList: React.FC<{}> = () => {
               download(downloadparams);
             }}
           >
-            <CloudDownloadOutlined /> <FormattedMessage id="global.download" />
+            <CloudDownloadOutlined /> {intl.formatMessage({ id: 'global.download' })}
           </Button>,
         ]}
       />

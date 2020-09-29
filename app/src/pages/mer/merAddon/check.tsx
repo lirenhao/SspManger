@@ -2,31 +2,30 @@ import { message, Divider } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { useIntl, FormattedMessage, IntlShape } from 'umi';
+import { useIntl } from 'umi';
 import CheckForm from './components/CheckForm';
 import CheckViewForm from './components/CheckViewForm';
 
 import { TableListItem, checkStateEnum, merchantTypeEnmu, operEnmu } from './data.d';
 import { queryCheck, get, getCheck, saveCheck } from './service';
 
-const handleSaveCheck = async (fields: TableListItem, intl: IntlShape) => {
-  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
-
-  try {
-    await saveCheck({ ...fields });
-    hide();
-    message.success(intl.formatMessage({ id: 'global.success' }));
-    return true;
-  } catch (error) {
-    hide();
-    message.error(intl.formatMessage({ id: 'global.error' }));
-    return false;
-  }
-};
-
 const TableList: React.FC<{}> = () => {
   const [createModalViewVisible, handleModalViewVisible] = useState<boolean>(false);
   const intl = useIntl();
+  const handleSaveCheck = async (fields: TableListItem) => {
+    const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
+
+    try {
+      await saveCheck({ ...fields });
+      hide();
+      message.success(intl.formatMessage({ id: 'global.success' }));
+      return true;
+    } catch (error) {
+      hide();
+      message.error(intl.formatMessage({ id: 'global.error' }));
+      return false;
+    }
+  };
   const actionRef = useRef<ActionType>();
 
   const [after, setAfter] = React.useState<Partial<TableListItem>>({});
@@ -61,7 +60,7 @@ const TableList: React.FC<{}> = () => {
               handleModalViewVisible(true);
             }}
           >
-            <FormattedMessage id="global.view" />
+            {intl.formatMessage({ id: 'global.view' })}
           </a>
           <Divider type="vertical" />
           <a
@@ -70,7 +69,7 @@ const TableList: React.FC<{}> = () => {
               setIsCheck(true);
             }}
           >
-            <FormattedMessage id="global.check" />
+            {intl.formatMessage({ id: 'global.check' })}
           </a>
         </>
       ),
@@ -171,7 +170,7 @@ const TableList: React.FC<{}> = () => {
         before={before}
         after={after}
         onSubmit={async (value) => {
-          const success = await handleSaveCheck(value, intl);
+          const success = await handleSaveCheck(value);
           if (success) {
             setIsCheck(false);
             if (actionRef.current) {

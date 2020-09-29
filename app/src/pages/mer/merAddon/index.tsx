@@ -2,65 +2,65 @@ import { message, Divider } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
-import { useIntl, FormattedMessage, IntlShape } from 'umi';
+import { useIntl } from 'umi';
 import ViewForm from './components/ViewForm';
 import UpdateForm from './components/UpdateForm';
 
 import { TableListItem, checkStateEnum, merchantTypeEnmu, operEnmu } from './data.d';
 import { query, save, remove } from './service';
 
-/**
- * 添加
- * @param fields
- */
-const handleSaveAndUpdate = async (fields: TableListItem, intl: IntlShape) => {
-  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
-
-  try {
-    await save({ ...fields });
-    hide();
-    message.success(intl.formatMessage({ id: 'global.success' }));
-    return true;
-  } catch (error) {
-    hide();
-    message.error(intl.formatMessage({ id: 'global.error' }));
-    return false;
-  }
-};
-
-const displayDelete = (params: TableListItem) => {
-  return params.hasMerchantExtra && params.checkState !== '0';
-};
-const displayEdit = (params: TableListItem) => {
-  if (!params.hasMerchantExtra) {
-    return true;
-  }
-  if (params.checkState !== '0') {
-    return true;
-  }
-  return false;
-};
-
-const handleDelCheck = async (fields: TableListItem, intl: IntlShape) => {
-  const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
-
-  try {
-    await remove({ ...fields });
-    hide();
-    message.success(intl.formatMessage({ id: 'global.success' }));
-    return true;
-  } catch (error) {
-    hide();
-    message.error(intl.formatMessage({ id: 'global.error' }));
-    return false;
-  }
-};
-
 const TableList: React.FC<{}> = () => {
   const [createModalViewVisible, handleModalViewVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
   const [stepFormValues, setStepFormValues] = useState({});
   const intl = useIntl();
+  /**
+   * 添加
+   * @param fields
+   */
+  const handleSaveAndUpdate = async (fields: TableListItem) => {
+    const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
+
+    try {
+      await save({ ...fields });
+      hide();
+      message.success(intl.formatMessage({ id: 'global.success' }));
+      return true;
+    } catch (error) {
+      hide();
+      message.error(intl.formatMessage({ id: 'global.error' }));
+      return false;
+    }
+  };
+
+  const displayDelete = (params: TableListItem) => {
+    return params.hasMerchantExtra && params.checkState !== '0';
+  };
+  const displayEdit = (params: TableListItem) => {
+    if (!params.hasMerchantExtra) {
+      return true;
+    }
+    if (params.checkState !== '0') {
+      return true;
+    }
+    return false;
+  };
+
+  const handleDelCheck = async (fields: TableListItem) => {
+    const hide = message.loading(intl.formatMessage({ id: 'global.running' }));
+
+    try {
+      await remove({ ...fields });
+      hide();
+      message.success(intl.formatMessage({ id: 'global.success' }));
+      return true;
+    } catch (error) {
+      hide();
+      message.error(intl.formatMessage({ id: 'global.error' }));
+      return false;
+    }
+  };
+
   const actionRef = useRef<ActionType>();
 
   const columns: ProColumns<TableListItem>[] = [
@@ -77,7 +77,7 @@ const TableList: React.FC<{}> = () => {
               handleUpdateModalVisible(true);
             }}
           >
-            <FormattedMessage id="global.edit" />
+            {intl.formatMessage({ id: 'global.edit' })}
           </a>
           <Divider
             type="vertical"
@@ -89,7 +89,7 @@ const TableList: React.FC<{}> = () => {
               handleModalViewVisible(true);
             }}
           >
-            <FormattedMessage id="global.view" />
+            {intl.formatMessage({ id: 'global.view' })}
           </a>
           <Divider
             style={displayDelete(record) ? { display: 'block' } : { display: 'none' }}
@@ -98,11 +98,11 @@ const TableList: React.FC<{}> = () => {
           <a
             style={displayDelete(record) ? { display: 'block' } : { display: 'none' }}
             onClick={() => {
-              handleDelCheck(record, intl);
+              handleDelCheck(record);
               actionRef.current?.reload();
             }}
           >
-            <FormattedMessage id="global.delete" />
+            {intl.formatMessage({ id: 'global.delete' })}
           </a>
         </>
       ),
@@ -188,7 +188,7 @@ const TableList: React.FC<{}> = () => {
         onCancel={() => handleModalViewVisible(false)}
         modalVisible={createModalViewVisible}
         onSubmit={async (value) => {
-          const success = await handleSaveAndUpdate(value, intl);
+          const success = await handleSaveAndUpdate(value);
           if (success) {
             handleModalViewVisible(false);
             if (actionRef.current) {
@@ -203,7 +203,7 @@ const TableList: React.FC<{}> = () => {
           onCancel={() => handleUpdateModalVisible(false)}
           modalVisible={updateModalVisible}
           onSubmit={async (value) => {
-            const success = await handleSaveAndUpdate(value, intl);
+            const success = await handleSaveAndUpdate(value);
             if (success) {
               handleUpdateModalVisible(false);
               if (actionRef.current) {
