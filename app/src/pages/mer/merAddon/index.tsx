@@ -213,23 +213,6 @@ const TableList: React.FC<{}> = () => {
           }}
         />
       ) : null}
-
-      {/* <CheckForm
-        // values={stepFormValues}
-        onCancel={() => setIsCheck(false)}
-        modalVisible={isCheck}
-        before = {before}
-        after = {after}
-        onSubmit={async (value) => {
-          const success = await handleSaveCheck(value,intl);
-          if (success) {
-            setIsCheck(false);
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          }
-        }}
-      /> */}
     </PageContainer>
   );
 };

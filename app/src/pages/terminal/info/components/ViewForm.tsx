@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Modal, Input } from 'antd';
+import { Form, Modal, Input, Col, Row } from 'antd';
 import { useIntl } from 'umi';
 import { TableListItem } from '../data';
 import formLayout from '../../../../formLayout';
@@ -44,132 +44,123 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
 
   form.setFieldsValue(formVals);
 
+  const fields = [
+    <Form.Item name="terminalId" label={intl.formatMessage({ id: 'terminal.terminalId' })}>
+      <Input disabled />
+    </Form.Item>,
+
+    <Form.Item name="merchantId" label={intl.formatMessage({ id: 'terminal.merchantId' })}>
+      <Input disabled />
+    </Form.Item>,
+
+    <Form.Item name="terminalType" label={intl.formatMessage({ id: 'terminal.terminalType' })}>
+      <Input disabled />
+    </Form.Item>,
+
+    <Form.Item name="status" label={intl.formatMessage({ id: 'terminal.status' })}>
+      <Input disabled />
+    </Form.Item>,
+
+    <Form.Item name="attribute" label={intl.formatMessage({ id: 'terminal.attribute' })}>
+      <Input disabled />
+    </Form.Item>,
+
+    <Form.Item name="tranCtl" label={intl.formatMessage({ id: 'terminal.tranCtl' })}>
+      <Input disabled />
+    </Form.Item>,
+
+    <Form.Item name="signFlag" label={intl.formatMessage({ id: 'terminal.signFlag' })}>
+      <Input disabled />
+    </Form.Item>,
+
+    <Form.Item name="batchNo" label={intl.formatMessage({ id: 'terminal.batchNo' })}>
+      <Input disabled />
+    </Form.Item>,
+    <Form.Item name="terminalParam" label={intl.formatMessage({ id: 'terminal.terminalParam' })}>
+      <Input disabled />
+    </Form.Item>,
+
+    <Form.Item name="tmkZmk" label={intl.formatMessage({ id: 'terminal.tmkZmk' })}>
+      <Input disabled />
+    </Form.Item>,
+
+    <Form.Item name="terminalBrand" label={intl.formatMessage({ id: 'terminal.terminalBrand' })}>
+      <Input disabled />
+    </Form.Item>,
+
+    <Form.Item name="terminalModel" label={intl.formatMessage({ id: 'terminal.terminalModel' })}>
+      <Input disabled />
+    </Form.Item>,
+    <Form.Item name="lineCondition" label={intl.formatMessage({ id: 'terminal.lineCondition' })}>
+      <Input disabled />
+    </Form.Item>,
+    <Form.Item name="installAddress" label={intl.formatMessage({ id: 'terminal.installAddress' })}>
+      <Input disabled />
+    </Form.Item>,
+    <Form.Item name="installDate" label={intl.formatMessage({ id: 'terminal.installDate' })}>
+      <Input disabled />
+    </Form.Item>,
+    <Form.Item name="person" label={intl.formatMessage({ id: 'terminal.person' })}>
+      <Input disabled />
+    </Form.Item>,
+    <Form.Item name="telephone" label={intl.formatMessage({ id: 'terminal.telephone' })}>
+      <Input disabled />
+    </Form.Item>,
+    <Form.Item name="counterName" label={intl.formatMessage({ id: 'terminal.counterName' })}>
+      <Input disabled />
+    </Form.Item>,
+    <Form.Item name="counterPhone" label={intl.formatMessage({ id: 'terminal.counterPhone' })}>
+      <Input disabled />
+    </Form.Item>,
+    <Form.Item name="terminalDesc" label={intl.formatMessage({ id: 'terminal.terminalDesc' })}>
+      <Input disabled />
+    </Form.Item>,
+    <Form.Item name="areaCode" label={intl.formatMessage({ id: 'terminal.areaCode' })}>
+      <Input disabled />
+    </Form.Item>,
+    <Form.Item name="timeZone" label={intl.formatMessage({ id: 'terminal.timeZone' })}>
+      <Input disabled />
+    </Form.Item>,
+
+    <Form.Item name="timeZone" label={intl.formatMessage({ id: 'terminal.timeZone' })}>
+      <Input disabled />
+    </Form.Item>,
+
+    <Form.Item
+      name="hisInstallAddress"
+      label={intl.formatMessage({ id: 'terminal.hisInstallAddress' })}
+    >
+      <Input disabled />
+    </Form.Item>,
+
+    <Form.Item name="recodeStat" label={intl.formatMessage({ id: 'terminal.recodeStat' })}>
+      <Input disabled />
+    </Form.Item>,
+
+    <Form.Item name="lastoperFlag" label={intl.formatMessage({ id: 'terminal.lastoperFlag' })}>
+      <Input disabled />
+    </Form.Item>,
+
+    <Form.Item name="modifyOper" label={intl.formatMessage({ id: 'terminal.modifyOper' })}>
+      <Input disabled />
+    </Form.Item>,
+
+    <Form.Item name="modifyDate" label={intl.formatMessage({ id: 'terminal.modifyDate' })}>
+      <Input disabled />
+    </Form.Item>,
+
+    <Form.Item name="createDate" label={intl.formatMessage({ id: 'terminal.createDate' })}>
+      <Input disabled />
+    </Form.Item>,
+  ];
+
   const renderContent = () => {
     return (
-      <>
-        <Form.Item name="terminalId" label={intl.formatMessage({ id: 'terminal.terminalId' })}>
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item name="merchantId" label={intl.formatMessage({ id: 'terminal.merchantId' })}>
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item name="terminalType" label={intl.formatMessage({ id: 'terminal.terminalType' })}>
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item name="status" label={intl.formatMessage({ id: 'terminal.status' })}>
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item name="attribute" label={intl.formatMessage({ id: 'terminal.attribute' })}>
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item name="tranCtl" label={intl.formatMessage({ id: 'terminal.tranCtl' })}>
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item name="signFlag" label={intl.formatMessage({ id: 'terminal.signFlag' })}>
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item name="batchNo" label={intl.formatMessage({ id: 'terminal.batchNo' })}>
-          <Input disabled />
-        </Form.Item>
-        <Form.Item
-          name="terminalParam"
-          label={intl.formatMessage({ id: 'terminal.terminalParam' })}
-        >
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item name="tmkZmk" label={intl.formatMessage({ id: 'terminal.tmkZmk' })}>
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item
-          name="terminalBrand"
-          label={intl.formatMessage({ id: 'terminal.terminalBrand' })}
-        >
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item
-          name="terminalModel"
-          label={intl.formatMessage({ id: 'terminal.terminalModel' })}
-        >
-          <Input disabled />
-        </Form.Item>
-        <Form.Item
-          name="lineCondition"
-          label={intl.formatMessage({ id: 'terminal.lineCondition' })}
-        >
-          <Input disabled />
-        </Form.Item>
-        <Form.Item
-          name="installAddress"
-          label={intl.formatMessage({ id: 'terminal.installAddress' })}
-        >
-          <Input disabled />
-        </Form.Item>
-        <Form.Item name="installDate" label={intl.formatMessage({ id: 'terminal.installDate' })}>
-          <Input disabled />
-        </Form.Item>
-        <Form.Item name="person" label={intl.formatMessage({ id: 'terminal.person' })}>
-          <Input disabled />
-        </Form.Item>
-        <Form.Item name="telephone" label={intl.formatMessage({ id: 'terminal.telephone' })}>
-          <Input disabled />
-        </Form.Item>
-        <Form.Item name="counterName" label={intl.formatMessage({ id: 'terminal.counterName' })}>
-          <Input disabled />
-        </Form.Item>
-        <Form.Item name="counterPhone" label={intl.formatMessage({ id: 'terminal.counterPhone' })}>
-          <Input disabled />
-        </Form.Item>
-        <Form.Item name="terminalDesc" label={intl.formatMessage({ id: 'terminal.terminalDesc' })}>
-          <Input disabled />
-        </Form.Item>
-        <Form.Item name="areaCode" label={intl.formatMessage({ id: 'terminal.areaCode' })}>
-          <Input disabled />
-        </Form.Item>
-        <Form.Item name="timeZone" label={intl.formatMessage({ id: 'terminal.timeZone' })}>
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item name="timeZone" label={intl.formatMessage({ id: 'terminal.timeZone' })}>
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item
-          name="hisInstallAddress"
-          label={intl.formatMessage({ id: 'terminal.hisInstallAddress' })}
-        >
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item name="recodeStat" label={intl.formatMessage({ id: 'terminal.recodeStat' })}>
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item name="lastoperFlag" label={intl.formatMessage({ id: 'terminal.lastoperFlag' })}>
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item name="modifyOper" label={intl.formatMessage({ id: 'terminal.modifyOper' })}>
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item name="modifyDate" label={intl.formatMessage({ id: 'terminal.modifyDate' })}>
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item name="createDate" label={intl.formatMessage({ id: 'terminal.createDate' })}>
-          <Input disabled />
-        </Form.Item>
-      </>
+      <Row gutter={24}>
+        {fields.map((field) => (
+          <Col span={12}>{field}</Col>
+        ))}
+      </Row>
     );
   };
 
