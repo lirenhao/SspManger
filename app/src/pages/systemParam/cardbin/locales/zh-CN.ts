@@ -1,9 +1,9 @@
 export default {
   'cardbin.title': 'cardbin信息',
-  'cardbin.createCompoent': '新增',
-  'cardbin.updateCompoent': '编辑',
-  'cardbin.delete': '删除',
-  'cardbin.create': '新增',
+  'cardbin.createCompoent': 'ADD',
+  'cardbin.updateCompoent': 'EDIT',
+  'cardbin.delete': 'DELETE',
+  'cardbin.create': 'ADD',
   'cardbin.viewCompoent': '查看cardbin详情',
 
   'cardbin.issueriin': '发卡行编码',

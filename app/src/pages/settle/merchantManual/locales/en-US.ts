@@ -19,27 +19,26 @@ export default {
   'manualSettle.checkState': 'CHECK STATE',
   'manualSettle.checkReason': 'REJECT REASON',
   'manualSettle.operation': 'OPERATION',
-  'manualSettle.settleAmtNecessary': '结算金额是必须的',
-  'manualSettle.create': '新建',
+  'manualSettle.settleAmtNecessary': 'settleAmt is required',
+  'manualSettle.create': 'add',
   'manualSettle.startDate': 'Start Date',
-  'manualSettle.merchantIdNecessary': '商户是必须的',
+  'manualSettle.merchantIdNecessary': 'MERCHANT ID is required',
   'manualSettle.feeCreate': 'FEE AMOUNT',
-  'manualSettle.feeCreateNecessary': 'FEE AMOUNT 是必须的',
+  'manualSettle.feeCreateNecessary': 'FEE AMOUNT is required',
 
-  'manualSettle.tranAmtFormat': '格式错误',
+  'manualSettle.tranAmtFormat': 'format Error',
 
-  'manualSettle.feeFormat': '格式错误',
+  'manualSettle.feeFormat': 'format Error',
 
-  'manualSettle.settleAmtFormat': '格式错误',
+  'manualSettle.settleAmtFormat': 'format Error',
 
-  'manualSettle.tranAmtNecessary': '交易金额是必须的',
+  'manualSettle.tranAmtNecessary': 'TXN AMOUNT is required',
 
-  'manualSettle.feeNecessary': '手续费是必须的',
+  'manualSettle.feeNecessary': 'FEE AMOUNT is required',
 
-  'manualSettle.settleNecessary': '结算金额是必须的',
-  'manualSettle.viewCompoent': '查看',
+  'manualSettle.settleNecessary': 'settleAmt is required',
+  'manualSettle.viewCompoent': 'SETTLE VIEW',
 
   'adjInput.title': 'MERCHANT MANUAL ADJ INPUT',
   'adjInputVerify.title': 'MERCNT MANUAL ADJ VERIFY',
-
 };

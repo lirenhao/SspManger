@@ -1,5 +1,5 @@
 export default {
-  'settleList.lsId': '',
+  'settleList.lsId': ' ',
   'settleList.merchantId': 'MERCHANT ID',
   'settleList.settleDate': 'SETT DATE',
   'settleList.acqOrgName': '	BRANCH NAME',
@@ -13,5 +13,4 @@ export default {
   'settleList.fee': 'FEES',
   'settleList.settleAmt': 'NET SETT AMT',
   'settleDetail.title': 'Merchant Settle Detail List',
-  
 };

@@ -1,7 +1,5 @@
 export default {
   'merMdr.merchantId': '商户ID',
-  'merMdr.useCase': '交易状态',
-  'merMdr.ccyType': '现金类型',
   'merMdr.feeType': '费用类型',
   'merMdr.cardOrgNum': '卡类型',
   'merMdr.feeMinAmt': '最低MDR金额',

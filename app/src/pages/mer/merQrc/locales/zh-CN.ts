@@ -2,7 +2,6 @@ export default {
   'merQrc.merchantId': '商户ID',
   'merQrc.useCase': '交易类型',
   'merQrc.ccyType': '现金类型',
-  'merQrc.internationalCode': '国际码',
   'merQrc.checkState': '检查状态',
   'merQrc.checkReason': '检查原因',
   'merQrc.operation': '操作状态',

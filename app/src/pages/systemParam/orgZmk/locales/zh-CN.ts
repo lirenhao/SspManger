@@ -19,4 +19,6 @@ export default {
   'orgzmk.delete': '删除',
   'orgzmk.create': '增加',
   'orgzmk.title': 'ZMK管理',
+  'orgtmk.tmkZmk': 'TMKZMK',
+  'orgtmk.tmkWeb': 'TMKWEB',
 };

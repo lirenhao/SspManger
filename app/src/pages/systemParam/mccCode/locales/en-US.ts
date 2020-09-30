@@ -1,10 +1,11 @@
 export default {
   'mcc.mcc': 'mcc',
-  'mcc.mccNecessary': 'mcc 是必须的',
+  'mcc.mccNecessary': 'mcc is required',
   'mcc.remark': 'remark',
-  'mcc.createCompoent': '新建mcc',
-  'mcc.updateCompoent': '修改mcc',
-  'mcc.delete': '删除',
-  'mcc.create': '增加',
+  'mcc.createCompoent': ' MCC CODE Create',
+  'mcc.updateCompoent': 'MCC CODE EDIT',
+  'mcc.viewCompoent': 'MCC CODE VIEW',
+  'mcc.delete': 'delete',
+  'mcc.create': 'add',
   'mcc.title': 'Mcc Code Management',
 };

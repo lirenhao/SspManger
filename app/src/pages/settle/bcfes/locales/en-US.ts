@@ -17,9 +17,4 @@ export default {
   'bcfes.title': 'BCFES UNILATERAL LIST',
   'bcfesHandle.title': 'BCFES MANUAL HANDLE LIST',
   'bcfes.fee': 'Fee',
-  // bcfes.'merMdr.cName' : '中文名称',
-  // bcfes.'merMdr.eName' : '英文名称',
-  // bcfes.'merMdr.merchantType' : '商户类型',
-  // bcfes.'merMdr.create' : '创建',
-  // bcfes.'merMdr.view' : '查看',
 };

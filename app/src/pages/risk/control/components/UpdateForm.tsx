@@ -1,7 +1,7 @@
 import React from 'react';
-import { Form, Modal, Input,Select } from 'antd';
+import { Form, Modal, Input, Select } from 'antd';
 import { useIntl } from 'umi';
-import { TableListItem,StatusEnum } from '../data.d';
+import { TableListItem, StatusEnum } from '../data.d';
 import formLayout from '../../../../formLayout';
 
 interface CreateFormProps {
@@ -10,11 +10,6 @@ interface CreateFormProps {
   onSubmit: (values: TableListItem) => void;
   values: Partial<TableListItem>;
 }
-
-// export interface FormValueType extends Partial<TableListItem> {
-//   mcc?: string;
-//   remark?: string;
-// }
 
 export interface UpdateFormState {
   formVals: TableListItem;
@@ -28,7 +23,11 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   form.setFieldsValue(props.values);
   const handleSubmit = async () => {
     const fieldsValue = await form.validateFields();
-    onSubmit({...{merchantId:'',maxTrxCount:'',maxTrxAmount:'',status:''},...props.values, ...fieldsValue });
+    onSubmit({
+      ...{ merchantId: '', maxTrxCount: '', maxTrxAmount: '', status: '' },
+      ...props.values,
+      ...fieldsValue,
+    });
   };
 
   const renderStatusOption = () => {
@@ -48,10 +47,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   const renderContent = () => {
     return (
       <>
-        <Form.Item
-          name="merchantId"
-          label={intl.formatMessage({ id: 'merLimit.merchantId' })}
-        >
+        <Form.Item name="merchantId" label={intl.formatMessage({ id: 'merLimit.merchantId' })}>
           <Input disabled />
         </Form.Item>
         <Form.Item
@@ -66,20 +62,28 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
         >
           <Input />
         </Form.Item>
-        <Form.Item name="maxTrxAmount"           rules={[
+        <Form.Item
+          name="maxTrxAmount"
+          rules={[
             {
               required: true,
               message: intl.formatMessage({ id: 'global.required' }),
             },
-          ]} label={intl.formatMessage({ id: 'merLimit.maxTrxAmount' })}>
+          ]}
+          label={intl.formatMessage({ id: 'merLimit.maxTrxAmount' })}
+        >
           <Input />
         </Form.Item>
-        <Form.Item name="status" rules={[
+        <Form.Item
+          name="status"
+          rules={[
             {
               required: true,
               message: intl.formatMessage({ id: 'global.required' }),
             },
-          ]}  label={intl.formatMessage({ id: 'merLimit.status' })}>
+          ]}
+          label={intl.formatMessage({ id: 'merLimit.status' })}
+        >
           <Select
             showSearch
             style={{ width: 200 }}
@@ -88,7 +92,6 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
             {renderStatusOption()}
           </Select>
         </Form.Item>
-
       </>
     );
   };
@@ -96,16 +99,12 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
   return (
     <Modal
       destroyOnClose
-      title={intl.formatMessage({ id: 'banks.updateCompoent' })}
+      title={intl.formatMessage({ id: 'merLimit.updateCompoent' })}
       visible={modalVisible}
       onCancel={() => onCancel()}
       onOk={() => handleSubmit()}
     >
-      <Form
-        {...formLayout}
-        form={form}
-
-      >
+      <Form {...formLayout} form={form}>
         {renderContent()}
       </Form>
     </Modal>

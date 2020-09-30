@@ -1,10 +1,10 @@
 export default {
   'country.internationalCode': 'COUNTRY CODE',
-  'country.internationalCodeNecessary': 'CURRENCY NUMBER 是必须的',
+  'country.internationalCodeNecessary': 'CURRENCY NUMBER is required',
   'country.cName': 'CHINESE NAME',
-  'country.cNameNecessary': '中文名是必须的',
+  'country.cNameNecessary': 'CHINESE NAME',
   'country.eName': 'ENGLISH NAME',
-  'country.eNameNecessary': '英文名是必须的',
+  'country.eNameNecessary': 'ENGLISH NAME is required',
   'country.createCompoent': 'ADD',
   'country.updateCompoent': 'EDIT',
   'country.delete': 'DELETE',

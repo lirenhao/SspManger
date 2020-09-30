@@ -1,5 +1,5 @@
 export default {
-  'terminal.merchantId': '商户ID',
+  'terminal.merchantId': 'MERCHANT ID',
   'terminal.wildcardFlag': 'CARD ASSOCIATION ACCEPTED',
   'terminal.tranCtl': 'TERMINAL FEATURES',
   'terminal.signFlag': 'TERMINAL PARAMETERS STATUS',
