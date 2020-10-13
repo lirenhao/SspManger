@@ -19,8 +19,6 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
   const intl = useIntl();
   const { modalVisible, onCancel } = props;
 
-
-
   const [form] = Form.useForm();
 
   form.setFieldsValue(props.values);
@@ -72,7 +70,7 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
   return (
     <Modal
       destroyOnClose
-      title={intl.formatMessage({ id: 'merQrc.updateCompoent' })}
+      title={intl.formatMessage({ id: 'hq.viewCompoent' })}
       visible={modalVisible}
       onCancel={() => onCancel()}
       onOk={() => {}}
@@ -80,7 +78,7 @@ const ViewForm: React.FC<UpdateFormProps> = (props) => {
       <Form
         {...formLayout}
         form={form}
-        
+
         // initialValues={values}
       >
         {renderContent()}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Modal, Input, Button } from 'antd';
 import { useIntl } from 'umi';
-import { TableListItem} from '../data.d';
+import { TableListItem } from '../data.d';
 import formLayout from '../../../../formLayout';
 
 interface CheckFormProps {
@@ -18,8 +18,6 @@ export interface CheckFormState {
 const ViewForm: React.FC<CheckFormProps> = (props) => {
   const intl = useIntl();
   const { modalVisible, onCancel, onSubmit } = props;
-
-  
 
   const [form] = Form.useForm();
 
@@ -69,7 +67,7 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
   return (
     <Modal
       destroyOnClose
-      title={intl.formatMessage({ id: 'merQrc.updateCompoent' })}
+      title={intl.formatMessage({ id: 'hq.checkCompoent' })}
       visible={modalVisible}
       onCancel={() => onCancel()}
       footer={

@@ -121,7 +121,7 @@ const TableList: React.FC<{}> = () => {
     },
     {
       title: intl.formatMessage({ id: 'merQrc.ccyCode' }),
-      dataIndex: ['ccyCode', 'ccyType'],
+      dataIndex: 'ccyCode',
       initialValue: undefined,
       valueEnum: ccyArr,
       hideInTable: true,
@@ -129,6 +129,8 @@ const TableList: React.FC<{}> = () => {
     {
       title: intl.formatMessage({ id: 'merQrc.ccyCode' }),
       dataIndex: 'ccyType',
+      initialValue: undefined,
+      valueEnum: ccyArr,
       hideInSearch: true,
     },
     {

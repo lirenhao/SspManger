@@ -43,12 +43,22 @@ public class PospOrgZmkService {
     }
 
     public void saveAndUpdate(PospOrgZmk pospOrgZmk) {
-        String zmk = XorUtil.xorHex(pospOrgZmk.getPwd1(), pospOrgZmk.getPwd2());
-        String zmkLmk = sspEncryption.getZmkLmk(zmk);
-        pospOrgZmk.setZmkLmk(zmkLmk.toUpperCase());
-        String checkValue = TripleDESUtil.encode3DesHex(checkData, zmk);
-        pospOrgZmk.setCheckValue(checkValue.toUpperCase().substring(0, 6));
-        pospOrgZmkDao.saveAndFlush(pospOrgZmk);
+        PospOrgZmk oldpospOrgZmk = pospOrgZmkDao.findById(pospOrgZmk.getOrgId()).orElse(null);
+        if(oldpospOrgZmk==null) {
+            String zmk = XorUtil.xorHex(pospOrgZmk.getPwd1(), pospOrgZmk.getPwd2());
+            String zmkLmk = sspEncryption.getZmkLmk(zmk);
+            pospOrgZmk.setZmkLmk(zmkLmk.toUpperCase());
+            String checkValue = TripleDESUtil.encode3DesHex(checkData, zmk);
+            pospOrgZmk.setCheckValue(checkValue.toUpperCase().substring(0, 6));
+            pospOrgZmkDao.saveAndFlush(pospOrgZmk);
+        }else{
+            String zmk = XorUtil.xorHex(pospOrgZmk.getPwd1(), pospOrgZmk.getPwd2());
+            String zmkLmk = sspEncryption.getZmkLmk(zmk);
+            oldpospOrgZmk.setZmkLmk(zmkLmk.toUpperCase());
+            String checkValue = TripleDESUtil.encode3DesHex(checkData, zmk);
+            oldpospOrgZmk.setCheckValue(checkValue.toUpperCase().substring(0, 6));
+            pospOrgZmkDao.saveAndFlush(oldpospOrgZmk);
+        }
     }
 
     public void delete(String id) {

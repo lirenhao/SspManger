@@ -1,7 +1,9 @@
 package com.yada.ssp.manager.svc.service;
 
+import com.yada.ssp.manager.svc.dao.CcyTypeDao;
 import com.yada.ssp.manager.svc.dao.StaticQrcListCheckDao;
 import com.yada.ssp.manager.svc.dao.StaticQrcListDao;
+import com.yada.ssp.manager.svc.model.CcyType;
 import com.yada.ssp.manager.svc.model.StaticQrcList;
 import com.yada.ssp.manager.svc.model.StaticQrcListCheck;
 import com.yada.ssp.manager.svc.query.StaticQrcListCheckQuery;
@@ -24,10 +26,12 @@ import java.util.List;
 public class StaticQrcListCheckService {
     private final StaticQrcListCheckDao staticQrcListCheckDao;
     private final StaticQrcListDao staticQrcListDao;
+    private final CcyTypeDao ccyTypeDao;
     @Autowired
-    public StaticQrcListCheckService(StaticQrcListCheckDao staticQrcListCheckDao, StaticQrcListDao staticQrcListDao) {
+    public StaticQrcListCheckService(StaticQrcListCheckDao staticQrcListCheckDao, StaticQrcListDao staticQrcListDao,CcyTypeDao ccyTypeDao) {
         this.staticQrcListCheckDao = staticQrcListCheckDao;
         this.staticQrcListDao = staticQrcListDao;
+        this.ccyTypeDao = ccyTypeDao;
     }
 
     public StaticQrcListCheck findOne(String lsId) {
@@ -46,6 +50,8 @@ public class StaticQrcListCheckService {
         staticQrcListCheck.setCheckState("0");
         staticQrcListCheck.setOperation("0");
         staticQrcListCheck.setCreateDate(DateUtil.getCurDate());
+        CcyType ccyType = ccyTypeDao.getOne(staticQrcListCheck.getCcyType());
+        staticQrcListCheck.setCcyCode(ccyType);
         staticQrcListCheckDao.saveAndFlush(staticQrcListCheck);
     }
 

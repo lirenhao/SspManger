@@ -187,11 +187,19 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
           <Select>{renderCardAssoOption()}</Select>
         </Form.Item>
 
-        <Form.Item name="tranCnt" label={intl.formatMessage({ id: 'merMdr.tranCnt' })}>
+        <Form.Item
+          name="tranCnt"
+          label={intl.formatMessage({ id: 'merMdr.tranCnt' })}
+          hidden={tranCntDisable}
+        >
           <Input disabled={tranCntDisable} />
         </Form.Item>
 
-        <Form.Item name="tranAmt" label={intl.formatMessage({ id: 'merMdr.tranAmt' })}>
+        <Form.Item
+          name="tranAmt"
+          label={intl.formatMessage({ id: 'merMdr.tranAmt' })}
+          hidden={tranAmtDisable}
+        >
           <Input disabled={tranAmtDisable} />
         </Form.Item>
         <Form.Item

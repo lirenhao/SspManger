@@ -95,6 +95,14 @@ const TableList: React.FC<{}> = () => {
       dataIndex: ['merchant', 'merchantType'],
       initialValue: undefined,
       valueEnum: merchantTypeEnmu,
+      hideInSearch: true,
+    },
+    {
+      title: intl.formatMessage({ id: 'merAddon.merchantType' }),
+      dataIndex: 'merchantType',
+      initialValue: undefined,
+      valueEnum: merchantTypeEnmu,
+      hideInTable: true,
     },
 
     {

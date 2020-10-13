@@ -106,11 +106,11 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
     <>
       <Modal
         destroyOnClose
-        title={intl.formatMessage({ id: 'riskReport.updateCompoent' })}
+        title={intl.formatMessage({ id: 'riskReport.viewCompoent' })}
         visible={modalVisible}
         onCancel={() => onCancel()}
         onOk={() => onCancel()}
-        width= {600}
+        width={600}
       >
         <Form {...formLayout} form={form}>
           {renderContent()}

@@ -31,9 +31,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
     merchantId: '',
     terminal: '',
     useCase: '',
-    ccyCode: {
-      ccyName: '',
-    },
+    ccyCode: '',
     qrValue: '',
     cardAsso: '',
   };
@@ -165,10 +163,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
           <Select>{renderUseCaseOption()}</Select>
         </Form.Item>
 
-        <Form.Item
-          name={['ccyCode', 'ccyType']}
-          label={intl.formatMessage({ id: 'merQrc.ccyType' })}
-        >
+        <Form.Item name="ccyType" label={intl.formatMessage({ id: 'merQrc.ccyType' })}>
           <Select>{renderCcyOption()}</Select>
         </Form.Item>
         <Form.Item name="cardAsso" label={intl.formatMessage({ id: 'merQrc.cardAsso' })}>

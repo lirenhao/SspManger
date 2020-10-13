@@ -3,10 +3,11 @@ export interface TableListItem {
   merchantId?: string;
   terminalId?: string;
   createDate?: string;
-  ccyCode?: {
-    ccyType?: string;
-    ccyName?: string;
-  };
+  ccyCode?:
+    | string
+    | {
+        ccyType?: string;
+      };
   ccyType?: string;
   useCase?: string;
   qrValue?: string;
@@ -36,10 +37,8 @@ export interface TableListData {
 
 export interface TableListParams {
   merchantId?: string;
-  
-  ccyCode?:{
-    ccyType?: string;
-  }
+
+  ccyCode?: string;
   internationalCode?: string;
   checkState?: string;
   operation?: string;

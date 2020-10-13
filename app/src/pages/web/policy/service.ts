@@ -24,7 +24,7 @@ export async function fetchIssue(id: string) {
 
 export async function fetchPut(params: TableListItem) {
   return request('/svc/ssp/merPolicy', {
-    method: 'POST',
+    method: 'PUT',
     data: params,
   });
 }

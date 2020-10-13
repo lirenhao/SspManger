@@ -21,4 +21,6 @@ export default {
   'hq.posNumYearPer': 'POS终端数同比上年增长率（%）',
   'hq.barNum': '二维码终端数',
   'hq.year': '年份',
+  'hq.checkCompoent': 'check',
+  'hq.viewCompoent': 'view',
 };

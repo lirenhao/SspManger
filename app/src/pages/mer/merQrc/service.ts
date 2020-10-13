@@ -2,16 +2,14 @@ import { request } from 'umi';
 import { TableListParams, TableListItem } from './data.d';
 
 export async function query(params?: TableListParams) {
-  const ccyCode = params?.ccyCode?.ccyType;
-
   return request('/svc/ssp/staticQrc', {
     method: 'GET',
-    params: { ...params, ...{ ccyCode } },
+    params,
   });
 }
 
 export async function save(params: TableListItem) {
-  const ccyType = params?.ccyCode?.ccyType;
+  const ccyType = params?.ccyType;
   return request('/svc/ssp/staticQrc', {
     method: 'POST',
     data: {
