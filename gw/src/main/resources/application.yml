@@ -1,0 +1,53 @@
+logging:
+  level:
+    root: debug
+server:
+  port: 9000
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8180/auth/realms/sspManager
+        registration:
+          keycloak:
+            client-id: gateway
+            client-secret: b1a58eb9-c90d-4f2d-ba0c-0c35d4725b3c
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay
+      routes:
+        - id: ssp-service
+          uri: http://localhost:9001
+          predicates:
+            - Path=/svc/ssp/**
+          filters:
+            - RewritePath=/svc(?<segment>/?.*),$\{segment}
+            - RemoveRequestHeader=Cookie
+        - id: web-service
+          uri: http://localhost:9002
+          predicates:
+            - Path=/svc/web/**
+          filters:
+            - RewritePath=/svc/web(?<segment>/?.*),$\{segment}
+            - RemoveRequestHeader=Cookie
+        - id: changePwd
+          uri: http://localhost:8180
+          predicates:
+            - Path=/changePwd
+          filters:
+            - RedirectTo=302, http://localhost:8180/auth/realms/sspManager/account/password
+        - id: login
+          uri: http://localhost:9000
+          predicates:
+            - Path=/login
+          filters:
+            - RedirectTo=302, /oauth2/authorization/keycloak
+        - id: app
+          uri: http://localhost:8000
+          predicates:
+            - Path=/**
+  resources:
+    static-locations: file:/Users/lirenhao/Workspace/ssp/SspManger/app/dist
