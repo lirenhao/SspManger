@@ -1,6 +1,5 @@
 package com.yada.ssp.manager.svc.controller;
 
-import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.TermCountCur;
 import com.yada.ssp.manager.svc.model.TermCountHis;
 import com.yada.ssp.manager.svc.service.TermCountService;
@@ -12,8 +11,9 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,23 +36,23 @@ public class TermCountController {
     }
 
     @GetMapping
-    public Page list(@RequestAttribute("auth") Auth auth, String month, @PageableDefault Pageable pageable) {
+    public Page list(@AuthenticationPrincipal Jwt principal, String month, @PageableDefault Pageable pageable) {
         if (null == month || "".equals(month) || DateUtil.getCurMonth().equals(month)) {
-            return termCountService.findCurMonth(auth.getOrgId(), pageable);
+            return termCountService.findCurMonth(principal.getClaimAsString("orgId"), pageable);
         } else {
-            return termCountService.findHis(month, auth.getOrgId(), pageable);
+            return termCountService.findHis(month, principal.getClaimAsString("orgId"), pageable);
         }
     }
 
     @GetMapping("/download")
-    public void download(@RequestAttribute("auth") Auth auth, String month, HttpServletResponse resp) {
+    public void download(@AuthenticationPrincipal Jwt principal, String month, HttpServletResponse resp) {
         Context context = new Context();
         if (null == month || "".equals(month) || DateUtil.getCurMonth().equals(month)) {
-            List<TermCountCur> page = termCountService.findCurMonth(auth.getOrgId());
+            List<TermCountCur> page = termCountService.findCurMonth(principal.getClaimAsString("orgId"));
             context.putVar("page", page);
             context.putVar("month", DateUtil.getCurMonth());
         } else {
-            List<TermCountHis> page = termCountService.findHis(month, auth.getOrgId());
+            List<TermCountHis> page = termCountService.findHis(month, principal.getClaimAsString("orgId"));
             context.putVar("page", page);
             context.putVar("month", month);
         }

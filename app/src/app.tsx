@@ -2,6 +2,7 @@ import React from 'react';
 import { BasicLayoutProps, Settings as LayoutSettings } from '@ant-design/pro-layout';
 import { notification } from 'antd';
 import { history, RequestConfig, Link } from 'umi';
+import { stringify } from 'querystring';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import { ResponseError } from 'umi-request';
@@ -73,7 +74,10 @@ const errorHandler = (error: ResponseError) => {
     const { status, url } = response;
 
     if (status === 401) {
-      window.location.reload();
+      const queryString = stringify({
+        redirect: window.location.href.split('#')[0],
+      });
+      window.location.href = `${process.env.SERVICE_CONTEXT || ''}/login?${queryString}`;
     } else {
       notification.error({
         message: `请求错误 ${status}`,

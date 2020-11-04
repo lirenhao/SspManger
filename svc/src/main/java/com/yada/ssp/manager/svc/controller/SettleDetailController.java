@@ -1,6 +1,5 @@
 package com.yada.ssp.manager.svc.controller;
 
-import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.MerSettle;
 import com.yada.ssp.manager.svc.model.SettleDetail;
 import com.yada.ssp.manager.svc.query.MerSettleQuery;
@@ -15,7 +14,12 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -40,16 +44,16 @@ public class SettleDetailController {
     }
 
     @GetMapping
-    public Page<SettleDetail> list(@RequestAttribute("auth") Auth auth,
+    public Page<SettleDetail> list(@AuthenticationPrincipal Jwt principal,
                                    @ModelAttribute SettleDetailQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(auth.getOrgId());
+        query.setOrgId(principal.getClaimAsString("orgId"));
         return settleDetailService.findAll(query, pageable);
     }
 
     @GetMapping("/download")
-    public void list(@RequestAttribute("auth") Auth auth,
+    public void list(@AuthenticationPrincipal Jwt principal,
                      @ModelAttribute SettleDetailQuery query, HttpServletResponse resp) {
-        query.setOrgId(auth.getOrgId());
+        query.setOrgId(principal.getClaimAsString("orgId"));
         List<SettleDetail> page = settleDetailService.findAll(query);
         Context context = new Context();
         context.putVar("page", page);
@@ -59,7 +63,7 @@ public class SettleDetailController {
         merSettleQuery.setMerchantId(query.getMerchantId());
         merSettleQuery.setSettleStartDate(query.getSettleStartDate());
         merSettleQuery.setSettleEndDate(query.getSettleEndDate());
-        merSettleQuery.setOrgId(auth.getOrgId());
+        merSettleQuery.setOrgId(principal.getClaimAsString("orgId"));
         List<MerSettle> list = merSettleService.findAll(merSettleQuery);
         if (list.size() > 0) {
             context.putVar("total", list.get(0));

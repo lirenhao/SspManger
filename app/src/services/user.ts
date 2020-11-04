@@ -9,5 +9,7 @@ export async function queryNotices(): Promise<any> {
 }
 
 export async function logout() {
-  return request('/logout');
+  return request('/logout', {
+    method: 'POST',
+  });
 }

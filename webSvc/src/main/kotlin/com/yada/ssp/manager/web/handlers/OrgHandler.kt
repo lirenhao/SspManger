@@ -19,7 +19,9 @@ class OrgHandler @Autowired constructor(private val orgService: OrgService) {
             withNotFound(orgService.get(req.pathVariable("id")))
 
     fun createOrUpdate(req: ServerRequest): Mono<ServerResponse> =
-            ok().body(req.bodyToMono(Org::class.java).flatMap(orgService::createOrUpdate))
+            req.bodyToMono(Org::class.java)
+                    .flatMap(orgService::createOrUpdate)
+                    .flatMap { ok().bodyValue(it) }
 
     fun exist(req: ServerRequest): Mono<ServerResponse> =
             ok().body(orgService.exist(req.pathVariable("id")))

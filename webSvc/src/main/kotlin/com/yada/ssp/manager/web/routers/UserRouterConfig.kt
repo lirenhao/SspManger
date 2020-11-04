@@ -1,6 +1,5 @@
 package com.yada.ssp.manager.web.routers
 
-import com.yada.ssp.manager.web.filters.AuthHandlerFilter
 import com.yada.ssp.manager.web.handlers.UserHandler
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -9,8 +8,7 @@ import org.springframework.web.reactive.function.server.router
 
 @Configuration
 class UserRouterConfig @Autowired constructor(
-        private val userHandler: UserHandler,
-        private val authHandlerFilter: AuthHandlerFilter
+        private val userHandler: UserHandler
 ) {
     @Bean
     fun userApiRouter() = router {
@@ -24,7 +22,6 @@ class UserRouterConfig @Autowired constructor(
             PUT("/{id}/reset", userHandler::reset)
             PUT("/{id}", userHandler::update)
             DELETE("/{id}", userHandler::delete)
-            filter(authHandlerFilter)
         }
     }
 }

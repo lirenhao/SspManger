@@ -1,6 +1,5 @@
 package com.yada.ssp.manager.svc.controller;
 
-import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.Trans;
 import com.yada.ssp.manager.svc.query.TransQuery;
 import com.yada.ssp.manager.svc.service.TransService;
@@ -8,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -25,9 +26,9 @@ public class TransController {
     }
 
     @GetMapping
-    public Page<Trans> list(@RequestAttribute("auth") Auth auth,
+    public Page<Trans> list(@AuthenticationPrincipal Jwt principal,
                             @ModelAttribute TransQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(auth.getOrgId());
+        query.setOrgId(principal.getClaimAsString("orgId"));
         return transService.findAll(query, pageable);
     }
 

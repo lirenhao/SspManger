@@ -12,7 +12,7 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Service
-open class UserService @Autowired constructor(
+class UserService @Autowired constructor(
         private val userRepo: UserRepository,
         private val pwdDigestService: IPwdDigestService
 ) {

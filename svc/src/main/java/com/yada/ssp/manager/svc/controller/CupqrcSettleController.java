@@ -1,6 +1,5 @@
 package com.yada.ssp.manager.svc.controller;
 
-import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.CupqrcSettle;
 import com.yada.ssp.manager.svc.query.CupqrcSettleQuery;
 import com.yada.ssp.manager.svc.service.CupqrcSettleService;
@@ -11,6 +10,8 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -35,17 +36,17 @@ public class CupqrcSettleController {
      * TODO 查询时默认日期是昨天
      */
     @GetMapping
-    public Page<CupqrcSettle> list(@RequestAttribute("auth") Auth auth,
+    public Page<CupqrcSettle> list(@AuthenticationPrincipal Jwt principal,
                                    @ModelAttribute CupqrcSettleQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(auth.getOrgId());
+        query.setOrgId(principal.getClaimAsString("orgId"));
         query.setStatus("0");
         return cupqrcSettleService.findAll(query, pageable);
     }
 
     @GetMapping("/download")
-    public void download(@RequestAttribute("auth") Auth auth,
+    public void download(@AuthenticationPrincipal Jwt principal,
                          @ModelAttribute CupqrcSettleQuery query, HttpServletResponse resp) {
-        query.setOrgId(auth.getOrgId());
+        query.setOrgId(principal.getClaimAsString("orgId"));
         query.setStatus("0");
         List<CupqrcSettle> page = cupqrcSettleService.findAll(query);
         Context context = new Context();
@@ -67,9 +68,9 @@ public class CupqrcSettleController {
      * TODO 查询时默认日期是昨天
      */
     @GetMapping("/handle")
-    public Page<CupqrcSettle> handleList(@RequestAttribute("auth") Auth auth,
+    public Page<CupqrcSettle> handleList(@AuthenticationPrincipal Jwt principal,
                                          @ModelAttribute CupqrcSettleQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(auth.getOrgId());
+        query.setOrgId(principal.getClaimAsString("orgId"));
         query.setStatus("2");
         return cupqrcSettleService.findAll(query, pageable);
     }

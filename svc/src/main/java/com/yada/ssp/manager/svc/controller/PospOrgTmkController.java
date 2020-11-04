@@ -1,6 +1,5 @@
 package com.yada.ssp.manager.svc.controller;
 
-import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.PospOrgTmk;
 import com.yada.ssp.manager.svc.query.PospOrgTmkQuery;
 import com.yada.ssp.manager.svc.service.PospOrgTmkService;
@@ -9,11 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/pospOrgTmk")
@@ -27,10 +31,10 @@ public class PospOrgTmkController {
     }
 
     @GetMapping
-    public Page<PospOrgTmk> list(@RequestAttribute("auth") Auth auth,
+    public Page<PospOrgTmk> list(@AuthenticationPrincipal Jwt principal,
                                  @ModelAttribute PospOrgTmkQuery query, @PageableDefault(sort = {"orgId", "terminalId", "tmkZmk"}) Pageable pageable) {
-        if ((null == query.getOrgId() || "".equals(query.getOrgId())) && auth.getOrgId().length() > 2) {
-            query.setOrgId(auth.getOrgId());
+        if ((null == query.getOrgId() || "".equals(query.getOrgId())) && principal.getClaimAsString("orgId").length() > 2) {
+            query.setOrgId(principal.getClaimAsString("orgId"));
         }
         if (query.getOrgId() == null) {
             query.setOrgId("");
@@ -47,12 +51,12 @@ public class PospOrgTmkController {
      * 密钥数量提示
      */
     @GetMapping("/scalar")
-    public Map<String, Integer> scalar(@RequestAttribute("auth") Auth auth) {
+    public Map<String, Integer> scalar(@AuthenticationPrincipal Jwt principal) {
         Map<String, Integer> result = new HashMap<>();
-        result.put("total", pospOrgTmkService.total(auth.getOrgId()));
-        result.put("enable", pospOrgTmkService.enable(auth.getOrgId()));
-        result.put("unable", pospOrgTmkService.unable(auth.getOrgId()));
-        result.put("termNum", pospOrgTmkService.termNum(auth.getOrgId()));
+        result.put("total", pospOrgTmkService.total(principal.getClaimAsString("orgId")));
+        result.put("enable", pospOrgTmkService.enable(principal.getClaimAsString("orgId")));
+        result.put("unable", pospOrgTmkService.unable(principal.getClaimAsString("orgId")));
+        result.put("termNum", pospOrgTmkService.termNum(principal.getClaimAsString("orgId")));
         return result;
     }
 

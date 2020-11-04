@@ -1,6 +1,5 @@
 package com.yada.ssp.manager.svc.controller;
 
-import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.AppUser;
 import com.yada.ssp.manager.svc.model.AppUserCheck;
 import com.yada.ssp.manager.svc.model.AppUserPK;
@@ -11,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -32,9 +33,9 @@ public class AppUserController {
     }
 
     @GetMapping
-    public Page<AppUserCheck> list(@RequestAttribute("auth") Auth auth,
+    public Page<AppUserCheck> list(@AuthenticationPrincipal Jwt principal,
                                    @ModelAttribute AppUserCheckQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(auth.getOrgId());
+        query.setOrgId(principal.getClaimAsString("orgId"));
         return appUserCheckService.findAll(query, pageable);
     }
 

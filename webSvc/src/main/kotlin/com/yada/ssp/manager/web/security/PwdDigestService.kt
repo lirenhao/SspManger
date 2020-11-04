@@ -1,7 +1,6 @@
 package com.yada.ssp.manager.web.security
 
 import org.jasypt.encryption.StringEncryptor
-import org.springframework.beans.factory.annotation.Autowired
 
 interface IPwdDigestService {
     fun getDefaultPwdDigest(username: String): String
@@ -9,7 +8,7 @@ interface IPwdDigestService {
     fun checkPwdDigest(username: String, pwdPlaintext: String, pwdDigest: String): Boolean
 }
 
-class PwdDigestService @Autowired constructor(
+class PwdDigestService constructor(
         private val defaultPwd: String,
         private val stringEncryptor: StringEncryptor
 ) : IPwdDigestService {

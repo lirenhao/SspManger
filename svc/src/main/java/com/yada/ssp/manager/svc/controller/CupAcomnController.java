@@ -1,6 +1,5 @@
 package com.yada.ssp.manager.svc.controller;
 
-import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.CupAcomn;
 import com.yada.ssp.manager.svc.query.CupAcomnQuery;
 import com.yada.ssp.manager.svc.service.CupAcomnService;
@@ -11,6 +10,8 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -35,9 +36,9 @@ public class CupAcomnController {
      * TODO 查询时默认日期是昨天
      */
     @GetMapping
-    public Page<CupAcomn> list(@RequestAttribute("auth") Auth auth,
+    public Page<CupAcomn> list(@AuthenticationPrincipal Jwt principal,
                        @ModelAttribute CupAcomnQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(auth.getOrgId());
+        query.setOrgId(principal.getClaimAsString("orgId"));
         query.setStatus("0");
         return cupAcomnService.findAll(query, pageable);
     }
@@ -66,9 +67,9 @@ public class CupAcomnController {
      * TODO 查询时默认日期是昨天
      */
     @GetMapping("/handle")
-    public Page<CupAcomn> handleList(@RequestAttribute("auth") Auth auth,
+    public Page<CupAcomn> handleList(@AuthenticationPrincipal Jwt principal,
                              @ModelAttribute CupAcomnQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(auth.getOrgId());
+        query.setOrgId(principal.getClaimAsString("orgId"));
         query.setStatus("2");
         return cupAcomnService.findAll(query, pageable);
     }

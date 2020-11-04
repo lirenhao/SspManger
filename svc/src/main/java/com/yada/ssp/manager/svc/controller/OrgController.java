@@ -1,10 +1,11 @@
 package com.yada.ssp.manager.svc.controller;
 
-import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.Org;
 import com.yada.ssp.manager.svc.service.OrgService;
 import com.yada.ssp.manager.svc.view.TreeNode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,16 +42,16 @@ public class OrgController {
      * 获取机构树
      */
     @GetMapping("/tree")
-    public TreeNode[] tree(@RequestAttribute("auth") Auth auth) {
-        return orgService.genOrgTree(auth.getOrgId());
+    public TreeNode[] tree(@AuthenticationPrincipal Jwt principal) {
+        return orgService.genOrgTree(principal.getClaimAsString("orgId"));
     }
 
     /**
      * 获取所有子集机构的key:value
      */
     @GetMapping("/map")
-    public Map<String, String> map(@RequestAttribute("auth") Auth auth) {
-        return orgService.findByOrgIdStartingWithList(auth.getOrgId())
+    public Map<String, String> map(@AuthenticationPrincipal Jwt principal) {
+        return orgService.findByOrgIdStartingWithList(principal.getClaimAsString("orgId"))
                 .stream().collect(Collectors.toMap(Org::getOrgId, Org::getName));
     }
 
@@ -58,8 +59,8 @@ public class OrgController {
      * 获取所有二级机构的key:value
      */
     @GetMapping("/second")
-    public Map<String, String> secondOrg(@RequestAttribute("auth") Auth auth) {
-        return orgService.findSecondOrg(auth.getOrgId())
+    public Map<String, String> secondOrg(@AuthenticationPrincipal Jwt principal) {
+        return orgService.findSecondOrg(principal.getClaimAsString("orgId"))
                 .stream().collect(Collectors.toMap(Org::getOrgId, Org::getName));
     }
 

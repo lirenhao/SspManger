@@ -1,6 +1,5 @@
 package com.yada.ssp.manager.svc.controller;
 
-import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.HqReport;
 import com.yada.ssp.manager.svc.service.HqReportService;
 import com.yada.ssp.manager.svc.util.DateUtil;
@@ -8,8 +7,9 @@ import org.jxls.common.Context;
 import org.jxls.util.JxlsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,14 +32,14 @@ public class HqReportController {
     }
 
     @GetMapping
-    public List<HqReport> list(@RequestAttribute("auth") Auth auth, Integer year, String orgId) {
-        return query(auth, year, orgId);
+    public List<HqReport> list(@AuthenticationPrincipal Jwt principal, Integer year, String orgId) {
+        return query(principal, year, orgId);
     }
 
     @GetMapping("/download")
-    public void download(@RequestAttribute("auth") Auth auth, HttpServletResponse resp, Integer year, String orgId) {
+    public void download(@AuthenticationPrincipal Jwt principal, HttpServletResponse resp, Integer year, String orgId) {
         Context context = new Context();
-        List<HqReport> page = query(auth, year, orgId);
+        List<HqReport> page = query(principal, year, orgId);
         context.putVar("page", page);
         context.putVar("year", year);
         try {
@@ -53,12 +53,12 @@ public class HqReportController {
         }
     }
 
-    private List<HqReport> query(Auth auth, Integer year, String orgId) {
+    private List<HqReport> query(Jwt principal, Integer year, String orgId) {
         if (year == null) {
             year = Integer.parseInt(DateUtil.getCurYear());
         }
-        if(orgId == null || !orgId.startsWith(auth.getOrgId())) {
-            orgId = auth.getOrgId();
+        if(orgId == null || !orgId.startsWith(principal.getClaimAsString("orgId"))) {
+            orgId = principal.getClaimAsString("orgId");
         }
        return hqReportService.hqReport(year, orgId);
     }

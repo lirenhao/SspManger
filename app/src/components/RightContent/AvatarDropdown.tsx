@@ -21,10 +21,10 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
     try {
       await logout();
       setInitialState({ ...initialState, currentUser: undefined });
-      window.location.href = `/login?redirect=${encodeURI(window.location.href)}`;
+      // window.location.href = `/login?redirect=${encodeURI(window.location.href)}`;
     } catch (err) {
-
     }
+    window.location.reload();
   }
 
   const loading = (
@@ -51,9 +51,11 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
 
   const menuHeaderDropdown = (
     <Menu className={styles.menu} selectedKeys={[]}>
-      <Menu.Item onClick={() => handlePush('/modifyPwd')}>
-        <LockOutlined />
-        修改密码
+      <Menu.Item>
+        <a href='/changePwd' target='_blank'>
+          <LockOutlined />
+          修改密码
+        </a>
       </Menu.Item>
       <Menu.Item onClick={handleLogout}>
         <LogoutOutlined />

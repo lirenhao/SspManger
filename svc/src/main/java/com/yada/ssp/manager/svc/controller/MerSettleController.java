@@ -1,6 +1,5 @@
 package com.yada.ssp.manager.svc.controller;
 
-import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.MerSettle;
 import com.yada.ssp.manager.svc.query.MerSettleQuery;
 import com.yada.ssp.manager.svc.service.MerSettleService;
@@ -12,7 +11,12 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -33,9 +37,9 @@ public class MerSettleController {
     }
 
     @GetMapping
-    public Page<MerSettle> list(@RequestAttribute("auth") Auth auth,
+    public Page<MerSettle> list(@AuthenticationPrincipal Jwt principal,
                                 @ModelAttribute MerSettleQuery query, @PageableDefault Pageable pageable) {
-        return query(auth, query, pageable);
+        return query(principal, query, pageable);
     }
 
     @GetMapping("/download")
@@ -44,10 +48,10 @@ public class MerSettleController {
     }
 
     @GetMapping("/success")
-    public Page<MerSettle> success(@RequestAttribute("auth") Auth auth,
+    public Page<MerSettle> success(@AuthenticationPrincipal Jwt principal,
                                    @ModelAttribute MerSettleQuery query, @PageableDefault Pageable pageable) {
         query.setStatus("1");
-        return query(auth, query, pageable);
+        return query(principal, query, pageable);
     }
 
     @GetMapping("/success/download")
@@ -57,10 +61,10 @@ public class MerSettleController {
     }
 
     @GetMapping("/failure")
-    public Page<MerSettle> failure(@RequestAttribute("auth") Auth auth,
+    public Page<MerSettle> failure(@AuthenticationPrincipal Jwt principal,
                                    @ModelAttribute MerSettleQuery query, @PageableDefault Pageable pageable) {
         query.setStatus("2");
-        return query(auth, query, pageable);
+        return query(principal, query, pageable);
     }
 
     @GetMapping("/failure/download")
@@ -69,8 +73,8 @@ public class MerSettleController {
         download(query, resp, "merSettleFailure.xls", "MER_SETTLE_FAILURE");
     }
 
-    private Page<MerSettle> query(Auth auth, MerSettleQuery query, Pageable pageable) {
-        query.setOrgId(auth.getOrgId());
+    private Page<MerSettle> query(Jwt principal, MerSettleQuery query, Pageable pageable) {
+        query.setOrgId(principal.getClaimAsString("orgId"));
         return merSettleService.findAll(query, pageable);
     }
 

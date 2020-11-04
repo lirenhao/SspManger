@@ -8,7 +8,7 @@ const { REACT_APP_ENV } = process.env;
 
 export default defineConfig({
   hash: true,
-  publicPath: '/ssp/',
+  // publicPath: '/ssp/',
   antd: {},
   dva: {
     hmr: true,

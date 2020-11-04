@@ -28,7 +28,7 @@ private fun makeTree(orgs: List<Org>): List<OrgTree> {
 }
 
 @Service
-open class OrgService @Autowired constructor(
+class OrgService @Autowired constructor(
         private val repo: OrgRepository,
         private val userSvc: UserService
 ) {

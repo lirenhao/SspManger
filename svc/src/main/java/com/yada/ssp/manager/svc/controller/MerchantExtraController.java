@@ -1,6 +1,5 @@
 package com.yada.ssp.manager.svc.controller;
 
-import com.yada.ssp.manager.svc.auth.model.Auth;
 import com.yada.ssp.manager.svc.model.MerchantExtra;
 import com.yada.ssp.manager.svc.model.MerchantExtraCheck;
 import com.yada.ssp.manager.svc.query.MerchantExtraCheckQuery;
@@ -10,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -31,9 +32,9 @@ public class MerchantExtraController {
     }
 
     @GetMapping
-    public Page<MerchantExtraCheck> list(@RequestAttribute("auth") Auth auth,
+    public Page<MerchantExtraCheck> list(@AuthenticationPrincipal Jwt principal,
                                          @ModelAttribute MerchantExtraCheckQuery query, @PageableDefault Pageable pageable) {
-        query.setOrgId(auth.getOrgId());
+        query.setOrgId(principal.getClaimAsString("orgId"));
         return merchantExtraCheckService.findAll(query, pageable);
     }
 
