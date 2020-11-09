@@ -44,7 +44,7 @@ public class StaticQrcListCheck {
 
 
 
-    @Column
+    @Column(name="ccyCode")
     private String ccyType;
     //币种
     @OneToOne(targetEntity = CcyType.class, fetch = FetchType.LAZY)
@@ -171,7 +171,7 @@ public class StaticQrcListCheck {
     }
 
     public String getCcyType() {
-        return ccyType;
+        return this.ccyType;
     }
 
     public void setCcyType(String ccyType) {

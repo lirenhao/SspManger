@@ -29,9 +29,7 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
     checkState: '',
     checkReason: '',
     operation: props.before.operation ? operEnmu[props.before.operation] : '',
-    ccyCode: {
-      ccyName: props.before.ccyCode?.ccyName,
-    },
+    ccyCode: props.before.ccyCode,
     ccyType: props.before.ccyType,
     merchant: {
       merchantId: props.before.merchant ? props.before.merchant.merchantId : '',
@@ -51,9 +49,7 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
     checkState: '',
     checkReason: '',
     operation: props.after.operation ? operEnmu[props.after.operation] : '',
-    ccyCode: {
-      ccyName: props.after.ccyCode?.ccyName,
-    },
+    ccyCode: props.after.ccyCode,
     ccyType: props.after.ccyType,
     merchant: {
       merchantId: props.after.merchant ? props.after.merchant.merchantId : '',
@@ -148,7 +144,7 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: intl.formatMessage({ id: 'merAddon.check.checkState.required' }),
+                  message: intl.formatMessage({ id: 'merQrc.check.checkState.required' }),
                 },
               ]}
             >

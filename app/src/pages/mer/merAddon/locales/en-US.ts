@@ -17,4 +17,5 @@ export default {
   'merAddonCheck.title': 'Merchant Add-On Check',
   'merAddon.ccyTypeNecessary': 'CURRENCY is required',
   'merAddon.internationalCodeNecessary': 'COUNTRY CODE is required',
+  'merAddon.check.checkState.required': 'CheckState is required',
 };

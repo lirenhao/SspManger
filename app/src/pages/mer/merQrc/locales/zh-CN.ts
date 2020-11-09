@@ -21,4 +21,5 @@ export default {
   'merQrcCheck.title': '商户QR码审核',
   'merQrc.checkCompoent': '商户QR码审核',
   'merQrc.createDate': '生效日期',
+  'merQrc.check.checkState.required': '审核状态是必须的',
 };

@@ -28,9 +28,7 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
     checkState: '',
     checkReason: '',
     operation: props.before.operation ? operEnmu[props.before.operation] : '',
-    ccyCode: {
-      ccyName: props.before.ccyCode?.ccyName,
-    },
+    ccyCode: props.before.ccyCode,
     ccyType: props.before.ccyType,
     merchant: {
       merchantId: props.before.merchant ? props.before.merchant.merchantId : '',
@@ -48,11 +46,9 @@ const ViewForm: React.FC<CheckFormProps> = (props) => {
     qrValue: props.after.qrValue,
     cardAsso: props.after.cardAsso ? cardAssoEnum[props.after.cardAsso] : '',
     checkState: '',
-    checkReason: '',
+    checkReason: props.after.checkReason,
     operation: props.after.operation ? operEnmu[props.after.operation] : '',
-    ccyCode: {
-      ccyName: props.after.ccyCode?.ccyName,
-    },
+    ccyCode: props.after.ccyCode,
     ccyType: props.after.ccyType,
     merchant: {
       merchantId: props.after.merchant ? props.after.merchant.merchantId : '',

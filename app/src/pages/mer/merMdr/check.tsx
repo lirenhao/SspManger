@@ -114,6 +114,12 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'feeMinAmt',
       hideInSearch: true,
     },
+    {
+      title: intl.formatMessage({ id: 'merMdr.feeMinAmt' }),
+      dataIndex: 'checkReason',
+      hideInSearch: true,
+      hideInTable: true,
+    },
 
     {
       title: intl.formatMessage({ id: 'merMdr.checkState' }),

@@ -21,16 +21,8 @@ const Result = {
   current: 0,
 };
 
-const pageResult = {
-  content: Result.data,
-  totalElements: Result.total,
-  success: true,
-  size: Result.pageSize,
-  number: Result.current,
-};
-
 function getAllriskList(req: Request, res: Response) {
-  return res.json(pageResult);
+  return res.json(TableListDataSource);
 }
 
 function getOne(req: Request, res: Response) {

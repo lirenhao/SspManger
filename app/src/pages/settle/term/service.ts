@@ -2,7 +2,7 @@ import { request } from 'umi';
 import { TableListParams, TableListItem } from './data.d';
 
 export async function query(params?: TableListParams) {
-  return request('/svc/ssp/termCount/', {
+  return request('/svc/ssp/termCount', {
     method: 'GET',
     params: {
       ...params,

@@ -16,4 +16,6 @@ export default {
   'merQrc.fee': 'Fee Type',
   'merQrc.title': 'Merchant Static-QRC',
   'merQrc.createDate': 'EFFECTIVE DATE',
+
+  'merQrc.check.checkState.required': 'CheckState is required',
 };

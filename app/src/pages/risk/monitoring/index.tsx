@@ -78,10 +78,7 @@ const TableList: React.FC<{}> = () => {
               sort: Object.keys(sort).map((key) => `${key},desc${sort[key]?.replace('end', '')}`),
             });
             return {
-              data: result.content,
-              page: result.totalPages,
-              total: result.totalElements,
-              success: true,
+              data: result,
             };
           } catch (err) {
             return {

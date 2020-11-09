@@ -13,7 +13,7 @@ spring:
         registration:
           keycloak:
             client-id: gateway
-            client-secret: b1a58eb9-c90d-4f2d-ba0c-0c35d4725b3c
+            client-secret: 885bbb5c-69ac-493e-bf8c-6e659ccaae54
   cloud:
     gateway:
       default-filters:
@@ -50,4 +50,4 @@ spring:
           predicates:
             - Path=/**
   resources:
-    static-locations: file:/Users/lirenhao/Workspace/ssp/SspManger/app/dist
+    static-locations: file:D:\javaproject\XjpSspManger\app\dist
