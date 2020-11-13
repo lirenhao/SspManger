@@ -7,7 +7,7 @@ const routes: IRoute[] = [
     component: './risk/monitoring',
     locale: 'riskMonitoring.title',
     access: 'canShow',
-    roles: ['admin', 'Risk Operator'],
+    roles: ['admin', 'RiskOperator'],
   },
   {
     path: '/risk/control',
@@ -15,7 +15,7 @@ const routes: IRoute[] = [
     component: './risk/control',
     locale: 'riskControl.title',
     access: 'canShow',
-    roles: ['admin', 'Risk Operator'],
+    roles: ['admin', 'RiskOperator'],
   },
   {
     path: '/risk/report',
@@ -23,7 +23,7 @@ const routes: IRoute[] = [
     component: './risk/report',
     locale: 'riskReport.title',
     access: 'canShow',
-    roles: ['admin', 'Risk Operator'],
+    roles: ['admin', 'RiskOperator'],
   },
 ];
 

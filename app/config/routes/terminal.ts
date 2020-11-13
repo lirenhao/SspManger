@@ -7,7 +7,7 @@ const routes: IRoute[] = [
     component: './terminal/info',
     locale: 'terminal.info',
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator', 'Merchant Checker'],
+    roles: ['admin', 'MerchantOperator', 'MerchantChecker'],
   },
   {
     path: '/terminal/termSn',
@@ -15,7 +15,7 @@ const routes: IRoute[] = [
     component: './info/termSn',
     locale: 'termSn.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator', 'Merchant Checker'],
+    roles: ['admin', 'MerchantOperator', 'MerchantChecker'],
   },
   {
     path: '/terminal/orgTmk',
@@ -23,7 +23,7 @@ const routes: IRoute[] = [
     component: './systemParam/orgTmk',
     locale: 'orgtmk.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Checker'],
+    roles: ['admin', 'MerchantChecker'],
   },
   {
     path: '/terminal/uploadTmk',
@@ -31,7 +31,7 @@ const routes: IRoute[] = [
     component: './systemParam/uploadTmk',
     locale: 'uploadTmk.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Checker'],
+    roles: ['admin', 'MerchantChecker'],
   },
 ];
 

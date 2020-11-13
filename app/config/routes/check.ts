@@ -7,7 +7,7 @@ const routes: IRoute[] = [
     component: './mer/merAddon/check',
     locale: 'merAddonCheck.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Checker'],
+    roles: ['admin', 'MerchantChecker'],
   },
   {
     path: '/check/merQrc',
@@ -15,7 +15,7 @@ const routes: IRoute[] = [
     component: './mer/merQrc/check',
     locale: 'merQrcCheck.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Checker'],
+    roles: ['admin', 'MerchantChecker'],
   },
   {
     path: '/check/merMdr',
@@ -23,7 +23,7 @@ const routes: IRoute[] = [
     component: './mer/merMdr/check',
     locale: 'merMdrCheck.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Checker'],
+    roles: ['admin', 'MerchantChecker'],
   },
   {
     path: '/check/appUser',
@@ -31,7 +31,7 @@ const routes: IRoute[] = [
     component: './app/user/check',
     locale: 'appUser.check.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Checker'],
+    roles: ['admin', 'MerchantChecker'],
   },
   {
     path: '/check/ccpay',
@@ -39,7 +39,7 @@ const routes: IRoute[] = [
     component: './ccpay/mng/check',
     locale: 'ccpayCheck.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Checker'],
+    roles: ['admin', 'MerchantChecker'],
   },
 ];
 

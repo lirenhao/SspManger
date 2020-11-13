@@ -7,7 +7,7 @@ const routes: IRoute[] = [
     component: './app/user',
     locale: 'appUser.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator'],
+    roles: ['admin', 'MerchantOperator'],
   },
 ];
 

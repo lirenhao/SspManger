@@ -7,7 +7,7 @@ const routes: IRoute[] = [
     component: './settle/cup',
     locale: 'cup.title',
     access: 'canShow',
-    roles: ['admin', 'Finance Operator'],
+    roles: ['admin', 'FinanceOperator'],
   },
   {
     path: '/settle/cupHandle',
@@ -15,7 +15,7 @@ const routes: IRoute[] = [
     component: './settle/cupManu',
     locale: 'cupHandle.title',
     access: 'canShow',
-    roles: ['admin', 'Finance Operator'],
+    roles: ['admin', 'FinanceOperator'],
   },
   {
     path: '/settle/bcfes',
@@ -23,7 +23,7 @@ const routes: IRoute[] = [
     component: './settle/bcfes',
     locale: 'bcfes.title',
     access: 'canShow',
-    roles: ['admin', 'Finance Operator'],
+    roles: ['admin', 'FinanceOperator'],
   },
   {
     path: '/settle/bcfesHandle',
@@ -31,7 +31,7 @@ const routes: IRoute[] = [
     component: './settle/bcfesManu',
     locale: 'bcfesHandle.title',
     access: 'canShow',
-    roles: ['admin', 'Finance Operator'],
+    roles: ['admin', 'FinanceOperator'],
   },
   {
     path: '/settle/adjInput',
@@ -39,7 +39,7 @@ const routes: IRoute[] = [
     component: './settle/merchantManual',
     locale: 'adjInput.title',
     access: 'canShow',
-    roles: ['admin', 'Finance Operator'],
+    roles: ['admin', 'FinanceOperator'],
   },
   {
     path: '/settle/adjInputVerify',
@@ -47,7 +47,7 @@ const routes: IRoute[] = [
     component: './settle/merchantManualVerify',
     locale: 'adjInputVerify.title',
     access: 'canShow',
-    roles: ['admin', 'Finance Checker'],
+    roles: ['admin', 'FinanceChecker'],
   },
   {
     path: '/settle/settleList',
@@ -55,7 +55,7 @@ const routes: IRoute[] = [
     component: './settle/settleList',
     locale: 'settleList.title',
     access: 'canShow',
-    roles: ['admin', 'Finance Operator'],
+    roles: ['admin', 'FinanceOperator'],
   },
   {
     path: '/settle/settleHisSuccess',
@@ -63,7 +63,7 @@ const routes: IRoute[] = [
     component: './settle/settleHisSuccess',
     locale: 'settleHisSuccess.title',
     access: 'canShow',
-    roles: ['admin', 'Finance Operator'],
+    roles: ['admin', 'FinanceOperator'],
   },
   {
     path: '/settle/settleHisFail',
@@ -71,7 +71,7 @@ const routes: IRoute[] = [
     component: './settle/settleHis',
     locale: 'settleHisFail.title',
     access: 'canShow',
-    roles: ['admin', 'Finance Operator'],
+    roles: ['admin', 'FinanceOperator'],
   },
   {
     path: '/settle/settleDetail',
@@ -79,7 +79,7 @@ const routes: IRoute[] = [
     component: './settle/settleDetail',
     locale: 'settleDetail.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator'],
+    roles: ['admin', 'MerchantOperator'],
   },
 ];
 

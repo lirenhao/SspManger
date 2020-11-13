@@ -7,7 +7,7 @@ const routes: IRoute[] = [
     component: './info/merchant',
     locale: 'merchant.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator', 'Merchant Checker'],
+    roles: ['admin', 'MerchantOperator', 'MerchantChecker'],
   },
   {
     path: '/mer/merAddon',
@@ -15,7 +15,7 @@ const routes: IRoute[] = [
     component: './mer/merAddon',
     locale: 'merAddon.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator'],
+    roles: ['admin', 'MerchantOperator'],
   },
   {
     path: '/mer/merQrc',
@@ -23,7 +23,7 @@ const routes: IRoute[] = [
     component: './mer/merQrc',
     locale: 'merQrc.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator'],
+    roles: ['admin', 'MerchantOperator'],
   },
   {
     path: '/mer/merMdr',
@@ -31,7 +31,7 @@ const routes: IRoute[] = [
     component: './mer/merMdr',
     locale: 'merMdr.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator'],
+    roles: ['admin', 'MerchantOperator'],
   },
   {
     path: '/mer/apiOrgMapping',
@@ -39,7 +39,7 @@ const routes: IRoute[] = [
     component: './api/org/Mapping',
     locale: 'apiOrg.mapping.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Checker'],
+    roles: ['admin', 'MerchantChecker'],
   },
   {
     path: '/mer/webUser',
@@ -47,7 +47,7 @@ const routes: IRoute[] = [
     component: './web/user',
     locale: 'webUser.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator'],
+    roles: ['admin', 'MerchantOperator'],
   },
   {
     path: '/mer/webSubs',
@@ -55,7 +55,7 @@ const routes: IRoute[] = [
     component: './web/subs',
     locale: 'webSubs.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator'],
+    roles: ['admin', 'MerchantOperator'],
   },
 ];
 

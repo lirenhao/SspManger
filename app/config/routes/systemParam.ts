@@ -55,7 +55,7 @@ const routes: IRoute[] = [
     component: './systemParam/banks',
     locale: 'banks.title',
     access: 'canShow',
-    roles: ['admin', 'Finance Operator'],
+    roles: ['admin', 'FinanceOperator'],
   },
   {
     path: '/systemParam/orgZmk',

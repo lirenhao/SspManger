@@ -7,7 +7,7 @@ const routes: IRoute[] = [
     component: './settle/term',
     locale: 'termCount.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator', 'Finance Operator', 'Merchant Checker', 'Finance Checker'],
+    roles: ['admin', 'MerchantOperator', 'FinanceOperator', 'MerchantChecker', 'FinanceChecker'],
   },
   {
     path: '/other/hqReport',
@@ -15,7 +15,7 @@ const routes: IRoute[] = [
     component: './settle/hq',
     locale: 'hq.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator', 'Finance Operator', 'Merchant Checker', 'Finance Checker'],
+    roles: ['admin', 'MerchantOperator', 'FinanceOperator', 'MerchantChecker', 'FinanceChecker'],
   },
 ];
 

@@ -7,7 +7,7 @@ const routes: IRoute[] = [
     component: './ccpay/mng',
     locale: 'ccpay.title',
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator'],
+    roles: ['admin', 'MerchantOperator'],
   },
 ];
 

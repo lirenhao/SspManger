@@ -36,7 +36,7 @@ export default [
     locale: 'menu.systemParam',
     routes: SystemParamRoutes,
     access: 'canShow',
-    roles: ['admin', 'Finance Operator'],
+    roles: ['admin', 'FinanceOperator'],
   },
   {
     path: '/mer',
@@ -45,7 +45,7 @@ export default [
     locale: 'menu.mer',
     routes: mer,
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator', 'Merchant Checker'],
+    roles: ['admin', 'MerchantOperator', 'MerchantChecker'],
   },
   {
     path: '/terminal',
@@ -54,7 +54,7 @@ export default [
     locale: 'menu.terminal',
     routes: terminal,
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator', 'Merchant Checker'],
+    roles: ['admin', 'MerchantOperator', 'MerchantChecker'],
   },
   {
     path: '/user',
@@ -63,7 +63,7 @@ export default [
     locale: 'menu.merUser',
     routes: user,
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator'],
+    roles: ['admin', 'MerchantOperator'],
   },
   {
     path: '/ccpay',
@@ -72,7 +72,7 @@ export default [
     locale: 'menu.ccpay',
     routes: ccpay,
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator'],
+    roles: ['admin', 'MerchantOperator'],
   },
   {
     path: '/transaction',
@@ -81,7 +81,7 @@ export default [
     locale: 'menu.trans',
     routes: trans,
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator'],
+    roles: ['admin', 'MerchantOperator'],
   },
   {
     path: '/check',
@@ -90,7 +90,7 @@ export default [
     locale: 'menu.check',
     routes: check,
     access: 'canShow',
-    roles: ['admin', 'Merchant Checker'],
+    roles: ['admin', 'MerchantChecker'],
   },
   {
     path: '/settle',
@@ -99,7 +99,7 @@ export default [
     locale: 'menu.settle',
     routes: settle,
     access: 'canShow',
-    roles: ['admin', 'Merchant Operator', 'Finance Operator', 'Finance Checker'],
+    roles: ['admin', 'MerchantOperator', 'FinanceOperator', 'FinanceChecker'],
   },
   {
     path: '/risk',
@@ -117,7 +117,7 @@ export default [
     locale: 'menu.other',
     routes: other,
     access: 'canShow',
-    roles: ['admin', 'Finance Operator', 'Merchant Checker', 'Finance Checker'],
+    roles: ['admin', 'FinanceOperator', 'MerchantChecker', 'FinanceChecker'],
   },
   {
     component: './404',
