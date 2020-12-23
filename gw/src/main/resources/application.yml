@@ -50,4 +50,4 @@ spring:
           predicates:
             - Path=/**
   resources:
-    static-locations: file:D:\javaproject\XjpSspManger\app\dist
+    static-locations: file:/Users/lirenhao/Workspace/ssp/SspManger/app/dist
