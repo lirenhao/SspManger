@@ -1,6 +1,7 @@
 logging:
   level:
-    root: debug
+    root: info
+    org.springframework.security: trace
 server:
   port: 9000
 spring:
@@ -13,7 +14,8 @@ spring:
         registration:
           keycloak:
             client-id: gateway
-            client-secret: 885bbb5c-69ac-493e-bf8c-6e659ccaae54
+            client-secret: ee861007-3394-4a79-9d6c-9ca3ebd2e738
+            scope: openid
   cloud:
     gateway:
       default-filters:
@@ -45,9 +47,6 @@ spring:
             - Path=/login
           filters:
             - RedirectTo=302, /oauth2/authorization/keycloak
-        - id: app
-          uri: http://localhost:8000
-          predicates:
-            - Path=/**
-  resources:
-    static-locations: file:/Users/lirenhao/Workspace/ssp/SspManger/app/dist
+  web:
+    resources:
+      static-locations: file:/Users/lirenhao/Workspace/ssp/SspManger/app/dist
