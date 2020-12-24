@@ -15,17 +15,17 @@ spring:
           keycloak:
             client-id: gateway
             client-secret: ee861007-3394-4a79-9d6c-9ca3ebd2e738
-            scope: openid
+            scope:
+             - openid
   cloud:
     gateway:
-      default-filters:
-        - TokenRelay
       routes:
         - id: ssp-service
           uri: http://localhost:9001
           predicates:
             - Path=/svc/ssp/**
           filters:
+            - TokenRelay
             - RewritePath=/svc(?<segment>/?.*),$\{segment}
             - RemoveRequestHeader=Cookie
         - id: web-service
@@ -33,6 +33,7 @@ spring:
           predicates:
             - Path=/svc/web/**
           filters:
+            - TokenRelay
             - RewritePath=/svc/web(?<segment>/?.*),$\{segment}
             - RemoveRequestHeader=Cookie
         - id: changePwd
@@ -41,12 +42,6 @@ spring:
             - Path=/changePwd
           filters:
             - RedirectTo=302, http://localhost:8180/auth/realms/sspManager/account/password
-        - id: login
-          uri: http://localhost:9000
-          predicates:
-            - Path=/login
-          filters:
-            - RedirectTo=302, /oauth2/authorization/keycloak
   web:
     resources:
       static-locations: file:/Users/lirenhao/Workspace/ssp/SspManger/app/dist

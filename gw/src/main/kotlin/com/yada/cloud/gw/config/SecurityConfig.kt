@@ -8,7 +8,6 @@ import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.oauth2.client.oidc.web.server.logout.OidcClientInitiatedServerLogoutSuccessHandler
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository
 import org.springframework.security.web.server.SecurityWebFilterChain
-import org.springframework.security.web.server.authentication.RedirectServerAuthenticationEntryPoint
 
 @EnableWebFluxSecurity
 class SecurityConfig @Autowired constructor(
@@ -19,8 +18,6 @@ class SecurityConfig @Autowired constructor(
     fun configure(http: ServerHttpSecurity): SecurityWebFilterChain {
         http.csrf().disable()
         http.authorizeExchange()
-                // allow anonymous access to the root page
-                .pathMatchers("/svc/**").permitAll()
                 // all other requests
                 .anyExchange().authenticated()
                 // RP-initiated logout
@@ -28,7 +25,6 @@ class SecurityConfig @Autowired constructor(
                 // enable OAuth2/OIDC
                 .and().oauth2Login(withDefaults())
                 .exceptionHandling()
-                .authenticationEntryPoint(RedirectServerAuthenticationEntryPoint("/oauth2/authorization/keycloak"))
         return http.build()
     }
 }
