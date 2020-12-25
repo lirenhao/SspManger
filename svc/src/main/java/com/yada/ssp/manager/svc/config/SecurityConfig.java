@@ -26,10 +26,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(registry -> {
-                    securityProperties.getRoles().keySet()
-                            .forEach(role ->
-                                    registry.antMatchers(securityProperties.getRoles().get(role)).hasRole(role)
-                            );
                     registry.anyRequest().authenticated();
                 })
                 .oauth2ResourceServer()
