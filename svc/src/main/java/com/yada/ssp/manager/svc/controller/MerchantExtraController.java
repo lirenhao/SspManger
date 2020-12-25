@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,7 @@ public class MerchantExtraController {
     }
 
     @GetMapping
+    @Secured(value = {"admin","MerchantChecker","MerchantOperator"})
     public Page<MerchantExtraCheck> list(@AuthenticationPrincipal Jwt principal,
                                          @ModelAttribute MerchantExtraCheckQuery query, @PageableDefault Pageable pageable) {
         query.setOrgId(principal.getClaimAsString("orgId"));
@@ -39,26 +41,31 @@ public class MerchantExtraController {
     }
 
     @PutMapping
+    @Secured(value = {"admin","MerchantChecker","MerchantOperator"})
     public void update(@RequestBody MerchantExtraCheck merchantExtraCheck) {
         merchantExtraCheckService.saveMerchantExtra(merchantExtraCheck);
     }
 
     @GetMapping("/{id}")
+    @Secured(value = {"admin","MerchantChecker","MerchantOperator"})
     public MerchantExtraCheck get(@PathVariable String id) {
         return merchantExtraCheckService.findOne(id);
     }
 
     @DeleteMapping("/{id}")
+    @Secured(value = {"admin","MerchantChecker","MerchantOperator"})
     public void merchantExtraDelete(@PathVariable String id) {
         merchantExtraCheckService.merchantExtraDelete(id);
     }
 
     @GetMapping("/{id}/check")
+    @Secured(value = {"admin","MerchantChecker","MerchantOperator"})
     public MerchantExtra merchantExtraShowForCheck(@PathVariable String id) {
         return merchantExtraService.findOne(id);
     }
 
     @PutMapping("/{id}/check")
+    @Secured(value = {"admin","MerchantChecker","MerchantOperator"})
     public void check(@PathVariable String id, @RequestBody Map<String, String> body) {
         merchantExtraCheckService.saveCheck(id, body.get("checkReason"), body.get("checkState"));
     }

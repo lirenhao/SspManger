@@ -10,6 +10,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,7 @@ public class CupqrcSettleController {
      * TODO 查询时默认日期是昨天
      */
     @GetMapping
+    @Secured(value = {"admin","FinanceOperator"})
     public Page<CupqrcSettle> list(@AuthenticationPrincipal Jwt principal,
                                    @ModelAttribute CupqrcSettleQuery query, @PageableDefault Pageable pageable) {
         query.setOrgId(principal.getClaimAsString("orgId"));
@@ -44,6 +46,7 @@ public class CupqrcSettleController {
     }
 
     @GetMapping("/download")
+    @Secured(value = {"admin","FinanceOperator"})
     public void download(@AuthenticationPrincipal Jwt principal,
                          @ModelAttribute CupqrcSettleQuery query, HttpServletResponse resp) {
         query.setOrgId(principal.getClaimAsString("orgId"));
@@ -68,6 +71,7 @@ public class CupqrcSettleController {
      * TODO 查询时默认日期是昨天
      */
     @GetMapping("/handle")
+    @Secured(value = {"admin","FinanceOperator"})
     public Page<CupqrcSettle> handleList(@AuthenticationPrincipal Jwt principal,
                                          @ModelAttribute CupqrcSettleQuery query, @PageableDefault Pageable pageable) {
         query.setOrgId(principal.getClaimAsString("orgId"));
@@ -76,6 +80,7 @@ public class CupqrcSettleController {
     }
 
     @GetMapping("/{lsId}/handle")
+    @Secured(value = {"admin","FinanceOperator"})
     public void handle(@PathVariable String lsId) {
         cupqrcSettleService.handle(lsId);
     }

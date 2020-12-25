@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,7 @@ public class RiskListController {
     }
 
     @GetMapping
+    @Secured(value = {"admin","RiskOperator"})
     public Page<RiskList> list(@AuthenticationPrincipal Jwt principal,
                                @ModelAttribute RiskListQuery query, @PageableDefault Pageable pageable) {
         query.setOrgId(principal.getClaimAsString("orgId"));
@@ -33,11 +35,13 @@ public class RiskListController {
     }
 
     @GetMapping("/{id}")
+    @Secured(value = {"admin","RiskOperator"})
     public RiskList get(@PathVariable String id) {
         return riskListService.findOne(id);
     }
 
     @GetMapping("/{id}/trans")
+    @Secured(value = {"admin","RiskOperator"})
     public List<RiskTran> getTrans(@PathVariable String id) {
         return riskListService.findRiskTran(id);
     }

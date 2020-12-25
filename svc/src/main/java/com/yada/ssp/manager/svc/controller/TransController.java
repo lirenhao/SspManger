@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,7 @@ public class TransController {
     }
 
     @GetMapping
+    @Secured(value = {"admin","MerchantOperator"})
     public Page<Trans> list(@AuthenticationPrincipal Jwt principal,
                             @ModelAttribute TransQuery query, @PageableDefault Pageable pageable) {
         query.setOrgId(principal.getClaimAsString("orgId"));
@@ -33,6 +35,7 @@ public class TransController {
     }
 
     @GetMapping("/{traceNo}")
+    @Secured(value = {"admin","MerchantOperator"})
     public Trans show(@PathVariable String traceNo) {
         return transService.findOne(traceNo);
     }

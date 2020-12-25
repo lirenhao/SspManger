@@ -1,6 +1,7 @@
 package com.yada.ssp.manager.svc.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final SecurityProperties securityProperties;

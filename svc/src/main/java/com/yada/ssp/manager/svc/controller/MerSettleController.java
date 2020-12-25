@@ -11,6 +11,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,17 +38,20 @@ public class MerSettleController {
     }
 
     @GetMapping
+    @Secured(value = {"admin","FinanceOperator"})
     public Page<MerSettle> list(@AuthenticationPrincipal Jwt principal,
                                 @ModelAttribute MerSettleQuery query, @PageableDefault Pageable pageable) {
         return query(principal, query, pageable);
     }
 
     @GetMapping("/download")
+    @Secured(value = {"admin","FinanceOperator"})
     public void list(@ModelAttribute MerSettleQuery query, HttpServletResponse resp) {
         download(query, resp, "merSettle.xls", "MER_SETTLE");
     }
 
     @GetMapping("/success")
+    @Secured(value = {"admin","FinanceOperator"})
     public Page<MerSettle> success(@AuthenticationPrincipal Jwt principal,
                                    @ModelAttribute MerSettleQuery query, @PageableDefault Pageable pageable) {
         query.setStatus("1");
@@ -55,12 +59,14 @@ public class MerSettleController {
     }
 
     @GetMapping("/success/download")
+    @Secured(value = {"admin","FinanceOperator"})
     public void success(@ModelAttribute MerSettleQuery query, HttpServletResponse resp) {
         query.setStatus("1");
         download(query, resp, "merSettleSuccess.xls", "MER_SETTLE_SUCCESS");
     }
 
     @GetMapping("/failure")
+    @Secured(value = {"admin","FinanceOperator"})
     public Page<MerSettle> failure(@AuthenticationPrincipal Jwt principal,
                                    @ModelAttribute MerSettleQuery query, @PageableDefault Pageable pageable) {
         query.setStatus("2");
@@ -68,6 +74,7 @@ public class MerSettleController {
     }
 
     @GetMapping("/failure/download")
+    @Secured(value = {"admin","FinanceOperator"})
     public void failure(@ModelAttribute MerSettleQuery query, HttpServletResponse resp) {
         query.setStatus("2");
         download(query, resp, "merSettleFailure.xls", "MER_SETTLE_FAILURE");

@@ -11,6 +11,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +37,7 @@ public class TermCountController {
     }
 
     @GetMapping
+    @Secured(value = {"admin","MerchantOperator","MerchantChecker","FinanceOperator","FinanceChecker"})
     public Page list(@AuthenticationPrincipal Jwt principal, String month, @PageableDefault Pageable pageable) {
         if (null == month || "".equals(month) || DateUtil.getCurMonth().equals(month)) {
             return termCountService.findCurMonth(principal.getClaimAsString("orgId"), pageable);
@@ -45,6 +47,7 @@ public class TermCountController {
     }
 
     @GetMapping("/download")
+    @Secured(value = {"admin","MerchantOperator","MerchantChecker","FinanceOperator","FinanceChecker"})
     public void download(@AuthenticationPrincipal Jwt principal, String month, HttpServletResponse resp) {
         Context context = new Context();
         if (null == month || "".equals(month) || DateUtil.getCurMonth().equals(month)) {

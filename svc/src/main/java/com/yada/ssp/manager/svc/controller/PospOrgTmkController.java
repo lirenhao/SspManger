@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,7 @@ public class PospOrgTmkController {
     }
 
     @GetMapping
+    @Secured(value = {"admin","MerchantChecker"})
     public Page<PospOrgTmk> list(@AuthenticationPrincipal Jwt principal,
                                  @ModelAttribute PospOrgTmkQuery query, @PageableDefault(sort = {"orgId", "terminalId", "tmkZmk"}) Pageable pageable) {
         if ((null == query.getOrgId() || "".equals(query.getOrgId())) && principal.getClaimAsString("orgId").length() > 2) {
@@ -43,6 +45,7 @@ public class PospOrgTmkController {
     }
 
     @PostMapping
+    @Secured(value = {"admin","MerchantChecker"})
     public void save(@RequestBody PospOrgTmk pospOrgTmk) {
         pospOrgTmkService.saveAndUpdate(pospOrgTmk);
     }
@@ -51,6 +54,7 @@ public class PospOrgTmkController {
      * 密钥数量提示
      */
     @GetMapping("/scalar")
+    @Secured(value = {"admin","MerchantChecker"})
     public Map<String, Integer> scalar(@AuthenticationPrincipal Jwt principal) {
         Map<String, Integer> result = new HashMap<>();
         result.put("total", pospOrgTmkService.total(principal.getClaimAsString("orgId")));
@@ -61,11 +65,13 @@ public class PospOrgTmkController {
     }
 
     @DeleteMapping("/{orgId}/{tmkZmk}")
+    @Secured(value = {"admin","MerchantChecker"})
     public void delete(@PathVariable String orgId, @PathVariable String tmkZmk) {
         pospOrgTmkService.delete(orgId, tmkZmk);
     }
 
     @PostMapping("/upload")
+    @Secured(value = {"admin","MerchantChecker"})
     public List<PospOrgTmk> upload(String orgId, MultipartFile file) throws IOException {
         List<PospOrgTmk> batch = new ArrayList<>();
         List<String[]> data = PoiExcelUtil.readExcelOneSheet(file, 5);

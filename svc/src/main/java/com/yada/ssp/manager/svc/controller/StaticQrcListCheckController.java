@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,7 @@ public class StaticQrcListCheckController {
     }
 
     @GetMapping
+    @Secured(value = {"admin","MerchantOperator","MerchantChecker"})
     public Page<StaticQrcListCheck> list(@AuthenticationPrincipal Jwt principal,
                                          @ModelAttribute StaticQrcListCheckQuery query, @PageableDefault Pageable pageable) {
         query.setOrgId(principal.getClaimAsString("orgId"));
@@ -39,33 +41,39 @@ public class StaticQrcListCheckController {
     }
 
     @PostMapping
+    @Secured(value = {"admin","MerchantOperator","MerchantChecker"})
     public void save(@RequestBody StaticQrcListCheck staticQrcListCheck) {
         staticQrcListCheck.setQrValue(staticQrcListCheck.getQrValue().trim());
         staticQrcListCheckService.save(staticQrcListCheck);
     }
 
     @PutMapping
+    @Secured(value = {"admin","MerchantOperator","MerchantChecker"})
     public void update(@RequestBody StaticQrcListCheck staticQrcListCheck) {
         staticQrcListCheck.setQrValue(staticQrcListCheck.getQrValue().trim());
         staticQrcListCheckService.update(staticQrcListCheck);
     }
 
     @GetMapping("/{lsId}")
+    @Secured(value = {"admin","MerchantOperator","MerchantChecker"})
     public StaticQrcListCheck get(@PathVariable String lsId) {
         return staticQrcListCheckService.findOne(lsId);
     }
 
     @DeleteMapping("/{lsId}")
+    @Secured(value = {"admin","MerchantOperator","MerchantChecker"})
     public void delete(@PathVariable String lsId) {
         staticQrcListCheckService.delete(lsId);
     }
 
     @GetMapping("/{lsId}/check")
+    @Secured(value = {"admin","MerchantOperator","MerchantChecker"})
     public StaticQrcList getCheck(@PathVariable String lsId) {
         return staticQrcListService.findOne(lsId);
     }
 
     @PutMapping("/{lsId}/check")
+    @Secured(value = {"admin","MerchantOperator","MerchantChecker"})
     public void saveCheck(@PathVariable String lsId, @RequestBody Map<String, String> body) {
         staticQrcListCheckService.saveCheck(lsId, body.get("checkReason"), body.get("checkState"));
     }

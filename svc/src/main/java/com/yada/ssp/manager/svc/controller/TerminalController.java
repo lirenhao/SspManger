@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,7 @@ public class TerminalController {
     }
 
     @GetMapping
+    @Secured(value = {"admin","MerchantOperator","MerchantChecker"})
     public Page<Terminal> list(@AuthenticationPrincipal Jwt principal,
                                @ModelAttribute TerminalQuery query, @PageableDefault Pageable pageable) {
         if (null == query.getOrgId() || "".equals(query.getOrgId())) {
@@ -38,6 +40,7 @@ public class TerminalController {
     }
 
     @GetMapping("/{merchantId}")
+    @Secured(value = {"admin","MerchantOperator","MerchantChecker"})
     public List<Terminal> getByMerNo(@AuthenticationPrincipal Jwt principal, @PathVariable String merchantId) {
         TerminalQuery query = new TerminalQuery();
         query.setOrgId(principal.getClaimAsString("orgId"));
@@ -46,6 +49,7 @@ public class TerminalController {
     }
 
     @GetMapping("/{merchantId}/{terminalId}")
+    @Secured(value = {"admin","MerchantOperator","MerchantChecker"})
     public Terminal get(@PathVariable String terminalId, @PathVariable String merchantId) {
         return terminalService.findOne(new TerminalPK(terminalId, merchantId));
     }

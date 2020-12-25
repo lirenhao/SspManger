@@ -7,6 +7,7 @@ import org.jxls.common.Context;
 import org.jxls.util.JxlsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,11 +33,13 @@ public class HqReportController {
     }
 
     @GetMapping
+    @Secured(value = {"admin","FinanceOperator","FinanceChecker","MerchantChecker","MerchantOperator"})
     public List<HqReport> list(@AuthenticationPrincipal Jwt principal, Integer year, String orgId) {
         return query(principal, year, orgId);
     }
 
     @GetMapping("/download")
+    @Secured(value = {"admin","FinanceOperator","FinanceChecker","MerchantChecker","MerchantOperator"})
     public void download(@AuthenticationPrincipal Jwt principal, HttpServletResponse resp, Integer year, String orgId) {
         Context context = new Context();
         List<HqReport> page = query(principal, year, orgId);
