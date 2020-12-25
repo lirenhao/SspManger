@@ -1,8 +1,7 @@
 import React from 'react';
 import { LogoutOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
-import { history, useModel } from 'umi';
-import { logout } from '@/services/user';
+import { useModel } from 'umi';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
@@ -11,21 +10,7 @@ export interface GlobalHeaderRightProps {
 }
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
-  const { initialState, setInitialState } = useModel('@@initialState');
-
-  const handlePush = function (url: string) {
-    history.push(url);
-  }
-
-  const handleLogout = async function () {
-    try {
-      await logout();
-      setInitialState({ ...initialState, currentUser: undefined });
-      // window.location.href = `/login?redirect=${encodeURI(window.location.href)}`;
-    } catch (err) {
-    }
-    window.location.reload();
-  }
+  const { initialState } = useModel('@@initialState');
 
   const loading = (
     <span className={`${styles.action} ${styles.account}`}>
@@ -57,9 +42,11 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
           修改密码
         </a>
       </Menu.Item>
-      <Menu.Item onClick={handleLogout}>
-        <LogoutOutlined />
-        退出登录
+      <Menu.Item>
+        <a href='/signout'>
+          <LogoutOutlined />
+          退出登录
+        </a>
       </Menu.Item>
     </Menu>
   );

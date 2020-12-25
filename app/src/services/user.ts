@@ -7,9 +7,3 @@ export async function queryCurrent() {
 export async function queryNotices(): Promise<any> {
   return Promise.resolve({ data: [] });
 }
-
-export async function logout() {
-  return request('/logout', {
-    method: 'POST',
-  });
-}
