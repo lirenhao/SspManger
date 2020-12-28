@@ -9,29 +9,33 @@ import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.oauth2.client.oidc.web.server.logout.OidcClientInitiatedServerLogoutSuccessHandler
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository
 import org.springframework.security.web.server.SecurityWebFilterChain
+import org.springframework.security.web.server.authentication.RedirectServerAuthenticationEntryPoint
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers
+import java.net.URI
 
 @EnableWebFluxSecurity
 class SecurityConfig @Autowired constructor(
-        private val clientRegistrationRepository: ReactiveClientRegistrationRepository
+    private val clientRegistrationRepository: ReactiveClientRegistrationRepository
 ) {
 
     @Bean
     fun configure(http: ServerHttpSecurity): SecurityWebFilterChain {
         http.csrf().disable()
         http.authorizeExchange()
-                // all other requests
-                .anyExchange().authenticated()
-                // RP-initiated logout
-                .and().logout {
-                    val handler = OidcClientInitiatedServerLogoutSuccessHandler(clientRegistrationRepository)
-                    handler.setPostLogoutRedirectUri("{baseUrl}")
-                    it.logoutSuccessHandler(handler)
-                    it.requiresLogout(ServerWebExchangeMatchers.pathMatchers(HttpMethod.GET, "/signout"))
-                }
-                // enable OAuth2/OIDC
-                .oauth2Login(withDefaults())
-                .exceptionHandling()
+            // allow anonymous access to the root page
+            .pathMatchers("/svc/**", "/favicon.*", "/*.js", "/*.css", "/*.png", "/*.svg").permitAll()
+            // all other requests
+            .anyExchange().authenticated()
+            // RP-initiated logout
+            .and().logout {
+                val handler = OidcClientInitiatedServerLogoutSuccessHandler(clientRegistrationRepository)
+                handler.setPostLogoutRedirectUri("{baseUrl}")
+                handler.setLogoutSuccessUrl(URI("/"))
+                it.logoutSuccessHandler(handler)
+                it.requiresLogout(ServerWebExchangeMatchers.pathMatchers(HttpMethod.GET, "/signout"))
+            }
+            // enable OAuth2/OIDC
+            .oauth2Login()
         return http.build()
     }
 }
