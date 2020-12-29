@@ -25,7 +25,7 @@ spring:
           predicates:
             - Path=/svc/ssp/**
           filters:
-            - TokenRelay
+            - OAuthApi
             - RewritePath=/svc(?<segment>/?.*),$\{segment}
             - RemoveRequestHeader=Cookie
         - id: web-service
@@ -33,7 +33,7 @@ spring:
           predicates:
             - Path=/svc/web/**
           filters:
-            - TokenRelay
+            - OAuthApi
             - RewritePath=/svc/web(?<segment>/?.*),$\{segment}
             - RemoveRequestHeader=Cookie
         - id: changePwd
