@@ -43,7 +43,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a href='/signout'>
+        <a href={`/signout?redirect_uri=${encodeURI(window.location.href)}`}>
           <LogoutOutlined />
           退出登录
         </a>

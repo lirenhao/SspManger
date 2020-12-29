@@ -1,6 +1,6 @@
 import React from 'react';
 import { BasicLayoutProps, Settings as LayoutSettings } from '@ant-design/pro-layout';
-import { notification } from 'antd';
+import { notification, Button } from 'antd';
 import { history, RequestConfig, Link } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
@@ -49,7 +49,7 @@ const codeMessage = {
   202: '一个请求已经进入后台排队（异步任务）。',
   204: '删除数据成功。',
   400: '发出的请求有错误，服务器没有进行新建或修改数据的操作。',
-  401: '用户登陆过期，请重新登陆。',
+  401: '用户没有权限（令牌、用户名、密码错误）。',
   403: '用户得到授权，但是访问是被禁止的。',
   404: '发出的请求针对的是不存在的记录，服务器没有进行操作。',
   405: '请求方法不被允许。',
@@ -71,19 +71,18 @@ const errorHandler = (error: ResponseError) => {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
 
-    notification.error({
-      message: `请求错误 ${status}`,
-      description: `${errorText}[${url.split('?')[0]}]`,
-    });
-
-    // if (status === 401) {
-    //   window.location.reload();
-    // } else {
-    //   notification.error({
-    //     message: `请求错误 ${status}`,
-    //     description: `${errorText}[${url.split('?')[0]}]`,
-    //   });
-    // }
+    if (status === 401) {
+      notification.error({
+        message: '用户登陆过期',
+        description: <div>请重新<Button type="link" onClick={() => window.location.reload()} >登陆</Button></div>,
+        duration: null,
+      });
+    } else {
+      notification.error({
+        message: `请求错误 ${status}`,
+        description: `${errorText}[${url.split('?')[0]}]`,
+      });
+    }
   }
 
   if (!response) {
