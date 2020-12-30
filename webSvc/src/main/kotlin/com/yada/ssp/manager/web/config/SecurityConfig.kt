@@ -20,8 +20,8 @@ import org.springframework.security.web.server.SecurityWebFilterChain
 @EnableWebFluxSecurity
 @EnableConfigurationProperties(SecurityConfigProperties::class)
 class SecurityConfig(
-        private val config: SecurityConfigProperties,
-        private val stringEncryptor: StringEncryptor
+    private val config: SecurityConfigProperties,
+    private val stringEncryptor: StringEncryptor
 ) {
 
     @Bean
@@ -32,24 +32,23 @@ class SecurityConfig(
 
     @Bean
     fun configure(http: ServerHttpSecurity): SecurityWebFilterChain {
-
         http
-                .authorizeExchange { exchanges ->
-                    config.roles.keys.forEach { role ->
-                        exchanges.pathMatchers(*config.roles[role] ?: arrayOf()).hasRole(role)
-                    }
-                    exchanges.anyExchange().authenticated()
+            .authorizeExchange { exchanges ->
+                config.roles.keys.forEach {
+                    exchanges.pathMatchers(it).hasAnyRole(*config.roles[it] ?: arrayOf())
                 }
-                .oauth2ResourceServer()
-                .jwt().jwtAuthenticationConverter {
-                    val jwtConverter = JwtAuthenticationConverter()
-                    jwtConverter.setJwtGrantedAuthoritiesConverter { jwt: Jwt ->
-                        (jwt.getClaimAsMap("realm_access")["roles"] as List<*>)
-                                .map { role -> "ROLE_$role" }
-                                .map { role -> SimpleGrantedAuthority(role) }
-                    }
-                    ReactiveJwtAuthenticationConverterAdapter(jwtConverter).convert(it)
+                exchanges.anyExchange().authenticated()
+            }
+            .oauth2ResourceServer()
+            .jwt().jwtAuthenticationConverter {
+                val jwtConverter = JwtAuthenticationConverter()
+                jwtConverter.setJwtGrantedAuthoritiesConverter { jwt: Jwt ->
+                    (jwt.getClaimAsMap("realm_access")["roles"] as List<*>)
+                        .map { role -> "ROLE_$role" }
+                        .map { role -> SimpleGrantedAuthority(role) }
                 }
+                ReactiveJwtAuthenticationConverterAdapter(jwtConverter).convert(it)
+            }
 
         return http.build()
     }

@@ -8,7 +8,6 @@ import org.springframework.security.web.server.WebFilterExchange
 import org.springframework.security.web.server.authentication.logout.RedirectServerLogoutSuccessHandler
 import org.springframework.security.web.server.authentication.logout.ServerLogoutSuccessHandler
 import org.springframework.stereotype.Component
-import org.springframework.util.Assert
 import org.springframework.web.util.UriComponentsBuilder
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.switchIfEmpty
@@ -46,10 +45,5 @@ class OAuthLogoutSuccessHandler(
                 this.serverLogoutSuccessHandler.onLogoutSuccess(exchange, authentication).then(Mono.empty())
             }.flatMap { redirectStrategy.sendRedirect(exchange.exchange, it) }
 
-    }
-
-    fun setLogoutSuccessUrl(logoutSuccessUrl: URI) {
-        Assert.notNull(logoutSuccessUrl, "logoutSuccessUrl cannot be null")
-        serverLogoutSuccessHandler.setLogoutSuccessUrl(logoutSuccessUrl)
     }
 }
