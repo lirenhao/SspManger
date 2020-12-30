@@ -73,6 +73,7 @@ const errorHandler = (error: ResponseError) => {
 
     if (status === 401) {
       notification.error({
+        key: 'http-status-401',
         message: '用户登陆过期',
         description: <div>请重新<Button type="link" onClick={() => window.location.reload()} >登陆</Button></div>,
         duration: null,
