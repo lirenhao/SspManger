@@ -58,6 +58,10 @@ task("copyApp") {
             from("../app/dist")
             into("src/main/resources/static")
         }
+        copy {
+            from("../app/dist")
+            into( "../dist/app")
+        }
     }
 }
 

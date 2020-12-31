@@ -44,4 +44,4 @@ spring:
             - RedirectTo=302, http://localhost:8180/auth/realms/sspManager/account/password
   web:
     resources:
-      static-locations: file:/Users/lirenhao/Workspace/ssp/SspManger/app/dist
+      static-locations: classpath:/static/, file:/Users/lirenhao/Workspace/ssp/SspManger/app/dist
