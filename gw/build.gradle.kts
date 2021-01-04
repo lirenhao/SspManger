@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
     id("org.springframework.boot") version "2.4.1"
@@ -76,14 +77,18 @@ task("deleteApp") {
 task("buildApp") {
     group = "app"
     description = "build app"
+    var npm = "npm"
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        npm = "npm.cmd"
+    }
     doLast {
         exec {
             workingDir("../app")
-            commandLine("npm", "install")
+            commandLine(npm, "install")
         }
         exec {
             workingDir("../app")
-            commandLine("npm", "run", "build")
+            commandLine(npm, "run", "build")
         }
     }
 }
