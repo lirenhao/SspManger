@@ -42,6 +42,15 @@ spring:
             - Path=/changePwd
           filters:
             - RedirectTo=302, http://localhost:8180/auth/realms/sspManager/account/password
+        - id: app
+          uri: http://localhost:9000
+          predicates:
+            - Path=/**
+          filters:
+            - name: OAuth
+              args:
+                staticPaths: /**.js,/**.css
+            - StaticRes
   web:
     resources:
       static-locations: classpath:/static/, file:/Users/lirenhao/Workspace/ssp/SspManger/app/dist

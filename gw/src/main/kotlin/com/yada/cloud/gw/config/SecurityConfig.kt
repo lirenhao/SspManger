@@ -21,9 +21,7 @@ class SecurityConfig @Autowired constructor(
         http.csrf().disable()
         http.authorizeExchange()
             // allow anonymous access to the root page
-            .pathMatchers("/svc/**", "/favicon.*", "/*.js", "/*.css", "/*.png", "/*.svg").permitAll()
-            // all other requests
-            .anyExchange().authenticated()
+            .anyExchange().permitAll()
             // RP-initiated logout
             .and().logout {
                 val handler = OidcClientInitiatedServerLogoutSuccessHandler(clientRegistrationRepository)
