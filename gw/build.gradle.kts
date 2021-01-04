@@ -96,10 +96,14 @@ task("buildApp") {
 task("buildSspSvc") {
     group = "svc"
     description = "build ssp svc"
+    var mvn = "mvn"
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        mvn = "mvn.cmd"
+    }
     doLast {
         exec {
             workingDir("../svc")
-            commandLine("mvn", "clean", "package")
+            commandLine(mvn, "clean", "package")
         }
     }
 }
@@ -107,10 +111,14 @@ task("buildSspSvc") {
 task("buildWebSvc") {
     group = "svc"
     description = "build web svc"
+    var gradle = "gradle"
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        gradle = "gradle.bat"
+    }
     doLast {
         exec {
             workingDir("../webSvc")
-            commandLine("gradle", "clean", "build")
+            commandLine(gradle,"clean","build")
         }
     }
 }
